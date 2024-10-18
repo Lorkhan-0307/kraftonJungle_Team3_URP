@@ -50,7 +50,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         // 방에 입장하면 플레이어 캐릭터를 생성
-        //PhotonNetwork.Instantiate("PlayerPrefab", Vector3.zero, Quaternion.identity);
+        PhotonNetwork.Instantiate("PlayerPrefab", Vector3.zero, Quaternion.identity);
 
         // 방장(마스터 클라이언트)일 경우 특정 로직 실행
         if (PhotonNetwork.IsMasterClient)
@@ -79,21 +79,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     /// <summary>
     /// 죽은 플레이어 본인이 실행시켜주세요.
+    /// Run by the dead player.
     /// </summary>
     public void PlayerDeath()
     {
         int id = PhotonNetwork.LocalPlayer.ActorNumber;
 
         SendToClients(EventCode.PlayerDeath, id);
-    }
-
-    /// <summary>
-    /// 게임 종료조건이 달성되었을 때 실행시켜주세요.
-    /// </summary>
-    public void PlayerWin()
-    {
-        // TODO: 살아있는 플레이어 목록을 문자열로 만들어서 보내주자.
-        // SendToClients(EventCode.PlayerDeath, actorNumber);
     }
 
     /// <summary>

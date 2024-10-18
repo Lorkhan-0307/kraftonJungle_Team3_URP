@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using UnityEngine;
+using System;
 
 public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
 {
@@ -41,16 +42,42 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
                 PhotonView from = PhotonNetwork.GetPhotonView(int.Parse(tokens[0]));
                 PhotonView to = PhotonNetwork.GetPhotonView(int.Parse(tokens[1]));
 
+                //TODO: 공격자 피격자 이용해서 해야하는 로직들 처리하기
                 break;
             case EventCode.PlayerDeath:
-
+                ServerLogic server = GetComponent<ServerLogic>();
+                if(server)
+                {
+                    server.PlayerDeath((int)photonEvent.CustomData);
+                }
                 break;
             case EventCode.EndGame:
-
+                bool result = EndGame((string)photonEvent.CustomData);
+                if(result)
+                {
+                    Debug.Log("Victory!");
+                }
+                else
+                {
+                    Debug.Log("Defeat!");
+                }
                 break;
             case EventCode.SwitchDayNight:
 
                 break;
         }
+    }
+
+    public bool EndGame(string data)
+    {
+        string[] tokens = data.Split(",");
+        int myID = PhotonNetwork.LocalPlayer.ActorNumber;
+        for(int i = 0; i < tokens.Length; i++)
+        {
+            if (myID == int.Parse(tokens[i]))
+                return true;
+        }
+
+        return false;
     }
 }
