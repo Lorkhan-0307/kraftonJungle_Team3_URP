@@ -63,6 +63,7 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
                 }
                 break;
             case EventCode.SwitchDayNight:
+                // TODO: 모든 클라이언트에게 현재 시각 방송
 
                 break;
         }

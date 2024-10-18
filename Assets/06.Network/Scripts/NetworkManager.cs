@@ -3,10 +3,11 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
+
+    #region Singleton
     // 싱글톤 인스턴스
     public static NetworkManager Instance { get; private set; }
 
@@ -27,14 +28,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
     }
 
-    void Start()
-    {
-        testAction.Enable();
-        testAction.performed += Test;
-        // Photon 서버에 연결
-        PhotonNetwork.ConnectUsingSettings();
-    }
+    #endregion
 
+    #region RoomServer
     public override void OnConnectedToMaster()
     {
         // 서버에 연결되면 방에 입장 시도
@@ -58,13 +54,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             gameObject.AddComponent<ServerLogic>();
         }
     }
-
-
-    public InputAction testAction;
-    public void Test(InputAction.CallbackContext context)
-    {
-        GetComponent<ServerLogic>().SetPlayerRole();
-    }
+    #endregion
 
     #region Methods:Request
     public void AttackEntity(PhotonView from, PhotonView to)
@@ -78,7 +68,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
 
     /// <summary>
-    /// 죽은 플레이어 본인이 실행시켜주세요.
+    /// 죽은 플레이어 본인이 죽은 시점에 실행시켜주세요.
     /// Run by the dead player.
     /// </summary>
     public void PlayerDeath()
@@ -91,12 +81,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     /// <summary>
     /// 0: Day, 1:Night
     /// </summary>
-    public void SwitchDayNight()
+    public void SwitchDayNight(bool isDay)
     {
-        //SendToClients(EventCode.SwitchDayNight);
+        SendToClients(EventCode.SwitchDayNight, isDay);
     }
-    #endregion
-
     public void SendToServer(EventCode code, object content)
     {
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient }; // 모든 클라이언트에게 전송
@@ -113,4 +101,23 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         //이거 쓰면 될듯
         PhotonNetwork.RaiseEvent(0, content, raiseEventOptions, sendOptions);
     }
+    #endregion
+
+
+    void Start()
+    {
+        testAction.Enable();
+        testAction.performed += Test;
+        // Photon 서버에 연결
+        PhotonNetwork.ConnectUsingSettings();
+    }
+
+
+
+    public InputAction testAction;
+    public void Test(InputAction.CallbackContext context)
+    {
+        GetComponent<ServerLogic>().SetPlayerRole();
+    }
+
 }

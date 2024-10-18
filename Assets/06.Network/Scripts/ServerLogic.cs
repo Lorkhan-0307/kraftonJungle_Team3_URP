@@ -3,6 +3,7 @@ using UnityEngine;
 using Photon.Realtime;
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
+using UnityEngine.InputSystem;
 using Unity.VisualScripting; // 이벤트 코드에 사용
 
 public enum EventCode
@@ -16,7 +17,9 @@ public enum EventCode
 
 public class ServerLogic : MonoBehaviourPunCallbacks
 {
+    public int requirePlayers = 5;
 
+    private InputAction gameStartAction;
     // 싱글톤 인스턴스
     public static ServerLogic Instance { get; private set; }
 
@@ -35,6 +38,24 @@ public class ServerLogic : MonoBehaviourPunCallbacks
             // 이미 인스턴스가 존재하는 경우, 중복된 객체를 파괴
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        gameStartAction = new InputAction(type: InputActionType.Value, binding: "<Keyboard>/space");
+        gameStartAction.Enable();
+        gameStartAction.performed += StartGame;
+    }
+
+    public void StartGame(InputAction.CallbackContext context)
+    {
+        if(PhotonNetwork.PlayerList.Length < requirePlayers)
+        {
+            Debug.Log("인원이 부족합니다.");
+            return;
+        }
+
+        // TODO: 게임 시작 기능 구현
     }
 
 
