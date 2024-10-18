@@ -45894,9 +45894,6 @@ MonoBehaviour:
     m_Bits: 0
   footStepSound: {fileID: 8300000, guid: 263f8aaa01d5d0041b082b7b69d9ca02, type: 3}
   footStepDelay: 0.35
-  raycastShootPos: {fileID: 0}
-  attackrange: 3
-  killButton: {fileID: 0}
 --- !u!143 &1656206105
 CharacterController:
   m_ObjectHideFlags: 0
@@ -61018,7 +61015,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59ea75b435397bc4b82576f3d3f530b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pvCache: {fileID: 0}
 --- !u!114 &2034808836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61031,7 +61027,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71ae12f517627ac41b4d1d1e5ddc44fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pvCache: {fileID: 0}
   testAction:
     m_Name: Test
     m_Type: 0
