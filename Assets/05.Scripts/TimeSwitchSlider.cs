@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NightSwitchSlider : MonoBehaviour
+public class TimeSwitchSlider : MonoBehaviour, ISlider
 {
     public Slider slider;
 
@@ -14,6 +14,9 @@ public class NightSwitchSlider : MonoBehaviour
 
     Timer timer = new Timer();
     GameObject[] allNPC;
+
+    [SerializeField]
+    private float accelateTime = 10f;
 
     private void Start()
     {
@@ -73,9 +76,14 @@ public class NightSwitchSlider : MonoBehaviour
         }
     }
 
-    public void SetTime(float time)
+    public void SetValue(float value)
     {
-        slider.value = time;
+        slider.value = value;
     }
 
+    public void FastTime()
+    {
+        float t = (elapsedTime + accelateTime) / increaseTime;
+        slider.value = t;
+    }
 }
