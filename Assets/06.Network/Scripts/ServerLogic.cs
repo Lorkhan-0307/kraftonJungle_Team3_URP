@@ -140,7 +140,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     public void SetPlayerRole()
     {
         // 현재 룸에 접속되어있는 플레이어 목록 받아옴
-        Player[] playerList = PhotonNetwork.PlayerList;
+        Photon.Realtime.Player[] playerList = PhotonNetwork.PlayerList;
         isAlivePlayers = new bool[playerList.Length+1];
         for (int i = 1; i < isAlivePlayers.Length; i++)
         {
