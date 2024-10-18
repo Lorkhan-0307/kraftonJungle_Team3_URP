@@ -13,10 +13,12 @@ public class NightSwitchSlider : MonoBehaviour
     public float increaseTime = 20f;
 
     Timer timer = new Timer();
+    GameObject[] allNPC;
 
     private void Start()
     {
         hungerSlider = GameObject.Find("HungerSlider");
+        allNPC = GameObject.FindGameObjectsWithTag("NPC");
     }
 
     private void Update()
@@ -27,6 +29,14 @@ public class NightSwitchSlider : MonoBehaviour
         {
             // 낮일 때 작동
             hungerSlider.SetActive(true);
+
+            // 각 NPC 오브젝트를 활성화
+            foreach (GameObject npc in allNPC)
+            {
+                // NPC 활성화
+                npc.SetActive(true);
+            }
+
             if (elapsedTime < increaseTime)
             {
                 elapsedTime += Time.deltaTime;
@@ -39,6 +49,14 @@ public class NightSwitchSlider : MonoBehaviour
         {
             // UI 비활성화
             hungerSlider.SetActive(false);
+
+            // 각 NPC 오브젝트를 비활성화
+            foreach (GameObject npc in allNPC)
+            {
+                // NPC 비활성화
+                npc.SetActive(false);
+            }
+
             if ((elapsedTime*-1) > decreaseTime)
             {
                 elapsedTime += Time.deltaTime;
