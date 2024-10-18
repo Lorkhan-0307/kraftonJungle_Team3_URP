@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -24,6 +26,17 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInput playerInput;
     private InputAction moveAction;
     private InputAction jumpAction;
+    private InputAction killAction;
+
+    [SerializeField] private Transform raycastShootPos;
+    [SerializeField] private float attackrange = 3f;
+    [SerializeField] private Button killButton;
+    
+    
+    //Using Raycast
+    RaycastHit hit;
+    GameObject target;
+    
 
     private void Awake()
     {
@@ -31,14 +44,19 @@ public class PlayerMovement : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         moveAction = playerInput.actions["Move"];
         jumpAction = playerInput.actions["Jump"];
+        killAction = playerInput.actions["Kill"];
     }
 
     // Update is called once per frame
     void Update()
     {
         // 바닥 체크
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        //isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
+        
+        
+        isGrounded = controller.isGrounded;
+        
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
@@ -60,6 +78,18 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
+
+        // Using RayCast to detect attack
+        RayCastAttackDetection();
+        
+        
+        
+        
+        if (killButton.interactable && killAction.triggered && target != null)
+        {
+            AttackAction();   
+        }
+
         // 발걸음 소리 재생
         if ((input.x != 0 || input.y != 0) && isGrounded)
         {
@@ -70,5 +100,37 @@ public class PlayerMovement : MonoBehaviour
                 nextFootstep += footStepDelay;
             }
         }
+    }
+
+
+    private void RayCastAttackDetection()
+    {
+        if (Physics.Raycast(raycastShootPos.position, transform.forward, out hit, attackrange))
+        {
+            if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("NPC"))
+            {
+                //Debug.Log("DETECT PLAYER");
+                killButton.interactable = true;
+                target = hit.collider.gameObject;
+            }
+            else
+            {
+                killButton.interactable = false;
+                target = null;
+            }
+        }
+        else
+        {
+            killButton.interactable = false;
+            target = null;
+        }
+    }
+
+    private void AttackAction()
+    {
+        Player player = GetComponent<Player>();
+        player.OnAttack(target);
+        Player targetPlayer = target.GetComponent<Player>();
+        targetPlayer.OnDamaged(this.gameObject);
     }
 }
