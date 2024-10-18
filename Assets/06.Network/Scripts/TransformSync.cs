@@ -3,7 +3,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
+public class TransformSync : MonoBehaviourPunCallbacks, IPunObservable
 {
     private Vector3 latestPos; // 네트워크에서 동기화된 위치
     private Quaternion latestRot; // 네트워크에서 동기화된 회전
