@@ -1,0 +1,4 @@
+repository "kraftonJungle_Team3_URP@Lorkhan_01@cloud"
+  path "/"
+    br "/main"
+    co "/main"
