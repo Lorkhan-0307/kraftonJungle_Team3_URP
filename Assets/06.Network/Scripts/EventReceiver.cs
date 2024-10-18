@@ -26,6 +26,7 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
         {
             case EventCode.AttackToServer:
                 string message = (string)photonEvent.CustomData; // 전송된 데이터를 받음
+                //데이터 : "{공격자ID},{피격자ID}"
                 Debug.Log("이벤트 수신: " + message);
                 string[] tokens = message.Split(',');
                 PhotonView from = PhotonNetwork.GetPhotonView(int.Parse(tokens[0]));
