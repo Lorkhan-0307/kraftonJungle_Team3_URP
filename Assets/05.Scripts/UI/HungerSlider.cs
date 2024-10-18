@@ -16,7 +16,6 @@ public class HungerSlider : MonoBehaviour
         if (hungerSlider.value > 0)
         {
             elapsedTime += Time.deltaTime;
-            Debug.Log("Hungry");
 
             // 일정 시간동안 감소
             timer.GoTime(decreaseTime, hungerSlider, elapsedTime);
