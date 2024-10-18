@@ -19814,6 +19814,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 3599ad65-fa95-4355-975c-8a49e62b9628
     m_ActionName: DebugActions/On/Off Light[/Keyboard/t]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 10da924f-3ea2-49af-807e-8f28c854dad2
+    m_ActionName: PlayerActions/Test[/Keyboard/t]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: PC
   m_DefaultActionMap: DebugActions
@@ -61023,6 +61027,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71ae12f517627ac41b4d1d1e5ddc44fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testAction:
+    m_Name: Test
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 27113695-4e29-404d-a271-b11da447ee17
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 09524896-6a9e-485f-a8d6-f8e1573f3611
+      m_Path: <Keyboard>/#(Y)
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Test
+      m_Flags: 0
+    m_Flags: 0
 --- !u!4 &2034808837
 Transform:
   m_ObjectHideFlags: 0

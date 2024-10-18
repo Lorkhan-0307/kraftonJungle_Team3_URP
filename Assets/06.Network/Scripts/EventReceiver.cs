@@ -24,14 +24,32 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
 
         switch((EventCode)eventCode)
         {
-            case EventCode.AttackToServer:
+            case EventCode.GameStart:
+                int id = (int)photonEvent.CustomData;
+
+                //TODO: 자신의 플레이어 ActorNumber 가 전송받은 id와 같은지 비교하고 몬스터, 연구원으로 초기화함.
+                if(PhotonNetwork.LocalPlayer.ActorNumber == id)
+                {
+
+                }
+                break;
+            case EventCode.AttackRequest:
                 string message = (string)photonEvent.CustomData; // 전송된 데이터를 받음
                 //데이터 : "{공격자ID},{피격자ID}"
                 Debug.Log("이벤트 수신: " + message);
                 string[] tokens = message.Split(',');
                 PhotonView from = PhotonNetwork.GetPhotonView(int.Parse(tokens[0]));
                 PhotonView to = PhotonNetwork.GetPhotonView(int.Parse(tokens[1]));
-                ServerLogic.Instance.HitScan(from.transform, to.transform);
+
+                break;
+            case EventCode.PlayerDeath:
+
+                break;
+            case EventCode.EndGame:
+
+                break;
+            case EventCode.SwitchDayNight:
+
                 break;
         }
     }

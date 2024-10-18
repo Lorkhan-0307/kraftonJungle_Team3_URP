@@ -5,11 +5,16 @@ using ExitGames.Client.Photon; // 이벤트 코드에 사용
 
 public enum EventCode
 {
-    AttackToServer = 0,
+    GameStart = 0,
+    AttackRequest,
+    PlayerDeath,
+    EndGame,
+    SwitchDayNight
 }
 
 public class ServerLogic : MonoBehaviourPunCallbacks
 {
+
     // 싱글톤 인스턴스
     public static ServerLogic Instance { get; private set; }
 
@@ -30,30 +35,26 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    public void SendTest()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            object content = "TEMPTEMP"; // 이벤트에 포함할 데이터 (필요시)
-            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // 모든 클라이언트에게 전송
-            SendOptions sendOptions = new SendOptions { Reliability = true }; // 신뢰성 보장
-
-            //이거 쓰면 될듯
-            PhotonNetwork.RaiseEvent(0, content, raiseEventOptions, sendOptions);
-        }
-    }
 
     // Update is called once per frame
     void Update()
     {
         ApplyTime();
-        SendTest();
     }
+
+
+    #region GameStart
+    public void SetPlayerRole()
+    {
+        // 현재 룸에 접속되어있는 플레이어 목록 받아옴
+        Player[] playerList = PhotonNetwork.PlayerList;
+
+        Debug.Log("플레이어 수: " + playerList.Length.ToString());
+        int result = Random.Range(0, playerList.Length)+1;
+
+        NetworkManager.Instance.SendToClients(EventCode.GameStart, result);
+    }
+    #endregion
 
     #region Time
     public float dayLength;
@@ -83,16 +84,5 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         // 현재시각 방송함
     }
 
-    #endregion
-
-    #region HitScan
-    public float hitRange;
-    public void HitScan(Transform user, Transform target)
-    {
-        if(Vector3.Distance(user.position, target.position) < hitRange)
-        {
-            // 공격 성공 판정 방송함
-        }
-    }
     #endregion
 }
