@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
-    public GameState curState;
-
     // ΩÃ±€≈Ê ¿ŒΩ∫≈œΩ∫
     public static NetworkManager Instance { get; private set; }
 

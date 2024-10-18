@@ -8,13 +8,6 @@ public enum EventCode
     AttackToServer = 0,
 }
 
-public enum GameState
-{
-    Ready,
-    Playing,
-    End,
-}
-
 public class ServerLogic : MonoBehaviourPunCallbacks
 {
     // ΩÃ±€≈Ê ¿ŒΩ∫≈œΩ∫
