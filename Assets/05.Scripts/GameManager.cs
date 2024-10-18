@@ -13,7 +13,6 @@ public enum CharacterType
 
 public class GameManager : ScriptableSingleton<GameManager>
 {
-
     public void SetPlayer(CharacterType type)
     {
         switch (type)

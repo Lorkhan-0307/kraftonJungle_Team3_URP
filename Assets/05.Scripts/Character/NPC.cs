@@ -17,9 +17,12 @@ public class NPC : Player
         {
             case CharacterType.Monster:
                 // Todo: hunger time reset
+                //attacker ¿« hunger time reset »£√‚
+                FindObjectOfType<HungerSlider>().OnMonsterAteNPC();
                 break;
             case CharacterType.Scientist:
                 // Todo: less day time
+                FindObjectOfType<TimeSwitchSlider>().FastTime();
                 break;
         }
     }

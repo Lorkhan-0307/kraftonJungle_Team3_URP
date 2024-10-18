@@ -1,15 +1,12 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Timer
+public class MasterTimer
 {
     public bool GoTime(float time, Slider slider, float elapsedTime)
     {
         float startValue, endValue;
-        // isDay
 
         if (time > 0)
         {
