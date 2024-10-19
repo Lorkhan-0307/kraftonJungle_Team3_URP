@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TimeSwitchSlider : MonoBehaviour, ISlider
+public class TimeSwitchSlider : MonoBehaviour
 {
     public Slider slider;
 

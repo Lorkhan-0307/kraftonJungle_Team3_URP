@@ -22,4 +22,13 @@ public class TransformSync : MonoBehaviourPunCallbacks, IPunObservable
             latestRot = (Quaternion)stream.ReceiveNext(); // 회전 받기
         }
     }
+    private void Update()
+    {
+        if (!photonView.IsMine) // 다른 클라이언트의 오브젝트일 때
+        {
+            // 위치와 회전을 부드럽게 업데이트
+            transform.position = Vector3.Lerp(transform.position, latestPos, Time.deltaTime * 10);
+            transform.rotation = Quaternion.Lerp(transform.rotation, latestRot, Time.deltaTime * 10);
+        }
+    }
 }

@@ -10,7 +10,7 @@ public class HungerSlider : MonoBehaviour
     float elapsedTime = 0f;
 
     Timer timer = new Timer();
-
+     
     private void Update()
     {
         if (hungerSlider.value > 0)

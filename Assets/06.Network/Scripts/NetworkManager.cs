@@ -6,6 +6,11 @@ using UnityEngine.InputSystem;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
+    public GameState curState = GameState.OnRoom;
+
+
+
+
     public Monster monster;
     #region Singleton
     // 싱글톤 인스턴스
@@ -109,19 +114,24 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     GameObject playerObjectPrefab;
     public void StartGame(object data)
     {
-        Debug.Log("Start Game Event");
         object[] datas = (object[])data;
 
         Vector3[] spawnPos = (Vector3[])datas[0];
         int monsterNum = (int)datas[1];
 
         //TODO: 자신의 플레이어 ActorNumber 가 전송받은 id와 같은지 비교하고 몬스터, 연구원으로 초기화함.
-
+        Debug.Log($"Monster : {monsterNum}");
         Vector3 myPosition = spawnPos[PhotonNetwork.LocalPlayer.ActorNumber - 1];
-        GameObject go = PhotonNetwork.Instantiate(playerScientistName, myPosition, Quaternion.identity);
+        Debug.Log(myPosition.ToString());
+        GameObject go = null;
+        if (monsterNum == PhotonNetwork.LocalPlayer.ActorNumber)
+            go = PhotonNetwork.Instantiate(playerMonsterName, myPosition, Quaternion.identity);
+        else
+            go = PhotonNetwork.Instantiate(playerScientistName, myPosition, Quaternion.identity);
 
         GameObject po = Instantiate(playerObjectPrefab, go.transform.position, go.transform.rotation, go.transform);
 
+        curState = GameState.Playing;
     }
     #endregion
 

@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine.AI;
 
 public class NPCManager : MonoBehaviour
 {
-    public GameObject npcPrefab;
+    public string npcPrefab;
     // 스폰할 NPC 수
     [SerializeField]
     private int npcCount = 10;
@@ -35,7 +36,7 @@ public class NPCManager : MonoBehaviour
             Vector3 randomPosition = GetRandomNavMeshPosition();
 
             // NPC 생성
-            GameObject npc = Instantiate(npcPrefab, randomPosition, Quaternion.identity);
+            GameObject npc = PhotonNetwork.Instantiate(npcPrefab, randomPosition, Quaternion.identity);
             allNPC.Add(npc);
             npc.transform.parent = NPCGroup.transform;
             SetNewDestination(npc.GetComponent<NavMeshAgent>());
@@ -100,7 +101,7 @@ public class NPCManager : MonoBehaviour
         }
 
         // 유효한 NavMesh 위치가 없으면
-        return Vector3.zero;
+        return new Vector3(10, 1, 10);
     }
 
     void SetNewDestination(NavMeshAgent agent)

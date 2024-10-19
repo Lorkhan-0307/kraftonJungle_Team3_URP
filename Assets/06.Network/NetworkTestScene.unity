@@ -22054,8 +22054,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11ff6284edb511846a8a55baf174d4b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcPrefab: {fileID: 2841507407182230249, guid: 177bbf83cb1832d43b39251cee7df792,
-    type: 3}
+  npcPrefab: Player_NPC
   npcCount: 10
   npcGroupName: AllNPC
   allNPC: []
