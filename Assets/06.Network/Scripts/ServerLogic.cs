@@ -14,6 +14,7 @@ public enum EventCode
     EndGame,
     SwitchDayNight,
     HungerGauge,
+    AccelTime,
 }
 
 public enum GameState
