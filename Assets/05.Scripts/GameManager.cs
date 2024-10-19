@@ -38,6 +38,10 @@ public class GameManager : Singleton<GameManager>
     {
         isDay = false;
     }
-    
-    
+
+    // Get Day/Night() 필요할 듯
+    public bool GetTime()
+    {
+        return isDay;
+    }
 }

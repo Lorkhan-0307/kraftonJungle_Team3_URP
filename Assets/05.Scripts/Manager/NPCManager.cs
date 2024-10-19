@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
@@ -12,7 +13,7 @@ public class NPCManager : MonoBehaviour
     public string npcGroupName = "AllNPC";
 
     private GameObject NPCGroup;
-    public GameObject[] allNPC;
+    public List<GameObject> allNPC = new List<GameObject>();
 
     public float moveRadius = 10f;
 
@@ -23,7 +24,6 @@ public class NPCManager : MonoBehaviour
     void Start()
     {
         NPCGroup = new GameObject(npcGroupName);
-        allNPC = new GameObject[npcCount];
         //SpawnNPC();
     }
 
@@ -36,7 +36,7 @@ public class NPCManager : MonoBehaviour
 
             // NPC 생성
             GameObject npc = Instantiate(npcPrefab, randomPosition, Quaternion.identity);
-            allNPC[i] = npc;
+            allNPC.Add(npc);
             npc.transform.parent = NPCGroup.transform;
             SetNewDestination(npc.GetComponent<NavMeshAgent>());
         }
@@ -45,19 +45,22 @@ public class NPCManager : MonoBehaviour
     void Update()
     {
         // 낮일 때만 작동
-        for (int i = 0; i < npcCount; i++)
+        if (GameManager.instance.GetTime())
         {
-            NavMeshAgent agent = allNPC[i].GetComponent<NavMeshAgent>();
-            if (agent.remainingDistance < 0.1f)
+            foreach (GameObject npc in allNPC)
             {
-                if (waitTimer <= 0)
+                NavMeshAgent agent = npc.GetComponent<NavMeshAgent>();
+                if (agent.remainingDistance < 0.1f)
                 {
-                    SetNewDestination(agent);
-                    waitTimer = Random.Range(minWaitTime, maxWaitTime);
-                }
-                else
-                {
-                    waitTimer -= Time.deltaTime;
+                    if (waitTimer <= 0)
+                    {
+                        SetNewDestination(agent);
+                        waitTimer = Random.Range(minWaitTime, maxWaitTime);
+                    }
+                    else
+                    {
+                        waitTimer -= Time.deltaTime;
+                    }
                 }
             }
         }

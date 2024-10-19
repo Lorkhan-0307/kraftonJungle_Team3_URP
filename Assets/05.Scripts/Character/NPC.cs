@@ -34,9 +34,7 @@ public class NPC : Player
         // TODO : TSS에서의 변화에 따라 이 부분 수정 및 캡슐화
         // -> 데모 이후 수정 에정
         NPCManager npcManager = FindObjectOfType<NPCManager>();
-        List<GameObject> npcList = new List<GameObject>(npcManager.allNPC);
-        npcList.Remove(this.gameObject);
-        npcManager.allNPC = npcList.ToArray();
+        npcManager.allNPC.Remove(this.gameObject);
         
         // 여기서 Destroy 결과 전송
         Destroy(this.gameObject);
