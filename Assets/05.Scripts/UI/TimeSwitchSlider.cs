@@ -74,7 +74,32 @@ public class TimeSwitchSlider : MonoBehaviour
 
     public void FastTime()
     {
-        float t = (elapsedTime + accelateTime) / increaseTime;
+        // elapsedTime 수정
+        elapsedTime += accelateTime;
+        if (elapsedTime < increaseTime)
+        {
+            float t = elapsedTime / increaseTime;
+            slider.value = t;
+        }
+        else
+        {
+            slider.value = slider.maxValue;
+        }
+    }
+
+    // Server에서 시간 동기화 Event 발생하면
+    public void SyncTime(float elapsedTime)
+    {
+        float t;
+        this.elapsedTime = elapsedTime;
+        if (isDay)
+        {
+            t = elapsedTime / increaseTime;
+        }
+        else
+        {
+            t = elapsedTime / decreaseTime;
+        }
         slider.value = t;
     }
 }
