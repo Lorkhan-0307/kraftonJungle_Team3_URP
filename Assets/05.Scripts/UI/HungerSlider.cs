@@ -16,6 +16,7 @@ public class HungerSlider : MonoBehaviour
         if (hungerSlider.value > 0)
         {
             elapsedTime += Time.deltaTime;
+            Debug.Log("Hungry");
 
             // 일정 시간동안 감소
             timer.GoTime(decreaseTime, hungerSlider, elapsedTime);
@@ -28,32 +29,20 @@ public class HungerSlider : MonoBehaviour
 
     }
 
-    public void SetHunger(float gage)
+    public void OnMonsterAteNPC()
     {
-        hungerSlider.value = gage;
+        // current logic : set hunger bar max
+        SetHungerMax();
     }
 
-    //private IEnumerator Hungry()
-    //{
-    //    float elapsedTime = 0f;
-    //    float startValue = Hungerslider.value;
+    private void SetHungerMax()
+    {
+        hungerSlider.value = hungerSlider.maxValue;
+        elapsedTime = 0f;
+    }
 
-    //    while (elapsedTime < decreaseTime)
-    //    {
-    //        elapsedTime += Time.deltaTime;
-    //        float t = elapsedTime / decreaseTime;
-    //        Hungerslider.value = Mathf.Lerp(startValue, Hungerslider.minValue, t);
-    //        yield return null;
-    //        if (!nightSwitchSlider.isDay)
-    //        {
-    //            // 코루틴 종료
-    //            yield break;
-    //        }
-    //    }
-
-    //    // 최종적으로 최소값으로 설정
-    //    Hungerslider.value = Hungerslider.minValue;
-
-    //    // Hunger가 0이 되면 모습 변화
-    //}
+    public void SetValue(float value)
+    {
+        hungerSlider.value = value;
+    }
 }
