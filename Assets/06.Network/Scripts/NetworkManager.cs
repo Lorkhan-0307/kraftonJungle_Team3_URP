@@ -91,7 +91,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         SendOptions sendOptions = new SendOptions { Reliability = true }; // 신뢰성 보장
 
         //이거 쓰면 될듯
-        PhotonNetwork.RaiseEvent(0, content, raiseEventOptions, sendOptions);
+        PhotonNetwork.RaiseEvent((byte)code, content, raiseEventOptions, sendOptions);
     }
     public void SendToClients(EventCode code, object content)
     {
@@ -99,7 +99,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         SendOptions sendOptions = new SendOptions { Reliability = true }; // 신뢰성 보장
 
         //이거 쓰면 될듯
-        PhotonNetwork.RaiseEvent(0, content, raiseEventOptions, sendOptions);
+        PhotonNetwork.RaiseEvent((byte)code, content, raiseEventOptions, sendOptions);
     }
     #endregion
 
