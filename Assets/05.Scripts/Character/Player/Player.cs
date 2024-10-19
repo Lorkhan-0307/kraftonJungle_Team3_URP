@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -36,6 +37,8 @@ public class Player : MonoBehaviour, ICharacter
     {
         // Send Request to server at here
         Debug.Log("TRANSMIT TO SERVER");
+
+        NetworkManager.Instance.AttackEntity(GetComponent<PhotonView>(), victim.GetComponent<PhotonView>());
         //throw new System.NotImplementedException();
     }
 }
