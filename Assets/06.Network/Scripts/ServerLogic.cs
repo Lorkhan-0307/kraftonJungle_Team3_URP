@@ -15,9 +15,18 @@ public enum EventCode
     SwitchDayNight
 }
 
+public enum GameState
+{
+    OnRoom,
+    Playing,
+    End,
+}
+
 public class ServerLogic : MonoBehaviourPunCallbacks
 {
     public int requirePlayers = 5;
+
+    public GameState curState = GameState.OnRoom;
 
     private InputAction gameStartAction;
     // 싱글톤 인스턴스
@@ -49,13 +58,17 @@ public class ServerLogic : MonoBehaviourPunCallbacks
 
     public void StartGame(InputAction.CallbackContext context)
     {
+        if (curState != GameState.OnRoom) return;
+        
         if(PhotonNetwork.PlayerList.Length < requirePlayers)
         {
-            Debug.Log("인원이 부족합니다.");
+            Debug.Log($"[{PhotonNetwork.PlayerList.Length}/{requirePlayers}] 인원이 부족합니다.");
             return;
         }
 
         // TODO: 게임 시작 기능 구현
+        curState = GameState.Playing;
+
     }
 
 
