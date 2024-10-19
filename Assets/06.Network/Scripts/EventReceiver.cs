@@ -3,6 +3,7 @@ using Photon.Realtime;
 using ExitGames.Client.Photon;
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
 
 public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
 {
@@ -35,16 +36,21 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
                 PhotonView from = PhotonNetwork.GetPhotonView((int)datas[0]);
                 PhotonView to = PhotonNetwork.GetPhotonView((int)datas[1]);
 
-                int fromViewID = from.ViewID;
-                int toViewID = to.ViewID;
-
-
 
                 //TODO: 공격자 피격자 이용해서 해야하는 로직들 처리하기
                 if(to.AmOwner)
                 {
                     to.GetComponent<Player>().OnDamaged(from.gameObject);
+                    if (from.GetComponent<Player>().type == CharacterType.Scientist &&
+                        to.GetComponent<Player>().type == CharacterType.NPC)
+                    {
+                        FindObjectOfType<TimeSwitchSlider>().FastTime();
+
+                        NetworkManager.Instance.TimeAccel(
+                            FindObjectOfType<TimeSwitchSlider>().GetElapsedTime());
+                    }
                 }
+
                 break;
             case EventCode.PlayerDeath:
                 ServerLogic server = GetComponent<ServerLogic>();
@@ -80,7 +86,9 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
                 }
                 break;
             case EventCode.AccelTime:
-                NetworkManager.Instance.timeswitchslider.FastTime();
+                float SkipTime = (float)photonEvent.CustomData;
+
+                NetworkManager.Instance.timeswitchslider.SyncTime(SkipTime);
                 break;
         }
     }

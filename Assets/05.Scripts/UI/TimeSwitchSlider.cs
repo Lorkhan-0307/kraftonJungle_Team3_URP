@@ -102,4 +102,7 @@ public class TimeSwitchSlider : MonoBehaviour
         }
         slider.value = t;
     }
+
+    public float GetElapsedTime()
+        { return elapsedTime; }
 }

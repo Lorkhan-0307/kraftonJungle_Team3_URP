@@ -159,7 +159,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         SendToClients(EventCode.HungerGauge, ishungerzero);
     }
 
-    public void sibalmoyetji(float SkipTime)
+    public void TimeAccel(float SkipTime)
     {
         SendToClients(EventCode.AccelTime, SkipTime);
     }
