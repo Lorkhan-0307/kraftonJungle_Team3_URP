@@ -24,10 +24,10 @@ public class NPCManager : MonoBehaviour
     {
         NPCGroup = new GameObject(npcGroupName);
         allNPC = new GameObject[npcCount];
-        SpawnNPC();
+        //SpawnNPC();
     }
 
-    void SpawnNPC()
+    public void SpawnNPC()
     {
         for (int i = 0; i < npcCount; i++)
         {
