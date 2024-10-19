@@ -17,29 +17,24 @@ public class TimeSwitchSlider : MonoBehaviour, ISlider
 
     [SerializeField]
     private float accelateTime = 10f;
+    LightShifter lightShifter;
+    NPCManager npcManager;
 
     private void Start()
     {
         hungerSlider = GameObject.Find("HungerSlider");
         allNPC = GameObject.FindGameObjectsWithTag("NPC");
+        lightShifter = FindObjectOfType<LightShifter>();
+        npcManager = FindObjectOfType<NPCManager>();
     }
 
     private void Update()
     {
         float time;
 
+        // 낮일 때 작동
         if (isDay)
         {
-            // 낮일 때 작동
-            hungerSlider.SetActive(true);
-
-            // 각 NPC 오브젝트를 활성화
-            foreach (GameObject npc in allNPC)
-            {
-                // NPC 활성화
-                npc.SetActive(true);
-            }
-
             if (elapsedTime < increaseTime)
             {
                 elapsedTime += Time.deltaTime;
@@ -50,16 +45,6 @@ public class TimeSwitchSlider : MonoBehaviour, ISlider
         // 밤이면
         else
         {
-            // UI 비활성화
-            hungerSlider.SetActive(false);
-
-            // 각 NPC 오브젝트를 비활성화
-            foreach (GameObject npc in allNPC)
-            {
-                // NPC 비활성화
-                npc.SetActive(false);
-            }
-
             if ((elapsedTime*-1) > decreaseTime)
             {
                 elapsedTime += Time.deltaTime;
@@ -73,6 +58,14 @@ public class TimeSwitchSlider : MonoBehaviour, ISlider
             Debug.Log("Switch Day and Night");
             elapsedTime = 0f;
             isDay = !isDay;
+
+            // UI 활성화 여부
+            hungerSlider.SetActive(isDay);
+
+            if (isDay) npcManager.SetAble();
+            else npcManager.SetDisable();
+
+            lightShifter.ShiftTime();
         }
     }
 
