@@ -118,10 +118,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         //TODO: 자신의 플레이어 ActorNumber 가 전송받은 id와 같은지 비교하고 몬스터, 연구원으로 초기화함.
 
         Vector3 myPosition = spawnPos[PhotonNetwork.LocalPlayer.ActorNumber - 1];
-        GameObject go = PhotonNetwork.Instantiate(playerScientistName, myPosition, Quaternion.identity);
+        GameObject go = null;
+        if (monsterNum == PhotonNetwork.LocalPlayer.ActorNumber)
+            go = PhotonNetwork.Instantiate(playerMonsterName, myPosition, Quaternion.identity);
+        else
+            go = PhotonNetwork.Instantiate(playerScientistName, myPosition, Quaternion.identity);
 
         GameObject po = Instantiate(playerObjectPrefab, go.transform.position, go.transform.rotation, go.transform);
-
     }
     #endregion
 

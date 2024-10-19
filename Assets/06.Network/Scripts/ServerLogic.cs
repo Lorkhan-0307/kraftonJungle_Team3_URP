@@ -165,11 +165,9 @@ public class ServerLogic : MonoBehaviourPunCallbacks
             isAlivePlayers[i] = true;
         }
 
-        Debug.Log("플레이어 수: " + playerList.Length.ToString());
 
         // 랜덤으로 몬스터 번호 할당
         int monsterActorNum = Random.Range(0, playerList.Length)+1;
-        Debug.Log("몬스터 번호: " + monsterActorNum);
 
         Vector3[] randomSpawnPos = new Vector3[playerList.Length];
         // 각 플레이어에게 랜덤 스폰 위치와 몬스터 번호를 전송
@@ -177,8 +175,6 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         {
             // 각 플레이어의 랜덤 스폰 위치 설정
             randomSpawnPos[i] = NPCManager.GetRandomNavMeshPosition();
-
-            Debug.Log($"플레이어{i + 1} : {randomSpawnPos.ToString()}");
         }
         // 이벤트 데이터에 스폰 위치와 몬스터 번호를 담음
         object[] eventData = new object[] { randomSpawnPos, monsterActorNum };
