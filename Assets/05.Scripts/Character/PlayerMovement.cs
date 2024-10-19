@@ -53,13 +53,15 @@ public class PlayerMovement : MonoBehaviour
         jumpAction = playerInput.actions["Jump"];
         killAction = playerInput.actions["Kill"];
         runAction = playerInput.actions["Run"];
+        
+        controller = GetComponentInParent<CharacterController>();
 
         if (killButton == null)
         {
             killButton = FindObjectOfType<KillButton>().GetComponent<Button>();
         }
         
-        player = GetComponent<Player>();
+        player = GetComponentInParent<Player>();
     }
 
     // Update is called once per frame
@@ -146,7 +148,7 @@ public class PlayerMovement : MonoBehaviour
     {
         player.OnAttack(target);
         Player targetPlayer = target.GetComponent<Player>();
-        targetPlayer.OnDamaged(this.gameObject);
+        targetPlayer.OnDamaged(controller.gameObject);
     }
 
     private bool IsAvailableToAttack()

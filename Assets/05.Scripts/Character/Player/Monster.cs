@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Monster : Player
 {
+    private GameObject hungerParticle;
     public override void OnAttack(GameObject victim)
     {
         base.OnAttack(victim);
@@ -21,5 +23,19 @@ public class Monster : Player
     public override void OnDead()
     {
         base.OnDead();
+    }
+
+    // Use this when Hunger Gauge reach 0
+    public void OnHunger()
+    {
+        hungerParticle = GetComponentInChildren<ParticleSystem>().GameObject();
+        hungerParticle.SetActive(true);
+    }
+
+    // Use this when Hunger Gauge reset
+    public void NoHunger()
+    {
+        hungerParticle = GetComponentInChildren<ParticleSystem>().GameObject();
+        hungerParticle.SetActive(false);
     }
 }
