@@ -102,7 +102,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     #region StartGame
     [SerializeField]
-    string playerPrefabName;
+    string playerScientistName;
+    [SerializeField]
+    string playerMonsterName;
+    [SerializeField]
+    GameObject playerObjectPrefab;
     public void StartGame(object data)
     {
         Debug.Log("Start Game Event");
@@ -114,7 +118,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         //TODO: 자신의 플레이어 ActorNumber 가 전송받은 id와 같은지 비교하고 몬스터, 연구원으로 초기화함.
 
         Vector3 myPosition = spawnPos[PhotonNetwork.LocalPlayer.ActorNumber - 1];
-        GameObject go = PhotonNetwork.Instantiate(playerPrefabName, myPosition, Quaternion.identity);
+        GameObject go = PhotonNetwork.Instantiate(playerScientistName, myPosition, Quaternion.identity);
+
+        GameObject po = Instantiate(playerObjectPrefab, go.transform.position, go.transform.rotation, go.transform);
+
     }
     #endregion
 

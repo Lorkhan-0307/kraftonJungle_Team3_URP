@@ -7,7 +7,7 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/06.Network/NetworkTestScene.unity
-    guid: 2b0cab86c364dbe419a8b226ba084306
+    guid: f8b44bf8d414f154f97edaab831f613c
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 3744d8b7ba3dbd746a979d56a8b79c4e,
       type: 3}
