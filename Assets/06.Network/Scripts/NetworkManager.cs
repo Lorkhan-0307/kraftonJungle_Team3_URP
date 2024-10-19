@@ -62,10 +62,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #region Methods:Request
     public void AttackEntity(PhotonView from, PhotonView to)
     {
-        string result = "";
-        result += from.ViewID.ToString();
-        result += ",";
-        result += to.ViewID.ToString();
+        object[] result = { from.ViewID, to.ViewID };
 
         SendToClients(EventCode.AttackRequest, result);
     }
@@ -163,6 +160,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public bool IsMonster()
     {
-        return myPlayer.is_player;
+        return (myPlayer.type == CharacterType.Monster);
     }
 }
