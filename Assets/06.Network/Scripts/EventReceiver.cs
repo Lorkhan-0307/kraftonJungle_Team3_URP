@@ -36,6 +36,8 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
                 PhotonView from = PhotonNetwork.GetPhotonView((int)datas[0]);
                 PhotonView to = PhotonNetwork.GetPhotonView((int)datas[1]);
 
+                if (!from) break;
+                if (!to) break;
 
                 //TODO: 공격자 피격자 이용해서 해야하는 로직들 처리하기
                 if(to.AmOwner)
