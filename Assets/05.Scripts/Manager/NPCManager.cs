@@ -47,7 +47,7 @@ public class NPCManager : MonoBehaviour
     {
         // 호스트만 동작
         // 낮일 때만 작동
-        if (GameManager.instance.GetTime())
+        if (NetworkManager.Instance.IsServer() && GameManager.instance.GetTime())
         {
             foreach (GameObject npc in allNPC)
             {
@@ -135,8 +135,6 @@ public class NPCManager : MonoBehaviour
 
     public void SetDisable()
     {
-        //if (allNPC.Count == 0)
-        //    FindAllNPC();
         // 각 NPC 오브젝트를 비활성화
         foreach (GameObject npc in allNPC)
         {
