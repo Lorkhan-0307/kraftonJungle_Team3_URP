@@ -26,13 +26,7 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
         switch((EventCode)eventCode)
         {
             case EventCode.GameStart:
-                int id = (int)photonEvent.CustomData;
-
-                //TODO: 자신의 플레이어 ActorNumber 가 전송받은 id와 같은지 비교하고 몬스터, 연구원으로 초기화함.
-                if(PhotonNetwork.LocalPlayer.ActorNumber == id)
-                {
-
-                }
+                NetworkManager.Instance.StartGame(photonEvent.CustomData);
                 break;
             case EventCode.AttackRequest:
                 string message = (string)photonEvent.CustomData; // 전송된 데이터를 받음
@@ -92,4 +86,5 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
 
         return false;
     }
+
 }

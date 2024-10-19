@@ -45,9 +45,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        // 방에 입장하면 플레이어 캐릭터를 생성
-        PhotonNetwork.Instantiate("PlayerPrefab", Vector3.zero, Quaternion.identity);
-
         // 방장(마스터 클라이언트)일 경우 특정 로직 실행
         if (PhotonNetwork.IsMasterClient)
         {
@@ -103,6 +100,23 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     #endregion
 
+    #region StartGame
+    [SerializeField]
+    string playerPrefabName;
+    public void StartGame(object data)
+    {
+        Debug.Log("Start Game Event");
+        object[] datas = (object[])data;
+
+        Vector3[] spawnPos = (Vector3[])datas[0];
+        int monsterNum = (int)datas[1];
+
+        //TODO: 자신의 플레이어 ActorNumber 가 전송받은 id와 같은지 비교하고 몬스터, 연구원으로 초기화함.
+
+        Vector3 myPosition = spawnPos[PhotonNetwork.LocalPlayer.ActorNumber - 1];
+        GameObject go = PhotonNetwork.Instantiate(playerPrefabName, myPosition, Quaternion.identity);
+    }
+    #endregion
 
     void Start()
     {

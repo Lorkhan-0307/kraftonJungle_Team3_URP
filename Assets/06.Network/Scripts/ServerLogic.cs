@@ -59,6 +59,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
 
     public void StartGame(InputAction.CallbackContext context)
     {
+        Debug.Log("StartGame Button Clicked");
         if (curState != GameState.OnRoom) return;
         
         if(PhotonNetwork.PlayerList.Length < requirePlayers)
@@ -69,7 +70,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
 
         // TODO: 게임 시작 기능 구현
         curState = GameState.Playing;
-
+        SetPlayerRole();
     }
 
 
@@ -80,14 +81,14 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     }
 
     #region GameLogic
-    public int monsterNum = -1;
+    public int monsterActorNum = -1;
 
     public bool[] isAlivePlayers;
 
 
     public void PlayerDeath(int actorNum)
     {
-        isAlivePlayers[actorNum] = false;
+        isAlivePlayers[actorNum-1] = false;
 
         CheckEndCondition();
     }
@@ -115,7 +116,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     public List<int> GetAlivePlayers()
     {
         List<int> result = new List<int>();
-        for(int i = 1; i < isAlivePlayers.Length; i++ )
+        for(int i = 0; i < isAlivePlayers.Length; i++ )
         {
             if(isAlivePlayers[i])
                 result.Add(i);
@@ -126,7 +127,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
 
     public void CheckEndCondition()
     {
-        bool isMonsterAlive = isAlivePlayers[monsterNum];
+        bool isMonsterAlive = isAlivePlayers[monsterActorNum-1];
 
         // 괴물이 죽었을 경우
         if (!isMonsterAlive)
@@ -136,9 +137,9 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         }
 
         // 괴물이 살아있을 경우 모든 플레이어가 죽어야 게임 종료
-        for(int i = 1; i < isAlivePlayers.Length; i++)
+        for(int i = 0; i < isAlivePlayers.Length; i++)
         {
-            if (i == monsterNum) continue;
+            if (i == monsterActorNum-1) continue;
 
             if (isAlivePlayers[i])
                 return;
@@ -153,18 +154,36 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     #region GameStart
     public void SetPlayerRole()
     {
-        // 현재 룸에 접속되어있는 플레이어 목록 받아옴
+        // 현재 룸에 접속되어있는 플레이어 목록을 가져옴
         Photon.Realtime.Player[] playerList = PhotonNetwork.PlayerList;
-        isAlivePlayers = new bool[playerList.Length+1];
-        for (int i = 1; i < isAlivePlayers.Length; i++)
+        isAlivePlayers = new bool[playerList.Length];
+
+        for (int i = 0; i < isAlivePlayers.Length; i++)
         {
             isAlivePlayers[i] = true;
         }
 
         Debug.Log("플레이어 수: " + playerList.Length.ToString());
-        monsterNum = Random.Range(0, playerList.Length)+1;
 
-        NetworkManager.Instance.SendToClients(EventCode.GameStart, monsterNum);
+        // 랜덤으로 몬스터 번호 할당
+        int monsterActorNum = Random.Range(0, playerList.Length) + 1;
+        Debug.Log("몬스터 번호: " + monsterActorNum);
+
+        Vector3[] randomSpawnPos = new Vector3[playerList.Length];
+        // 각 플레이어에게 랜덤 스폰 위치와 몬스터 번호를 전송
+        for (int i = 0; i < playerList.Length; i++)
+        {
+            // 각 플레이어의 랜덤 스폰 위치 설정
+            randomSpawnPos[i] = NPCManager.GetRandomNavMeshPosition();
+        }
+        // 이벤트 데이터에 스폰 위치와 몬스터 번호를 담음
+        object[] eventData = new object[] { randomSpawnPos, monsterActorNum };
+
+        // 이벤트 전송 (몬스터 번호와 랜덤 스폰 위치)
+        NetworkManager.Instance.SendToClients(EventCode.GameStart, eventData);
+
+        // 필드에 랜덤으로 NPC 뿌림
+        FindObjectOfType<NPCManager>().SpawnNPC();
     }
     #endregion
 
