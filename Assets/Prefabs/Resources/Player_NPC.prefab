@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 8380113029329633828}
   - component: {fileID: 407002003618631886}
   - component: {fileID: 7923490552873536213}
+  - component: {fileID: 5194387607558945149}
   - component: {fileID: 6285171166944961644}
   - component: {fileID: 5913564522040278332}
   m_Layer: 0
@@ -236,6 +237,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
+--- !u!114 &5194387607558945149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7344563461369970091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0860d8208cda75c419d923ecda87ddcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!195 &6285171166944961644
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -276,7 +289,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 5194387607558945149}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

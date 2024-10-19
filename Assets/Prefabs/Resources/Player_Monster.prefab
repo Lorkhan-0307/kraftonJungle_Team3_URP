@@ -73,6 +73,7 @@ GameObject:
   - component: {fileID: 6565988133518559259}
   - component: {fileID: 5715514064531892253}
   - component: {fileID: 4592344235940966939}
+  - component: {fileID: 8116302031385396139}
   - component: {fileID: 2239595898273206159}
   - component: {fileID: 1850379248344377810}
   - component: {fileID: 4160618565708385934}
@@ -157,6 +158,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8116302031385396139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5722733983999574982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0860d8208cda75c419d923ecda87ddcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2239595898273206159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,7 +236,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 8116302031385396139}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
