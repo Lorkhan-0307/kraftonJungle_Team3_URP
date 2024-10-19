@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.HID;
 using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
     public CharacterController controller;
     public float speed = 8f;
+    public float monsterNightSpeed = 12f;
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
     public Transform groundCheck;
@@ -27,10 +29,15 @@ public class PlayerMovement : MonoBehaviour
     private InputAction moveAction;
     private InputAction jumpAction;
     private InputAction killAction;
+    private InputAction runAction;
 
     [SerializeField] private Transform raycastShootPos;
     [SerializeField] private float attackrange = 3f;
     [SerializeField] private Button killButton;
+    
+    
+    
+    public Player player;
     
     
     //Using Raycast
@@ -45,6 +52,14 @@ public class PlayerMovement : MonoBehaviour
         moveAction = playerInput.actions["Move"];
         jumpAction = playerInput.actions["Jump"];
         killAction = playerInput.actions["Kill"];
+        runAction = playerInput.actions["Run"];
+
+        if (killButton == null)
+        {
+            killButton = FindObjectOfType<KillButton>().GetComponent<Button>();
+        }
+        
+        player = GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -65,7 +80,8 @@ public class PlayerMovement : MonoBehaviour
         // Move 액션으로 이동 입력 받기
         Vector2 input = moveAction.ReadValue<Vector2>();
         Vector3 motion = transform.right * input.x + transform.forward * input.y;
-        controller.Move(motion * speed * Time.deltaTime);
+        float currentSpeed = IsMonsterNightSpeed() && runAction.IsPressed() ? speed : monsterNightSpeed;
+        controller.Move(motion * currentSpeed * Time.deltaTime);
 
         // Jump 액션으로 점프 입력 받기
         if (jumpAction.triggered && isGrounded)
@@ -128,9 +144,33 @@ public class PlayerMovement : MonoBehaviour
 
     private void AttackAction()
     {
-        Player player = GetComponent<Player>();
         player.OnAttack(target);
         Player targetPlayer = target.GetComponent<Player>();
         targetPlayer.OnDamaged(this.gameObject);
+    }
+
+    private bool IsAvailableToAttack()
+    {
+        // 시간에 따라 공격이 가능할수도, 안가능할 수도 있다. 이를 여기에서 식별한다.
+        // TimeSwitchSlider 등에서 현재 시간이 낮인지, 밤인지를 불러오는 과정이 필요.
+        bool isAttackable = true;
+        switch (player.type)
+        {
+            case CharacterType.Monster:
+                break;
+            case CharacterType.Scientist:
+                if (!GameManager.instance.isDay) isAttackable = false;
+                break;
+            default:
+                Debug.LogError("TYPE NOT SET!!");
+                break;
+        }
+
+        return isAttackable;
+    }
+
+    private bool IsMonsterNightSpeed()
+    {
+        return !GameManager.instance.isDay && player.type == CharacterType.Monster;
     }
 }

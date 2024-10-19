@@ -13,6 +13,8 @@ public enum CharacterType
 
 public class GameManager : ScriptableSingleton<GameManager>
 {
+    public bool isDay = true;
+    
     public void SetPlayer(CharacterType type)
     {
         switch (type)
@@ -25,6 +27,16 @@ public class GameManager : ScriptableSingleton<GameManager>
                 Debug.LogError("GAMEMANAGER.CSS : UNDEFINED CHARACTER TYPE!!");
                 break;
         }
+    }
+
+    public void SetDay()
+    {
+        isDay = true;
+    }
+
+    public void SetNight()
+    {
+        isDay = false;
     }
     
     

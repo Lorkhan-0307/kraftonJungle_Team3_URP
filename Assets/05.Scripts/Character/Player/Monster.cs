@@ -12,6 +12,10 @@ public class Monster : Player
     public override void OnDamaged(GameObject attacker)
     {
         base.OnDamaged(attacker);
+        
+        // 여기서 Destroy 결과 전송
+        Destroy(this);
+        //PhotonNetwork.Destroy(this.gameObject);
     }
 
     public override void OnDead()

@@ -35,6 +35,7 @@ public class Player : MonoBehaviour, ICharacter
     public virtual void OnAttack(GameObject victim)
     {
         // Send Request to server at here
-        throw new System.NotImplementedException();
+        Debug.Log("TRANSMIT TO SERVER");
+        //throw new System.NotImplementedException();
     }
 }

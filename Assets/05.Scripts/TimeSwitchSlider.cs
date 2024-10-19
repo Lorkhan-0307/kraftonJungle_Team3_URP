@@ -13,7 +13,9 @@ public class TimeSwitchSlider : MonoBehaviour, ISlider
     public float increaseTime = 20f;
 
     Timer timer = new Timer();
-    GameObject[] allNPC;
+    
+    // ì´ ë°©ì‹ì—ì„œëŠ” allNPC ë‚´ì˜ ìš”ì†Œë¥¼ ì œê±°í•  ìˆ˜ ì—†ê¸° ë•Œë¬¸ì— ìˆ˜ì •í•´ì•¼ í•©ë‹ˆë‹¤.
+    public GameObject[] allNPC;
 
     [SerializeField]
     private float accelateTime = 10f;
@@ -30,13 +32,13 @@ public class TimeSwitchSlider : MonoBehaviour, ISlider
 
         if (isDay)
         {
-            // ³·ÀÏ ¶§ ÀÛµ¿
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ûµï¿½
             hungerSlider.SetActive(true);
 
-            // °¢ NPC ¿ÀºêÁ§Æ®¸¦ È°¼ºÈ­
+            // ï¿½ï¿½ NPC ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ È°ï¿½ï¿½È­
             foreach (GameObject npc in allNPC)
             {
-                // NPC È°¼ºÈ­
+                // NPC È°ï¿½ï¿½È­
                 npc.SetActive(true);
             }
 
@@ -47,16 +49,16 @@ public class TimeSwitchSlider : MonoBehaviour, ISlider
 
             time = increaseTime;
         }
-        // ¹ãÀÌ¸é
+        // ï¿½ï¿½ï¿½Ì¸ï¿½
         else
         {
-            // UI ºñÈ°¼ºÈ­
+            // UI ï¿½ï¿½È°ï¿½ï¿½È­
             hungerSlider.SetActive(false);
 
-            // °¢ NPC ¿ÀºêÁ§Æ®¸¦ ºñÈ°¼ºÈ­
+            // ï¿½ï¿½ NPC ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
             foreach (GameObject npc in allNPC)
             {
-                // NPC ºñÈ°¼ºÈ­
+                // NPC ï¿½ï¿½È°ï¿½ï¿½È­
                 npc.SetActive(false);
             }
 
@@ -67,7 +69,7 @@ public class TimeSwitchSlider : MonoBehaviour, ISlider
 
             time = decreaseTime;
         }
-        // ³·¹ã ÀüÈ¯µÆÀ¸¸é
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (isDay != timer.GoTime(time, slider, elapsedTime))
         {
             Debug.Log("Switch Day and Night");
