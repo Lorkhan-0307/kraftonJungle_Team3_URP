@@ -5,7 +5,7 @@ public class TimeSwitchSlider : MonoBehaviour
 {
     public Slider slider;
 
-    private bool isDay = GameManager.instance.GetTime();
+    private bool isDay = true;
     GameObject hungerSlider
     {
         get 
