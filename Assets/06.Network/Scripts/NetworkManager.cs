@@ -10,6 +10,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     Player myPlayer;
 
+    public bool IsServer()
+    {
+        return PhotonNetwork.IsMasterClient;
+    }
 
 
     public Monster monster
