@@ -35,6 +35,11 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
                 PhotonView from = PhotonNetwork.GetPhotonView((int)datas[0]);
                 PhotonView to = PhotonNetwork.GetPhotonView((int)datas[1]);
 
+                int fromViewID = from.ViewID;
+                int toViewID = to.ViewID;
+
+
+
                 //TODO: 공격자 피격자 이용해서 해야하는 로직들 처리하기
                 if(to.AmOwner)
                 {
@@ -73,6 +78,9 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
                 {
                     NetworkManager.Instance.monster.NoHunger(); 
                 }
+                break;
+            case EventCode.AccelTime:
+                NetworkManager.Instance.timeswitchslider.FastTime();
                 break;
         }
     }

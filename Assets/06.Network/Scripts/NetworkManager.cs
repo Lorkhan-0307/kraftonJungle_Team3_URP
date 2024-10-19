@@ -13,6 +13,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
 
     public Monster monster;
+    public TimeSwitchSlider timeswitchslider;
     #region Singleton
     // ΩÃ±€≈Ê ¿ŒΩ∫≈œΩ∫
     public static NetworkManager Instance { get; private set; }
@@ -156,6 +157,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void HungerEvent(bool ishungerzero)
     {
         SendToClients(EventCode.HungerGauge, ishungerzero);
+    }
+
+    public void sibalmoyetji(float SkipTime)
+    {
+        SendToClients(EventCode.AccelTime, SkipTime);
     }
 
     public bool IsMonster()
