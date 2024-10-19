@@ -16,7 +16,6 @@ public class GameManager : Singleton<GameManager>
     public bool isDay = true;
     public GameObject hungerSliderPrefab;
     public GameObject canvasPrefab;
-    //public Transform canvasTrans;
 
     public void SetPlayer(CharacterType type)
     {
@@ -52,7 +51,7 @@ public class GameManager : Singleton<GameManager>
         isDay = false;
     }
 
-    // Get Day/Night() ÇÊ¿äÇÒ µí
+    // Get Day/Night() í•„ìš”í•  ë“¯
     public bool GetTime()
     {
         return isDay;

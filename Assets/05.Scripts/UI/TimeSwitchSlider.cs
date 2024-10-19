@@ -6,7 +6,16 @@ public class TimeSwitchSlider : MonoBehaviour
     public Slider slider;
 
     private bool isDay = true;
-    GameObject hungerSlider;
+    GameObject hungerSlider
+    {
+        get 
+        { 
+            if(HungerSlider == null)
+                HungerSlider = GameObject.Find("HungerSlider(Clone)");
+            return HungerSlider;
+        }
+    }
+    GameObject HungerSlider = null;
 
     float elapsedTime = 0f;
     public float decreaseTime = -20f;
@@ -21,7 +30,6 @@ public class TimeSwitchSlider : MonoBehaviour
 
     private void Start()
     {
-        hungerSlider = GameObject.Find("HungerSlider");
         lightShifter = FindObjectOfType<LightShifter>();
         npcManager = FindObjectOfType<NPCManager>();
     }

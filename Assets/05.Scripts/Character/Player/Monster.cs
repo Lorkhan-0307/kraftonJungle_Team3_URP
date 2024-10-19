@@ -30,7 +30,7 @@ public class Monster : Player
     // Use this when Hunger Gauge reach 0
     public void OnHunger()
     {
-        hungerParticle = GetComponentInChildren<ParticleSystem>().GameObject();
+        hungerParticle = GetComponentInChildren<ParticleSystem>(true).GameObject();
         hungerParticle.SetActive(true);
     }
 
