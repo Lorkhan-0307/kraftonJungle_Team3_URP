@@ -32,14 +32,14 @@ public class HungerSlider : MonoBehaviour
 
     }
 
-    public void OnMonsterAteNPC()
-    {
-        // current logic : set hunger bar max
-        SetHungerMax();
-        NetworkManager.Instance.HungerEvent(false);
-    }
+    //public void OnMonsterAteNPC()
+    //{
+    //    // current logic : set hunger bar max
+    //    SetHungerMax();
+    //    NetworkManager.Instance.HungerEvent(false);
+    //}
 
-    private void SetHungerMax()
+    public void SetHungerMax()
     {
         hungerSlider.value = hungerSlider.maxValue;
         elapsedTime = 0f;

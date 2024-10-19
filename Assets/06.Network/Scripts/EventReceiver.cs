@@ -40,8 +40,6 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
                 //TODO: 공격자 피격자 이용해서 해야하는 로직들 처리하기
                 if(to.AmOwner)
                 {
-                    if (!from) Debug.Log("from is NULL");
-                    if (!to.GetComponent<Player>()) Debug.Log("to doesn't have Player Component");
                     to.GetComponent<Player>().OnDamaged(from.gameObject);
                     if (from.GetComponent<Player>().type == CharacterType.Scientist &&
                         to.GetComponent<Player>().type == CharacterType.NPC)

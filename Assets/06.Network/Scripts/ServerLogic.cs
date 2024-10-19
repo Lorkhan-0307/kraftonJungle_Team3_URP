@@ -161,6 +161,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
 
 
         // 랜덤으로 몬스터 번호 할당
+        Random.InitState((int)Time.time);
         monsterActorNum = Random.Range(0, playerList.Length)+1;
 
         Vector3[] randomSpawnPos = new Vector3[playerList.Length];

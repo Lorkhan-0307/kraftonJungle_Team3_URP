@@ -19,7 +19,12 @@ public class NPC : Player
             case CharacterType.Monster:
                 // Todo: hunger time reset
                 //attacker �� hunger time reset ȣ��
-                FindObjectOfType<HungerSlider>().OnMonsterAteNPC();
+                // Monster 에게만
+                if (NetworkManager.Instance.IsMonster())
+                {
+                    FindObjectOfType<HungerSlider>().SetHungerMax();
+                }
+                NetworkManager.Instance.HungerEvent(false);
                 Debug.Log("MONSTER ATTACKED NPC");
                 break;
             case CharacterType.Scientist:
