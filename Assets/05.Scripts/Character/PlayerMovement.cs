@@ -56,12 +56,16 @@ public class PlayerMovement : MonoBehaviour
         
         controller = GetComponentInParent<CharacterController>();
 
+        
+        player = GetComponentInParent<Player>();
+    }
+    private void Start()
+    {
         if (killButton == null)
         {
             killButton = FindObjectOfType<KillButton>().GetComponent<Button>();
         }
         
-        player = GetComponentInParent<Player>();
     }
 
     // Update is called once per frame

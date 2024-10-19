@@ -121,15 +121,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         Debug.Log($"Monster : {monsterNum}");
         Vector3 myPosition = spawnPos[PhotonNetwork.LocalPlayer.ActorNumber - 1];
         Debug.Log(myPosition.ToString());
-        GameObject go = null;
+        GameObject spawnedPlayer = null;
         if (monsterNum == PhotonNetwork.LocalPlayer.ActorNumber)
-            go = PhotonNetwork.Instantiate(playerMonsterName, myPosition, Quaternion.identity);
+            spawnedPlayer = PhotonNetwork.Instantiate(playerMonsterName, myPosition, Quaternion.identity);
         else
-            go = PhotonNetwork.Instantiate(playerScientistName, myPosition, Quaternion.identity);
+            spawnedPlayer = PhotonNetwork.Instantiate(playerScientistName, myPosition, Quaternion.identity);
 
-        myPlayer = go.GetComponent<Player>();
+        myPlayer = spawnedPlayer.GetComponent<Player>();
 
-        GameObject po = Instantiate(playerObjectPrefab, go.transform.position, go.transform.rotation, go.transform);
+        GameObject po = Instantiate(playerObjectPrefab, spawnedPlayer.transform.position, spawnedPlayer.transform.rotation, spawnedPlayer.transform);
 
         curState = GameState.Playing;
         GameManager.instance.StartGame();
