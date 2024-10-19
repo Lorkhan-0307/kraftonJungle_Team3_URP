@@ -74,6 +74,7 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
                 break;
             case EventCode.SwitchDayNight:
                 bool isDay = (bool)photonEvent.CustomData;
+                Debug.Log($"SwitchDayNight {isDay}");
                 if(isDay)
                 {
                     GameManager.instance.SetDay();
@@ -85,6 +86,8 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
                 FindObjectOfType<TimeSwitchSlider>().SyncTime(0);
                 break;
             case EventCode.HungerGauge:
+                if (!NetworkManager.Instance.monster) return;
+
                 bool ishungerzero = (bool)photonEvent.CustomData;
 
                 if(ishungerzero)
