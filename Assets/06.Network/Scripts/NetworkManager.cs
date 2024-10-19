@@ -12,25 +12,31 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
 
 
-    public Monster monster;
+    public Monster monster
+    {
+        get
+        {
+            return FindObjectOfType<Monster>();
+        }
+    }
     public TimeSwitchSlider timeswitchslider;
     #region Singleton
-    // ½Ì±ÛÅæ ÀÎ½ºÅÏ½º
+    // ì‹±ê¸€í†¤ ì¸ìŠ¤í„´ìŠ¤
     public static NetworkManager Instance { get; private set; }
 
-    // Awake´Â Startº¸´Ù ¸ÕÀú È£ÃâµË´Ï´Ù.
+    // AwakeëŠ” Startë³´ë‹¤ ë¨¼ì € í˜¸ì¶œë©ë‹ˆë‹¤.
     private void Awake()
     {
-        // ½Ì±ÛÅæ ÀÎ½ºÅÏ½º°¡ ¾ø´Â °æ¿ì ÀÌ °´Ã¼¸¦ ÀÎ½ºÅÏ½º·Î ¼³Á¤
+        // ì‹±ê¸€í†¤ ì¸ìŠ¤í„´ìŠ¤ê°€ ì—†ëŠ” ê²½ìš° ì´ ê°ì²´ë¥¼ ì¸ìŠ¤í„´ìŠ¤ë¡œ ì„¤ì •
         if (Instance == null)
         {
             Instance = this;
-            // ´Ù¸¥ ¾À¿¡¼­µµ ÆÄ±«µÇÁö ¾Êµµ·Ï ¼³Á¤
+            // ë‹¤ë¥¸ ì”¬ì—ì„œë„ íŒŒê´´ë˜ì§€ ì•Šë„ë¡ ì„¤ì •
             DontDestroyOnLoad(gameObject);
         }
         else
         {
-            // ÀÌ¹Ì ÀÎ½ºÅÏ½º°¡ Á¸ÀçÇÏ´Â °æ¿ì, Áßº¹µÈ °´Ã¼¸¦ ÆÄ±«
+            // ì´ë¯¸ ì¸ìŠ¤í„´ìŠ¤ê°€ ì¡´ì¬í•˜ëŠ” ê²½ìš°, ì¤‘ë³µëœ ê°ì²´ë¥¼ íŒŒê´´
             Destroy(gameObject);
         }
     }
@@ -40,19 +46,19 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #region RoomServer
     public override void OnConnectedToMaster()
     {
-        // ¼­¹ö¿¡ ¿¬°áµÇ¸é ¹æ¿¡ ÀÔÀå ½Ãµµ
+        // ì„œë²„ì— ì—°ê²°ë˜ë©´ ë°©ì— ì…ì¥ ì‹œë„
         PhotonNetwork.JoinRandomRoom();
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        // ¹æÀÌ ¾øÀ¸¸é »õ·Î¿î ¹æÀ» »ı¼º
+        // ë°©ì´ ì—†ìœ¼ë©´ ìƒˆë¡œìš´ ë°©ì„ ìƒì„±
         PhotonNetwork.CreateRoom(null);
     }
 
     public override void OnJoinedRoom()
     {
-        // ¹æÀå(¸¶½ºÅÍ Å¬¶óÀÌ¾ğÆ®)ÀÏ °æ¿ì Æ¯Á¤ ·ÎÁ÷ ½ÇÇà
+        // ë°©ì¥(ë§ˆìŠ¤í„° í´ë¼ì´ì–¸íŠ¸)ì¼ ê²½ìš° íŠ¹ì • ë¡œì§ ì‹¤í–‰
         if (PhotonNetwork.IsMasterClient)
         {
             gameObject.AddComponent<ServerLogic>();
@@ -69,7 +75,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
 
     /// <summary>
-    /// Á×Àº ÇÃ·¹ÀÌ¾î º»ÀÎÀÌ Á×Àº ½ÃÁ¡¿¡ ½ÇÇà½ÃÄÑÁÖ¼¼¿ä.
+    /// ì£½ì€ í”Œë ˆì´ì–´ ë³¸ì¸ì´ ì£½ì€ ì‹œì ì— ì‹¤í–‰ì‹œì¼œì£¼ì„¸ìš”.
     /// Run by the dead player.
     /// </summary>
     public void PlayerDeath()
@@ -88,18 +94,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     public void SendToServer(EventCode code, object content)
     {
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient }; // ¸ğµç Å¬¶óÀÌ¾ğÆ®¿¡°Ô Àü¼Û
-        SendOptions sendOptions = new SendOptions { Reliability = true }; // ½Å·Ú¼º º¸Àå
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient }; // ëª¨ë“  í´ë¼ì´ì–¸íŠ¸ì—ê²Œ ì „ì†¡
+        SendOptions sendOptions = new SendOptions { Reliability = true }; // ì‹ ë¢°ì„± ë³´ì¥
 
-        //ÀÌ°Å ¾²¸é µÉµí
+        //ì´ê±° ì“°ë©´ ë ë“¯
         PhotonNetwork.RaiseEvent((byte)code, content, raiseEventOptions, sendOptions);
     }
     public void SendToClients(EventCode code, object content)
     {
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // ¸ğµç Å¬¶óÀÌ¾ğÆ®¿¡°Ô Àü¼Û
-        SendOptions sendOptions = new SendOptions { Reliability = true }; // ½Å·Ú¼º º¸Àå
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // ëª¨ë“  í´ë¼ì´ì–¸íŠ¸ì—ê²Œ ì „ì†¡
+        SendOptions sendOptions = new SendOptions { Reliability = true }; // ì‹ ë¢°ì„± ë³´ì¥
 
-        //ÀÌ°Å ¾²¸é µÉµí
+        //ì´ê±° ì“°ë©´ ë ë“¯
         PhotonNetwork.RaiseEvent((byte)code, content, raiseEventOptions, sendOptions);
     }
     #endregion
@@ -118,7 +124,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         Vector3[] spawnPos = (Vector3[])datas[0];
         int monsterNum = (int)datas[1];
 
-        //TODO: ÀÚ½ÅÀÇ ÇÃ·¹ÀÌ¾î ActorNumber °¡ Àü¼Û¹ŞÀº id¿Í °°ÀºÁö ºñ±³ÇÏ°í ¸ó½ºÅÍ, ¿¬±¸¿øÀ¸·Î ÃÊ±âÈ­ÇÔ.
+        //TODO: ìì‹ ì˜ í”Œë ˆì´ì–´ ActorNumber ê°€ ì „ì†¡ë°›ì€ idì™€ ê°™ì€ì§€ ë¹„êµí•˜ê³  ëª¬ìŠ¤í„°, ì—°êµ¬ì›ìœ¼ë¡œ ì´ˆê¸°í™”í•¨.
         Debug.Log($"Monster : {monsterNum}");
         Vector3 myPosition = spawnPos[PhotonNetwork.LocalPlayer.ActorNumber - 1];
         Debug.Log(myPosition.ToString());
@@ -141,7 +147,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         testAction.Enable();
         testAction.performed += Test;
-        // Photon ¼­¹ö¿¡ ¿¬°á
+        // Photon ì„œë²„ì— ì—°ê²°
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -153,7 +159,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         GetComponent<ServerLogic>().SetPlayerRole();
     }
 
-    // ¸ğµç Å¬¶óÀÌ¾ğÆ®¿¡°Ô ÀÌº¥Æ®¸¦ º¸³¿.
+    // ëª¨ë“  í´ë¼ì´ì–¸íŠ¸ì—ê²Œ ì´ë²¤íŠ¸ë¥¼ ë³´ëƒ„.
     public void HungerEvent(bool ishungerzero)
     {
         SendToClients(EventCode.HungerGauge, ishungerzero);

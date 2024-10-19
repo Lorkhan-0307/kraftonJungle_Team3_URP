@@ -4,7 +4,7 @@ using Photon.Realtime;
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using UnityEngine.InputSystem;
-using Unity.VisualScripting; // ÀÌº¥Æ® ÄÚµå¿¡ »ç¿ë
+using Unity.VisualScripting; // ì´ë²¤íŠ¸ ì½”ë“œì— ì‚¬ìš©
 
 public enum EventCode
 {
@@ -30,22 +30,22 @@ public class ServerLogic : MonoBehaviourPunCallbacks
 
 
     private InputAction gameStartAction;
-    // ½Ì±ÛÅæ ÀÎ½ºÅÏ½º
+    // ì‹±ê¸€í†¤ ì¸ìŠ¤í„´ìŠ¤
     public static ServerLogic Instance { get; private set; }
 
-    // Awake´Â Startº¸´Ù ¸ÕÀú È£ÃâµË´Ï´Ù.
+    // AwakeëŠ” Startë³´ë‹¤ ë¨¼ì € í˜¸ì¶œë©ë‹ˆë‹¤.
     private void Awake()
     {
-        // ½Ì±ÛÅæ ÀÎ½ºÅÏ½º°¡ ¾ø´Â °æ¿ì ÀÌ °´Ã¼¸¦ ÀÎ½ºÅÏ½º·Î ¼³Á¤
+        // ì‹±ê¸€í†¤ ì¸ìŠ¤í„´ìŠ¤ê°€ ì—†ëŠ” ê²½ìš° ì´ ê°ì²´ë¥¼ ì¸ìŠ¤í„´ìŠ¤ë¡œ ì„¤ì •
         if (Instance == null)
         {
             Instance = this;
-            // ´Ù¸¥ ¾À¿¡¼­µµ ÆÄ±«µÇÁö ¾Êµµ·Ï ¼³Á¤
+            // ë‹¤ë¥¸ ì”¬ì—ì„œë„ íŒŒê´´ë˜ì§€ ì•Šë„ë¡ ì„¤ì •
             DontDestroyOnLoad(gameObject);
         }
         else
         {
-            // ÀÌ¹Ì ÀÎ½ºÅÏ½º°¡ Á¸ÀçÇÏ´Â °æ¿ì, Áßº¹µÈ °´Ã¼¸¦ ÆÄ±«
+            // ì´ë¯¸ ì¸ìŠ¤í„´ìŠ¤ê°€ ì¡´ì¬í•˜ëŠ” ê²½ìš°, ì¤‘ë³µëœ ê°ì²´ë¥¼ íŒŒê´´
             Destroy(gameObject);
         }
     }
@@ -64,20 +64,15 @@ public class ServerLogic : MonoBehaviourPunCallbacks
 
         //if(PhotonNetwork.PlayerList.Length < requirePlayers)
         //{
-        //    Debug.Log($"[{PhotonNetwork.PlayerList.Length}/{requirePlayers}] ÀÎ¿øÀÌ ºÎÁ·ÇÕ´Ï´Ù.");
+        //    Debug.Log($"[{PhotonNetwork.PlayerList.Length}/{requirePlayers}] ì¸ì›ì´ ë¶€ì¡±í•©ë‹ˆë‹¤.");
         //    return;
         //}
 
-        // TODO: °ÔÀÓ ½ÃÀÛ ±â´É ±¸Çö
+        // TODO: ê²Œì„ ì‹œì‘ ê¸°ëŠ¥ êµ¬í˜„
         SetPlayerRole();
     }
 
 
-    // Update is called once per frame
-    void Update()
-    {
-        ApplyTime();
-    }
 
     #region GameLogic
     public int monsterActorNum = -1;
@@ -92,7 +87,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         CheckEndCondition();
     }
     /// <summary>
-    /// °ÔÀÓ Á¾·áÁ¶°ÇÀÌ ´Ş¼ºµÇ¾úÀ» ¶§ ½ÇÇà½ÃÄÑÁÖ¼¼¿ä.
+    /// ê²Œì„ ì¢…ë£Œì¡°ê±´ì´ ë‹¬ì„±ë˜ì—ˆì„ ë•Œ ì‹¤í–‰ì‹œì¼œì£¼ì„¸ìš”.
     /// Run when the game end condition is in effect.
     /// </summary>
     public void EndGame()
@@ -128,14 +123,14 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     {
         bool isMonsterAlive = isAlivePlayers[monsterActorNum-1];
 
-        // ±«¹°ÀÌ Á×¾úÀ» °æ¿ì
+        // ê´´ë¬¼ì´ ì£½ì—ˆì„ ê²½ìš°
         if (!isMonsterAlive)
         {
             EndGame();
             return;
         }
 
-        // ±«¹°ÀÌ »ì¾ÆÀÖÀ» °æ¿ì ¸ğµç ÇÃ·¹ÀÌ¾î°¡ Á×¾î¾ß °ÔÀÓ Á¾·á
+        // ê´´ë¬¼ì´ ì‚´ì•„ìˆì„ ê²½ìš° ëª¨ë“  í”Œë ˆì´ì–´ê°€ ì£½ì–´ì•¼ ê²Œì„ ì¢…ë£Œ
         for(int i = 0; i < isAlivePlayers.Length; i++)
         {
             if (i == monsterActorNum-1) continue;
@@ -153,10 +148,10 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     #region GameStart
     public void SetPlayerRole()
     {
-        // ÇöÀç ·ë¿¡ Á¢¼ÓµÇ¾îÀÖ´Â ÇÃ·¹ÀÌ¾î ¸ñ·ÏÀ» °¡Á®¿È
+        // í˜„ì¬ ë£¸ì— ì ‘ì†ë˜ì–´ìˆëŠ” í”Œë ˆì´ì–´ ëª©ë¡ì„ ê°€ì ¸ì˜´
         Photon.Realtime.Player[] playerList = PhotonNetwork.PlayerList;
 
-        // ÇÃ·¹ÀÌ¾î »ıÁ¸ ¿©ºÎ ¹è¿­ ÃÊ±âÈ­
+        // í”Œë ˆì´ì–´ ìƒì¡´ ì—¬ë¶€ ë°°ì—´ ì´ˆê¸°í™”
         isAlivePlayers = new bool[playerList.Length];
 
         for (int i = 0; i < isAlivePlayers.Length; i++)
@@ -165,25 +160,25 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         }
 
 
-        // ·£´ıÀ¸·Î ¸ó½ºÅÍ ¹øÈ£ ÇÒ´ç
+        // ëœë¤ìœ¼ë¡œ ëª¬ìŠ¤í„° ë²ˆí˜¸ í• ë‹¹
         monsterActorNum = Random.Range(0, playerList.Length)+1;
 
         Vector3[] randomSpawnPos = new Vector3[playerList.Length];
-        // °¢ ÇÃ·¹ÀÌ¾î¿¡°Ô ·£´ı ½ºÆù À§Ä¡¿Í ¸ó½ºÅÍ ¹øÈ£¸¦ Àü¼Û
+        // ê° í”Œë ˆì´ì–´ì—ê²Œ ëœë¤ ìŠ¤í° ìœ„ì¹˜ì™€ ëª¬ìŠ¤í„° ë²ˆí˜¸ë¥¼ ì „ì†¡
         for (int i = 0; i < randomSpawnPos.Length; i++)
         {
-            // °¢ ÇÃ·¹ÀÌ¾îÀÇ ·£´ı ½ºÆù À§Ä¡ ¼³Á¤
+            // ê° í”Œë ˆì´ì–´ì˜ ëœë¤ ìŠ¤í° ìœ„ì¹˜ ì„¤ì •
             randomSpawnPos[i] = NPCManager.GetRandomNavMeshPosition();
 
             Debug.Log($"{i}: {randomSpawnPos[i]}");
         }
-        // ÀÌº¥Æ® µ¥ÀÌÅÍ¿¡ ½ºÆù À§Ä¡¿Í ¸ó½ºÅÍ ¹øÈ£¸¦ ´ãÀ½
+        // ì´ë²¤íŠ¸ ë°ì´í„°ì— ìŠ¤í° ìœ„ì¹˜ì™€ ëª¬ìŠ¤í„° ë²ˆí˜¸ë¥¼ ë‹´ìŒ
         object[] eventData = new object[] { randomSpawnPos, monsterActorNum };
 
-        // ÀÌº¥Æ® Àü¼Û (¸ó½ºÅÍ ¹øÈ£¿Í ·£´ı ½ºÆù À§Ä¡)
+        // ì´ë²¤íŠ¸ ì „ì†¡ (ëª¬ìŠ¤í„° ë²ˆí˜¸ì™€ ëœë¤ ìŠ¤í° ìœ„ì¹˜)
         NetworkManager.Instance.SendToClients(EventCode.GameStart, eventData);
 
-        // ÇÊµå¿¡ ·£´ıÀ¸·Î NPC »Ñ¸²
+        // í•„ë“œì— ëœë¤ìœ¼ë¡œ NPC ë¿Œë¦¼
         FindObjectOfType<NPCManager>().SpawnNPC();
     }
     #endregion
@@ -191,7 +186,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     #region Time
 
     /// <summary>
-    /// ¼­¹ö°¡ ¹ã³· ¹Ù²ï ½ÃÁ¡¿¡ ½ÇÇàÇÕ´Ï´Ù.
+    /// ì„œë²„ê°€ ë°¤ë‚® ë°”ë€ ì‹œì ì— ì‹¤í–‰í•©ë‹ˆë‹¤.
     /// </summary>
     /// <param name="isDay"></param>
     public void SwitchDayNight(bool isDay)
