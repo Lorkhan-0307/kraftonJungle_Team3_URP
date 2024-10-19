@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
-
+    public Monster monster;
     #region Singleton
     // ΩÃ±€≈Ê ¿ŒΩ∫≈œΩ∫
     public static NetworkManager Instance { get; private set; }

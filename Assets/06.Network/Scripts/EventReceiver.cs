@@ -66,7 +66,16 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
 
                 break;
             case EventCode.HungerGauge:
+                bool ishungerzero = (bool)photonEvent.CustomData;
 
+                if(ishungerzero)
+                {
+                    NetworkManager.Instance.monster.OnHunger();
+                }
+                else
+                {
+                    NetworkManager.Instance.monster.NoHunger(); 
+                }
                 break;
         }
     }
