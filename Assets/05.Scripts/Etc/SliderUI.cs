@@ -4,14 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Timer
+public class SliderUI : MonoBehaviour
 {
-    // isDay
-
-    //낮일때
-    //밤일때
-    //전환됐을 때
-
     public bool GoTime(float time, Slider slider, float elapsedTime)
     {
         float startValue, endValue;
@@ -39,5 +33,10 @@ public class Timer
             slider.value = endValue;
             return time < 0;
         }
+    }
+
+    public void SetValue(float value)
+    {
+
     }
 }

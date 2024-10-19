@@ -5,7 +5,7 @@ public class TimeSwitchSlider : MonoBehaviour
 {
     public Slider slider;
 
-    public bool isDay = true;
+    private bool isDay = true;
     GameObject hungerSlider;
 
     float elapsedTime = 0f;
@@ -30,7 +30,7 @@ public class TimeSwitchSlider : MonoBehaviour
     {
         float time;
 
-        // ³·ÀÏ ¶§ ÀÛµ¿
+        // ë‚®ì¼ ë•Œ ì‘ë™
         if (isDay)
         {
             if (elapsedTime < increaseTime)
@@ -40,7 +40,7 @@ public class TimeSwitchSlider : MonoBehaviour
 
             time = increaseTime;
         }
-        // ¹ãÀÌ¸é
+        // ë°¤ì´ë©´
         else
         {
             if ((elapsedTime*-1) > decreaseTime)
@@ -50,15 +50,18 @@ public class TimeSwitchSlider : MonoBehaviour
 
             time = decreaseTime;
         }
-        // ³·¹ã ÀüÈ¯µÆÀ¸¸é
+        // ë‚®ë°¤ ì „í™˜ëìœ¼ë©´
         if (isDay != timer.GoTime(time, slider, elapsedTime))
         {
             Debug.Log("Switch Day and Night");
             elapsedTime = 0f;
             isDay = !isDay;
 
-            // UI È°¼ºÈ­ ¿©ºÎ
-            hungerSlider.SetActive(isDay);
+            // UI í™œì„±í™” ì—¬ë¶€
+            if (hungerSlider)
+            {
+                hungerSlider.SetActive(isDay);
+            }
 
             if (isDay) npcManager.SetAble();
             else npcManager.SetDisable();
@@ -67,14 +70,9 @@ public class TimeSwitchSlider : MonoBehaviour
         }
     }
 
-    public void SetValue(float value)
-    {
-        slider.value = value;
-    }
-
     public void FastTime()
     {
-        // elapsedTime ¼öÁ¤
+        // elapsedTime ìˆ˜ì •
         elapsedTime += accelateTime;
         if (elapsedTime < increaseTime)
         {
@@ -87,7 +85,7 @@ public class TimeSwitchSlider : MonoBehaviour
         }
     }
 
-    // Server¿¡¼­ ½Ã°£ µ¿±âÈ­ Event ¹ß»ıÇÏ¸é
+    // Serverì—ì„œ ì‹œê°„ ë™ê¸°í™” Event ë°œìƒí•˜ë©´
     public void SyncTime(float elapsedTime)
     {
         float t;

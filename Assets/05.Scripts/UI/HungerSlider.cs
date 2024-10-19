@@ -10,7 +10,7 @@ public class HungerSlider : MonoBehaviour
     float elapsedTime = 0f;
 
     Timer timer = new Timer();
-     
+
     private void Update()
     {
         if (hungerSlider.value > 0)
@@ -45,8 +45,13 @@ public class HungerSlider : MonoBehaviour
         elapsedTime = 0f;
     }
 
-    public void SetValue(float value)
+    public void SetAble()
     {
-        hungerSlider.value = value;
+        this.gameObject.SetActive(true);
+    }
+
+    public void SetDisable()
+    {
+        this.gameObject.SetActive(false);
     }
 }
