@@ -9,17 +9,17 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
 {
     private void OnEnable()
     {
-        // ÀÌº¥Æ® Äİ¹éÀ» µî·Ï
+        // ì´ë²¤íŠ¸ ì½œë°±ì„ ë“±ë¡
         PhotonNetwork.AddCallbackTarget(this);
     }
 
     private void OnDisable()
     {
-        // ÀÌº¥Æ® Äİ¹é µî·Ï ÇØÁ¦
+        // ì´ë²¤íŠ¸ ì½œë°± ë“±ë¡ í•´ì œ
         PhotonNetwork.RemoveCallbackTarget(this);
     }
 
-    // ÀÌº¥Æ® ¼ö½Å Ã³¸® ¸Ş¼­µå
+    // ì´ë²¤íŠ¸ ìˆ˜ì‹  ì²˜ë¦¬ ë©”ì„œë“œ
     public void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
@@ -30,14 +30,14 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
                 NetworkManager.Instance.StartGame(photonEvent.CustomData);
                 break;
             case EventCode.AttackRequest:
-                object[] datas = (object[])photonEvent.CustomData; // Àü¼ÛµÈ µ¥ÀÌÅÍ¸¦ ¹ŞÀ½
-                //µ¥ÀÌÅÍ : {°ø°İÀÚID, ÇÇ°İÀÚID}
+                object[] datas = (object[])photonEvent.CustomData; // ì „ì†¡ëœ ë°ì´í„°ë¥¼ ë°›ìŒ
+                //ë°ì´í„° : {ê³µê²©ìID, í”¼ê²©ìID}
                 
                 PhotonView from = PhotonNetwork.GetPhotonView((int)datas[0]);
                 PhotonView to = PhotonNetwork.GetPhotonView((int)datas[1]);
 
 
-                //TODO: °ø°İÀÚ ÇÇ°İÀÚ ÀÌ¿ëÇØ¼­ ÇØ¾ßÇÏ´Â ·ÎÁ÷µé Ã³¸®ÇÏ±â
+                //TODO: ê³µê²©ì í”¼ê²©ì ì´ìš©í•´ì„œ í•´ì•¼í•˜ëŠ” ë¡œì§ë“¤ ì²˜ë¦¬í•˜ê¸°
                 if(to.AmOwner)
                 {
                     to.GetComponent<Player>().OnDamaged(from.gameObject);
@@ -71,7 +71,17 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
                 }
                 break;
             case EventCode.SwitchDayNight:
+                bool isDay = (bool)photonEvent.CustomData;
+                if(isDay)
+                {
+                    GameManager.instance.SetDay();
+                }
+                else
+                {
+                    GameManager.instance.SetNight();
+                }
 
+                NetworkManager.Instance.timeswitchslider.SyncTime(0);
                 break;
             case EventCode.HungerGauge:
                 bool ishungerzero = (bool)photonEvent.CustomData;

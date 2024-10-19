@@ -189,32 +189,14 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     #endregion
 
     #region Time
-    public float dayLength;
-    public float nightLength;
-    public float curTime;
-    public bool isDay = true;
 
-    public void ApplyTime()
+    /// <summary>
+    /// 서버가 밤낮 바뀐 시점에 실행합니다.
+    /// </summary>
+    /// <param name="isDay"></param>
+    public void SwitchDayNight(bool isDay)
     {
-        curTime += Time.deltaTime;
-
-        if (isDay)
-        {
-            if (curTime > dayLength)
-            {
-                // 저녁됨 방송함
-            }
-        }
-        else
-        {
-            if (curTime > nightLength)
-            {
-                // 아침됨 방송함
-            }
-        }
-
-        // 현재시각 방송함
+        NetworkManager.Instance.SendToClients(EventCode.SwitchDayNight, isDay);
     }
-
     #endregion
 }
