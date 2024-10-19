@@ -22100,7 +22100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcPrefab: Player_NPC
-  npcCount: 20
+  npcCount: 50
   npcGroupName: AllNPC
   allNPC: []
   moveRadius: 10
@@ -37371,6 +37371,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55eca92a6eda2ee4e82662bad2636c85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slider: {fileID: 1307570994}
+  isDay: 1
+  decreaseTime: -20
+  increaseTime: 20
+  accelateTime: 10
 --- !u!1001 &1307708139
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50806,6 +50811,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3089fe058a789e1418a11ddb69d068de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hungerSlider: {fileID: 1853655508}
+  decreaseTime: -20
 --- !u!1 &1853993618 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 387364091424724237, guid: aedebdaeae12a6743b39120d2f5156b0,

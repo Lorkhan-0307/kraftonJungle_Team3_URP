@@ -101,7 +101,7 @@ public class NPCManager : MonoBehaviour
         }
 
         // 유효한 NavMesh 위치가 없으면
-        return Vector3.zero;
+        return new Vector3(10, 1, 10);
     }
 
     void SetNewDestination(NavMeshAgent agent)

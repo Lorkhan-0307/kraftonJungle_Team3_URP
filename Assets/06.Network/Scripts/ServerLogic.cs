@@ -27,7 +27,6 @@ public class ServerLogic : MonoBehaviourPunCallbacks
 {
     public int requirePlayers = 5;
 
-    public GameState curState = GameState.OnRoom;
 
     private InputAction gameStartAction;
     // 싱글톤 인스턴스
@@ -60,16 +59,15 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     public void StartGame(InputAction.CallbackContext context)
     {
         Debug.Log("StartGame Button Clicked");
-        if (curState != GameState.OnRoom) return;
-        
-        if(PhotonNetwork.PlayerList.Length < requirePlayers)
-        {
-            Debug.Log($"[{PhotonNetwork.PlayerList.Length}/{requirePlayers}] 인원이 부족합니다.");
-            return;
-        }
+        if (NetworkManager.Instance.curState != GameState.OnRoom) return;
+
+        //if(PhotonNetwork.PlayerList.Length < requirePlayers)
+        //{
+        //    Debug.Log($"[{PhotonNetwork.PlayerList.Length}/{requirePlayers}] 인원이 부족합니다.");
+        //    return;
+        //}
 
         // TODO: 게임 시작 기능 구현
-        curState = GameState.Playing;
         SetPlayerRole();
     }
 
@@ -171,10 +169,12 @@ public class ServerLogic : MonoBehaviourPunCallbacks
 
         Vector3[] randomSpawnPos = new Vector3[playerList.Length];
         // 각 플레이어에게 랜덤 스폰 위치와 몬스터 번호를 전송
-        for (int i = 0; i < playerList.Length; i++)
+        for (int i = 0; i < randomSpawnPos.Length; i++)
         {
             // 각 플레이어의 랜덤 스폰 위치 설정
             randomSpawnPos[i] = NPCManager.GetRandomNavMeshPosition();
+
+            Debug.Log($"{i}: {randomSpawnPos[i]}");
         }
         // 이벤트 데이터에 스폰 위치와 몬스터 번호를 담음
         object[] eventData = new object[] { randomSpawnPos, monsterActorNum };
