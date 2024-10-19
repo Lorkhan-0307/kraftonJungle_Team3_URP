@@ -16,16 +16,15 @@ public class HungerSlider : MonoBehaviour
         if (hungerSlider.value > 0)
         {
             elapsedTime += Time.deltaTime;
-            Debug.Log("Hungry");
 
-            // ÀÏÁ¤ ½Ã°£µ¿¾È °¨¼Ò
+            // ì¼ì • ì‹œê°„ë™ì•ˆ ê°ì†Œ
             timer.GoTime(decreaseTime, hungerSlider, elapsedTime);
         }
 
         //if ()
-        // NPC ¸¦ ¸ÔÀ¸¸é gage Max
-        // .. ¸¸¾à ¸ğ½ÀÀÌ º¯È­ÇÑ »ıÅÂ¶ó¸é
-        // .. ¸ğ½À Á¤»óÈ­
+        // NPC ë¥¼ ë¨¹ìœ¼ë©´ gage Max
+        // .. ë§Œì•½ ëª¨ìŠµì´ ë³€í™”í•œ ìƒíƒœë¼ë©´
+        // .. ëª¨ìŠµ ì •ìƒí™”
 
     }
 
