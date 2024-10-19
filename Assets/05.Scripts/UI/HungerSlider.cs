@@ -18,7 +18,11 @@ public class HungerSlider : MonoBehaviour
             elapsedTime += Time.deltaTime;
 
             // 일정 시간동안 감소
-            timer.GoTime(decreaseTime, hungerSlider, elapsedTime);
+            // 0이 되면
+            if (timer.GoTime(decreaseTime, hungerSlider, elapsedTime))
+            {
+                NetworkManager.Instance.HungerEvent(true);
+            }
         }
 
         //if ()
@@ -32,6 +36,7 @@ public class HungerSlider : MonoBehaviour
     {
         // current logic : set hunger bar max
         SetHungerMax();
+        NetworkManager.Instance.HungerEvent(false);
     }
 
     private void SetHungerMax()
