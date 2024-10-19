@@ -37,8 +37,8 @@ public class NPC : Player
         npcManager.allNPC.Remove(this.gameObject);
         
         // 여기서 Destroy 결과 전송
-        Destroy(this.gameObject);
-        //PhotonNetwork.Destroy(this.gameObject);
+        //Destroy(this.gameObject);
+        PhotonNetwork.Destroy(this.gameObject);
     }
 
     public override void OnDead()

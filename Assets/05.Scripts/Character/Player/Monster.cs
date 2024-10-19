@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -16,8 +17,9 @@ public class Monster : Player
         base.OnDamaged(attacker);
         
         // 여기서 Destroy 결과 전송
-        Destroy(this.gameObject);
-        //PhotonNetwork.Destroy(this.gameObject);
+        //Destroy(this.gameObject);
+        PhotonNetwork.Destroy(this.gameObject);
+        NetworkManager.Instance.PlayerDeath();
     }
 
     public override void OnDead()
