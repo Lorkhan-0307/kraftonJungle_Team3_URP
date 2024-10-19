@@ -28,13 +28,15 @@ public class NPC : Player
                 Debug.Log("SCIENTIST ATTACKED NPC");
                 break;
         }
-        
-        //tss에서 allNPC가 바뀌기 전까지 유지할 스크립트.
+
+        // tss에서 allNPC가 바뀌기 전까지 유지할 스크립트.
+        // tss에서 NPCManaer로 이동
         // TODO : TSS에서의 변화에 따라 이 부분 수정 및 캡슐화
-        TimeSwitchSlider tss = FindObjectOfType<TimeSwitchSlider>();
-        List<GameObject> npcList = new List<GameObject>(tss.allNPC);
+        // -> 데모 이후 수정 에정
+        NPCManager npcManager = FindObjectOfType<NPCManager>();
+        List<GameObject> npcList = new List<GameObject>(npcManager.allNPC);
         npcList.Remove(this.gameObject);
-        tss.allNPC = npcList.ToArray();
+        npcManager.allNPC = npcList.ToArray();
         
         // 여기서 Destroy 결과 전송
         Destroy(this.gameObject);

@@ -13,7 +13,6 @@ public class TimeSwitchSlider : MonoBehaviour, ISlider
     public float increaseTime = 20f;
 
     Timer timer = new Timer();
-    GameObject[] allNPC;
 
     [SerializeField]
     private float accelateTime = 10f;
@@ -23,7 +22,6 @@ public class TimeSwitchSlider : MonoBehaviour, ISlider
     private void Start()
     {
         hungerSlider = GameObject.Find("HungerSlider");
-        allNPC = GameObject.FindGameObjectsWithTag("NPC");
         lightShifter = FindObjectOfType<LightShifter>();
         npcManager = FindObjectOfType<NPCManager>();
     }

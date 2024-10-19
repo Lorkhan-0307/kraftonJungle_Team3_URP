@@ -16,16 +16,15 @@ public class HungerSlider : MonoBehaviour
         if (hungerSlider.value > 0)
         {
             elapsedTime += Time.deltaTime;
-            //Debug.Log("Hungry");
 
-            // ���� �ð����� ����
+            // 일정 시간동안 감소
             timer.GoTime(decreaseTime, hungerSlider, elapsedTime);
         }
 
         //if ()
-        // NPC �� ������ gage Max
-        // .. ���� ����� ��ȭ�� ���¶��
-        // .. ��� ����ȭ
+        // NPC 를 먹으면 gage Max
+        // .. 만약 모습이 변화한 생태라면
+        // .. 모습 정상화
 
     }
 
