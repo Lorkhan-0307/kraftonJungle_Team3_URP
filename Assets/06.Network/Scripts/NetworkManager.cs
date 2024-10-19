@@ -19,7 +19,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             return FindObjectOfType<Monster>();
         }
     }
-    public TimeSwitchSlider timeswitchslider;
     #region Singleton
     // 싱글톤 인스턴스
     public static NetworkManager Instance { get; private set; }

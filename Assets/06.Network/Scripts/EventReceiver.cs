@@ -80,8 +80,7 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
                 {
                     GameManager.instance.SetNight();
                 }
-
-                NetworkManager.Instance.timeswitchslider.SyncTime(0);
+                FindObjectOfType<TimeSwitchSlider>().SyncTime(0);
                 break;
             case EventCode.HungerGauge:
                 bool ishungerzero = (bool)photonEvent.CustomData;
@@ -98,7 +97,7 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
             case EventCode.AccelTime:
                 float SkipTime = (float)photonEvent.CustomData;
 
-                NetworkManager.Instance.timeswitchslider.SyncTime(SkipTime);
+                FindObjectOfType<TimeSwitchSlider>().SyncTime(SkipTime);
                 break;
         }
     }
