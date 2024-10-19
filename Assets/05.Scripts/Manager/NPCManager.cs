@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class NPCManager : MonoBehaviour
 {
     public string npcPrefab;
-    // ½ºÆùÇÒ NPC ¼ö
+    // ìŠ¤í°í•  NPC ìˆ˜
     [SerializeField]
     private int npcCount = 10;
 
@@ -25,17 +25,17 @@ public class NPCManager : MonoBehaviour
     void Start()
     {
         NPCGroup = new GameObject(npcGroupName);
-        //SpawnNPC();
     }
 
+    // í˜¸ìŠ¤íŠ¸ë§Œ í˜¸ì¶œ
     public void SpawnNPC()
     {
         for (int i = 0; i < npcCount; i++)
         {
-            // ·£´ıÀ¸·Î À§Ä¡ °è»ê
+            // ëœë¤ìœ¼ë¡œ ìœ„ì¹˜ ê³„ì‚°
             Vector3 randomPosition = GetRandomNavMeshPosition();
 
-            // NPC »ı¼º
+            // NPC ìƒì„±
             GameObject npc = PhotonNetwork.Instantiate(npcPrefab, randomPosition, Quaternion.identity);
             allNPC.Add(npc);
             npc.transform.parent = NPCGroup.transform;
@@ -45,7 +45,8 @@ public class NPCManager : MonoBehaviour
 
     void Update()
     {
-        // ³·ÀÏ ¶§¸¸ ÀÛµ¿
+        // í˜¸ìŠ¤íŠ¸ë§Œ ë™ì‘
+        // ë‚®ì¼ ë•Œë§Œ ì‘ë™
         if (GameManager.instance.GetTime())
         {
             foreach (GameObject npc in allNPC)
@@ -67,25 +68,34 @@ public class NPCManager : MonoBehaviour
         }
     }
 
-    // NavMesh À§ ·£´ı À¯È¿ À§Ä¡ Ã£±â
+    public void FindAllNPC()
+    {
+        GameObject[] npcs = GameObject.FindGameObjectsWithTag("NPC");
+
+        // ë¦¬ìŠ¤íŠ¸ ì´ˆê¸°í™” í›„ NPC ì¶”ê°€
+        allNPC.Clear();
+        allNPC.AddRange(npcs);
+    }
+
+    // NavMesh ìœ„ ëœë¤ ìœ íš¨ ìœ„ì¹˜ ì°¾ê¸°
     public static Vector3 GetRandomNavMeshPosition()
     {
-        // ¸ğµç NavMeshSurface Ã£±â
+        // ëª¨ë“  NavMeshSurface ì°¾ê¸°
         NavMeshSurface[] navMeshSurfaces = FindObjectsOfType<NavMeshSurface>();
         if (navMeshSurfaces.Length == 0)
         {
-            // NavMeshSurface°¡ ¾øÀ» °æ¿ì
+            // NavMeshSurfaceê°€ ì—†ì„ ê²½ìš°
             Debug.LogWarning("No NavMeshSurface found.");
             return Vector3.zero;
         }
 
-        // NavMeshSurface ·£´ı ¼±ÅÃ
+        // NavMeshSurface ëœë¤ ì„ íƒ
         NavMeshSurface selectedSurface = navMeshSurfaces[Random.Range(0, navMeshSurfaces.Length)];
 
-        // ¼±ÅÃµÈ NavMeshSurfaceÀÇ ¿µ¿ª
+        // ì„ íƒëœ NavMeshSurfaceì˜ ì˜ì—­
         Bounds bounds = selectedSurface.GetComponent<Collider>().bounds;
 
-        // bounds ³»¿¡¼­ ·£´ı À§Ä¡ »ı¼º
+        // bounds ë‚´ì—ì„œ ëœë¤ ìœ„ì¹˜ ìƒì„±
         Vector3 randomPoint = new Vector3(
             Random.Range(bounds.min.x, bounds.max.x),
             bounds.min.y,
@@ -93,14 +103,14 @@ public class NPCManager : MonoBehaviour
         );
 
         NavMeshHit hit;
-        // °¡Àå °¡±î¿î À¯È¿ÇÑ À§Ä¡ Ã£±â
+        // ê°€ì¥ ê°€ê¹Œìš´ ìœ íš¨í•œ ìœ„ì¹˜ ì°¾ê¸°
         if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
         {
-            // À¯È¿ÇÑ À§Ä¡ ¹İÈ¯
+            // ìœ íš¨í•œ ìœ„ì¹˜ ë°˜í™˜
             return hit.position;
         }
 
-        // À¯È¿ÇÑ NavMesh À§Ä¡°¡ ¾øÀ¸¸é
+        // ìœ íš¨í•œ NavMesh ìœ„ì¹˜ê°€ ì—†ìœ¼ë©´
         return new Vector3(10, 1, 10);
     }
 
@@ -115,20 +125,22 @@ public class NPCManager : MonoBehaviour
 
     public void SetAble()
     {
-        // °¢ NPC ¿ÀºêÁ§Æ®¸¦ È°¼ºÈ­
+        // ê° NPC ì˜¤ë¸Œì íŠ¸ë¥¼ í™œì„±í™”
         foreach (GameObject npc in allNPC)
         {
-            // NPC È°¼ºÈ­
+            // NPC í™œì„±í™”
             npc.SetActive(true);
         }
     }
 
     public void SetDisable()
     {
-        // °¢ NPC ¿ÀºêÁ§Æ®¸¦ ºñÈ°¼ºÈ­
+        if (allNPC.Count == 0)
+            FindAllNPC();
+        // ê° NPC ì˜¤ë¸Œì íŠ¸ë¥¼ ë¹„í™œì„±í™”
         foreach (GameObject npc in allNPC)
         {
-            // NPC ºñÈ°¼ºÈ­
+            // NPC ë¹„í™œì„±í™”
             npc.SetActive(false);
         }
     }
