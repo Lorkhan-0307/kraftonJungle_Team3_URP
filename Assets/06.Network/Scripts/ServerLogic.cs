@@ -165,7 +165,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
 
 
         // 랜덤으로 몬스터 번호 할당
-        int monsterActorNum = Random.Range(0, playerList.Length)+1;
+        monsterActorNum = Random.Range(0, playerList.Length)+1;
 
         Vector3[] randomSpawnPos = new Vector3[playerList.Length];
         // 각 플레이어에게 랜덤 스폰 위치와 몬스터 번호를 전송

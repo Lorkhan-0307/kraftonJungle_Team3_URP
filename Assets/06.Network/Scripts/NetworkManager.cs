@@ -13,6 +13,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
 
     public Monster monster;
+    public TimeSwitchSlider timeswitchslider;
     #region Singleton
     // 싱글톤 인스턴스
     public static NetworkManager Instance { get; private set; }
@@ -91,7 +92,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         SendOptions sendOptions = new SendOptions { Reliability = true }; // 신뢰성 보장
 
         //이거 쓰면 될듯
-        PhotonNetwork.RaiseEvent(0, content, raiseEventOptions, sendOptions);
+        PhotonNetwork.RaiseEvent((byte)code, content, raiseEventOptions, sendOptions);
     }
     public void SendToClients(EventCode code, object content)
     {
@@ -99,7 +100,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         SendOptions sendOptions = new SendOptions { Reliability = true }; // 신뢰성 보장
 
         //이거 쓰면 될듯
-        PhotonNetwork.RaiseEvent(0, content, raiseEventOptions, sendOptions);
+        PhotonNetwork.RaiseEvent((byte)code, content, raiseEventOptions, sendOptions);
     }
     #endregion
 
@@ -156,6 +157,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void HungerEvent(bool ishungerzero)
     {
         SendToClients(EventCode.HungerGauge, ishungerzero);
+    }
+
+    public void sibalmoyetji(float SkipTime)
+    {
+        SendToClients(EventCode.AccelTime, SkipTime);
     }
 
     public bool IsMonster()
