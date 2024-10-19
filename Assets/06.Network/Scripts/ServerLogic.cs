@@ -12,7 +12,8 @@ public enum EventCode
     AttackRequest,
     PlayerDeath,
     EndGame,
-    SwitchDayNight
+    SwitchDayNight,
+    HungerGauge,
 }
 
 public enum GameState

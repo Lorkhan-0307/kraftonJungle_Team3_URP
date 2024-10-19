@@ -28,10 +28,11 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
             case EventCode.GameStart:
                 int id = (int)photonEvent.CustomData;
 
-                //TODO: 이거 지금 자기자신만 수정하는거같은데 이후에 다른 유저 캐릭터도 수정해줘야할듯
-                //자신의 플레이어 ActorNumber 가 전송받은 id와 같은지 비교하고 몬스터, 연구원으로 초기화함.
-                bool isMonster = PhotonNetwork.LocalPlayer.ActorNumber == id;
+                //TODO: 자신의 플레이어 ActorNumber 가 전송받은 id와 같은지 비교하고 몬스터, 연구원으로 초기화함.
+                if(PhotonNetwork.LocalPlayer.ActorNumber == id)
+                {
 
+                }
                 break;
             case EventCode.AttackRequest:
                 string message = (string)photonEvent.CustomData; // 전송된 데이터를 받음
@@ -62,18 +63,9 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
                 }
                 break;
             case EventCode.SwitchDayNight:
-                bool isDay = (bool)photonEvent.CustomData;
-                LightShifter shifter = FindObjectOfType<LightShifter>();
-                if (isDay)
-                {
-                    shifter.OnDayShift();
-                }
-                else
-                {
-                    shifter.OnNightShift();
-                }
-                // TODO: DayNight Slider 측에도 정보 보내줘야함.
 
+                break;
+            case EventCode.HungerGauge:
 
                 break;
         }

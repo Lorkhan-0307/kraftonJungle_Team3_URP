@@ -120,4 +120,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         GetComponent<ServerLogic>().SetPlayerRole();
     }
 
+    // 모든 클라이언트에게 이벤트를 보냄.
+    public void HungerEvent(bool ishungerzero)
+    {
+        SendToClients(EventCode.HungerGauge, ishungerzero);
+    }
 }
