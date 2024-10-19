@@ -5,7 +5,7 @@ public class TimeSwitchSlider : MonoBehaviour
 {
     public Slider slider;
 
-    private bool isDay = true;
+    private bool isDay = GameManager.instance.GetTime();
     GameObject hungerSlider
     {
         get 
@@ -64,6 +64,7 @@ public class TimeSwitchSlider : MonoBehaviour
             Debug.Log("Switch Day and Night");
             elapsedTime = 0f;
             isDay = !isDay;
+            NetworkManager.Instance.SwitchDayNight(isDay);
 
             // UI 활성화 여부
             if (hungerSlider)
