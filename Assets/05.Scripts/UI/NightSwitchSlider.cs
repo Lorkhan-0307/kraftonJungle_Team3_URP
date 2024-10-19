@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TimeSwitchSlider : MonoBehaviour, ISlider
+public class NightSwitchSlider : MonoBehaviour
 {
     public Slider slider;
 
@@ -13,12 +13,7 @@ public class TimeSwitchSlider : MonoBehaviour, ISlider
     public float increaseTime = 20f;
 
     Timer timer = new Timer();
-    
-    // ì´ ë°©ì‹ì—ì„œëŠ” allNPC ë‚´ì˜ ìš”ì†Œë¥¼ ì œê±°í•  ìˆ˜ ì—†ê¸° ë•Œë¬¸ì— ìˆ˜ì •í•´ì•¼ í•©ë‹ˆë‹¤.
-    public GameObject[] allNPC;
-
-    [SerializeField]
-    private float accelateTime = 10f;
+    GameObject[] allNPC;
 
     private void Start()
     {
@@ -32,13 +27,13 @@ public class TimeSwitchSlider : MonoBehaviour, ISlider
 
         if (isDay)
         {
-            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ûµï¿½
+            // ³·ÀÏ ¶§ ÀÛµ¿
             hungerSlider.SetActive(true);
 
-            // ï¿½ï¿½ NPC ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ È°ï¿½ï¿½È­
+            // °¢ NPC ¿ÀºêÁ§Æ®¸¦ È°¼ºÈ­
             foreach (GameObject npc in allNPC)
             {
-                // NPC È°ï¿½ï¿½È­
+                // NPC È°¼ºÈ­
                 npc.SetActive(true);
             }
 
@@ -49,16 +44,16 @@ public class TimeSwitchSlider : MonoBehaviour, ISlider
 
             time = increaseTime;
         }
-        // ï¿½ï¿½ï¿½Ì¸ï¿½
+        // ¹ãÀÌ¸é
         else
         {
-            // UI ï¿½ï¿½È°ï¿½ï¿½È­
+            // UI ºñÈ°¼ºÈ­
             hungerSlider.SetActive(false);
 
-            // ï¿½ï¿½ NPC ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
+            // °¢ NPC ¿ÀºêÁ§Æ®¸¦ ºñÈ°¼ºÈ­
             foreach (GameObject npc in allNPC)
             {
-                // NPC ï¿½ï¿½È°ï¿½ï¿½È­
+                // NPC ºñÈ°¼ºÈ­
                 npc.SetActive(false);
             }
 
@@ -69,7 +64,7 @@ public class TimeSwitchSlider : MonoBehaviour, ISlider
 
             time = decreaseTime;
         }
-        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        // ³·¹ã ÀüÈ¯µÆÀ¸¸é
         if (isDay != timer.GoTime(time, slider, elapsedTime))
         {
             Debug.Log("Switch Day and Night");
@@ -78,14 +73,9 @@ public class TimeSwitchSlider : MonoBehaviour, ISlider
         }
     }
 
-    public void SetValue(float value)
+    public void SetTime(float time)
     {
-        slider.value = value;
+        slider.value = time;
     }
 
-    public void FastTime()
-    {
-        float t = (elapsedTime + accelateTime) / increaseTime;
-        slider.value = t;
-    }
 }

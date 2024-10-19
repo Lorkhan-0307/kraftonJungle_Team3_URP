@@ -16,7 +16,7 @@ public class Monster : Player
         base.OnDamaged(attacker);
         
         // 여기서 Destroy 결과 전송
-        Destroy(this);
+        Destroy(this.gameObject);
         //PhotonNetwork.Destroy(this.gameObject);
     }
 
