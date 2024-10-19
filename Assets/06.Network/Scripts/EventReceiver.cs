@@ -31,8 +31,7 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
                 //TODO: 이거 지금 자기자신만 수정하는거같은데 이후에 다른 유저 캐릭터도 수정해줘야할듯
                 //자신의 플레이어 ActorNumber 가 전송받은 id와 같은지 비교하고 몬스터, 연구원으로 초기화함.
                 bool isMonster = PhotonNetwork.LocalPlayer.ActorNumber == id;
-                GameManager.instance.SetPlayer(isMonster 
-                    ? CharacterType.Monster : CharacterType.Scientist);
+
                 break;
             case EventCode.AttackRequest:
                 string message = (string)photonEvent.CustomData; // 전송된 데이터를 받음
