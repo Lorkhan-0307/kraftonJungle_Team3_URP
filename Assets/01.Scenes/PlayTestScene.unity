@@ -22099,8 +22099,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11ff6284edb511846a8a55baf174d4b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcPrefab: 
-  npcCount: 10
+  npcPrefab: Player_NPC
+  npcCount: 20
   npcGroupName: AllNPC
   allNPC: []
   moveRadius: 10
