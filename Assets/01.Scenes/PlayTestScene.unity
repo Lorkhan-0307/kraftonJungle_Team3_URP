@@ -19640,6 +19640,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 3599ad65-fa95-4355-975c-8a49e62b9628
     m_ActionName: DebugActions/On/Off Light[/Keyboard/t]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 35a91cbf-ecf1-4488-a78c-89370bae7bb2
+    m_ActionName: PlayerActions/Kill[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: PC
   m_DefaultActionMap: DebugActions
@@ -37710,7 +37714,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1307570992}
   - component: {fileID: 1307570994}
-  - component: {fileID: 1307570993}
+  - component: {fileID: 1307570995}
   m_Layer: 5
   m_Name: NightSwitchSlider
   m_TagString: Untagged
@@ -37742,22 +37746,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -65}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1307570993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1307570991}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaa7d1301ee47b0429912e4a121d4c18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 1307570994}
-  isDay: 1
-  decreaseTime: -20
-  increaseTime: 20
 --- !u!114 &1307570994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37809,6 +37797,23 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1307570995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1307570991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55eca92a6eda2ee4e82662bad2636c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 1307570994}
+  isDay: 1
+  decreaseTime: -20
+  increaseTime: 20
+  accelateTime: 10
 --- !u!1001 &1307708139
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45767,6 +45772,9 @@ MonoBehaviour:
     m_Bits: 0
   footStepSound: {fileID: 8300000, guid: 263f8aaa01d5d0041b082b7b69d9ca02, type: 3}
   footStepDelay: 0.35
+  raycastShootPos: {fileID: 0}
+  attackrange: 3
+  killButton: {fileID: 0}
 --- !u!143 &1656206105
 CharacterController:
   m_ObjectHideFlags: 0
@@ -51447,7 +51455,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1853655505}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c91659bbb268d64bab9f93c0a915d20, type: 3}
+  m_Script: {fileID: 11500000, guid: 3089fe058a789e1418a11ddb69d068de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hungerSlider: {fileID: 1853655508}

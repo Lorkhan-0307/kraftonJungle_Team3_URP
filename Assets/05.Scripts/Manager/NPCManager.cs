@@ -44,6 +44,7 @@ public class NPCManager : MonoBehaviour
 
     void Update()
     {
+        // 낮일 때만 작동
         for (int i = 0; i < npcCount; i++)
         {
             NavMeshAgent agent = allNPC[i].GetComponent<NavMeshAgent>();
@@ -106,5 +107,25 @@ public class NPCManager : MonoBehaviour
         NavMeshHit hit;
         NavMesh.SamplePosition(randomDirection, out hit, moveRadius, 1);
         agent.SetDestination(hit.position);
+    }
+
+    public void SetAble()
+    {
+        // 각 NPC 오브젝트를 활성화
+        foreach (GameObject npc in allNPC)
+        {
+            // NPC 활성화
+            npc.SetActive(true);
+        }
+    }
+
+    public void SetDisable()
+    {
+        // 각 NPC 오브젝트를 비활성화
+        foreach (GameObject npc in allNPC)
+        {
+            // NPC 비활성화
+            npc.SetActive(false);
+        }
     }
 }
