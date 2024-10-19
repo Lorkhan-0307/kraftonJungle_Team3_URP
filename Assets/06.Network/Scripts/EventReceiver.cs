@@ -29,14 +29,17 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
                 NetworkManager.Instance.StartGame(photonEvent.CustomData);
                 break;
             case EventCode.AttackRequest:
-                string message = (string)photonEvent.CustomData; // 전송된 데이터를 받음
-                //데이터 : "{공격자ID},{피격자ID}"
-                Debug.Log("이벤트 수신: " + message);
-                string[] tokens = message.Split(',');
-                PhotonView from = PhotonNetwork.GetPhotonView(int.Parse(tokens[0]));
-                PhotonView to = PhotonNetwork.GetPhotonView(int.Parse(tokens[1]));
+                object[] datas = (object[])photonEvent.CustomData; // 전송된 데이터를 받음
+                //데이터 : {공격자ID, 피격자ID}
+                
+                PhotonView from = PhotonNetwork.GetPhotonView((int)datas[0]);
+                PhotonView to = PhotonNetwork.GetPhotonView((int)datas[0]);
 
                 //TODO: 공격자 피격자 이용해서 해야하는 로직들 처리하기
+                if(to.AmOwner)
+                {
+                    to.GetComponent<Player>().OnDamaged(from.gameObject);
+                }
                 break;
             case EventCode.PlayerDeath:
                 ServerLogic server = GetComponent<ServerLogic>();

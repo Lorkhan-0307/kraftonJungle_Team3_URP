@@ -148,7 +148,7 @@ public class PlayerMovement : MonoBehaviour
     {
         player.OnAttack(target);
         Player targetPlayer = target.GetComponent<Player>();
-        targetPlayer.OnDamaged(controller.gameObject);
+        //targetPlayer.OnDamaged(controller.gameObject);
     }
 
     private bool IsAvailableToAttack()
