@@ -8,6 +8,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 {
     public GameState curState = GameState.OnRoom;
 
+    Player myPlayer;
 
 
 
@@ -129,6 +130,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         else
             go = PhotonNetwork.Instantiate(playerScientistName, myPosition, Quaternion.identity);
 
+        myPlayer = go.GetComponent<Player>();
+
         GameObject po = Instantiate(playerObjectPrefab, go.transform.position, go.transform.rotation, go.transform);
 
         curState = GameState.Playing;
@@ -155,5 +158,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void HungerEvent(bool ishungerzero)
     {
         SendToClients(EventCode.HungerGauge, ishungerzero);
+    }
+
+    public bool IsMonster()
+    {
+        return myPlayer.is_player;
     }
 }
