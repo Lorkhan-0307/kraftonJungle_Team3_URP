@@ -5,7 +5,7 @@ public class TimeSwitchSlider : MonoBehaviour
 {
     public Slider slider;
 
-    private bool isDay = true;
+    private bool isDay;
     GameObject hungerSlider
     {
         get 
@@ -32,6 +32,7 @@ public class TimeSwitchSlider : MonoBehaviour
     {
         lightShifter = FindObjectOfType<LightShifter>();
         npcManager = FindObjectOfType<NPCManager>();
+        isDay = GameManager.instance.GetTime();
     }
 
     private void Update()
@@ -64,19 +65,25 @@ public class TimeSwitchSlider : MonoBehaviour
             Debug.Log("Switch Day and Night");
             elapsedTime = 0f;
             isDay = !isDay;
-            NetworkManager.Instance.SwitchDayNight(isDay);
-
-            // UI 활성화 여부
-            if (hungerSlider)
-            {
-                hungerSlider.SetActive(isDay);
-            }
-
-            if (isDay) npcManager.SetAble();
-            else npcManager.SetDisable();
-
-            lightShifter.ShiftTime();
+            // 호스트만
+            if(NetworkManager.Instance.IsServer())
+                NetworkManager.Instance.SwitchDayNight(isDay);
         }
+    }
+
+    public void SwitchTime(bool isDay)
+    {
+        this.isDay = isDay;
+        // UI 활성화 여부
+        if (hungerSlider)
+        {
+            hungerSlider.SetActive(isDay);
+        }
+
+        if (isDay) npcManager.SetAble();
+        else npcManager.SetDisable();
+
+        lightShifter.ShiftTime();
     }
 
     public void FastTime()

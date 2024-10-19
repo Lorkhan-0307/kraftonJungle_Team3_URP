@@ -51,6 +51,19 @@ public class GameManager : Singleton<GameManager>
         isDay = false;
     }
 
+    public void SwitchTime(bool isDay)
+    {
+        if (isDay)
+        {
+            SetNight();
+        }
+        else
+        {
+            SetDay();
+        }
+        FindObjectOfType<TimeSwitchSlider>().SwitchTime(isDay);
+    }
+
     // Get Day/Night() 필요할 듯
     public bool GetTime()
     {
