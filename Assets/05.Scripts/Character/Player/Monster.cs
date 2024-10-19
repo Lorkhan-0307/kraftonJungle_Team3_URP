@@ -37,7 +37,7 @@ public class Monster : Player
     // Use this when Hunger Gauge reset
     public void NoHunger()
     {
-        hungerParticle = GetComponentInChildren<ParticleSystem>().GameObject();
+        hungerParticle = GetComponentInChildren<ParticleSystem>(true).GameObject();
         hungerParticle.SetActive(false);
     }
 }
