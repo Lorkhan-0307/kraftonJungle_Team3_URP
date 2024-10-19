@@ -22,6 +22,7 @@ public class NPC : Player
                 // Monster 에게만
                 if (NetworkManager.Instance.IsMonster())
                 {
+                    Debug.Log("Monster's gage is Max");
                     FindObjectOfType<HungerSlider>().SetHungerMax();
                 }
                 NetworkManager.Instance.HungerEvent(false);
