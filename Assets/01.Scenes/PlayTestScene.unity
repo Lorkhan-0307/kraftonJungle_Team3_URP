@@ -96,7 +96,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 6b1898ad4516ba84e875c72015f574b3,
+  m_LightingDataAsset: {fileID: 112000000, guid: e2f369451eaec7247876ab04b95dae2a,
     type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 879fee6a25cf7bb41973f60cbb23531f,
     type: 2}
@@ -19550,8 +19550,16 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 3599ad65-fa95-4355-975c-8a49e62b9628
     m_ActionName: DebugActions/On/Off Light[/Keyboard/t]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 35a91cbf-ecf1-4488-a78c-89370bae7bb2
+    m_ActionName: PlayerActions/Kill[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2f5b53e8-1157-49bb-b324-3cef7353cd2d
+    m_ActionName: PlayerActions/Run[/Keyboard/leftShift]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: PC
+  m_DefaultControlScheme: 
   m_DefaultActionMap: DebugActions
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
