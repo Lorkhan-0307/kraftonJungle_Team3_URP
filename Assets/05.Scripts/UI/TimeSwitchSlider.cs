@@ -13,35 +13,28 @@ public class TimeSwitchSlider : MonoBehaviour, ISlider
     public float increaseTime = 20f;
 
     Timer timer = new Timer();
-    
-    // ì´ ë°©ì‹ì—ì„œëŠ” allNPC ë‚´ì˜ ìš”ì†Œë¥¼ ì œê±°í•  ìˆ˜ ì—†ê¸° ë•Œë¬¸ì— ìˆ˜ì •í•´ì•¼ í•©ë‹ˆë‹¤.
-    public GameObject[] allNPC;
+    GameObject[] allNPC;
 
     [SerializeField]
     private float accelateTime = 10f;
+    LightShifter lightShifter;
+    NPCManager npcManager;
 
     private void Start()
     {
         hungerSlider = GameObject.Find("HungerSlider");
         allNPC = GameObject.FindGameObjectsWithTag("NPC");
+        lightShifter = FindObjectOfType<LightShifter>();
+        npcManager = FindObjectOfType<NPCManager>();
     }
 
     private void Update()
     {
         float time;
 
+        // ³·ÀÏ ¶§ ÀÛµ¿
         if (isDay)
         {
-            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ûµï¿½
-            hungerSlider.SetActive(true);
-
-            // ï¿½ï¿½ NPC ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ È°ï¿½ï¿½È­
-            foreach (GameObject npc in allNPC)
-            {
-                // NPC È°ï¿½ï¿½È­
-                npc.SetActive(true);
-            }
-
             if (elapsedTime < increaseTime)
             {
                 elapsedTime += Time.deltaTime;
@@ -49,19 +42,9 @@ public class TimeSwitchSlider : MonoBehaviour, ISlider
 
             time = increaseTime;
         }
-        // ï¿½ï¿½ï¿½Ì¸ï¿½
+        // ¹ãÀÌ¸é
         else
         {
-            // UI ï¿½ï¿½È°ï¿½ï¿½È­
-            hungerSlider.SetActive(false);
-
-            // ï¿½ï¿½ NPC ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
-            foreach (GameObject npc in allNPC)
-            {
-                // NPC ï¿½ï¿½È°ï¿½ï¿½È­
-                npc.SetActive(false);
-            }
-
             if ((elapsedTime*-1) > decreaseTime)
             {
                 elapsedTime += Time.deltaTime;
@@ -69,12 +52,20 @@ public class TimeSwitchSlider : MonoBehaviour, ISlider
 
             time = decreaseTime;
         }
-        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        // ³·¹ã ÀüÈ¯µÆÀ¸¸é
         if (isDay != timer.GoTime(time, slider, elapsedTime))
         {
             Debug.Log("Switch Day and Night");
             elapsedTime = 0f;
             isDay = !isDay;
+
+            // UI È°¼ºÈ­ ¿©ºÎ
+            hungerSlider.SetActive(isDay);
+
+            if (isDay) npcManager.SetAble();
+            else npcManager.SetDisable();
+
+            lightShifter.ShiftTime();
         }
     }
 
