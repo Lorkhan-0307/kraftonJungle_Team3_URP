@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Singleton<T> : ScriptableObject where T : ScriptableObject
+public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T Instance;
 
@@ -10,7 +10,7 @@ public class Singleton<T> : ScriptableObject where T : ScriptableObject
         {
             if (Instance == null)
             {
-                Instance = Resources.FindObjectsOfTypeAll<T>()[0];
+                Instance = FindObjectOfType<T>();
             }
             return Instance;
         }
