@@ -13,8 +13,9 @@ public class Scientist : Player
     public override void OnDamaged(GameObject attacker)
     {
         base.OnDamaged(attacker);
+        Debug.Log("ONDAMAGED");
         // 여기서 Destroy 결과 전송
-        Destroy(this);
+        Destroy(this.gameObject);
         //PhotonNetwork.Destroy(this.gameObject);
     }
 
