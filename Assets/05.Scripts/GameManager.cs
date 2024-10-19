@@ -11,7 +11,7 @@ public enum CharacterType
 }
 
 
-public class GameManager : ScriptableSingleton<GameManager>
+public class GameManager : Singleton<GameManager>
 {
     public bool isDay = true;
     
