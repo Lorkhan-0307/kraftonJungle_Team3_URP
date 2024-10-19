@@ -135,6 +135,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         GameObject po = Instantiate(playerObjectPrefab, go.transform.position, go.transform.rotation, go.transform);
 
         curState = GameState.Playing;
+        GameManager.instance.StartGame();
     }
     #endregion
 

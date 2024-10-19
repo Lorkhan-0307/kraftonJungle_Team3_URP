@@ -3,7 +3,9 @@ guid: 3089fe058a789e1418a11ddb69d068de
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - hungerSlider: {fileID: 7834549293180564991, guid: ff6fca7c0d5d6ef4e8451d4fed10b479,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
