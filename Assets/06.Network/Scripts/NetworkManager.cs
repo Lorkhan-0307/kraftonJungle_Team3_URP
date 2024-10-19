@@ -143,6 +143,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         curState = GameState.Playing;
         GameManager.instance.StartGame();
+
+        Invoke("FindAllNPC", 1f);
+    }
+
+    void FindAllNPC()
+    {
+        FindObjectOfType<NPCManager>().FindAllNPC();
     }
     #endregion
 

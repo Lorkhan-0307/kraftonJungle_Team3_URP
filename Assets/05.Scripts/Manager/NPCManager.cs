@@ -37,7 +37,7 @@ public class NPCManager : MonoBehaviour
 
             // NPC 생성
             GameObject npc = PhotonNetwork.Instantiate(npcPrefab, randomPosition, Quaternion.identity);
-            allNPC.Add(npc);
+            //allNPC.Add(npc);
             npc.transform.parent = NPCGroup.transform;
             SetNewDestination(npc.GetComponent<NavMeshAgent>());
         }
@@ -135,8 +135,8 @@ public class NPCManager : MonoBehaviour
 
     public void SetDisable()
     {
-        if (allNPC.Count == 0)
-            FindAllNPC();
+        //if (allNPC.Count == 0)
+        //    FindAllNPC();
         // 각 NPC 오브젝트를 비활성화
         foreach (GameObject npc in allNPC)
         {
