@@ -113,7 +113,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         for(int i = 0; i < isAlivePlayers.Length; i++ )
         {
             if(isAlivePlayers[i])
-                result.Add(i);
+                result.Add(i+1);
         }
 
         return result;
