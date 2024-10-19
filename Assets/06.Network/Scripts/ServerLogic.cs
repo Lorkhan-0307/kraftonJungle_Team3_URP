@@ -156,6 +156,8 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     {
         // 현재 룸에 접속되어있는 플레이어 목록을 가져옴
         Photon.Realtime.Player[] playerList = PhotonNetwork.PlayerList;
+
+        // 플레이어 생존 여부 배열 초기화
         isAlivePlayers = new bool[playerList.Length];
 
         for (int i = 0; i < isAlivePlayers.Length; i++)
@@ -166,7 +168,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         Debug.Log("플레이어 수: " + playerList.Length.ToString());
 
         // 랜덤으로 몬스터 번호 할당
-        int monsterActorNum = Random.Range(0, playerList.Length) + 1;
+        int monsterActorNum = Random.Range(0, playerList.Length)+1;
         Debug.Log("몬스터 번호: " + monsterActorNum);
 
         Vector3[] randomSpawnPos = new Vector3[playerList.Length];
@@ -175,6 +177,8 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         {
             // 각 플레이어의 랜덤 스폰 위치 설정
             randomSpawnPos[i] = NPCManager.GetRandomNavMeshPosition();
+
+            Debug.Log($"플레이어{i + 1} : {randomSpawnPos.ToString()}");
         }
         // 이벤트 데이터에 스폰 위치와 몬스터 번호를 담음
         object[] eventData = new object[] { randomSpawnPos, monsterActorNum };
