@@ -12,7 +12,7 @@ public class NPCManager : MonoBehaviour
     public string npcGroupName = "AllNPC";
 
     private GameObject NPCGroup;
-    private GameObject[] allNPC;
+    public GameObject[] allNPC;
 
     public float moveRadius = 10f;
 
@@ -64,7 +64,7 @@ public class NPCManager : MonoBehaviour
     }
 
     // NavMesh 위 랜덤 유효 위치 찾기
-    Vector3 GetRandomNavMeshPosition()
+    public static Vector3 GetRandomNavMeshPosition()
     {
         // 모든 NavMeshSurface 찾기
         NavMeshSurface[] navMeshSurfaces = FindObjectsOfType<NavMeshSurface>();

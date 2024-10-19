@@ -19644,6 +19644,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 35a91cbf-ecf1-4488-a78c-89370bae7bb2
     m_ActionName: PlayerActions/Kill[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2f5b53e8-1157-49bb-b324-3cef7353cd2d
+    m_ActionName: PlayerActions/Run[/Keyboard/leftShift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: PC
   m_DefaultActionMap: DebugActions
@@ -22192,6 +22196,7 @@ MonoBehaviour:
     type: 3}
   npcCount: 10
   npcGroupName: AllNPC
+  allNPC: []
   moveRadius: 10
   minWaitTime: 2
   maxWaitTime: 5
@@ -45763,6 +45768,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 1656206105}
   speed: 8
+  monsterNightSpeed: 12
   gravity: -18
   jumpHeight: 1.5
   groundCheck: {fileID: 332806202}
@@ -45775,6 +45781,7 @@ MonoBehaviour:
   raycastShootPos: {fileID: 0}
   attackrange: 3
   killButton: {fileID: 0}
+  player: {fileID: 0}
 --- !u!143 &1656206105
 CharacterController:
   m_ObjectHideFlags: 0
@@ -51415,7 +51422,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1853655506}
   - component: {fileID: 1853655508}
-  - component: {fileID: 1853655507}
+  - component: {fileID: 1853655509}
   m_Layer: 5
   m_Name: HungerSlider
   m_TagString: Untagged
@@ -51446,20 +51453,6 @@ RectTransform:
   m_AnchoredPosition: {x: -628, y: -65}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1853655507
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1853655505}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3089fe058a789e1418a11ddb69d068de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hungerSlider: {fileID: 1853655508}
-  decreaseTime: -20
 --- !u!114 &1853655508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51511,6 +51504,20 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1853655509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1853655505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3089fe058a789e1418a11ddb69d068de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hungerSlider: {fileID: 1853655508}
+  decreaseTime: -20
 --- !u!1 &1853993618 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 387364091424724237, guid: aedebdaeae12a6743b39120d2f5156b0,
