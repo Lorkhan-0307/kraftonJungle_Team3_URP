@@ -31,19 +31,19 @@ public class PlayerMovement : MonoBehaviour
     private InputAction killAction;
     private InputAction runAction;
 
-    [SerializeField] private Transform raycastShootPos;
-    [SerializeField] private float attackrange = 3f;
+    //[SerializeField] private Transform raycastShootPos;
+    //[SerializeField] private float attackrange = 3f;
     private KillButton killButton;
-    
-    
-    
+
+
+
     public Player player;
-    
-    
+
+
     //Using Raycast
-    RaycastHit hit;
-    GameObject target;
-    
+    //RaycastHit hit;
+    //GameObject target;
+
 
     private void Awake()
     {
@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
         {
             killButton = FindObjectOfType<KillButton>();
         }
-        
+
     }
 
     // Update is called once per frame
@@ -102,12 +102,9 @@ public class PlayerMovement : MonoBehaviour
 
 
         // Using RayCast to detect attack
-        RayCastAttackDetection();
-        
-        
-        
-        
-        if (killButton.GetInteractable() && killAction.triggered && target != null)
+        player.RayCastAttackDetection();
+
+        if (killButton.GetInteractable() && killAction.triggered && player.target != null)
         {
             AttackAction();   
         }
@@ -125,35 +122,40 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    private void RayCastAttackDetection()
-    {
-        if (Physics.Raycast(raycastShootPos.position, transform.forward, out hit, attackrange))
-        {
-            // 밤에는 연구원이 몬스터 못 죽임
-            // 낮에는 연구원만 몬스터를 죽일 수 있음
-            if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("NPC"))
-            {
-                //Debug.Log("DETECT PLAYER");
-                killButton.SetAble();
-                target = hit.collider.gameObject;
-            }
-            else
-            {
-                killButton.SetDisable();
-                target = null;
-            }
-        }
-        else
-        {
-            killButton.SetDisable();
-            target = null;
-        }
-    }
+    //private void RayCastAttackDetection()
+    //{
+    //    if (Physics.Raycast(raycastShootPos.position, transform.forward, out hit, attackrange))
+    //    {
+    //        // 낮, 연구원 : 현재 로직
+    //        // 밤, 연구원 : Kill X (Detect 호출 X)
+
+    //        // 밤, 몬스터 : 현재 로직
+    //        // 낮, 몬스터 : NPC만 Kill
+
+    //        // 플레이어 혹은 NPC이면 킬 가능
+    //        if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("NPC"))
+    //        {
+    //            //Debug.Log("DETECT PLAYER");
+    //            killButton.SetAble();
+    //            target = hit.collider.gameObject;
+    //        }
+    //        else
+    //        {
+    //            killButton.SetDisable();
+    //            target = null;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        killButton.SetDisable();
+    //        target = null;
+    //    }
+    //}
 
     private void AttackAction()
     {
-        player.OnAttack(target);
-        Player targetPlayer = target.GetComponent<Player>();
+        player.OnAttack(player.target);
+        Player targetPlayer = player.target.GetComponent<Player>();
         //targetPlayer.OnDamaged(controller.gameObject);
     }
 
