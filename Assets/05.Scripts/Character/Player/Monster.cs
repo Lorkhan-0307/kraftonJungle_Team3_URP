@@ -40,4 +40,17 @@ public class Monster : Player
         hungerParticle = GetComponentInChildren<ParticleSystem>(true).GameObject();
         hungerParticle.SetActive(false);
     }
+
+    public override bool AttackDetection(GameObject target)
+    {
+        if (GameManager.instance.GetTime())
+        {
+            if (target.CompareTag("NPC")) return true;
+        }
+        else
+        {
+            if (target.CompareTag("Player")) return true;
+        }
+        return false;
+    }
 }

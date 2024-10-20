@@ -31,18 +31,16 @@ public class PlayerMovement : MonoBehaviour
     private InputAction killAction;
     private InputAction runAction;
 
-    //[SerializeField] private Transform raycastShootPos;
-    //[SerializeField] private float attackrange = 3f;
-    private KillButton killButton;
-
-
+    [SerializeField] private Transform raycastShootPos;
+    [SerializeField] private float attackrange = 3f;
+    private Button killButton;
 
     public Player player;
 
 
     //Using Raycast
-    //RaycastHit hit;
-    //GameObject target;
+    RaycastHit hit;
+    GameObject target;
 
 
     private void Awake()
@@ -63,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (killButton == null)
         {
-            killButton = FindObjectOfType<KillButton>();
+            killButton = FindObjectOfType<KillButton>().GetComponent<Button>();
         }
 
     }
@@ -102,9 +100,9 @@ public class PlayerMovement : MonoBehaviour
 
 
         // Using RayCast to detect attack
-        player.RayCastAttackDetection();
+        RayCastAttackDetection();
 
-        if (killButton.GetInteractable() && killAction.triggered && player.target != null)
+        if (killButton.interactable && killAction.triggered && target != null)
         {
             AttackAction();   
         }
@@ -122,40 +120,36 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    //private void RayCastAttackDetection()
-    //{
-    //    if (Physics.Raycast(raycastShootPos.position, transform.forward, out hit, attackrange))
-    //    {
-    //        // 낮, 연구원 : 현재 로직
-    //        // 밤, 연구원 : Kill X (Detect 호출 X)
+    private void RayCastAttackDetection()
+    {
+        if (Physics.Raycast(raycastShootPos.position, transform.forward, out hit, attackrange))
+        {
+            // 낮, 연구원 : 현재 로직
+            // 밤, 연구원 : Kill X (Detect 호출 X)
 
-    //        // 밤, 몬스터 : 현재 로직
-    //        // 낮, 몬스터 : NPC만 Kill
+            // 밤, 몬스터 : 현재 로직
+            // 낮, 몬스터 : NPC만 Kill
 
-    //        // 플레이어 혹은 NPC이면 킬 가능
-    //        if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("NPC"))
-    //        {
-    //            //Debug.Log("DETECT PLAYER");
-    //            killButton.SetAble();
-    //            target = hit.collider.gameObject;
-    //        }
-    //        else
-    //        {
-    //            killButton.SetDisable();
-    //            target = null;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        killButton.SetDisable();
-    //        target = null;
-    //    }
-    //}
+            target = hit.collider.gameObject;
+
+            bool canAttack = player.AttackDetection(target);
+            
+            killButton.interactable = canAttack;
+
+            if (!canAttack)
+                target = null;
+        }
+        else
+        {
+            killButton.interactable = false;
+            target = null;
+        }
+    }
 
     private void AttackAction()
     {
-        player.OnAttack(player.target);
-        Player targetPlayer = player.target.GetComponent<Player>();
+        player.OnAttack(target);
+        Player targetPlayer = target.GetComponent<Player>();
         //targetPlayer.OnDamaged(controller.gameObject);
     }
 

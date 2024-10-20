@@ -41,4 +41,10 @@ public class Player : MonoBehaviour, ICharacter
         NetworkManager.Instance.AttackEntity(GetComponent<PhotonView>(), victim.GetComponent<PhotonView>());
         //throw new System.NotImplementedException();
     }
+
+    public virtual bool AttackDetection(GameObject target)
+    {
+
+        return false;
+    }
 }

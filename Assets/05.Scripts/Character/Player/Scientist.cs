@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Scientist : Player
 {
+
     public override void OnAttack(GameObject victim)
     {
         base.OnAttack(victim);
@@ -24,5 +25,15 @@ public class Scientist : Player
     public override void OnDead()
     {
         base.OnDead();
+    }
+
+    public override bool AttackDetection(GameObject target)
+    {
+        // 낮일 떄
+        if (GameManager.instance.GetTime())
+        {
+            if(target.CompareTag("Player") || target.CompareTag("NPC")) return true;
+        }
+        return false;
     }
 }
