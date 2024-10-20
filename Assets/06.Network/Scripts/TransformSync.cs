@@ -5,30 +5,31 @@ using UnityEngine;
 
 public class TransformSync : MonoBehaviourPunCallbacks, IPunObservable
 {
-    private Vector3 latestPos; // ³×Æ®¿öÅ©¿¡¼­ µ¿±âÈ­µÈ À§Ä¡
-    private Quaternion latestRot; // ³×Æ®¿öÅ©¿¡¼­ µ¿±âÈ­µÈ È¸Àü
+    private Vector3 latestPos; // ë„¤íŠ¸ì›Œí¬ì—ì„œ ë™ê¸°í™”ëœ ìœ„ì¹˜
+    private Quaternion latestRot; // ë„¤íŠ¸ì›Œí¬ì—ì„œ ë™ê¸°í™”ëœ íšŒì „
 
-    // ³×Æ®¿öÅ© µ¿±âÈ­¸¦ À§ÇÑ ¸Ş¼­µå
+    // ë„¤íŠ¸ì›Œí¬ ë™ê¸°í™”ë¥¼ ìœ„í•œ ë©”ì„œë“œ
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if (stream.IsWriting) // ³»°¡ µ¥ÀÌÅÍ¸¦ Àü¼ÛÇÒ ¶§
+        if (stream.IsWriting) // ë‚´ê°€ ë°ì´í„°ë¥¼ ì „ì†¡í•  ë•Œ
         {
-            stream.SendNext(transform.position); // À§Ä¡ Àü¼Û
-            stream.SendNext(transform.rotation); // È¸Àü Àü¼Û
+            stream.SendNext(transform.position); // ìœ„ì¹˜ ì „ì†¡
+            stream.SendNext(transform.rotation); // íšŒì „ ì „ì†¡
         }
-        else // ´Ù¸¥ ÇÃ·¹ÀÌ¾îÀÇ µ¥ÀÌÅÍ¸¦ ¹ŞÀ» ¶§
+        else // ë‹¤ë¥¸ í”Œë ˆì´ì–´ì˜ ë°ì´í„°ë¥¼ ë°›ì„ ë•Œ
         {
-            latestPos = (Vector3)stream.ReceiveNext(); // À§Ä¡ ¹Ş±â
-            latestRot = (Quaternion)stream.ReceiveNext(); // È¸Àü ¹Ş±â
+            latestPos = (Vector3)stream.ReceiveNext(); // ìœ„ì¹˜ ë°›ê¸°
+            latestRot = (Quaternion)stream.ReceiveNext(); // íšŒì „ ë°›ê¸°
         }
     }
     private void Update()
     {
-        if (!photonView.IsMine) // ´Ù¸¥ Å¬¶óÀÌ¾ğÆ®ÀÇ ¿ÀºêÁ§Æ®ÀÏ ¶§
+        if (!photonView.IsMine) // ë‹¤ë¥¸ í´ë¼ì´ì–¸íŠ¸ì˜ ì˜¤ë¸Œì íŠ¸ì¼ ë•Œ
         {
-            // À§Ä¡¿Í È¸ÀüÀ» ºÎµå·´°Ô ¾÷µ¥ÀÌÆ®
-            transform.position = Vector3.Lerp(transform.position, latestPos, Time.deltaTime * 10);
-            transform.rotation = Quaternion.Lerp(transform.rotation, latestRot, Time.deltaTime * 10);
+            float lerpValue = Mathf.Clamp01(Time.deltaTime * 10);
+            // ìœ„ì¹˜ì™€ íšŒì „ì„ ë¶€ë“œëŸ½ê²Œ ì—…ë°ì´íŠ¸
+            transform.position = Vector3.Lerp(transform.position, latestPos, lerpValue);
+            transform.rotation = Quaternion.Lerp(transform.rotation, latestRot, lerpValue);
         }
     }
 }
