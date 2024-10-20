@@ -26,10 +26,13 @@ public class TransformSync : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (!photonView.IsMine) // 다른 클라이언트의 오브젝트일 때
         {
-            float lerpValue = Mathf.Clamp01(Time.deltaTime * 10);
-            // 위치와 회전을 부드럽게 업데이트
-            transform.position = Vector3.Lerp(transform.position, latestPos, lerpValue);
-            transform.rotation = Quaternion.Lerp(transform.rotation, latestRot, lerpValue);
+            float lerpValue = Mathf.Clamp01(Time.deltaTime * 20);
+            if (lerpValue > 0)
+            {
+                // 위치와 회전을 부드럽게 업데이트
+                transform.position = Vector3.Lerp(transform.position, latestPos, lerpValue);
+                transform.rotation = Quaternion.Lerp(transform.rotation, latestRot, lerpValue);
+            }
         }
     }
 }

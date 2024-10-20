@@ -40,18 +40,7 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
                 if (!to) break;
 
                 //TODO: 공격자 피격자 이용해서 해야하는 로직들 처리하기
-                if(to.AmOwner)
-                {
-                    to.GetComponent<Player>().OnDamaged(from.gameObject);
-                    if (from.GetComponent<Player>().type == CharacterType.Scientist &&
-                        to.GetComponent<Player>().type == CharacterType.NPC)
-                    {
-                        FindObjectOfType<TimeSwitchSlider>().FastTime();
-
-                        NetworkManager.Instance.TimeAccel(
-                            FindObjectOfType<TimeSwitchSlider>().GetElapsedTime());
-                    }
-                }
+                to.GetComponent<Player>().OnDamaged(from.gameObject);
 
                 break;
             case EventCode.PlayerDeath:

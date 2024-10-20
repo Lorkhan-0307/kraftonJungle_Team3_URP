@@ -29,9 +29,15 @@ public class NPC : Player
                 Debug.Log("MONSTER ATTACKED NPC");
                 break;
             case CharacterType.Scientist:
-                // Todo: less day time
-                FindObjectOfType<TimeSwitchSlider>().FastTime();
-                Debug.Log("SCIENTIST ATTACKED NPC");
+                if(NetworkManager.Instance.IsServer())
+                {
+                    // Todo: less day time
+                    FindObjectOfType<TimeSwitchSlider>().FastTime();
+                    NetworkManager.Instance.TimeAccel(
+                        FindObjectOfType<TimeSwitchSlider>().GetElapsedTime());
+
+                    Debug.Log("SCIENTIST ATTACKED NPC");
+                }
                 break;
         }
 
