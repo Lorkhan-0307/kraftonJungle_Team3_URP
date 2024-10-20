@@ -18,7 +18,8 @@ public class Scientist : Player
         Debug.Log("ONDAMAGED");
         // 여기서 Destroy 결과 전송
         //Destroy(this.gameObject);
-        PhotonNetwork.Destroy(this.gameObject);
+        if (GetComponent<PhotonView>().AmOwner)
+            PhotonNetwork.Destroy(this.gameObject);
         NetworkManager.Instance.PlayerDeath();
     }
 

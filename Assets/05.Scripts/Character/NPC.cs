@@ -50,7 +50,8 @@ public class NPC : Player
         
         // 여기서 Destroy 결과 전송
         //Destroy(this.gameObject);
-        PhotonNetwork.Destroy(this.gameObject);
+        if(GetComponent<PhotonView>().AmOwner)
+            PhotonNetwork.Destroy(this.gameObject);
     }
 
     public override void OnDead()
