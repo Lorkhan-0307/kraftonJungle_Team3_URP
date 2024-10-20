@@ -111,6 +111,7 @@ public class NPCManager : MonoBehaviour
         }
 
         // 유효한 NavMesh 위치가 없으면
+        // y가 1?
         return new Vector3(10, 1, 10);
     }
 
@@ -125,7 +126,7 @@ public class NPCManager : MonoBehaviour
 
     public void SetAble()
     {
-        FindAllNPC();
+        //FindAllNPC();
         // 각 NPC 오브젝트를 활성화
         foreach (GameObject npc in allNPC)
         {
