@@ -14,7 +14,7 @@ public class Player : MonoBehaviour, ICharacter
 
     public void SetPlayer(CharacterType type)
     {
-        type = type;
+        this.type = type;
     }
 
     private void Start()

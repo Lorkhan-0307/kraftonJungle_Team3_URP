@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="EventSystemSpawner.cs" company="Exit Games GmbH">
 // </copyright>
 // <summary>
@@ -25,7 +25,7 @@ namespace Photon.Chat.UtilityScripts
             Debug.LogError("PUN Demos are not compatible with the New Input System, unless you enable \"Both\" in: Edit > Project Settings > Player > Active Input Handling. Pausing App.");
             Debug.Break();
             return;
-            #endif
+            #else
 
             EventSystem sceneEventSystem = FindObjectOfType<EventSystem>();
             if (sceneEventSystem == null)
@@ -35,6 +35,7 @@ namespace Photon.Chat.UtilityScripts
                 eventSystem.AddComponent<EventSystem>();
                 eventSystem.AddComponent<StandaloneInputModule>();
             }
+            #endif
         }
     }
 }

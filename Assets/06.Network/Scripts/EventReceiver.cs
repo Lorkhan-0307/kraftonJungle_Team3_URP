@@ -7,13 +7,13 @@ using Unity.VisualScripting;
 
 public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
 {
-    private void OnEnable()
+    public override void OnEnable()
     {
         // 이벤트 콜백을 등록
         PhotonNetwork.AddCallbackTarget(this);
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
         // 이벤트 콜백 등록 해제
         PhotonNetwork.RemoveCallbackTarget(this);
