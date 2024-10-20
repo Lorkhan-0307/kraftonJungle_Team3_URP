@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private Transform raycastShootPos;
     [SerializeField] private float attackrange = 3f;
-    [SerializeField] private Button killButton;
+    private KillButton killButton;
     
     
     
@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (killButton == null)
         {
-            killButton = FindObjectOfType<KillButton>().GetComponent<Button>();
+            killButton = FindObjectOfType<KillButton>();
         }
         
     }
@@ -107,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
         
         
         
-        if (killButton.interactable && killAction.triggered && target != null)
+        if (killButton.GetInteractable() && killAction.triggered && target != null)
         {
             AttackAction();   
         }
@@ -129,21 +129,23 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Physics.Raycast(raycastShootPos.position, transform.forward, out hit, attackrange))
         {
+            // 밤에는 연구원이 몬스터 못 죽임
+            // 낮에는 연구원만 몬스터를 죽일 수 있음
             if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("NPC"))
             {
                 //Debug.Log("DETECT PLAYER");
-                killButton.interactable = true;
+                killButton.SetAble();
                 target = hit.collider.gameObject;
             }
             else
             {
-                killButton.interactable = false;
+                killButton.SetDisable();
                 target = null;
             }
         }
         else
         {
-            killButton.interactable = false;
+            killButton.SetDisable();
             target = null;
         }
     }

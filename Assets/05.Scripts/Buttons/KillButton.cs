@@ -1,18 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.HID;
+using UnityEngine.UI;
 
 public class KillButton : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Button killButton;
+
+    private void Start()
     {
-        
+        if (killButton == null)
+            killButton = FindObjectOfType<KillButton>().GetComponent<Button>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetAble()
     {
-        
+        killButton.interactable = true;
+    }
+
+    public void SetDisable()
+    {
+        killButton.interactable = false;
+    }
+
+    public bool GetInteractable()
+    {
+        return killButton.interactable;
     }
 }
