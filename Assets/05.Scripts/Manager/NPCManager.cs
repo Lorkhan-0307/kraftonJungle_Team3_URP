@@ -125,6 +125,7 @@ public class NPCManager : MonoBehaviour
 
     public void SetAble()
     {
+        FindAllNPC();
         // 각 NPC 오브젝트를 활성화
         foreach (GameObject npc in allNPC)
         {
@@ -135,6 +136,7 @@ public class NPCManager : MonoBehaviour
 
     public void SetDisable()
     {
+        FindAllNPC();
         // 각 NPC 오브젝트를 비활성화
         foreach (GameObject npc in allNPC)
         {

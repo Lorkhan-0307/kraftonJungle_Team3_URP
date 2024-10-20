@@ -83,6 +83,7 @@ public class TimeSwitchSlider : MonoBehaviour
         if (isDay) npcManager.SetAble();
         else npcManager.SetDisable();
 
+        // 이미 바뀌었는데 또 호출될 가능성?
         lightShifter.ShiftTime();
     }
 
