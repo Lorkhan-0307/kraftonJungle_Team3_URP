@@ -14978,7 +14978,6 @@ MonoBehaviour:
     type: 3}
   canvasPrefab: {fileID: 5561377586965464437, guid: f0788cfb75287574282d46eeef398beb,
     type: 3}
-  canvasTrans: {fileID: 0}
 --- !u!4 &627276454
 Transform:
   m_ObjectHideFlags: 0
