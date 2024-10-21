@@ -71,7 +71,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     #endregion
 
-    #region Methods:Request
     public void AttackEntity(PhotonView from, PhotonView to)
     {
         object[] result = { from.ViewID, to.ViewID };
@@ -97,6 +96,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         SendToClients(EventCode.SwitchDayNight, isDay);
     }
+    #region Methods:Sender
     public void SendToServer(EventCode code, object content)
     {
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient }; // 모든 클라이언트에게 전송
@@ -158,6 +158,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     #endregion
 
+    public InputAction testAction;
     void Start()
     {
         testAction.Enable();
@@ -168,7 +169,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
 
 
-    public InputAction testAction;
     public void Test(InputAction.CallbackContext context)
     {
         GetComponent<ServerLogic>().SetPlayerRole();
