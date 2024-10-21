@@ -72,8 +72,6 @@ public class PlayerMovement : MonoBehaviour
         // 바닥 체크
         //isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        
-        
         isGrounded = controller.isGrounded;
         
         if (isGrounded && velocity.y < 0)
@@ -178,3 +176,4 @@ public class PlayerMovement : MonoBehaviour
         return !GameManager.instance.isDay && player.type == CharacterType.Monster;
     }
 }
+    
