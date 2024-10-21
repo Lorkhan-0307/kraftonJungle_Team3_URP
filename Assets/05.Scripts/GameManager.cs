@@ -39,27 +39,45 @@ public class GameManager : Singleton<GameManager>
         {
             GameObject hungerSlider = Instantiate(hungerSliderPrefab, canvas.transform);
         }
+
+        SetDay();
     }
 
     public void SetDay()
     {
         isDay = true;
+        
+        if (NetworkManager.Instance.IsMonster())
+        {
+            // For Debug
+            Monster m = FindObjectOfType<Monster>();
+            m.OnDayUniteVisibilityScientist();
+        }
+        
     }
 
     public void SetNight()
     {
         isDay = false;
+        
+        
+        if (NetworkManager.Instance.IsMonster())
+        {
+            // For Debug
+            Monster m = FindObjectOfType<Monster>();
+            m.OnNightVisibleScientist();
+        }
     }
 
     public void SwitchTime(bool isDay)
     {
         if (isDay)
         {
-            SetNight();
+            SetDay();
         }
         else
         {
-            SetDay();
+            SetNight();
         }
         FindObjectOfType<TimeSwitchSlider>().SwitchTime(isDay);
     }

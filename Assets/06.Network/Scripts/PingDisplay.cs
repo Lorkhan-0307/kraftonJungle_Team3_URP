@@ -1,26 +1,16 @@
-// ÇÎ Ãâ·Â ÄÚµå.
-// ÇöÀç´Â »ç¿ëÇÏÁö ¾Ê½À´Ï´Ù.
-//using Photon.Pun;
-//using UnityEngine;
-//using UnityEngine.UI;
+using Photon.Pun;
+using UnityEngine;
+using UnityEngine.UI;
 
-//public class PingDisplay : MonoBehaviour
-//{
-//    public Text pingText;  // Ping Á¤º¸¸¦ Ç¥½ÃÇÒ UI Text
+public class PingDisplay : MonoBehaviour
+{
+    public Text pingText;  // Ping ì •ë³´ë¥¼ í‘œì‹œí•  UI Text
 
-//    void Start()
-//    {
-//        // PingText ¿ÀºêÁ§Æ®¸¦ UI¿¡¼­ Ã£½À´Ï´Ù.
-//        if (pingText == null)
-//        {
-//            pingText = GameObject.Find("PingText").GetComponent<Text>();
-//        }
-//    }
 
-//    void Update()
-//    {
-//        // PhotonNetwork.GetPing()¸¦ ÅëÇØ ÇöÀç Ping °ªÀ» °¡Á®¿Í UI¿¡ Ç¥½Ã
-//        int ping = PhotonNetwork.GetPing();
-//        pingText.text = $"Ping: {ping} ms";
-//    }
-//}
+    void Update()
+    {
+        // PhotonNetwork.GetPing()ë¥¼ í†µí•´ í˜„ì¬ Ping ê°’ì„ ê°€ì ¸ì™€ UIì— í‘œì‹œ
+        int ping = PhotonNetwork.GetPing();
+        pingText.text = $"Ping: {ping} ms";
+    }
+}

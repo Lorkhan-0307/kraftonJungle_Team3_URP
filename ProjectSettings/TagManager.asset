@@ -7,6 +7,7 @@ TagManager:
   - ExitLight
   - NPC
   - KillButton
+  - ScientistOutline
   layers:
   - Default
   - TransparentFX

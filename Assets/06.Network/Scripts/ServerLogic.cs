@@ -84,7 +84,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     {
         isAlivePlayers[actorNum-1] = false;
 
-        CheckEndCondition();
+        //CheckEndCondition();
     }
     /// <summary>
     /// 게임 종료조건이 달성되었을 때 실행시켜주세요.
@@ -113,7 +113,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         for(int i = 0; i < isAlivePlayers.Length; i++ )
         {
             if(isAlivePlayers[i])
-                result.Add(i+1);
+                result.Add(i);
         }
 
         return result;
@@ -173,14 +173,18 @@ public class ServerLogic : MonoBehaviourPunCallbacks
 
             Debug.Log($"{i}: {randomSpawnPos[i]}");
         }
+
+        // 필드에 랜덤으로 NPC 뿌림
+        NPCManager npcManager = FindObjectOfType<NPCManager>();
+        npcManager.SpawnNPC();
+
+        int npcCount = npcManager.npcCount;
+
         // 이벤트 데이터에 스폰 위치와 몬스터 번호를 담음
-        object[] eventData = new object[] { randomSpawnPos, monsterActorNum };
+        object[] eventData = new object[] { randomSpawnPos, monsterActorNum, npcCount };
 
         // 이벤트 전송 (몬스터 번호와 랜덤 스폰 위치)
         NetworkManager.Instance.SendToClients(EventCode.GameStart, eventData);
-
-        // 필드에 랜덤으로 NPC 뿌림
-        FindObjectOfType<NPCManager>().SpawnNPC();
     }
     #endregion
 

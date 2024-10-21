@@ -10,6 +10,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     Player myPlayer;
 
+    public int NPCCount = 0;
+
     public bool IsServer()
     {
         return PhotonNetwork.IsMasterClient;
@@ -126,6 +128,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         Vector3[] spawnPos = (Vector3[])datas[0];
         int monsterNum = (int)datas[1];
+        NPCCount = (int)datas[2];
 
         //TODO: 자신의 플레이어 ActorNumber 가 전송받은 id와 같은지 비교하고 몬스터, 연구원으로 초기화함.
         Debug.Log($"Monster : {monsterNum}");
