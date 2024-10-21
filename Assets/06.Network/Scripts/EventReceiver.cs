@@ -44,9 +44,9 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
 
                 break;
             case EventCode.PlayerDeath:
-                ServerLogic server = GetComponent<ServerLogic>();
-                if(server)
+                if(NetworkManager.Instance.IsServer())
                 {
+                    ServerLogic server = GetComponent<ServerLogic>();
                     server.PlayerDeath((int)photonEvent.CustomData);
                 }
                 break;
@@ -68,17 +68,17 @@ public class EventReceiver : MonoBehaviourPunCallbacks, IOnEventCallback
                 FindObjectOfType<TimeSwitchSlider>().SyncTime(0);
                 break;
             case EventCode.HungerGauge:
-                if (!NetworkManager.Instance.monster) return;
+                if (!NetworkManager.Instance.Monster) return;
 
                 bool ishungerzero = (bool)photonEvent.CustomData;
 
                 if(ishungerzero)
                 {
-                    NetworkManager.Instance.monster.OnHunger();
+                    NetworkManager.Instance.Monster.OnHunger();
                 }
                 else
                 {
-                    NetworkManager.Instance.monster.NoHunger(); 
+                    NetworkManager.Instance.Monster.NoHunger(); 
                 }
                 break;
             case EventCode.AccelTime:

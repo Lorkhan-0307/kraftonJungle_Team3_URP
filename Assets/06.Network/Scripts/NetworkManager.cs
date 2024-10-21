@@ -18,7 +18,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
 
 
-    public Monster monster
+    public Monster Monster
     {
         get
         {
@@ -85,9 +85,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     /// </summary>
     public void PlayerDeath()
     {
-        int id = PhotonNetwork.LocalPlayer.ActorNumber;
+        int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
 
-        SendToClients(EventCode.PlayerDeath, id);
+        SendToClients(EventCode.PlayerDeath, actorNumber);
     }
 
     /// <summary>
@@ -155,14 +155,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         curState = GameState.Playing;
         GameManager.instance.StartGame();
-
-        //Invoke("FindAllNPC", 1f);
     }
-
-    //void FindAllNPC()
-    //{
-    //    FindObjectOfType<NPCManager>().FindAllNPC();
-    //}
     #endregion
 
     void Start()
