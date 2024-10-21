@@ -21,7 +21,7 @@ public class Scientist : Player
         if (GetComponent<PhotonView>().AmOwner)
         {
             PhotonNetwork.Destroy(this.gameObject);
-            NetworkManager.Instance.PlayerDeath();
+            NEPlayerDeath.PlayerDeath();
         }
     }
 

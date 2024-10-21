@@ -24,4 +24,11 @@ public class NEHungerGauge : NetworkEvent
             NetworkManager.Instance.Monster.NoHunger();
         }
     }
+
+    // 모든 클라이언트에게 이벤트를 보냄.
+    public static void HungerEvent(bool ishungerzero)
+    {
+        NetworkManager.SendToClients(EventCode.HungerGauge, ishungerzero);
+    }
+
 }

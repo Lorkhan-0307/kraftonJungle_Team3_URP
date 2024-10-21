@@ -15,4 +15,9 @@ public class NEAccelTime : NetworkEvent
 
         FindObjectOfType<TimeSwitchSlider>().SyncTime(SkipTime);
     }
+
+    public static void TimeAccel(float SkipTime)
+    {
+        NetworkManager.SendToClients(EventCode.AccelTime, SkipTime);
+    }
 }

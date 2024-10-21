@@ -38,7 +38,7 @@ public class Player : MonoBehaviour, ICharacter
         // Send Request to server at here
         Debug.Log("TRANSMIT TO SERVER");
 
-        NetworkManager.Instance.AttackEntity(GetComponent<PhotonView>(), victim.GetComponent<PhotonView>());
+        NEAttackRequest.AttackEntity(GetComponent<PhotonView>(), victim.GetComponent<PhotonView>());
         //throw new System.NotImplementedException();
     }
 

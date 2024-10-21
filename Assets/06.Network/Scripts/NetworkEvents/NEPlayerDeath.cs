@@ -1,8 +1,9 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDeath : NetworkEvent
+public class NEPlayerDeath : NetworkEvent
 {
     protected override void Awake()
     {
@@ -16,5 +17,17 @@ public class PlayerDeath : NetworkEvent
             ServerLogic server = FindObjectOfType<ServerLogic>();
             server.PlayerDeath((int)customData);
         }
+    }
+
+
+    /// <summary>
+    /// 죽은 플레이어 본인이 죽은 시점에 실행시켜주세요.
+    /// Run by the dead player.
+    /// </summary>
+    public static void PlayerDeath()
+    {
+        int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
+
+        NetworkManager.SendToClients(EventCode.PlayerDeath, actorNumber);
     }
 }

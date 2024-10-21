@@ -21,6 +21,8 @@ public class NEEndGame : NetworkEvent
         {
             Debug.Log("Defeat!");
         }
+
+        NetworkManager.Instance.curState = GameState.End;
     }
 
     public bool EndGame(string data)

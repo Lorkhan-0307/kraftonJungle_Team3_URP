@@ -24,4 +24,11 @@ public class NEAttackRequest : NetworkEvent
         //TODO: 공격자 피격자 이용해서 해야하는 로직들 처리하기
         to.GetComponent<Player>().OnDamaged(from.gameObject);
     }
+
+    public static void AttackEntity(PhotonView from, PhotonView to)
+    {
+        object[] result = { from.ViewID, to.ViewID };
+
+        NetworkManager.SendToClients(EventCode.AttackRequest, result);
+    }
 }

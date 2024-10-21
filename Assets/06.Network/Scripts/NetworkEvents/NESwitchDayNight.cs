@@ -22,6 +22,6 @@ public class NESwitchDayNight : NetworkEvent
     /// </summary>
     public static void SwitchDayNight(bool isDay)
     {
-        NetworkManager.Instance.SendToClients(EventCode.SwitchDayNight, isDay);
+        NetworkManager.SendToClients(EventCode.SwitchDayNight, isDay);
     }
 }

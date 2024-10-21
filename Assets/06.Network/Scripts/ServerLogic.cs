@@ -105,7 +105,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
             result += players[i].ToString();
         }
 
-        NetworkManager.Instance.SendToClients(EventCode.EndGame, result);
+        NetworkManager.SendToClients(EventCode.EndGame, result);
     }
 
     public List<int> GetAlivePlayers()
@@ -185,7 +185,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         object[] eventData = new object[] { randomSpawnPos, monsterActorNum, npcCount };
 
         // 이벤트 전송 (몬스터 번호와 랜덤 스폰 위치)
-        NetworkManager.Instance.SendToClients(EventCode.GameStart, eventData);
+        NetworkManager.SendToClients(EventCode.GameStart, eventData);
     }
     #endregion
 
@@ -197,7 +197,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     /// <param name="isDay"></param>
     public void SwitchDayNight(bool isDay)
     {
-        NetworkManager.Instance.SendToClients(EventCode.SwitchDayNight, isDay);
+        NetworkManager.SendToClients(EventCode.SwitchDayNight, isDay);
     }
     #endregion
 }

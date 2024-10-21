@@ -30,6 +30,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region RoomServer
+    void Start()
+    {
+        // Photon 서버에 연결
+        PhotonNetwork.ConnectUsingSettings();
+    }
+
     public override void OnConnectedToMaster()
     {
         // 서버에 연결되면 방에 입장 시도
@@ -52,6 +58,25 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     #endregion
 
+    #region Methods:Sender
+    public static void SendToServer(EventCode code, object content)
+    {
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient }; // 모든 클라이언트에게 전송
+        SendOptions sendOptions = new SendOptions { Reliability = true }; // 신뢰성 보장
+
+        //이거 쓰면 될듯
+        PhotonNetwork.RaiseEvent((byte)code, content, raiseEventOptions, sendOptions);
+    }
+    public static void SendToClients(EventCode code, object content)
+    {
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // 모든 클라이언트에게 전송
+        SendOptions sendOptions = new SendOptions { Reliability = true }; // 신뢰성 보장
+
+        //이거 쓰면 될듯
+        PhotonNetwork.RaiseEvent((byte)code, content, raiseEventOptions, sendOptions);
+    }
+    #endregion
+
     public GameState curState = GameState.OnRoom;
 
     public Player myPlayer;
@@ -70,70 +95,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             return FindObjectOfType<Monster>();
         }
-    }
-
-    public void AttackEntity(PhotonView from, PhotonView to)
-    {
-        object[] result = { from.ViewID, to.ViewID };
-
-        SendToClients(EventCode.AttackRequest, result);
-    }
-
-    /// <summary>
-    /// 죽은 플레이어 본인이 죽은 시점에 실행시켜주세요.
-    /// Run by the dead player.
-    /// </summary>
-    public void PlayerDeath()
-    {
-        int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
-
-        SendToClients(EventCode.PlayerDeath, actorNumber);
-    }
-
-    #region Methods:Sender
-    public void SendToServer(EventCode code, object content)
-    {
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient }; // 모든 클라이언트에게 전송
-        SendOptions sendOptions = new SendOptions { Reliability = true }; // 신뢰성 보장
-
-        //이거 쓰면 될듯
-        PhotonNetwork.RaiseEvent((byte)code, content, raiseEventOptions, sendOptions);
-    }
-    public void SendToClients(EventCode code, object content)
-    {
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // 모든 클라이언트에게 전송
-        SendOptions sendOptions = new SendOptions { Reliability = true }; // 신뢰성 보장
-
-        //이거 쓰면 될듯
-        PhotonNetwork.RaiseEvent((byte)code, content, raiseEventOptions, sendOptions);
-    }
-    #endregion
-
-    public InputAction testAction;
-    void Start()
-    {
-        testAction.Enable();
-        testAction.performed += Test;
-        // Photon 서버에 연결
-        PhotonNetwork.ConnectUsingSettings();
-    }
-
-
-
-    public void Test(InputAction.CallbackContext context)
-    {
-        GetComponent<ServerLogic>().SetPlayerRole();
-    }
-
-    // 모든 클라이언트에게 이벤트를 보냄.
-    public void HungerEvent(bool ishungerzero)
-    {
-        SendToClients(EventCode.HungerGauge, ishungerzero);
-    }
-
-    public void TimeAccel(float SkipTime)
-    {
-        SendToClients(EventCode.AccelTime, SkipTime);
     }
 
     public bool IsMonster()

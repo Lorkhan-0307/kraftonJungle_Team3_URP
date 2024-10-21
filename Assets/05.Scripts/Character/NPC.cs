@@ -25,7 +25,7 @@ public class NPC : Player
                     Debug.Log("Monster's gage is Max");
                     FindObjectOfType<HungerSlider>().SetHungerMax();
                 }
-                NetworkManager.Instance.HungerEvent(false);
+                NEHungerGauge.HungerEvent(false);
                 Debug.Log("MONSTER ATTACKED NPC");
                 break;
             case CharacterType.Scientist:
@@ -33,7 +33,7 @@ public class NPC : Player
                 {
                     // Todo: less day time
                     FindObjectOfType<TimeSwitchSlider>().FastTime();
-                    NetworkManager.Instance.TimeAccel(
+                    NEAccelTime.TimeAccel(
                         FindObjectOfType<TimeSwitchSlider>().GetElapsedTime());
 
                     Debug.Log("SCIENTIST ATTACKED NPC");

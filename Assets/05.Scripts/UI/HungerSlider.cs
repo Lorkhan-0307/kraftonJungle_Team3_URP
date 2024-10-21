@@ -21,7 +21,7 @@ public class HungerSlider : MonoBehaviour
             // 0이 되면
             if (timer.GoTime(decreaseTime, hungerSlider, elapsedTime))
             {
-                NetworkManager.Instance.HungerEvent(true);
+                NEHungerGauge.HungerEvent(true);
             }
         }
 
