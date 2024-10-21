@@ -21376,7 +21376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcPrefab: Player_NPC
-  npcCount: 50
+  npcCount: 20
   npcGroupName: AllNPC
   allNPC: []
   moveRadius: 10
@@ -47332,6 +47332,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 911077432}
     m_Modifications:
+    - target: {fileID: 422632009493608201, guid: c4470bf28fca8044dab507d047e88c69,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 998006218707716641, guid: c4470bf28fca8044dab507d047e88c69,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2528018916316870403, guid: c4470bf28fca8044dab507d047e88c69,
         type: 3}
       propertyPath: m_RootOrder
@@ -64825,6 +64835,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4916995761172275742, guid: d324de115c4dff845bee7b7f166883c4,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4975399993979019661, guid: d324de115c4dff845bee7b7f166883c4,
         type: 3}
       propertyPath: m_Name
@@ -64834,6 +64849,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8628764266457687011, guid: d324de115c4dff845bee7b7f166883c4,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

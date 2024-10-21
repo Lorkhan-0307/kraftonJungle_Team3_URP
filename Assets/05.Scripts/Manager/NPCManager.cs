@@ -15,11 +15,11 @@ public class NPCManager : MonoBehaviour
     private GameObject NPCGroup;
     public List<GameObject> allNPC = new List<GameObject>();
 
-    public float moveRadius = 10f;
+    public float moveRadius = 20f;
 
     private float waitTimer;
-    public float minWaitTime = 2f;
-    public float maxWaitTime = 5f;
+    public float minWaitTime = 0.02f;
+    public float maxWaitTime = 0.05f;
 
     void Start()
     {

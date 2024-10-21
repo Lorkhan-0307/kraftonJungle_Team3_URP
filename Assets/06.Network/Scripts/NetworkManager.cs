@@ -18,7 +18,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
 
 
-    public Monster monster
+    public Monster Monster
     {
         get
         {
@@ -71,7 +71,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     #endregion
 
-    #region Methods:Request
     public void AttackEntity(PhotonView from, PhotonView to)
     {
         object[] result = { from.ViewID, to.ViewID };
@@ -85,9 +84,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     /// </summary>
     public void PlayerDeath()
     {
-        int id = PhotonNetwork.LocalPlayer.ActorNumber;
+        int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
 
-        SendToClients(EventCode.PlayerDeath, id);
+        SendToClients(EventCode.PlayerDeath, actorNumber);
     }
 
     /// <summary>
@@ -97,6 +96,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         SendToClients(EventCode.SwitchDayNight, isDay);
     }
+    #region Methods:Sender
     public void SendToServer(EventCode code, object content)
     {
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient }; // 모든 클라이언트에게 전송
@@ -155,16 +155,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         curState = GameState.Playing;
         GameManager.instance.StartGame();
-
-        //Invoke("FindAllNPC", 1f);
     }
-
-    //void FindAllNPC()
-    //{
-    //    FindObjectOfType<NPCManager>().FindAllNPC();
-    //}
     #endregion
 
+    public InputAction testAction;
     void Start()
     {
         testAction.Enable();
@@ -175,7 +169,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
 
 
-    public InputAction testAction;
     public void Test(InputAction.CallbackContext context)
     {
         GetComponent<ServerLogic>().SetPlayerRole();

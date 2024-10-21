@@ -19,8 +19,10 @@ public class Scientist : Player
         // 여기서 Destroy 결과 전송
         //Destroy(this.gameObject);
         if (GetComponent<PhotonView>().AmOwner)
+        {
             PhotonNetwork.Destroy(this.gameObject);
-        NetworkManager.Instance.PlayerDeath();
+            NetworkManager.Instance.PlayerDeath();
+        }
     }
 
     public override void OnDead()
