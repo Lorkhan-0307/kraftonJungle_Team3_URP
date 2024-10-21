@@ -8,8 +8,7 @@ public class NPCManager : MonoBehaviour
 {
     public string npcPrefab;
     // 스폰할 NPC 수
-    [SerializeField]
-    private int npcCount = 10;
+    public int npcCount = 10;
 
     public string npcGroupName = "AllNPC";
 

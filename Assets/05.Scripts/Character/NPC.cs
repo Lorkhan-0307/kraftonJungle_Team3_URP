@@ -47,6 +47,7 @@ public class NPC : Player
         // -> 데모 이후 수정 에정
         NPCManager npcManager = FindObjectOfType<NPCManager>();
         npcManager.allNPC.Remove(this.gameObject);
+        NetworkManager.Instance.NPCCount--;
         
         // 여기서 Destroy 결과 전송
         //Destroy(this.gameObject);
