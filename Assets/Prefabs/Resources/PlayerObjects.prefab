@@ -305,6 +305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMaterial: {fileID: 2100000, guid: fa72cedaeedac51459f1341d77bf2a41, type: 2}
+  originalMaterial: {fileID: 2100000, guid: 14948590691ea624caa281f0cb53ed57, type: 2}
 --- !u!1 &3739888059094696870
 GameObject:
   m_ObjectHideFlags: 0
