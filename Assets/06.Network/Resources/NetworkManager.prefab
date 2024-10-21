@@ -46,11 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curState: 0
+  myPlayer: {fileID: 0}
   NPCCount: 0
-  playerScientistName: Player_Scientist
-  playerMonsterName: Player_Monster
-  playerObjectPrefab: {fileID: 6033922063256332061, guid: 1174927c3e36d014fbd09f2da7f68217,
-    type: 3}
   testAction:
     m_Name: Test
     m_Type: 0
@@ -163,6 +160,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventCode: 0
+  playerScientistName: Player_Scientist
+  playerMonsterName: Player_Monster
+  playerObjectPrefab: {fileID: 6033922063256332061, guid: 1174927c3e36d014fbd09f2da7f68217,
+    type: 3}
 --- !u!114 &3780648650000633309
 MonoBehaviour:
   m_ObjectHideFlags: 0

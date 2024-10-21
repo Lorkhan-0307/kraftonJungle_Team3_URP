@@ -16,4 +16,12 @@ public class NESwitchDayNight : NetworkEvent
         GameManager.instance.SwitchTime(isDay);
         FindObjectOfType<TimeSwitchSlider>().SyncTime(0);
     }
+
+    /// <summary>
+    /// 0: Day, 1:Night
+    /// </summary>
+    public static void SwitchDayNight(bool isDay)
+    {
+        NetworkManager.Instance.SendToClients(EventCode.SwitchDayNight, isDay);
+    }
 }

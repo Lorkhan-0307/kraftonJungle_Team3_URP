@@ -67,7 +67,7 @@ public class TimeSwitchSlider : MonoBehaviour
             isDay = !isDay;
             // 호스트만
             if(NetworkManager.Instance.IsServer())
-                NetworkManager.Instance.SwitchDayNight(isDay);
+                NESwitchDayNight.SwitchDayNight(isDay);
         }
     }
 
