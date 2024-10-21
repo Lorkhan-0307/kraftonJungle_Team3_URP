@@ -28,6 +28,18 @@ public class Monster : Player
         base.OnDead();
     }
 
+    public void OnNightVisibleScientist()
+    {
+        MonsterOutlineEffect moe = GetComponentInChildren<MonsterOutlineEffect>();
+        moe.EnableOutlineEffect();
+    }
+
+    public void OnDayUniteVisibilityScientist()
+    {
+        MonsterOutlineEffect moe = GetComponentInChildren<MonsterOutlineEffect>();
+        moe.DisableOutlineEffect();
+    }
+
     // Use this when Hunger Gauge reach 0
     public void OnHunger()
     {

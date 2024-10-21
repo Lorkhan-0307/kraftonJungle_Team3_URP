@@ -13,7 +13,7 @@ public class MasterTimer
             startValue = slider.minValue;
             endValue = slider.maxValue;
         }
-        // timeÀÌ 0ÀÏ¶§?
+        // timeì´ 0ì¼ë•Œ?
         else
         {
             startValue = slider.maxValue;

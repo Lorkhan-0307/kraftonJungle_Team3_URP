@@ -102,12 +102,10 @@ public class LightShifter : MonoBehaviour
         if (isDay)
         {
             OnNightShift();
-            GameManager.instance.SetNight();
         }
         else
         {
             OnDayShift();
-            GameManager.instance.SetDay();
         }
     }
     

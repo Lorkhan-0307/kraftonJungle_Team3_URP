@@ -9,8 +9,8 @@ using UnityEngine.UI;
 public class PlayerMovement : MonoBehaviour
 {
     public CharacterController controller;
-    public float speed = 8f;
-    public float monsterNightSpeed = 12f;
+    public float speed = 4f;
+    public float monsterNightSpeed = 8f;
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
     public Transform groundCheck;
@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
         // Move 액션으로 이동 입력 받기
         Vector2 input = moveAction.ReadValue<Vector2>();
         Vector3 motion = transform.right * input.x + transform.forward * input.y;
-        float currentSpeed = IsMonsterNightSpeed() && runAction.IsPressed() ? speed : monsterNightSpeed;
+        float currentSpeed = IsMonsterNightSpeed() && runAction.IsPressed() ? monsterNightSpeed : speed;
         controller.Move(motion * currentSpeed * Time.deltaTime);
 
         // Jump 액션으로 점프 입력 받기
