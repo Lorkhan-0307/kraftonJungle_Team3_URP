@@ -2,7 +2,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PingDisplay : MonoBehaviour
+public class DisplayPing : MonoBehaviour
 {
     public Text pingText;  // Ping 정보를 표시할 UI Text
 
