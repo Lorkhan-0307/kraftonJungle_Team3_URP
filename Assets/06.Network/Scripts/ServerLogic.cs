@@ -84,7 +84,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     {
         isAlivePlayers[actorNum-1] = false;
 
-        //CheckEndCondition();
+        CheckEndCondition();
     }
     /// <summary>
     /// 게임 종료조건이 달성되었을 때 실행시켜주세요.
@@ -96,7 +96,8 @@ public class ServerLogic : MonoBehaviourPunCallbacks
 
         List<int> players = GetAlivePlayers();
 
-        result += players[0].ToString();
+        if(players.Count > 0)
+            result += players[0].ToString();
 
         for (int i = 1; i < players.Count; i++)
         {
