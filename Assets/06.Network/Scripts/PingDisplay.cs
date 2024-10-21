@@ -6,14 +6,6 @@ public class PingDisplay : MonoBehaviour
 {
     public Text pingText;  // Ping 정보를 표시할 UI Text
 
-    void Start()
-    {
-        // PingText 오브젝트를 UI에서 찾습니다.
-        if (pingText == null)
-        {
-            pingText = GameObject.Find("PingText").GetComponent<Text>();
-        }
-    }
 
     void Update()
     {
