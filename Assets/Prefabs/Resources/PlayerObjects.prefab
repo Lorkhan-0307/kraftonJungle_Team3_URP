@@ -304,9 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8325aeb719a2e744a1704885b805cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterCamera: {fileID: 4339973304266702113}
-  outlineMaterials:
-  - {fileID: 2100000, guid: 14948590691ea624caa281f0cb53ed57, type: 2}
+  outlineMaterial: {fileID: 2100000, guid: fa72cedaeedac51459f1341d77bf2a41, type: 2}
 --- !u!1 &3739888059094696870
 GameObject:
   m_ObjectHideFlags: 0

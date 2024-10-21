@@ -5248,10 +5248,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2380249366515739072, guid: a542cbbb5b207e742a01a0f32f8d15eb,
+        type: 3}
+      propertyPath: m_TagString
+      value: ScientistOutline
+      objectReference: {fileID: 0}
     - target: {fileID: 6556506701442986633, guid: a542cbbb5b207e742a01a0f32f8d15eb,
         type: 3}
       propertyPath: m_Name
       value: DummyType01 URP
+      objectReference: {fileID: 0}
+    - target: {fileID: 7049523774288764253, guid: a542cbbb5b207e742a01a0f32f8d15eb,
+        type: 3}
+      propertyPath: m_TagString
+      value: ScientistOutline
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
