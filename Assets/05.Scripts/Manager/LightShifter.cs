@@ -99,8 +99,16 @@ public class LightShifter : MonoBehaviour
 
     public void ShiftTime()
     {
-        if(isDay) OnNightShift();
-        else OnDayShift();
+        if (isDay)
+        {
+            OnNightShift();
+            GameManager.instance.SetNight();
+        }
+        else
+        {
+            OnDayShift();
+            GameManager.instance.SetDay();
+        }
     }
     
 }

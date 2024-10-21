@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,6 +19,7 @@ public class MouseComponent : MonoBehaviour
         // PlayerInput 컴포넌트에서 InputAction 가져오기
         playerInput = GetComponent<PlayerInput>();
         lookAction = playerInput.actions["Look"];
+        playerBody = GetComponentInParent<CharacterController>().transform;
     }
 
     void Start()

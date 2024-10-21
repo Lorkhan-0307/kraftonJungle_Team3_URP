@@ -1,12 +1,16 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Timer
 {
-    //public static float decreaseTime = 20f;
-    //public static float increaseTime = 20f;
-    //static float elapsedTime = 0f;
+    // isDay
+
+    //낮일때
+    //밤일때
+    //전환됐을 때
 
     public bool GoTime(float time, Slider slider, float elapsedTime)
     {
@@ -17,7 +21,7 @@ public class Timer
             startValue = slider.minValue;
             endValue = slider.maxValue;
         }
-        // time�� 0�϶�?
+        // time이 0일때?
         else
         {
             startValue = slider.maxValue;
