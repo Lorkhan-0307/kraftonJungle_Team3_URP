@@ -86,33 +86,52 @@ public class NPCManager : MonoBehaviour
         {
             // NavMeshSurface가 없을 경우
             Debug.LogWarning("No NavMeshSurface found.");
-            return Vector3.zero;
+            return GetRandomFallbackPos();
         }
 
-        // NavMeshSurface 랜덤 선택
-        NavMeshSurface selectedSurface = navMeshSurfaces[Random.Range(0, navMeshSurfaces.Length)];
+        int maxAttempts = 5;
 
-        // 선택된 NavMeshSurface의 영역
-        Bounds bounds = selectedSurface.GetComponent<Collider>().bounds;
-
-        // bounds 내에서 랜덤 위치 생성
-        Vector3 randomPoint = new Vector3(
-            Random.Range(bounds.min.x, bounds.max.x),
-            bounds.min.y,
-            Random.Range(bounds.min.z, bounds.max.z)
-        );
-
-        NavMeshHit hit;
-        // 가장 가까운 유효한 위치 찾기
-        if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+        for (int attempt = 0; attempt < maxAttempts; attempt++)
         {
-            // 유효한 위치 반환
-            return hit.position;
+            // NavMeshSurface 랜덤 선택
+            NavMeshSurface selectedSurface = navMeshSurfaces[Random.Range(0, navMeshSurfaces.Length)];
+
+            // 선택된 NavMeshSurface의 영역
+            Bounds bounds = selectedSurface.GetComponent<Collider>().bounds;
+
+            // bounds 내에서 랜덤 위치 생성
+            Vector3 randomPoint = new Vector3(
+                Random.Range(bounds.min.x, bounds.max.x),
+                bounds.min.y,
+                Random.Range(bounds.min.z, bounds.max.z)
+            );
+
+            NavMeshHit hit;
+            // 가장 가까운 유효한 위치 찾기
+            if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+            {
+                // 유효한 위치 반환
+                return hit.position;
+            }
         }
 
         // 유효한 NavMesh 위치가 없으면
-        // y가 1?
-        return new Vector3(10, 1, 10);
+        Debug.LogWarning($"Failed to find a valid NavMesh position after {maxAttempts} attempts.");
+        return GetRandomFallbackPos();
+    }
+
+    private static Vector3 GetRandomFallbackPos()
+    {
+        // Fallback 위치 범위
+        float minX = 3f, maxX = 40f;
+        float minZ = 3f, maxZ = 27f;
+        float y = 0f;
+
+        return new Vector3(
+            Random.Range(minX, maxX),
+            y,
+            Random.Range(minZ, maxZ)
+        );
     }
 
     void SetNewDestination(NavMeshAgent agent)
