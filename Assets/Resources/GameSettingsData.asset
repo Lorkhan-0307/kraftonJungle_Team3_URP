@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1fc22ade561bf14da06c0e718d72cbb, type: 3}
   m_Name: GameSettingsData
   m_EditorClassIdentifier: 
-  players: 5
-  monsters: 1
-  scientists: 4
+  players: 0
   npcCount: 20
   monsterRandomSelect: 1
   monsterActorNum: 1
+  monsters: 1
+  scientists: 4
   dayLength: 20
   nightLength: 20
