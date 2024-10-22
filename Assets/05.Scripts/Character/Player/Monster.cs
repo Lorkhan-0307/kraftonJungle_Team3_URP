@@ -17,7 +17,6 @@ public class Monster : Player
         base.OnDamaged(attacker);
 
         // 여기서 Destroy 결과 전송
-        //Destroy(this.gameObject);
         if (GetComponent<PhotonView>().AmOwner)
         {
             PhotonNetwork.Destroy(this.gameObject);
@@ -36,6 +35,7 @@ public class Monster : Player
         moe.EnableOutlineEffect();
     }
 
+    // 괴물의 밤시야 끄기
     public void OnDayUniteVisibilityScientist()
     {
         MonsterOutlineEffect moe = GetComponentInChildren<MonsterOutlineEffect>();
@@ -58,7 +58,7 @@ public class Monster : Player
 
     public override bool AttackDetection(GameObject target)
     {
-        if (GameManager.instance.GetTime())
+        if (TimeManager.instance.GetisDay())
         {
             if (target.CompareTag("NPC")) return true;
         }

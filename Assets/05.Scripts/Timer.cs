@@ -6,12 +6,6 @@ using UnityEngine.UI;
 
 public class Timer
 {
-    // isDay
-
-    //낮일때
-    //밤일때
-    //전환됐을 때
-
     public bool GoTime(float time, Slider slider, float elapsedTime)
     {
         float startValue, endValue;

@@ -17,7 +17,6 @@ public class Scientist : Player
         base.OnDamaged(attacker);
         Debug.Log("ONDAMAGED");
         // 여기서 Destroy 결과 전송
-        //Destroy(this.gameObject);
         if (GetComponent<PhotonView>().AmOwner)
         {
             PhotonNetwork.Destroy(this.gameObject);
@@ -33,7 +32,7 @@ public class Scientist : Player
     public override bool AttackDetection(GameObject target)
     {
         // 낮일 떄
-        if (GameManager.instance.GetTime())
+        if (TimeManager.instance.GetisDay())
         {
             if(target.CompareTag("Player") || target.CompareTag("NPC")) return true;
         }

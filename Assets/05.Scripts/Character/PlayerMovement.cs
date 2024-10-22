@@ -161,7 +161,7 @@ public class PlayerMovement : MonoBehaviour
             case CharacterType.Monster:
                 break;
             case CharacterType.Scientist:
-                if (!GameManager.instance.isDay) isAttackable = false;
+                if (!TimeManager.instance.isDay) isAttackable = false;
                 break;
             default:
                 Debug.LogError("TYPE NOT SET!!");
@@ -173,7 +173,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsMonsterNightSpeed()
     {
-        return !GameManager.instance.isDay && player.type == CharacterType.Monster;
+        return !TimeManager.instance.isDay && player.type == CharacterType.Monster;
     }
 }
     

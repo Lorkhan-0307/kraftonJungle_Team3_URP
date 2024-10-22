@@ -13,8 +13,8 @@ public class NESwitchDayNight : NetworkEvent
     {
         bool isDay = (bool)customData;
         Debug.Log($"SwitchDayNight {isDay}");
-        GameManager.instance.SwitchTime(isDay);
-        FindObjectOfType<TimeSwitchSlider>().SyncTime(0);
+        TimeManager.instance.SwitchTime(isDay);
+        TimeManager.instance.SyncTime(0);
     }
 
     /// <summary>
