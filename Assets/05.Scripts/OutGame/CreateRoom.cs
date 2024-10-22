@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Michsky.UI.Dark;
+using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
+
 
 
 public class CreateRoom : MonoBehaviour
@@ -26,5 +30,17 @@ public class CreateRoom : MonoBehaviour
         
         // Todo : 이 값들을 이용해서 서버에서 방을 만드는 코드를 여기에 작성하시면, Create Room Button을 누르면 동작합니다.
         // 현재는 동시에 My Room 으로 넘어가도록 되어있습니다. Loading은 추후에 추가하겠습니다.
+        RoomOptions roomOptions = new RoomOptions();
+        roomOptions.MaxPlayers = _maxPlayerNum;
+
+        ExitGames.Client.Photon.Hashtable customData = new ExitGames.Client.Photon.Hashtable();
+        customData.Add("IsPublic", _connectionType);
+        customData.Add("Ping", PhotonNetwork.GetPing());
+
+        roomOptions.CustomRoomProperties = customData;
+        roomOptions.CustomRoomPropertiesForLobby = new string[] { "IsPublic", "Ping" };
+
+        //        roomOptions.CustomRoomProperties
+        PhotonNetwork.CreateRoom(_serverName, roomOptions);
     }
 }

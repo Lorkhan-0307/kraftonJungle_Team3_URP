@@ -1,3 +1,5 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -11,6 +13,14 @@ public class ServerButtonElements
     public string serverPlayerNum;
     public string serverTotalPlayerNum;
 
+    public ServerButtonElements(RoomInfo room)
+    {
+        serverName = room.Name;
+        serverOwner = room.masterClientId.ToString();
+        serverPing = room.CustomProperties["Ping"].ToString();    // TODO : 핑 데이터 받아오기
+        serverPlayerNum = room.PlayerCount.ToString();
+        serverTotalPlayerNum = room.MaxPlayers.ToString();
+    }
 }
 
 public class ServerButton : MonoBehaviour
@@ -38,6 +48,6 @@ public class ServerButton : MonoBehaviour
         // 테스트를 위해 Debug를 달아두겠습니다.
         
         Debug.Log("Clicked " + serverName.text + "Server Button");
-        
+        PhotonNetwork.JoinRoom(serverName.text);
     }
 }
