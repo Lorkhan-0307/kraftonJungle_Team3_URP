@@ -37,7 +37,7 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
                 {
                     int ping = PhotonNetwork.GetPing();
                     data["Ping"] = ping;
-                    Debug.Log($"Ping Renewed: {ping}");
+                    //Debug.Log($"Ping Renewed: {ping}");
 
                     PhotonNetwork.CurrentRoom.SetCustomProperties(data);
                 }

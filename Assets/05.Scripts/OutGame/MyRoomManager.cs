@@ -30,9 +30,6 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
         
         if(isOwner) SetOwner();
         else SetGuest();
-        
-        // update player List 꼭 참여할때 진행하게 해주세요!
-        UpdatePlayerList();
     }
 
     public override void OnJoinedRoom()
@@ -40,9 +37,6 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
         Debug.Log($"[{PhotonNetwork.CurrentRoom.Name}] 방에 입장하였습니다.");
 
         panelManager.OpenPanel("MyRoom");
-
-        //        UpdatePlayerList();
-        SetEachPlayer(PhotonNetwork.LocalPlayer);
     }
     public override void OnLeftRoom()
     {
@@ -51,16 +45,28 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
         Debug.Log($"{newPlayer.UserId} 님이 접속하였습니다.");
-        SetEachPlayer(newPlayer);
+        CallUpdatePlayerList();
     }
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
         Debug.Log($"{otherPlayer.UserId} 님이 접속을 해제하였습니다.");
-        RemovePlayer(otherPlayer);
+        CallUpdatePlayerList();
     }
 
+
+    // 예시: 방장(마스터 클라이언트)이 UpdatePlayerList를 실행하는 경우
+    public void CallUpdatePlayerList()
+    {
+        if (PhotonNetwork.IsMasterClient) // 방장만 호출
+        {
+            photonView.RPC("UpdatePlayerList", RpcTarget.AllBuffered); // 모든 클라이언트에 동기화
+        }
+    }
+
+    [PunRPC]
     public void UpdatePlayerList()
     {
+        Debug.Log("UpdatePlayerList Synched!");
         // 여기에서 player List를 업데이트합니다. 유저가 방에 참여할때, 방에서 나올때 이 함수를 실행시켜주세요.
         // 방에서 나가는 유저는 이 함수를 실행시키면 안됩니다.
         // 마찬가지로, 받아온 player 값들을 foreach로 하여, 아래의 함수를 실행해주세요.
@@ -74,7 +80,7 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
         // 현재 방에 접속된 플레이어들 불러와서 UI에 적용
         if(PhotonNetwork.CurrentRoom == null)
         {
-            Debug.Log("Not in a room");
+            Debug.Log("No Room");
             return;
         }
         Dictionary<int, Photon.Realtime.Player> players = PhotonNetwork.CurrentRoom.Players;
@@ -82,9 +88,9 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
         {
             Photon.Realtime.Player player = players[key];
 
-            if (player != null)
+            if (player == null)
             {
-                Debug.Log("Unexpected Player!");
+                Debug.Log("No Player");
                 continue;
             }
 
@@ -98,18 +104,6 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
         p.SetupPlayerOnRoom(new PlayerOnRoomElement(player));
         p.player = player;
         playerContents.Add(p);
-    }
-    private void RemovePlayer(Photon.Realtime.Player player)
-    {
-        PlayerOnRoom p = playerContents.Find(x => x.player == player);
-
-        if (p == null)
-        {
-            Debug.Log("No Such Player");
-        }
-
-        playerContents.Remove(p);
-        Destroy(p.gameObject);
     }
 
     // 사용자가 방에서 나오거나 방이 파괴되면 이 함수를 실행시켜주세요.

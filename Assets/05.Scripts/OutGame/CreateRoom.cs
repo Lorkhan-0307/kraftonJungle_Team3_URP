@@ -49,6 +49,7 @@ public class CreateRoom : MonoBehaviour
 
         roomOptions.CustomRoomProperties = customData;
         roomOptions.CustomRoomPropertiesForLobby = new string[] { "IsPublic", "Ping", "AccessCode" };
+        roomOptions.PublishUserId = true;
 
         //        roomOptions.CustomRoomProperties
         PhotonNetwork.CreateRoom(_serverName, roomOptions);
