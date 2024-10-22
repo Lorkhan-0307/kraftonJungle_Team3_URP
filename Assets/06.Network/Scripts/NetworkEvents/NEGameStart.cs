@@ -42,7 +42,7 @@ public class NEGameStart : NetworkEvent
         }
         Debug.Log($"current Actornum:{PhotonNetwork.LocalPlayer.ActorNumber}  {deb}");
 
-
+        // 로컬 플레이어 캐릭터 스폰
         Vector3 myPosition = spawnPos[PhotonNetwork.LocalPlayer.ActorNumber - 1];
         GameObject spawnedPlayer = null;
         if (monsterNum == PhotonNetwork.LocalPlayer.ActorNumber)

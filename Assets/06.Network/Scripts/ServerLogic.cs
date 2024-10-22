@@ -15,10 +15,12 @@ public enum EventCode
     SwitchDayNight,
     HungerGauge,
     AccelTime,
+    OnDisconnected,
 }
 
 public enum GameState
 {
+    OnLobby,
     OnRoom,
     Playing,
     End,
