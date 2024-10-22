@@ -17,7 +17,7 @@ public class ServerButtonElements
     {
         serverName = room.Name;
         serverOwner = room.masterClientId.ToString();
-        serverPing = room.CustomProperties["Ping"].ToString();    // TODO : 핑 데이터 받아오기
+        serverPing = room.CustomProperties["Ping"]?.ToString();    // TODO : 핑 데이터 받아오기
         serverPlayerNum = room.PlayerCount.ToString();
         serverTotalPlayerNum = room.MaxPlayers.ToString();
     }

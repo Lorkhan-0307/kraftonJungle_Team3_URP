@@ -48,9 +48,9 @@ public class MyRoomManager : MonoBehaviour
         // 마찬가지로, 받아온 player 값들을 foreach로 하여, 아래의 함수를 실행해주세요.
     }
 
-    private void SetEachPlayer(PlayerOnLobbyElement pole)
+    private void SetEachPlayer(PlayerOnRoomElement pole)
     {
-        Instantiate(playerPrefab, playerList).GetComponent<PlayerOnLobby>().SetupPlayerOnLobby(pole);
+        Instantiate(playerPrefab, playerList).GetComponent<PlayerOnRoom>().SetupPlayerOnRoom(pole);
     }
 
     // 사용자가 방에서 나오거나 방이 파괴되면 이 함수를 실행시켜주세요.

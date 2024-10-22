@@ -1,3 +1,4 @@
+using Michsky.UI.Dark;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
@@ -5,8 +6,9 @@ using UnityEngine;
 
 public class MasterServerClient : MonoBehaviourPunCallbacks
 {
-    public OutgameRoomsManager orManager;
-
+    //public OutgameRoomsManager orManager;
+    [SerializeField]
+    MainPanelManager mpManager;
 
     void Start()
     {
@@ -23,6 +25,8 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log($"[{PhotonNetwork.CurrentRoom.Name}] 방에 입장하였습니다.");
+
+        mpManager.OpenPanel("MyRoom");
     }
 
     IEnumerator RenewPing()
