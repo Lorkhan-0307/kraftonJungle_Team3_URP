@@ -45,6 +45,6 @@ public class CreateRoom : MonoBehaviour
 
 
         // Set Owner로 MyRoomManager에서 Start button을 Active 시킵니다. 다른게 더 필요하면 거기서 설정하면 됩니다.
-        // FindObjectOfType<MyRoomManager>().OnRoomCreateOrJoin(true);
+        FindObjectOfType<MyRoomManager>().OnRoomCreateOrJoin(true);
     }
 }
