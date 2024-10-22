@@ -17,9 +17,9 @@ MonoBehaviour:
   editorHints: 1
   changeRootFolder: 0
   rootFolder: Dark - Complete Horror UI/Prefabs/
-  backgroundColorTint: {r: 255, g: 255, b: 255, a: 255}
+  backgroundColorTint: {r: 1, g: 1, b: 1, a: 1}
   backgroundType: 0
-  backgroundImage: {fileID: 21300000, guid: 1ddfa95659ff6e343813a952d6e3eaa2, type: 3}
+  backgroundImage: {fileID: 21300000, guid: 8634284f5333ced47881595313de88df, type: 3}
   backgroundVideo: {fileID: 0}
   backgroundPreserveAspect: 0
   backgroundSpeed: 1
@@ -36,4 +36,4 @@ MonoBehaviour:
   alt2Font: {fileID: 0}
   brandLogo: {fileID: 21300000, guid: 454f59f9d97456e42ba9ef9bdbcb85c0, type: 3}
   gameLogo: {fileID: 21300000, guid: b3fae815942959840b2c432da7f433bd, type: 3}
-  logoColor: {r: 255, g: 255, b: 255, a: 255}
+  logoColor: {r: 255, g: 255, b: 255, a: 1}
