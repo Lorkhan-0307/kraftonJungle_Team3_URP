@@ -9,16 +9,24 @@ public class OutgameRoomsManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject serverButton;
     [SerializeField] private Transform serverList;
 
-    // Todo : 서버에서 방 목록을 여기서 받아와서 작업해야 합니다.
-    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    public override void OnJoinedLobby()
     {
-        // Server에서 public으로 오픈된 모든 방들을 로딩합니다.
-        // foreach를 통해서, 각각을 AddServerButtonOnServerList 함수를 실행하면 됩니다.
+        DestroyAllServerButtons();
+    }
+    void DestroyAllServerButtons()
+    {
         ServerButton[] buttons = serverList.GetComponentsInChildren<ServerButton>();
         for (int i = 0; i < buttons.Length; i++)
         {
             Destroy(buttons[i].gameObject);
         }
+    }
+    // Todo : 서버에서 방 목록을 여기서 받아와서 작업해야 합니다.
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        // Server에서 public으로 오픈된 모든 방들을 로딩합니다.
+        // foreach를 통해서, 각각을 AddServerButtonOnServerList 함수를 실행하면 됩니다.
+        DestroyAllServerButtons();
 
 
         foreach (RoomInfo room in roomList)

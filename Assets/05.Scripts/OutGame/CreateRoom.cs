@@ -36,9 +36,19 @@ public class CreateRoom : MonoBehaviour
         ExitGames.Client.Photon.Hashtable customData = new ExitGames.Client.Photon.Hashtable();
         customData.Add("IsPublic", _connectionType);
         customData.Add("Ping", PhotonNetwork.GetPing());
+        // Private 방 코드 생성, 등록
+        // TODO: 방 코드 다른 방들과 겹치지 않게 세팅해야함.
+        if(_connectionType)
+        {
+            customData.Add("AccessCode", Random.Range(100000, 999999));
+        }
+        else
+        {
+            customData.Add("AccessCode", 0);
+        }
 
         roomOptions.CustomRoomProperties = customData;
-        roomOptions.CustomRoomPropertiesForLobby = new string[] { "IsPublic", "Ping" };
+        roomOptions.CustomRoomPropertiesForLobby = new string[] { "IsPublic", "Ping", "AccessCode" };
 
         //        roomOptions.CustomRoomProperties
         PhotonNetwork.CreateRoom(_serverName, roomOptions);
