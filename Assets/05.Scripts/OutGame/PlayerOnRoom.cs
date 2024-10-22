@@ -5,26 +5,26 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class PlayerOnLobbyElement
+public class PlayerOnRoomElement
 {
     public string playerName;
     public bool isReady;
 }
 
-public class PlayerOnLobby : MonoBehaviour
+public class PlayerOnRoom : MonoBehaviour
 {
     [SerializeField] private TMP_Text playerNameInputField;
     [SerializeField] private GameObject starNotFilled;
     [SerializeField] private GameObject starFilled;
 
-    public void SetupPlayerOnLobby(PlayerOnLobbyElement pole)
+    public void SetupPlayerOnRoom(PlayerOnRoomElement pole)
     {
         playerNameInputField.text = pole.playerName;
-        SetPlayerOnLobbyReadyState(pole.isReady);
+        SetPlayerOnRoomReadyState(pole.isReady);
 
     }
 
-    public void SetPlayerOnLobbyReadyState(bool isReady)
+    public void SetPlayerOnRoomReadyState(bool isReady)
     {
         if (isReady)
         {

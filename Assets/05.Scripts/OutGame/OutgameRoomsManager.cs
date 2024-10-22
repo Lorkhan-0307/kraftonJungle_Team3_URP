@@ -25,8 +25,13 @@ public class OutgameRoomsManager : MonoBehaviourPunCallbacks
 
         foreach (RoomInfo room in roomList)
         {
-            ServerButtonElements buttonElement = new ServerButtonElements(room);
+            // 방 설정에 IsPublic이 없거나 Private로 설정되어있을 경우
+            if (!room.CustomProperties.ContainsKey("IsPublic") ||
+                (bool)room.CustomProperties["IsPublic"] == false)
+                continue;
 
+            ServerButtonElements buttonElement = new ServerButtonElements(room);
+            
             AddServerButtonOnServerList(buttonElement);
         }
     }
