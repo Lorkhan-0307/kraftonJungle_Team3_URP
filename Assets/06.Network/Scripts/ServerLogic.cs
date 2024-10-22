@@ -97,11 +97,11 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         Photon.Realtime.Player[] playerList = PhotonNetwork.PlayerList;
 
         // 인원 체크
-        //if (playerList.Length < settings.players)
-        //{
-        //    Debug.Log($"[{playerList.Length}/{settings.players}] 인원이 부족합니다.");
-        //    return;
-        //}
+        if (playerList.Length < settings.players && settings.players > 0)
+        {
+            Debug.Log($"[{playerList.Length}/{settings.players}] 인원이 부족합니다.");
+            return;
+        }
 
 
 
@@ -145,6 +145,16 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         int npcCount = settings.npcCount;
         npcManager.npcCount = npcCount;
         npcManager.SpawnNPC();
+
+        // 게임 낮 밤 시간 설정
+        if(GameManager.instance != null)
+        {
+            Debug.Log("There is No GameManager.");
+        }
+        else
+        {
+            // TODO: Apply Time Cycle Settings
+        }
 
 
         // 이벤트 데이터에 스폰 위치와 몬스터 번호를 담음

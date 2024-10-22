@@ -4,6 +4,7 @@ using UnityEngine;
 public class GameSettings : ScriptableObject
 {
     [Header("Player Settings")]
+    public int players = -1;
     public int npcCount = 20;
 
     [Header("Monster Settings")]
@@ -11,11 +12,10 @@ public class GameSettings : ScriptableObject
     public int monsterActorNum = 1;
 
     [Header("Time Cycle Settings")]
-    public int dayLength = 20;
-    public int nightLength = 20;
 
     [Header("Not Working")]
-    public int players = 5;
     public int monsters = 1;
     public int scientists = 4;
+    public int dayLength = 20;
+    public int nightLength = 20;
 }
