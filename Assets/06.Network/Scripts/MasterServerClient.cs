@@ -7,8 +7,6 @@ using UnityEngine;
 public class MasterServerClient : MonoBehaviourPunCallbacks
 {
     //public OutgameRoomsManager orManager;
-    [SerializeField]
-    MainPanelManager mpManager;
 
     void Start()
     {
@@ -20,14 +18,12 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinLobby();
+
+        ExitGames.Client.Photon.Hashtable customData = new ExitGames.Client.Photon.Hashtable();
+        customData.Add("IsReady", false);
+        PhotonNetwork.LocalPlayer.CustomProperties = customData;
     }
 
-    public override void OnJoinedRoom()
-    {
-        Debug.Log($"[{PhotonNetwork.CurrentRoom.Name}] 방에 입장하였습니다.");
-
-        mpManager.OpenPanel("MyRoom");
-    }
 
     IEnumerator RenewPing()
     {
@@ -42,9 +38,9 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
                     int ping = PhotonNetwork.GetPing();
                     data["Ping"] = ping;
                     Debug.Log($"Ping Renewed: {ping}");
+
+                    PhotonNetwork.CurrentRoom.SetCustomProperties(data);
                 }
-                
-                PhotonNetwork.CurrentRoom.SetCustomProperties(data);
             }
         }
     }

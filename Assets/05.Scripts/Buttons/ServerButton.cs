@@ -50,6 +50,7 @@ public class ServerButton : MonoBehaviour
         Debug.Log("Clicked " + serverName.text + "Server Button");
         PhotonNetwork.JoinRoom(serverName.text);
 
+
         // 참여하게 되는 경우이므로, Guest로 참여합니다.
         FindObjectOfType<MyRoomManager>().OnRoomCreateOrJoin(false);
     }

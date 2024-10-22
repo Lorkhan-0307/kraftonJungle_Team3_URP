@@ -9,10 +9,17 @@ public class PlayerOnRoomElement
 {
     public string playerName;
     public bool isReady;
+
+    public PlayerOnRoomElement(Photon.Realtime.Player player)
+    {
+        playerName = player.UserId;
+        isReady = (bool)player.CustomProperties["IsReady"];
+    }
 }
 
 public class PlayerOnRoom : MonoBehaviour
 {
+    public Photon.Realtime.Player player = null;
     [SerializeField] private TMP_Text playerNameInputField;
     [SerializeField] private GameObject starNotFilled;
     [SerializeField] private GameObject starFilled;
@@ -21,7 +28,6 @@ public class PlayerOnRoom : MonoBehaviour
     {
         playerNameInputField.text = pole.playerName;
         SetPlayerOnRoomReadyState(pole.isReady);
-
     }
 
     public void SetPlayerOnRoomReadyState(bool isReady)
