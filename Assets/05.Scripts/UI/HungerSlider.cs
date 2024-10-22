@@ -1,47 +1,51 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HungerSlider : MonoBehaviour
 {
-    public Slider hungerSlider;
-    public float decreaseTime = -20f;
+    Slider slider;
+    public float maxTime = 20f;
     float elapsedTime = 0f;
 
-    Timer timer = new Timer();
+    private void Start()
+    {
+        slider = GetComponent<Slider>();
+    }
 
     private void Update()
     {
-        if (hungerSlider.value > 0)
+        if (slider.value > 0)
         {
             elapsedTime += Time.deltaTime;
 
             // 일정 시간동안 감소
             // 0이 되면
-            if (timer.GoTime(decreaseTime, hungerSlider, elapsedTime))
+            if (elapsedTime < maxTime)
             {
+                elapsedTime += Time.deltaTime;
+                float t = 1 - elapsedTime / maxTime;
+                SetValue(t);
+            }
+            else
+            {
+                slider.value = 0;
                 NEHungerGauge.HungerEvent(true);
             }
         }
 
-        //if ()
         // NPC 를 먹으면 gage Max
         // .. 만약 모습이 변화한 생태라면
         // .. 모습 정상화
-
     }
 
-    //public void OnMonsterAteNPC()
-    //{
-    //    // current logic : set hunger bar max
-    //    SetHungerMax();
-    //    NetworkManager.Instance.HungerEvent(false);
-    //}
+    public void SetValue(float value)
+    {
+        slider.value = value;
+    }
 
     public void SetHungerMax()
     {
-        hungerSlider.value = hungerSlider.maxValue;
+        slider.value = slider.maxValue;
         elapsedTime = 0f;
     }
 

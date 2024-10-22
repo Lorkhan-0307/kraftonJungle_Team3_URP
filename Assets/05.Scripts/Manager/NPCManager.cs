@@ -4,7 +4,7 @@ using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class NPCManager : MonoBehaviour
+public class NPCManager : Singleton<NPCManager>
 {
     public string npcPrefab;
     // 스폰할 NPC 수
@@ -46,7 +46,7 @@ public class NPCManager : MonoBehaviour
     {
         // 호스트만 동작
         // 낮일 때만 작동
-        if (NetworkManager.Instance.IsServer() && GameManager.instance.GetTime())
+        if (NetworkManager.Instance.IsServer() && TimeManager.instance.GetisDay())
         {
             foreach (GameObject npc in allNPC)
             {
@@ -144,7 +144,6 @@ public class NPCManager : MonoBehaviour
 
     public void SetAble()
     {
-        //FindAllNPC();
         // 각 NPC 오브젝트를 활성화
         foreach (GameObject npc in allNPC)
         {

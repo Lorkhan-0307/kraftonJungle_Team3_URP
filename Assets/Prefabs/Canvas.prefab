@@ -1060,9 +1060,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 8685311830446478698}
-  decreaseTime: -20
-  increaseTime: 20
-  accelateTime: 10
 --- !u!1 &8437825943923737649
 GameObject:
   m_ObjectHideFlags: 0

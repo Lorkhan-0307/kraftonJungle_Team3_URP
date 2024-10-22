@@ -32,9 +32,9 @@ public class NPC : Player
                 if(NetworkManager.Instance.IsServer())
                 {
                     // Todo: less day time
-                    FindObjectOfType<TimeSwitchSlider>().FastTime();
+                    TimeManager.instance.AccelerateTime();
                     NEAccelTime.TimeAccel(
-                        FindObjectOfType<TimeSwitchSlider>().GetElapsedTime());
+                        TimeManager.instance.GetElapsedTime());
 
                     Debug.Log("SCIENTIST ATTACKED NPC");
                 }

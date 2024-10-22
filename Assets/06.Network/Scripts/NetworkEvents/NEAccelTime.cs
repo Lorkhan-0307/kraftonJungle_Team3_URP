@@ -13,7 +13,7 @@ public class NEAccelTime : NetworkEvent
     {
         float SkipTime = (float)customData;
 
-        FindObjectOfType<TimeSwitchSlider>().SyncTime(SkipTime);
+        TimeManager.instance.SyncTime(SkipTime);
     }
 
     public static void TimeAccel(float SkipTime)
