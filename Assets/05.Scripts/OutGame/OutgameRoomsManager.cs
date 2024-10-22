@@ -1,0 +1,30 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class OutgameRoomsManager : MonoBehaviour
+{
+    [SerializeField] private GameObject serverButton;
+    [SerializeField] private Transform serverList;
+
+
+    // Todo : 서버에서 방 목록을 여기서 받아와서 작업해야 합니다.
+    private void ServerListLoad()
+    {
+        // Server에서 public으로 오픈된 모든 방들을 로딩합니다.
+        // foreach를 통해서, 각각을 AddServerButtonOnServerList 함수를 실행하면 됩니다.
+    }
+
+    // 인자로 데이터를 넘겨줘야 합니다. 
+    // 인자 목록
+    // 1. 서버 이름 -> Server Title
+    // 2. 서버 참여 인원 / 전체 참여 가능 인원 -> serverPlayerNum / serverTotalPlayerNum
+    // 3. 서버 주인 -> Server Owner
+    // 4. Ping -> ping
+    // 자세한 사항은 ServerButtonElements를 찾아보세요.
+    private void AddServerButtonOnServerList(ServerButtonElements sbe)
+    {
+        Instantiate(serverButton, serverList).GetComponent<ServerButton>().SetupServerButton(sbe);
+    }
+}
+ 
