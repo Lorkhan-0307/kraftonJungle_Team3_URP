@@ -55,6 +55,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         // 방장(마스터 클라이언트)일 경우 특정 로직 실행
         if (PhotonNetwork.IsMasterClient)
         {
+            Debug.Log("You Are The Master Client!");
             gameObject.AddComponent<ServerLogic>();
         }
     }
@@ -81,8 +82,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
             }
         }
-
-        base.OnDisconnected(cause);
     }
     #endregion
 
