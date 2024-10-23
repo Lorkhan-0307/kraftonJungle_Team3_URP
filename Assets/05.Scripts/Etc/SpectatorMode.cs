@@ -7,6 +7,42 @@ public class SpectatorMode : MonoBehaviour
     public GameObject SpectatingTarget; // 내가 관전 중인 플레이어
     private bool isSpectating = false;
 
+
+    // 마우스 클릭했을 때 호출되는 함수
+    private void MoveToAnotherPlayer(int idx_move)
+    {
+        if (RemainingPlayers.Count == 0)
+            return;
+
+        int idx = RemainingPlayers.IndexOf(SpectatingTarget);
+        idx += idx_move;
+        if (idx < 0)
+            idx = RemainingPlayers.Count - 1;
+        else if (idx >= RemainingPlayers.Count)
+            idx = 0;
+
+        SpectatingTarget = RemainingPlayers[idx];
+        GetComponent<SpectatorCamera>().SetSpectatingTarget(SpectatingTarget);
+        Debug.Log("Move to another player: " + SpectatingTarget.name);
+    }
+
+    // 마우스 왼쪽 오른쪽 입력 받기
+    private void Update()
+    {
+        if (isSpectating)
+        {
+            if (Input.GetMouseButtonDown(0)) // 마우스 왼쪽 클릭
+            {
+                MoveToAnotherPlayer(-1);
+            }
+            else if (Input.GetMouseButtonDown(1)) // 마우스 오른쪽 클릭
+            {
+                MoveToAnotherPlayer(1);
+            }
+        }
+    }
+
+    // 관전모드 시작하는 함수
     public void StartSpectating()
     {
         Debug.Log("Start Spectating");
@@ -23,6 +59,7 @@ public class SpectatorMode : MonoBehaviour
         UpdateSpectatingPlayer();
     }
 
+    // 어떤 플레이어가 죽을 때마다 호출됨
     public void UpdateSpectatingPlayer()
     {
         // 어떤 플레이어가 죽었을 때마다 호출됨
@@ -40,6 +77,7 @@ public class SpectatorMode : MonoBehaviour
         Debug.Log("Remaining Players: " + SpectatingTarget.name);
     }
 
+    // 누군가 죽었을 때 호출되는 함수
     public void RemoveRemainingPlayer(GameObject player)
     {
         if (isSpectating)
