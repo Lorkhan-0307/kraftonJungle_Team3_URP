@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[System.Serializable]
 [CreateAssetMenu(fileName = "GameSettings", menuName = "GameSettings/Create New Game Settings")]
 public class GameSettings : ScriptableObject
 {
