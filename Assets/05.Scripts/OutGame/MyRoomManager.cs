@@ -4,6 +4,9 @@ using UnityEngine;
 using Michsky.UI.Dark;
 using Photon.Realtime;
 using TMPro;
+using System.Linq;
+using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class MyRoomManager : MonoBehaviourPunCallbacks
 {
@@ -43,8 +46,16 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
 
         panelManager.OpenPanel("MyRoom");
 
+        // 방장은 준비 항상 켜져있음
+        if(PhotonNetwork.IsMasterClient)
+        {
+            ExitGames.Client.Photon.Hashtable data = new ExitGames.Client.Photon.Hashtable();
+            data.Add("IsReady", true);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(data);
+        }
         // 방 접속 시 자기 자신 추가.
         SetEachPlayer(PhotonNetwork.LocalPlayer);
+        RoomSetup();
     }
     public override void OnLeftRoom()
     {
@@ -71,41 +82,6 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
         }
     }
 
-    // CallUpdatePlayerList() 에서 photonView.RPC() 를 통해 모든 클라이언트에서 호출하여 동기화합니다.
-    [PunRPC]
-    public void UpdatePlayerList()
-    {
-        Debug.Log("UpdatePlayerList Synched!");
-        // 여기에서 player List를 업데이트합니다. 유저가 방에 참여할때, 방에서 나올때 이 함수를 실행시켜주세요.
-        // 방에서 나가는 유저는 이 함수를 실행시키면 안됩니다.
-        // 마찬가지로, 받아온 player 값들을 foreach로 하여, 아래의 함수를 실행해주세요.
-
-        PlayerOnRoom[] buttons = playerList.GetComponentsInChildren<PlayerOnRoom>();
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            Destroy(buttons[i].gameObject);
-        }
-
-        // 현재 방에 접속된 플레이어들 불러와서 UI에 적용
-        if(PhotonNetwork.CurrentRoom == null)
-        {
-            Debug.Log("No Room");
-            return;
-        }
-        Dictionary<int, Photon.Realtime.Player> players = PhotonNetwork.CurrentRoom.Players;
-        foreach (int key in players.Keys)
-        {
-            Photon.Realtime.Player player = players[key];
-
-            if (player == null)
-            {
-                Debug.Log("No Player");
-                continue;
-            }
-
-            SetEachPlayer(player);
-        }
-    }
 
     private void SetEachPlayer(Photon.Realtime.Player player)
     {
@@ -152,19 +128,12 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
     // Guest가 Ready 버튼을 누른 경우
     public void OnClickReady()
     {
-        ExitGames.Client.Photon.Hashtable data = PhotonNetwork.LocalPlayer.CustomProperties;
+        Debug.Log($"{PhotonNetwork.LocalPlayer.UserId} Pressed Ready");
 
-        if (data.ContainsKey("IsReady"))
-        {
-            data["Ping"] = true;
-            PhotonNetwork.CurrentRoom.SetCustomProperties(data);
-            Debug.Log($"{PhotonNetwork.LocalPlayer.UserId} Pressed Ready");
-            photonView.RPC("UpdatePlayerList", RpcTarget.AllBuffered); // 모든 클라이언트에 동기화
-        }
-        else
-        {
-            Debug.Log("Pressed Ready, But no Key \"IsReady\".");
-        }
+        ExitGames.Client.Photon.Hashtable data = new ExitGames.Client.Photon.Hashtable();
+        data.Add("IsReady", true);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(data);
+        photonView.RPC("UpdatePlayerList", RpcTarget.AllBuffered); // 모든 클라이언트에 동기화
     }
 
     // Room Owner가 StartGame 버튼을 누른 경우
@@ -184,17 +153,119 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
 
         // TODO: 준비 완료. 게임 시작!
         Debug.Log("Game Start!");
+
+        if (PhotonNetwork.IsMasterClient) // 방장만 호출
+        {
+            photonView.RPC("SpawnNetworkManager", RpcTarget.AllBuffered); // 모든 클라이언트에 동기화
+            photonView.RPC("LoadGameScene", RpcTarget.AllBuffered); // 모든 클라이언트에 동기화
+        }
+
+
     }
 
     // 방 설정을 조절하는 장소입니다. 예시로 만든 변수들을 교체하시면 됩니다.
     public void RoomSetup()
     {
-        string _roomName = "";
-        string _roomCode = "";
-        string _roomPing = "";
+        Room room = PhotonNetwork.CurrentRoom;
+        if (room == null) return;
+
+        int accessCode = (int)room.CustomProperties["AccessCode"];
+
+        string _roomName = room.Name;
+        string _roomCode = accessCode.ToString();
+        string _roomPing = ((int)room.CustomProperties["Ping"]).ToString();
         roomName.text = _roomName;
-        roomCode.text = "GAME CODE : " + _roomCode;
+        roomCode.text = (accessCode == 0 ? "Public" : "GAME CODE : " + _roomCode);
         roomPing.text = _roomPing + " MS";
 
     }
+
+
+    void Start()
+    {
+        StartCoroutine(RenewPing());
+    }
+    IEnumerator RenewPing()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+            if (PhotonNetwork.InRoom)
+            {
+                ExitGames.Client.Photon.Hashtable data = PhotonNetwork.CurrentRoom.CustomProperties;
+                if (data.ContainsKey("Ping"))
+                {
+                    int ping = PhotonNetwork.GetPing();
+                    data["Ping"] = ping;
+                    roomPing.text = ping + " MS";
+                    //Debug.Log($"Ping Renewed: {ping}");
+
+                    PhotonNetwork.CurrentRoom.SetCustomProperties(data);
+                }
+
+                // 임시. 매 초 플레이어 목록 새로고침
+                CallUpdatePlayerList();
+            }
+        }
+    }
+
+
+    #region RPC
+    // CallUpdatePlayerList() 에서 photonView.RPC() 를 통해 모든 클라이언트에서 호출하여 동기화합니다.
+    [PunRPC]
+    public void UpdatePlayerList()
+    {
+        Debug.Log("UpdatePlayerList Synched!");
+        // 여기에서 player List를 업데이트합니다. 유저가 방에 참여할때, 방에서 나올때 이 함수를 실행시켜주세요.
+        // 방에서 나가는 유저는 이 함수를 실행시키면 안됩니다.
+        // 마찬가지로, 받아온 player 값들을 foreach로 하여, 아래의 함수를 실행해주세요.
+
+        PlayerOnRoom[] buttons = playerList.GetComponentsInChildren<PlayerOnRoom>();
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            Destroy(buttons[i].gameObject);
+        }
+
+        // 현재 방에 접속된 플레이어들 불러와서 UI에 적용
+        if (PhotonNetwork.CurrentRoom == null)
+        {
+            Debug.Log("No Room");
+            return;
+        }
+
+        // 플레이어 순서 ActorNum 순으로 정렬
+        Dictionary<int, Photon.Realtime.Player> players = PhotonNetwork.CurrentRoom.Players;
+        List<int> keys = players.Keys.ToList();
+        keys.Sort();
+        foreach (int key in keys)
+        {
+            Photon.Realtime.Player player = players[key];
+
+            if (player == null)
+            {
+                Debug.Log("No Player");
+                continue;
+            }
+
+            SetEachPlayer(player);
+        }
+    }
+    [PunRPC]
+    public void SpawnNetworkManager()
+    {
+        // Resources 폴더에서 "NetworkManager"라는 이름의 프리팹을 로드
+        GameObject networkManagerPrefab = Resources.Load<GameObject>("NetworkManager");
+        GameObject nm = Instantiate(networkManagerPrefab);
+
+        // 방장은 서버로직 추가
+        if (PhotonNetwork.IsMasterClient)
+            nm.AddComponent<ServerLogic>();
+    }
+    [PunRPC]
+    public void LoadGameScene()
+    {
+        SceneManager.LoadScene("ServerDemoScene");    // 씬 로딩
+    }
+    #endregion
+
 }

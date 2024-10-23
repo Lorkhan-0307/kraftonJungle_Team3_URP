@@ -19,8 +19,13 @@ public class Scientist : Player
         // 여기서 Destroy 결과 전송
         if (GetComponent<PhotonView>().AmOwner)
         {
+            Camera.main.transform.parent.GetComponent<SpectatorMode>().StartSpectating();
             PhotonNetwork.Destroy(this.gameObject);
             NEPlayerDeath.PlayerDeath();
+        }
+        else
+        {
+            Camera.main.transform.parent.GetComponent<SpectatorMode>().RemoveRemainingPlayer(this.gameObject);
         }
     }
 
@@ -34,7 +39,7 @@ public class Scientist : Player
         // 낮일 떄
         if (TimeManager.instance.GetisDay())
         {
-            if(target.CompareTag("Player") || target.CompareTag("NPC")) return true;
+            if (target.CompareTag("Player") || target.CompareTag("NPC")) return true;
         }
         return false;
     }
