@@ -12,6 +12,8 @@ public class GameManager : Singleton<GameManager>
 {
     public GameObject hungerSliderPrefab;
     public GameObject canvasPrefab;
+    GameObject canvas;
+    GameObject hungerSlider;
 
     public void SetPlayer(CharacterType type)
     {
@@ -30,12 +32,26 @@ public class GameManager : Singleton<GameManager>
     public void StartGame()
     {
         Debug.Log("Game Start");
-        GameObject canvas = Instantiate(canvasPrefab);
+        canvas = Instantiate(canvasPrefab);
         if (NetworkManager.Instance.IsMonster())
         {
-            GameObject hungerSlider = Instantiate(hungerSliderPrefab, canvas.transform);
+            hungerSlider = Instantiate(hungerSliderPrefab, canvas.transform);
         }
         TimeManager.instance.isStarted = true;
         TimeManager.instance.SetDay();
+    }
+
+    public void EndGame()
+    {
+        if (hungerSlider != null)
+        {
+            Destroy(hungerSlider);
+        }
+
+        if (canvas != null)
+        {
+            Destroy(canvas);
+        }
+        TimeManager.instance.isEnd = true;
     }
 }

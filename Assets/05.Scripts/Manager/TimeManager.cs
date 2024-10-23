@@ -5,6 +5,7 @@ public class TimeManager : Singleton<TimeManager>
     public bool isDay = true;
 
     public bool isStarted = false;
+    public bool isEnd = false;
 
     float _elapsedTime = 0f;
 
@@ -44,7 +45,9 @@ public class TimeManager : Singleton<TimeManager>
 
     private void Update()
     {
-        if (isStarted)
+        // 게임 시작시 작동
+        // 게임 종료시 멈춤
+        if (isStarted && !isEnd)
         {
             float maxTime;
 
