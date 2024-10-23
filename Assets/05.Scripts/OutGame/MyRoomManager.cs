@@ -7,6 +7,7 @@ using TMPro;
 using System.Linq;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System;
 
 public class MyRoomManager : MonoBehaviourPunCallbacks
 {
@@ -133,7 +134,7 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
         ExitGames.Client.Photon.Hashtable data = new ExitGames.Client.Photon.Hashtable();
         data.Add("IsReady", true);
         PhotonNetwork.LocalPlayer.SetCustomProperties(data);
-        photonView.RPC("UpdatePlayerList", RpcTarget.AllBuffered); // 모든 클라이언트에 동기화
+        photonView.RPC("SetPlayerReady", RpcTarget.AllBuffered, PhotonNetwork.LocalPlayer.ActorNumber, true); // 모든 클라이언트에 동기화
     }
 
     // Room Owner가 StartGame 버튼을 누른 경우
@@ -180,35 +181,19 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
 
     }
 
-
-    void Start()
+    public void UpdatePing()
     {
-        StartCoroutine(RenewPing());
-    }
-    IEnumerator RenewPing()
-    {
-        while (true)
+        ExitGames.Client.Photon.Hashtable data = PhotonNetwork.CurrentRoom.CustomProperties;
+        if (data.ContainsKey("Ping"))
         {
-            yield return new WaitForSeconds(1f);
-            if (PhotonNetwork.InRoom)
-            {
-                ExitGames.Client.Photon.Hashtable data = PhotonNetwork.CurrentRoom.CustomProperties;
-                if (data.ContainsKey("Ping"))
-                {
-                    int ping = PhotonNetwork.GetPing();
-                    data["Ping"] = ping;
-                    roomPing.text = ping + " MS";
-                    //Debug.Log($"Ping Renewed: {ping}");
+            int ping = PhotonNetwork.GetPing();
+            data["Ping"] = ping;
+            roomPing.text = ping + " MS";
+            //Debug.Log($"Ping Renewed: {ping}");
 
-                    PhotonNetwork.CurrentRoom.SetCustomProperties(data);
-                }
-
-                // 임시. 매 초 플레이어 목록 새로고침
-                CallUpdatePlayerList();
-            }
+            PhotonNetwork.CurrentRoom.SetCustomProperties(data);
         }
     }
-
 
     #region RPC
     // CallUpdatePlayerList() 에서 photonView.RPC() 를 통해 모든 클라이언트에서 호출하여 동기화합니다.
@@ -265,6 +250,16 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
     public void LoadGameScene()
     {
         SceneManager.LoadScene("Demo_Play");    // 씬 로딩
+    }
+
+    [PunRPC]
+    public void SetPlayerReady(int actorNum, bool isReady)
+    {
+        PlayerOnRoom por = playerContents.Find(x => x.player.ActorNumber == actorNum);
+        if (por != null)
+        {
+            por.SetPlayerOnRoomReadyState(isReady);
+        }
     }
     #endregion
 
