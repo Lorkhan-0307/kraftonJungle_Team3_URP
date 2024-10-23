@@ -36,7 +36,10 @@ public class NPCManager : Singleton<NPCManager>
 
             // NPC 생성
             GameObject npc = PhotonNetwork.Instantiate(npcPrefab, randomPosition, Quaternion.identity);
-            //allNPC.Add(npc);
+            allNPC.Add(npc);
+            NavMeshAgent agent = npc.GetComponent<NavMeshAgent>();
+            // 우선순위를 NPC마다 다르게 설정
+            agent.avoidancePriority = Random.Range(0, 100);
             npc.transform.parent = NPCGroup.transform;
             SetNewDestination(npc.GetComponent<NavMeshAgent>());
         }
@@ -53,15 +56,7 @@ public class NPCManager : Singleton<NPCManager>
                 NavMeshAgent agent = npc.GetComponent<NavMeshAgent>();
                 if (agent.remainingDistance < 0.1f)
                 {
-                    if (waitTimer <= 0)
-                    {
-                        SetNewDestination(agent);
-                        waitTimer = Random.Range(minWaitTime, maxWaitTime);
-                    }
-                    else
-                    {
-                        waitTimer -= Time.deltaTime;
-                    }
+                    SetNewDestination(agent);
                 }
             }
         }
@@ -70,6 +65,7 @@ public class NPCManager : Singleton<NPCManager>
     public void FindAllNPC()
     {
         GameObject[] npcs = GameObject.FindGameObjectsWithTag("NPC");
+        Debug.Log($"NPC Count : {npcs.Length}");
 
         // 리스트 초기화 후 NPC 추가
         allNPC.Clear();
@@ -136,10 +132,22 @@ public class NPCManager : Singleton<NPCManager>
     void SetNewDestination(NavMeshAgent agent)
     {
         Vector3 randomDirection = Random.insideUnitSphere * moveRadius;
-        randomDirection += transform.position;
-        NavMeshHit hit;
-        NavMesh.SamplePosition(randomDirection, out hit, moveRadius, 1);
-        agent.SetDestination(hit.position);
+        // NPC의 현재 위치 더하기
+        randomDirection += agent.transform.position;
+
+        NavMeshPath path = new NavMeshPath();
+        if (NavMesh.CalculatePath(agent.transform.position, randomDirection, NavMesh.AllAreas, path))
+        {
+            Debug.DrawLine(agent.transform.position, randomDirection, Color.red);
+            if (path.status == NavMeshPathStatus.PathComplete)
+            {
+                agent.SetDestination(randomDirection);
+                return;
+            }
+            //Debug.LogWarning("Path can't be completed");
+        }
+        // 유효한 경로를 찾지 못했을 경우
+        //Debug.LogWarning("Could not find valid path");
     }
 
     public void SetAble()

@@ -67,8 +67,8 @@ public class TimeManager : Singleton<TimeManager>
                 
                 if (NetworkManager.Instance.IsServer())
                 {
-                    SwitchTime(!isDay);
-                    NESwitchDayNight.SwitchDayNight(isDay);
+                    //SwitchTime(!isDay);
+                    NESwitchDayNight.SwitchDayNight(!isDay);
                 }
                     
             }
