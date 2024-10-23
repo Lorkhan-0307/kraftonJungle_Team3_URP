@@ -2,6 +2,8 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Michsky.UI.Dark;
+
 
 public class NEEndGame : NetworkEvent
 {
@@ -14,54 +16,39 @@ public class NEEndGame : NetworkEvent
     {
         NetworkManager.Instance.curState = GameState.End;
         GameManager.instance.EndGame();
-        bool result = EndGame((string)customData);
-        if (result)
-        {
-            Debug.Log("Victory!");
-        }
-        else
-        {
-            Debug.Log("Defeat!");
-        }
-    }
 
-    public bool EndGame(string data)
-    {
-        string[] tokens = data.Split(",");
+        object[] customDatas = (object[])customData;
+        bool isMonsterWon = (bool)customDatas[0];
+        //string data = (string)customDatas[1];
 
-        List<GameResultPlayerData> result = new List<GameResultPlayerData>();
-        Photon.Realtime.Player[] players = PhotonNetwork.PlayerList;
+        //string[] tokens = data.Split(",");
 
-        int tokenI = 0, playerI = 0;
-        while (true)
-        {
-            if (tokenI >= tokens.Length || playerI >= players.Length)
-            {
-                break;
-            }
+        //List<GameResultPlayerData> result = new List<GameResultPlayerData>();
+        //Photon.Realtime.Player[] players = PhotonNetwork.PlayerList;
 
-            if (int.Parse(tokens[tokenI]) == players[playerI].ActorNumber)
-            {
-                result.Add(new GameResultPlayerData(players[playerI], true));
-                tokenI++;
-            }
-            else
-            {
-                result.Add(new GameResultPlayerData(players[playerI], false));
-            }
-            playerI++;
-        }
+        //int tokenI = 0, playerI = 0;
+        //while (true)
+        //{
+        //    if (tokenI >= tokens.Length || playerI >= players.Length)
+        //    {
+        //        break;
+        //    }
 
+        //    if (int.Parse(tokens[tokenI]) == players[playerI].ActorNumber)
+        //    {
+        //        result.Add(new GameResultPlayerData(players[playerI], true));
+        //        tokenI++;
+        //    }
+        //    else
+        //    {
+        //        result.Add(new GameResultPlayerData(players[playerI], false));
+        //    }
+        //    playerI++;
+        //}
 
-
-        int myID = PhotonNetwork.LocalPlayer.ActorNumber;
-        for (int i = 0; i < tokens.Length; i++)
-        {
-            if (myID == int.Parse(tokens[i]))
-                return true;
-        }
-
-        return false;
+        GameOverPopup popup = FindObjectOfType<GameOverPopup>();
+        popup.SetupWinner(isMonsterWon);
+        popup.GetComponent<ModalWindowManager>().ModalWindowIn();
     }
 
 }

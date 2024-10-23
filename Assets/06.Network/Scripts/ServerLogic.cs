@@ -151,7 +151,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     /// 게임 종료조건이 달성되었을 때 실행시켜주세요.
     /// Run when the game end condition is in effect.
     /// </summary>
-    public void EndGame()
+    public void EndGame(bool isMonsterWon)
     {
         string result = "";
 
@@ -166,7 +166,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
             result += players[i].ToString();
         }
 
-        NetworkManager.SendToClients(EventCode.EndGame, result);
+        NetworkManager.SendToClients(EventCode.EndGame, new object[] { isMonsterWon, result });
     }
 
     public List<int> GetAlivePlayers()
@@ -188,7 +188,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         // 괴물이 죽었을 경우
         if (!isMonsterAlive)
         {
-            EndGame();
+            EndGame(false);
             return;
         }
 
@@ -201,7 +201,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
                 return;
         }
 
-        EndGame();
+        EndGame(true);
     }
 
     #endregion
