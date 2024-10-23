@@ -1,0 +1,54 @@
+{
+    "name": "SpectatorActions",
+    "maps": [
+        {
+            "name": "SpectatorActions",
+            "id": "8befe1d4-68e4-4445-adbe-a7ee660eb8c4",
+            "actions": [
+                {
+                    "name": "PrevPlayer",
+                    "type": "Button",
+                    "id": "e8c968c4-f7c4-4161-b9a2-9cde68ce3119",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NextPlayer",
+                    "type": "Button",
+                    "id": "72c603fa-eb74-42f2-afa4-e178a0619a65",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "69076301-9b5e-48c8-82cf-70dd67573bde",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PrevPlayer",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "006f51b4-ffd7-4470-ba70-9eb0a323de6b",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextPlayer",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

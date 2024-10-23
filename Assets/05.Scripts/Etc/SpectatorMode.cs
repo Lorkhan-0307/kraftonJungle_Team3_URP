@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SpectatorMode : MonoBehaviour
 {
@@ -26,19 +27,21 @@ public class SpectatorMode : MonoBehaviour
         Debug.Log("Move to another player: " + SpectatingTarget.name);
     }
 
-    // 마우스 왼쪽 오른쪽 입력 받기
-    private void Update()
+    // 마우스 왼쪽 클릭 시 이전 플레이어로 전환
+    public void OnPrevPlayer(InputAction.CallbackContext context)
     {
         if (isSpectating)
         {
-            if (Input.GetMouseButtonDown(0)) // 마우스 왼쪽 클릭
-            {
-                MoveToAnotherPlayer(-1);
-            }
-            else if (Input.GetMouseButtonDown(1)) // 마우스 오른쪽 클릭
-            {
-                MoveToAnotherPlayer(1);
-            }
+            MoveToAnotherPlayer(-1); // 왼쪽 클릭은 이전 플레이어
+        }
+    }
+
+    // 마우스 오른쪽 클릭 시 다음 플레이어로 전환
+    public void OnNextPlayer(InputAction.CallbackContext context)
+    {
+        if (isSpectating)
+        {
+            MoveToAnotherPlayer(1); // 오른쪽 클릭은 다음 플레이어
         }
     }
 
