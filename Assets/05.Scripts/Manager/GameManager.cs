@@ -44,6 +44,7 @@ public class GameManager : Singleton<GameManager>
 
     public void EndGame()
     {
+        Cursor.visible = true;
         if (hungerSlider != null)
         {
             Destroy(hungerSlider);

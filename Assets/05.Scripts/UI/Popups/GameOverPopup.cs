@@ -10,7 +10,12 @@ public class GameOverPopup : MonoBehaviour
 
 
     private ModalWindowManager _mwm;
-    
+
+    private void Start()
+    {
+        _mwm = GetComponent<ModalWindowManager>();
+    }
+
     public void SetupWinner(bool isMonsterWon)
     {
         if (isMonsterWon)

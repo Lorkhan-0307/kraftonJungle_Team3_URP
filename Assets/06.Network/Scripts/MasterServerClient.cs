@@ -31,14 +31,12 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
             yield return new WaitForSeconds(1);
             if (PhotonNetwork.IsConnected)
             {
-                Debug.Log("RefreshRoomsPeriod");
                 orManager.UpdateRoomList();
             }
 
             if (PhotonNetwork.InRoom)
             {
                 mrManager.UpdatePlayerList();
-                Debug.Log("RenewPing");
 
                 mrManager.UpdatePing();
                 // 임시. 매 초 플레이어 목록 새로고침
