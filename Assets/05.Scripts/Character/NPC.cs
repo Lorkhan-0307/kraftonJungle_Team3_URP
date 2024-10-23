@@ -45,8 +45,8 @@ public class NPC : Player
         // tss에서 NPCManaer로 이동
         // TODO : TSS에서의 변화에 따라 이 부분 수정 및 캡슐화
         // -> 데모 이후 수정 에정
-        //NPCManager npcManager = FindObjectOfType<NPCManager>();
-        //npcManager.allNPC.Remove(this.gameObject);
+        NPCManager npcManager = FindObjectOfType<NPCManager>();
+        npcManager.allNPC.Remove(this.gameObject);
         NetworkManager.Instance.NPCCount--;
         
         // 여기서 Destroy 결과 전송
