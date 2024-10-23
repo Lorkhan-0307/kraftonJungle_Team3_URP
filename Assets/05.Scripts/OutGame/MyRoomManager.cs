@@ -7,6 +7,7 @@ using TMPro;
 using System.Linq;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System;
 
 public class MyRoomManager : MonoBehaviourPunCallbacks
 {
@@ -133,7 +134,7 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
         ExitGames.Client.Photon.Hashtable data = new ExitGames.Client.Photon.Hashtable();
         data.Add("IsReady", true);
         PhotonNetwork.LocalPlayer.SetCustomProperties(data);
-        photonView.RPC("UpdatePlayerList", RpcTarget.AllBuffered); // 모든 클라이언트에 동기화
+        photonView.RPC("SetPlayerReady", RpcTarget.AllBuffered, PhotonNetwork.LocalPlayer.ActorNumber, true); // 모든 클라이언트에 동기화
     }
 
     // Room Owner가 StartGame 버튼을 누른 경우
@@ -265,6 +266,16 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
     public void LoadGameScene()
     {
         SceneManager.LoadScene("Demo_Play");    // 씬 로딩
+    }
+
+    [PunRPC]
+    public void SetPlayerReady(int actorNum, bool isReady)
+    {
+        PlayerOnRoom por = playerContents.Find(x => x.player.ActorNumber == actorNum);
+        if (por != null)
+        {
+            por.SetPlayerOnRoomReadyState(isReady);
+        }
     }
     #endregion
 

@@ -9,6 +9,8 @@ public class OutgameRoomsManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject serverButton;
     [SerializeField] private Transform serverList;
 
+    List<RoomInfo> roomList = new List<RoomInfo>();
+
     public override void OnJoinedLobby()
     {
         DestroyAllServerButtons();
@@ -24,6 +26,22 @@ public class OutgameRoomsManager : MonoBehaviourPunCallbacks
     // Todo : 서버에서 방 목록을 여기서 받아와서 작업해야 합니다.
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
+        this.roomList = roomList;
+        UpdateRoomList();
+    }
+
+    IEnumerator RefreshRoomsPeriod()
+    {
+        while(true)
+        {
+            if (!PhotonNetwork.IsConnected) continue;
+
+            UpdateRoomList();
+            yield return new WaitForSeconds(1);
+        }
+    }
+    public void UpdateRoomList()
+    {
         // Server에서 public으로 오픈된 모든 방들을 로딩합니다.
         // foreach를 통해서, 각각을 AddServerButtonOnServerList 함수를 실행하면 됩니다.
         DestroyAllServerButtons();
@@ -37,7 +55,7 @@ public class OutgameRoomsManager : MonoBehaviourPunCallbacks
                 continue;
 
             ServerButtonElements buttonElement = new ServerButtonElements(room);
-            
+
             AddServerButtonOnServerList(buttonElement);
         }
     }
