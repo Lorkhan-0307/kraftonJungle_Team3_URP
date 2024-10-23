@@ -62,6 +62,7 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
     }
     public override void OnLeftRoom()
     {
+        Debug.Log("방에서 퇴장하였습니다.");
         OnRoomLeave();
     }
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
@@ -176,6 +177,15 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient) // 방장만 호출
         {
             photonView.RPC("LoadGameScene", RpcTarget.AllBuffered); // 모든 클라이언트에 동기화
+        }
+    }
+
+    public void OnClickCancel()
+    {
+        if(PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+            PhotonNetwork.JoinLobby();
         }
     }
 
