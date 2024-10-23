@@ -264,7 +264,7 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void LoadGameScene()
     {
-        SceneManager.LoadScene("ServerDemoScene");    // 씬 로딩
+        SceneManager.LoadScene("Demo_Play");    // 씬 로딩
     }
     #endregion
 
