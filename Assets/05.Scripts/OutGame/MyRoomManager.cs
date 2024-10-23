@@ -171,12 +171,12 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
         // TODO: 준비 완료. 게임 시작!
         Debug.Log("Game Start!");
 
+        PhotonNetwork.CurrentRoom.IsVisible = false;
+
         if (PhotonNetwork.IsMasterClient) // 방장만 호출
         {
             photonView.RPC("LoadGameScene", RpcTarget.AllBuffered); // 모든 클라이언트에 동기화
         }
-
-
     }
 
     // 방 설정을 조절하는 장소입니다. 예시로 만든 변수들을 교체하시면 됩니다.

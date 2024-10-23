@@ -13,8 +13,14 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
     {
         orManager = FindObjectOfType<OutgameRoomsManager>(true);
         mrManager = FindObjectOfType<MyRoomManager>(true);
+
         // Photon 서버에 연결
-        PhotonNetwork.ConnectUsingSettings();
+        if(!PhotonNetwork.IsConnected)
+            PhotonNetwork.ConnectUsingSettings();
+        else if(!PhotonNetwork.InLobby)
+            PhotonNetwork.JoinLobby();
+
+        // 일정 주기로 실행되는 새로고침 코루틴 실행
         StartCoroutine(RefreshPeriod());
     }
 
