@@ -37,6 +37,9 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
         Debug.Log($"[{PhotonNetwork.CurrentRoom.Name}] 방에 입장하였습니다.");
 
         panelManager.OpenPanel("MyRoom");
+
+        // 방 접속 시 자기 자신 추가.
+        SetEachPlayer(PhotonNetwork.LocalPlayer);
     }
     public override void OnLeftRoom()
     {
