@@ -20,13 +20,13 @@ public class Scientist : Player
         //Destroy(this.gameObject);
         if (GetComponent<PhotonView>().AmOwner)
         {
-            Camera.main.GetComponent<SpectatorMode>().StartSpectating();
+            Camera.main.transform.parent.GetComponent<SpectatorMode>().StartSpectating();
             PhotonNetwork.Destroy(this.gameObject);
             NEPlayerDeath.PlayerDeath();
         }
         else
         {
-            Camera.main.GetComponent<SpectatorMode>().RemovePlayer(this.gameObject);
+            Camera.main.transform.parent.GetComponent<SpectatorMode>().RemoveRemainingPlayer(this.gameObject);
         }
     }
 

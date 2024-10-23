@@ -20,15 +20,14 @@ public class Monster : Player
         //Destroy(this.gameObject);
         if (GetComponent<PhotonView>().AmOwner)
         {
-            Camera.main.GetComponent<SpectatorMode>().StartSpectating();
+            Camera.main.transform.parent.GetComponent<SpectatorMode>().StartSpectating();
             PhotonNetwork.Destroy(this.gameObject);
             NEPlayerDeath.PlayerDeath();
         }
         else
         {
-            Camera.main.GetComponent<SpectatorMode>().RemovePlayer(this.gameObject);
+            Camera.main.transform.parent.GetComponent<SpectatorMode>().RemoveRemainingPlayer(this.gameObject);
         }
-        // GameObject.FindObjectOfType<SpectatorMode>() // 이건 효율이 안 좋음
     }
 
     public override void OnDead()
