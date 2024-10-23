@@ -1,10 +1,11 @@
 using Photon.Pun;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DisplayPing : MonoBehaviour
 {
-    public Text pingText;  // Ping 정보를 표시할 UI Text
+    public TMP_Text pingText;  // Ping 정보를 표시할 UI Text
 
 
     void Update()
