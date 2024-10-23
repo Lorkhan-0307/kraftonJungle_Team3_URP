@@ -34,6 +34,7 @@ public class PlayerOnRoom : MonoBehaviour
     {
         if (isReady)
         {
+            Debug.Log("Star Filled");
             // 준비가 된 경우
             starNotFilled.SetActive(false);
             starFilled.SetActive(true);
@@ -41,6 +42,7 @@ public class PlayerOnRoom : MonoBehaviour
 
         else
         {
+            Debug.Log("Star Not Filled");
             // 준비가 되지 않은 경우
             starNotFilled.SetActive(true);
             starFilled.SetActive(false);

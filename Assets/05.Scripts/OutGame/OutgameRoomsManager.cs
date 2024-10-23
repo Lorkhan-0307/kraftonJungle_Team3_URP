@@ -15,7 +15,7 @@ public class OutgameRoomsManager : MonoBehaviourPunCallbacks
     }
     void DestroyAllServerButtons()
     {
-        ServerButton[] buttons = serverList.GetComponentsInChildren<ServerButton>();
+        ServerButton[] buttons = serverList.GetComponentsInChildren<ServerButton>(true);
         for (int i = 0; i < buttons.Length; i++)
         {
             Destroy(buttons[i].gameObject);

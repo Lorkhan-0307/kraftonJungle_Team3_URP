@@ -20,7 +20,6 @@ public enum EventCode
 
 public enum GameState
 {
-    OnLobby,
     OnRoom,
     Playing,
     End,
