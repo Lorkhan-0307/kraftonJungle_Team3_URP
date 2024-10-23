@@ -23,7 +23,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     #region Singleton
     // 싱글톤 인스턴스
-    public static NetworkManager Instance { get; private set; }
+    public static NetworkManager Instance { get; set; }
 
     // Awake는 Start보다 먼저 호출됩니다.
     private void Awake()
