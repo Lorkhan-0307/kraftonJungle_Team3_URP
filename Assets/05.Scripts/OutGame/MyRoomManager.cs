@@ -181,35 +181,19 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
 
     }
 
-
-    void Start()
+    public void UpdatePing()
     {
-        StartCoroutine(RenewPing());
-    }
-    IEnumerator RenewPing()
-    {
-        while (true)
+        ExitGames.Client.Photon.Hashtable data = PhotonNetwork.CurrentRoom.CustomProperties;
+        if (data.ContainsKey("Ping"))
         {
-            yield return new WaitForSeconds(1f);
-            if (PhotonNetwork.InRoom)
-            {
-                ExitGames.Client.Photon.Hashtable data = PhotonNetwork.CurrentRoom.CustomProperties;
-                if (data.ContainsKey("Ping"))
-                {
-                    int ping = PhotonNetwork.GetPing();
-                    data["Ping"] = ping;
-                    roomPing.text = ping + " MS";
-                    //Debug.Log($"Ping Renewed: {ping}");
+            int ping = PhotonNetwork.GetPing();
+            data["Ping"] = ping;
+            roomPing.text = ping + " MS";
+            //Debug.Log($"Ping Renewed: {ping}");
 
-                    PhotonNetwork.CurrentRoom.SetCustomProperties(data);
-                }
-
-                // 임시. 매 초 플레이어 목록 새로고침
-                CallUpdatePlayerList();
-            }
+            PhotonNetwork.CurrentRoom.SetCustomProperties(data);
         }
     }
-
 
     #region RPC
     // CallUpdatePlayerList() 에서 photonView.RPC() 를 통해 모든 클라이언트에서 호출하여 동기화합니다.

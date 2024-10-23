@@ -40,11 +40,11 @@ public class CreateRoom : MonoBehaviour
         // TODO: 방 코드 다른 방들과 겹치지 않게 세팅해야함.
         if(_connectionType)
         {
-            customData.Add("AccessCode", Random.Range(100000, 999999));
+            customData.Add("AccessCode", 0);
         }
         else
         {
-            customData.Add("AccessCode", 0);
+            customData.Add("AccessCode", Random.Range(100000, 999999));
         }
 
         roomOptions.CustomRoomProperties = customData;

@@ -23,6 +23,7 @@ public class OutgameRoomsManager : MonoBehaviourPunCallbacks
             Destroy(buttons[i].gameObject);
         }
     }
+
     // Todo : 서버에서 방 목록을 여기서 받아와서 작업해야 합니다.
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
@@ -30,16 +31,6 @@ public class OutgameRoomsManager : MonoBehaviourPunCallbacks
         UpdateRoomList();
     }
 
-    IEnumerator RefreshRoomsPeriod()
-    {
-        while(true)
-        {
-            if (!PhotonNetwork.IsConnected) continue;
-
-            UpdateRoomList();
-            yield return new WaitForSeconds(1);
-        }
-    }
     public void UpdateRoomList()
     {
         // Server에서 public으로 오픈된 모든 방들을 로딩합니다.
