@@ -225,7 +225,6 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void UpdatePlayerList()
     {
-        Debug.Log("UpdatePlayerList Synched!");
         // 여기에서 player List를 업데이트합니다. 유저가 방에 참여할때, 방에서 나올때 이 함수를 실행시켜주세요.
         // 방에서 나가는 유저는 이 함수를 실행시키면 안됩니다.
         // 마찬가지로, 받아온 player 값들을 foreach로 하여, 아래의 함수를 실행해주세요.
