@@ -138,7 +138,7 @@ public class NPCManager : Singleton<NPCManager>
         NavMeshPath path = new NavMeshPath();
         if (NavMesh.CalculatePath(agent.transform.position, randomDirection, NavMesh.AllAreas, path))
         {
-            Debug.DrawLine(agent.transform.position, randomDirection, Color.red);
+            //Debug.DrawLine(agent.transform.position, randomDirection, Color.red);
             if (path.status == NavMeshPathStatus.PathComplete)
             {
                 agent.SetDestination(randomDirection);
