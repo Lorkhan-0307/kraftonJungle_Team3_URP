@@ -2,10 +2,25 @@ using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
+    public GameSettings gameSettings;
+    public GameState curState = GameState.OnLobby;
+
+    public Player myPlayer;
+
+    public int NPCCount = 0;
+
+    public bool IsServer()
+    {
+        return PhotonNetwork.IsMasterClient;
+    }
+
+
+    public Monster Monster { get { return FindObjectOfType<Monster>(); } }
+    public bool IsMonster() {  return (myPlayer.type == CharacterType.Monster); }
+
     #region Singleton
     // 싱글톤 인스턴스
     public static NetworkManager Instance { get; private set; }
@@ -35,7 +50,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         isStandalone = !PhotonNetwork.IsConnected;
 
-        if(isStandalone)
+        if (isStandalone)
         {
             // Photon 서버에 연결
             PhotonNetwork.ConnectUsingSettings();
@@ -101,7 +116,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     #endregion
 
-    #region Methods:Sender
+    #region Static Methods:Sender
     public static void SendToServer(EventCode code, object content)
     {
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient }; // 모든 클라이언트에게 전송
@@ -120,28 +135,4 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     #endregion
 
-    public GameState curState = GameState.OnLobby;
-
-    public Player myPlayer;
-
-    public int NPCCount = 0;
-
-    public bool IsServer()
-    {
-        return PhotonNetwork.IsMasterClient;
-    }
-
-
-    public Monster Monster
-    {
-        get
-        {
-            return FindObjectOfType<Monster>();
-        }
-    }
-
-    public bool IsMonster()
-    {
-        return (myPlayer.type == CharacterType.Monster);
-    }
 }

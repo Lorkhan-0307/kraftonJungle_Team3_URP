@@ -66,6 +66,7 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
         }
     }
 
+    // CallUpdatePlayerList() 에서 photonView.RPC() 를 통해 모든 클라이언트에서 호출하여 동기화합니다.
     [PunRPC]
     public void UpdatePlayerList()
     {
@@ -151,8 +152,13 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
         if (data.ContainsKey("IsReady"))
         {
             data["Ping"] = true;
-            Debug.Log($"{PhotonNetwork.LocalPlayer.UserId} Pressed Ready");
             PhotonNetwork.CurrentRoom.SetCustomProperties(data);
+            Debug.Log($"{PhotonNetwork.LocalPlayer.UserId} Pressed Ready");
+            photonView.RPC("UpdatePlayerList", RpcTarget.AllBuffered); // 모든 클라이언트에 동기화
+        }
+        else
+        {
+            Debug.Log("Pressed Ready, But no Key \"IsReady\".");
         }
     }
 
@@ -172,5 +178,6 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
         }
 
         // TODO: 준비 완료. 게임 시작!
+        Debug.Log("Game Start!");
     }
 }

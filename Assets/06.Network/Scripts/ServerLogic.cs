@@ -28,31 +28,13 @@ public enum GameState
 
 public class ServerLogic : MonoBehaviourPunCallbacks
 {
-    public GameSettings gameSettings;
     private InputAction gameStartAction;
-    // 싱글톤 인스턴스
-    public static ServerLogic Instance { get; private set; }
 
-    // Awake는 Start보다 먼저 호출됩니다.
-    private void Awake()
-    {
-        // 싱글톤 인스턴스가 없는 경우 이 객체를 인스턴스로 설정
-        if (Instance == null)
-        {
-            Instance = this;
-            // 다른 씬에서도 파괴되지 않도록 설정
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            // 이미 인스턴스가 존재하는 경우, 중복된 객체를 파괴
-            Destroy(gameObject);
-        }
-    }
 
     private void Start()
     {
-        gameSettings = Resources.Load<GameSettings>("GameSettingsData");
+        //TODO: 이거 NetworkManager로 이동하고 Start 함수 없애야할듯
+        NetworkManager.Instance.gameSettings = Resources.Load<GameSettings>("GameSettingsData");
 
         gameStartAction = new InputAction(type: InputActionType.Value, binding: "<Keyboard>/space");
         gameStartAction.Enable();
@@ -66,7 +48,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
 
 
         // TODO: 게임 시작 기능 구현
-        StartGameWithSettings(gameSettings);
+        StartGameWithSettings(NetworkManager.Instance.gameSettings);
     }
 
 
