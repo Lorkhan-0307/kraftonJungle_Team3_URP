@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -25,6 +26,8 @@ public class SpectatorMode : MonoBehaviour
         SpectatingTarget = RemainingPlayers[idx];
         GetComponent<SpectatorCamera>().SetSpectatingTarget(SpectatingTarget);
         Debug.Log("Move to another player: " + SpectatingTarget.name);
+
+       
     }
 
     // 마우스 왼쪽 클릭 시 이전 플레이어로 전환

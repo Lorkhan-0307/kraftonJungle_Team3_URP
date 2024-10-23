@@ -6,17 +6,7 @@ using UnityEngine.InputSystem;
 public class SpectatorCamera : MonoBehaviour
 {
     public GameObject SpectatingTarget;               // 카메라가 따라다닐 타겟
-
-    [SerializeField] private float offsetX = 0f;            // 카메라의 x좌표
-    [SerializeField] private float offsetY = 1.0f;           // 카메라의 y좌표
-    [SerializeField] private float offsetZ = 0f;          // 카메라의 z좌표
-    [SerializeField] private float distance = 1.5f;       // 카메라와 타겟 사이 평면 거리
-    [SerializeField] private float height = 1.0f;         // 카메라의 높이
-
     public float mouseSensitivity = 100f;   // 마우스 감도
-
-
-    public float CameraSpeed = 10.0f;       // 카메라의 속도
     Vector3 TargetPos;                      // 타겟의 위치
 
     // Input Actions 변수
@@ -30,7 +20,6 @@ public class SpectatorCamera : MonoBehaviour
         lookAction = playerInput.actions["Look"];
 
         Vector3 virtualCameraPosition = transform.Find("Virtual Camera").transform.position;
-        virtualCameraPosition.z -= distance;
         transform.Find("Virtual Camera").transform.position = virtualCameraPosition;
     }
     void Start()
