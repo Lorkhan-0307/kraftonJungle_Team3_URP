@@ -1,3 +1,4 @@
+using Michsky.UI.Dark;
 using UnityEngine;
 
 public enum CharacterType
@@ -53,5 +54,6 @@ public class GameManager : Singleton<GameManager>
             Destroy(canvas);
         }
         TimeManager.instance.isEnd = true;
+        FindObjectOfType<GameOverPopup>().GetComponent<ModalWindowManager>().ModalWindowIn();
     }
 }
