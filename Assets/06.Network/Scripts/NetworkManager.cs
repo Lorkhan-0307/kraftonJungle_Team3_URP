@@ -30,33 +30,49 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region RoomServer
+    bool isStandalone = false;
     void Start()
     {
-        // Photon 서버에 연결
-        PhotonNetwork.ConnectUsingSettings();
+        isStandalone = !PhotonNetwork.IsConnected;
+
+        if(isStandalone)
+        {
+            // Photon 서버에 연결
+            PhotonNetwork.ConnectUsingSettings();
+        }
     }
 
     public override void OnConnectedToMaster()
     {
-        // 서버에 연결되면 방에 입장 시도
-        curState = GameState.OnLobby;
-        PhotonNetwork.JoinRandomRoom();
+
+        if (isStandalone)
+        {
+            // 서버에 연결되면 방에 입장 시도
+            curState = GameState.OnLobby;
+            PhotonNetwork.JoinRandomRoom();
+        }
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        // 방이 없으면 새로운 방을 생성
-        PhotonNetwork.CreateRoom(null);
+        if (isStandalone)
+        {
+            // 방이 없으면 새로운 방을 생성
+            PhotonNetwork.CreateRoom(null);
+        }
     }
 
     public override void OnJoinedRoom()
     {
-        curState = GameState.OnRoom;
-        // 방장(마스터 클라이언트)일 경우 특정 로직 실행
-        if (PhotonNetwork.IsMasterClient)
+        if (isStandalone)
         {
-            Debug.Log("You Are The Master Client!");
-            gameObject.AddComponent<ServerLogic>();
+            curState = GameState.OnRoom;
+            // 방장(마스터 클라이언트)일 경우 특정 로직 실행
+            if (PhotonNetwork.IsMasterClient)
+            {
+                Debug.Log("You Are The Master Client!");
+                gameObject.AddComponent<ServerLogic>();
+            }
         }
     }
     public override void OnDisconnected(DisconnectCause cause)
