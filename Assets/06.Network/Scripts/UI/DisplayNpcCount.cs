@@ -1,12 +1,13 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DisplayNpcCount : MonoBehaviour
 {
-    public Text npcText;  // Ping 정보를 표시할 UI Text
+    public TMP_Text npcText;  // Ping 정보를 표시할 UI Text
 
     void Update()
     {
