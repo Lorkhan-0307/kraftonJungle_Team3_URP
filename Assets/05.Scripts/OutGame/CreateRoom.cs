@@ -19,6 +19,11 @@ public class CreateRoom : MonoBehaviour
 
     public void OnClickCreateRoom()
     {
+        if(!PhotonNetwork.InLobby)
+        {
+            Debug.LogError("아직 서버에 접속되지 않았습니다.");
+        }
+
         // 현재 값들을 가지고 사용하면 됩니다.
         string _serverName = serverName.text;
         // 최대 접속 가능 유저수는 slider value입니다.
