@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,41 +13,44 @@ public class SpectatorCamera : MonoBehaviour
     [SerializeField] private float distance = 1.5f;       // 카메라와 타겟 사이 평면 거리
     [SerializeField] private float height = 1.0f;         // 카메라의 높이
 
+    public float mouseSensitivity = 100f;   // 마우스 감도
+
 
     public float CameraSpeed = 10.0f;       // 카메라의 속도
     Vector3 TargetPos;                      // 타겟의 위치
 
+    // Input Actions 변수
+    private PlayerInput playerInput;
+    private InputAction lookAction;
+
+    void Awake()
+    {
+        // PlayerInput 컴포넌트에서 InputAction 가져오기
+        playerInput = GetComponent<PlayerInput>();
+        lookAction = playerInput.actions["Look"];
+
+        Vector3 virtualCameraPosition = transform.Find("Virtual Camera").transform.position;
+        virtualCameraPosition.z -= distance;
+        transform.Find("Virtual Camera").transform.position = virtualCameraPosition;
+    }
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     public void SetSpectatingTarget(GameObject target)
     {
         SpectatingTarget = target;
-        gameObject.GetComponentInChildren<MouseComponent>().playerBody = gameObject.transform;
-        // gameObject.GetComponent<MouseComponent>().playerBody = target.transform;
         Debug.Log("Set Spectating Target: " + target.name);
     }
 
     private void FollowPosition()
     {
-        // TargetPos = new Vector3(
-        //     SpectatingTarget.transform.position.x + offsetX,
-        //     SpectatingTarget.transform.position.y + offsetY,
-        //     SpectatingTarget.transform.position.z + offsetZ
-        //     );
+        transform.position = SpectatingTarget.transform.position;
+        Vector2 mouseDelta = lookAction.ReadValue<Vector2>();
 
-        float angle = SpectatingTarget.transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
-        float cosine = Mathf.Cos(angle);
-        float sine = Mathf.Sin(angle);
-
-        TargetPos = new Vector3(
-            SpectatingTarget.transform.position.x - distance * cosine,
-            SpectatingTarget.transform.position.y + height,
-            SpectatingTarget.transform.position.z - distance * sine
-            );
-
-        transform.position = TargetPos;
-
-        // 카메라의 움직임을 부드럽게 하는 함수(Lerp)
-        // transform.position = Vector3.Lerp(transform.position, TargetPos, Time.deltaTime * CameraSpeed);
-
+        float mouseX = mouseDelta.x * mouseSensitivity * Time.deltaTime;
+        transform.Rotate(Vector3.up * mouseX);
     }
 
     private void FixedUpdate()
