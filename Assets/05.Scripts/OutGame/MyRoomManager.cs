@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Michsky.UI.Dark;
 using Photon.Realtime;
+using TMPro;
 
 public class MyRoomManager : MonoBehaviourPunCallbacks
 {
@@ -19,6 +20,10 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
 
     [SerializeField]
     List<PlayerOnRoom> playerContents = new List<PlayerOnRoom>();
+
+    [SerializeField] private TMP_Text roomName;
+    [SerializeField] private TMP_Text roomCode;
+    [SerializeField] private TMP_Text roomPing;
 
     // 사용자가 방을 만들거나 참여하면 꼭 이 함수를 실행시켜주세요.
     public void OnRoomCreateOrJoin(bool isOwner)
@@ -179,5 +184,17 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
 
         // TODO: 준비 완료. 게임 시작!
         Debug.Log("Game Start!");
+    }
+
+    // 방 설정을 조절하는 장소입니다. 예시로 만든 변수들을 교체하시면 됩니다.
+    public void RoomSetup()
+    {
+        string _roomName = "";
+        string _roomCode = "";
+        string _roomPing = "";
+        roomName.text = _roomName;
+        roomCode.text = "GAME CODE : " + _roomCode;
+        roomPing.text = _roomPing + " MS";
+
     }
 }
