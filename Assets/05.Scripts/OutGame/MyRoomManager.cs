@@ -57,6 +57,8 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
         // 방 접속 시 자기 자신 추가.
         SetEachPlayer(PhotonNetwork.LocalPlayer);
         RoomSetup();
+
+        SpawnNetworkManager();
     }
     public override void OnLeftRoom()
     {
@@ -73,6 +75,20 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
         CallUpdatePlayerList();
     }
 
+    public void SpawnNetworkManager()
+    {
+        if(NetworkManager.Instance)
+        {
+            Destroy(NetworkManager.Instance.gameObject);
+        }
+
+        // Resources 폴더에서 "NetworkManager"라는 이름의 프리팹을 로드
+        GameObject nm = Instantiate(Resources.Load<GameObject>("NetworkManager"));
+
+        // 방장은 서버로직 추가
+        if (PhotonNetwork.IsMasterClient)
+            nm.AddComponent<ServerLogic>();
+    }
 
     // 예시: 방장(마스터 클라이언트)이 UpdatePlayerList를 실행하는 경우
     public void CallUpdatePlayerList()
@@ -157,7 +173,6 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient) // 방장만 호출
         {
-            photonView.RPC("SpawnNetworkManager", RpcTarget.AllBuffered); // 모든 클라이언트에 동기화
             photonView.RPC("LoadGameScene", RpcTarget.AllBuffered); // 모든 클라이언트에 동기화
         }
 
@@ -234,17 +249,6 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
 
             SetEachPlayer(player);
         }
-    }
-    [PunRPC]
-    public void SpawnNetworkManager()
-    {
-        // Resources 폴더에서 "NetworkManager"라는 이름의 프리팹을 로드
-        GameObject networkManagerPrefab = Resources.Load<GameObject>("NetworkManager");
-        GameObject nm = Instantiate(networkManagerPrefab);
-
-        // 방장은 서버로직 추가
-        if (PhotonNetwork.IsMasterClient)
-            nm.AddComponent<ServerLogic>();
     }
     [PunRPC]
     public void LoadGameScene()

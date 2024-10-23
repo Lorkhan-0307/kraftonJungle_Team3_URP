@@ -70,4 +70,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
     #endregion
 
+    public void CallSyncSettings()
+    {
+        if (PhotonNetwork.IsMasterClient) // 방장만 호출
+        {
+            photonView.RPC("UpdatePlayerList", RpcTarget.Others, gameSettings.InstanceToData()); // 모든 클라이언트에 동기화
+        }
+    }
+    [PunRPC]
+    public void SyncSettings(object data)
+    {
+        gameSettings = GameSettings.DataToInstance(data);
+    }
 }

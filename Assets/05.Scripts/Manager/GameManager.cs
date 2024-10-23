@@ -54,6 +54,5 @@ public class GameManager : Singleton<GameManager>
             Destroy(canvas);
         }
         TimeManager.instance.isEnd = true;
-        FindObjectOfType<GameOverPopup>().GetComponent<ModalWindowManager>().ModalWindowIn();
     }
 }
