@@ -9,10 +9,10 @@ public class SpectatorManager : Singleton<SpectatorManager>
     private List<GameObject> remainingPlayers = new List<GameObject>();
     private GameObject spectatorInstance;
 
-    private void Awake()
-    {
-        StartSpectating();
-    }
+    // private void Awake()
+    // {
+    //     StartSpectating();
+    // }
 
     // 자신이 죽었을 때 호출
     public void StartSpectating()
