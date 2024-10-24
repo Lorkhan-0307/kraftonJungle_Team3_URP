@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Scientist : Player
 {
+    public GameObject SpectatorManager;
 
     public override void OnAttack(GameObject victim)
     {
@@ -19,13 +20,13 @@ public class Scientist : Player
         // 여기서 Destroy 결과 전송
         if (GetComponent<PhotonView>().AmOwner)
         {
-            Camera.main.transform.parent.GetComponent<SpectatorMode>().StartSpectating();
+            SpectatorManager.GetComponent<SpectatorManager>().StartSpectating();
             PhotonNetwork.Destroy(this.gameObject);
             NEPlayerDeath.PlayerDeath();
         }
         else
         {
-            Camera.main.transform.parent.GetComponent<SpectatorMode>().RemoveRemainingPlayer(this.gameObject);
+            SpectatorManager.GetComponent<SpectatorManager>().RemoveRemainingPlayer(this.gameObject);
         }
     }
 
