@@ -44,6 +44,8 @@ public class GameManager : Singleton<GameManager>
 
     public void EndGame()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
         if (hungerSlider != null)
         {
             Destroy(hungerSlider);

@@ -81,6 +81,7 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
         if(NetworkManager.Instance)
         {
             Destroy(NetworkManager.Instance.gameObject);
+            NetworkManager.Instance = null;
         }
 
         // Resources 폴더에서 "NetworkManager"라는 이름의 프리팹을 로드
@@ -218,7 +219,7 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
 
             PhotonNetwork.CurrentRoom.SetCustomProperties(data);
         }
-    }
+    }       
 
     #region RPC
     // CallUpdatePlayerList() 에서 photonView.RPC() 를 통해 모든 클라이언트에서 호출하여 동기화합니다.
