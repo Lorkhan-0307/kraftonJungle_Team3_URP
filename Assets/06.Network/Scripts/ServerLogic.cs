@@ -55,12 +55,12 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     #region GameLogic
     public int monsterActorNum = -1;
 
-    public bool[] isAlivePlayers;
+    ExitGames.Client.Photon.Hashtable isAlivePlayers = new Hashtable();
 
 
     public void PlayerDeath(int actorNum)
     {
-        isAlivePlayers[actorNum-1] = false;
+        isAlivePlayers[actorNum] = false;
 
         CheckEndCondition();
     }
@@ -87,11 +87,11 @@ public class ServerLogic : MonoBehaviourPunCallbacks
 
 
         // 플레이어 생존 여부 배열 초기화
-        isAlivePlayers = new bool[playerList.Length];
+        isAlivePlayers = new Hashtable();
 
-        for (int i = 0; i < isAlivePlayers.Length; i++)
+        for (int i = 0; i < playerList.Length; i++)
         {
-            isAlivePlayers[i] = true;
+            isAlivePlayers.Add(playerList[i].ActorNumber, true);
         }
 
 
@@ -172,10 +172,10 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     public List<int> GetAlivePlayers()
     {
         List<int> result = new List<int>();
-        for (int i = 0; i < isAlivePlayers.Length; i++)
+        foreach(var key in isAlivePlayers.Keys)
         {
-            if (isAlivePlayers[i])
-                result.Add(i);
+            if ((bool)isAlivePlayers[key])
+                result.Add((int)key);
         }
 
         return result;
@@ -183,7 +183,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
 
     public void CheckEndCondition()
     {
-        bool isMonsterAlive = isAlivePlayers[monsterActorNum - 1];
+        bool isMonsterAlive = (bool)isAlivePlayers[monsterActorNum];
 
         // 괴물이 죽었을 경우
         if (!isMonsterAlive)
@@ -193,11 +193,11 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         }
 
         // 괴물이 살아있을 경우 모든 플레이어가 죽어야 게임 종료
-        for (int i = 0; i < isAlivePlayers.Length; i++)
+        foreach(var key in isAlivePlayers.Keys)
         {
-            if (i == monsterActorNum - 1) continue;
+            if ((int)key == monsterActorNum) continue;
 
-            if (isAlivePlayers[i])
+            if ((bool)isAlivePlayers[key])
                 return;
         }
 

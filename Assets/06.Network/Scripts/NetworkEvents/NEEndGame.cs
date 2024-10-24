@@ -18,39 +18,28 @@ public class NEEndGame : NetworkEvent
         GameManager.instance.EndGame();
 
         object[] customDatas = (object[])customData;
+
         bool isMonsterWon = (bool)customDatas[0];
-        //string data = (string)customDatas[1];
+        string resultStr = (string)customDatas[1];
 
-        //string[] tokens = data.Split(",");
+        //PlayerPrefs 에 임시로 결과 추가
+        AddResult(isMonsterWon, resultStr);
 
-        //List<GameResultPlayerData> result = new List<GameResultPlayerData>();
-        //Photon.Realtime.Player[] players = PhotonNetwork.PlayerList;
-
-        //int tokenI = 0, playerI = 0;
-        //while (true)
-        //{
-        //    if (tokenI >= tokens.Length || playerI >= players.Length)
-        //    {
-        //        break;
-        //    }
-
-        //    if (int.Parse(tokens[tokenI]) == players[playerI].ActorNumber)
-        //    {
-        //        result.Add(new GameResultPlayerData(players[playerI], true));
-        //        tokenI++;
-        //    }
-        //    else
-        //    {
-        //        result.Add(new GameResultPlayerData(players[playerI], false));
-        //    }
-        //    playerI++;
-        //}
 
         GameOverPopup popup = FindObjectOfType<GameOverPopup>();
         popup.SetupWinner(isMonsterWon);
         popup.GetComponent<ModalWindowManager>().ModalWindowIn();
     }
 
+    void AddResult(bool isMonsterWon, string resultStr)
+    {
+        string[] tokens = resultStr.Split(',');
+
+        string addResult = $"{isMonsterWon.ToString()},{tokens.Length}\n";
+
+        string pref = PlayerPrefs.GetString("GameResultDemo", "");
+        PlayerPrefs.SetString("GameResultDemo", pref + addResult);
+    }
 }
 
 public class GameResultPlayerData

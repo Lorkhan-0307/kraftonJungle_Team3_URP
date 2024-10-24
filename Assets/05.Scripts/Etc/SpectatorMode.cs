@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SpectatorMode : MonoBehaviour
 {
@@ -24,21 +26,25 @@ public class SpectatorMode : MonoBehaviour
         SpectatingTarget = RemainingPlayers[idx];
         GetComponent<SpectatorCamera>().SetSpectatingTarget(SpectatingTarget);
         Debug.Log("Move to another player: " + SpectatingTarget.name);
+
+       
     }
 
-    // 마우스 왼쪽 오른쪽 입력 받기
-    private void Update()
+    // 마우스 왼쪽 클릭 시 이전 플레이어로 전환
+    public void OnPrevPlayer(InputAction.CallbackContext context)
     {
         if (isSpectating)
         {
-            if (Input.GetMouseButtonDown(0)) // 마우스 왼쪽 클릭
-            {
-                MoveToAnotherPlayer(-1);
-            }
-            else if (Input.GetMouseButtonDown(1)) // 마우스 오른쪽 클릭
-            {
-                MoveToAnotherPlayer(1);
-            }
+            MoveToAnotherPlayer(-1); // 왼쪽 클릭은 이전 플레이어
+        }
+    }
+
+    // 마우스 오른쪽 클릭 시 다음 플레이어로 전환
+    public void OnNextPlayer(InputAction.CallbackContext context)
+    {
+        if (isSpectating)
+        {
+            MoveToAnotherPlayer(1); // 오른쪽 클릭은 다음 플레이어
         }
     }
 
@@ -46,6 +52,12 @@ public class SpectatorMode : MonoBehaviour
     public void StartSpectating()
     {
         Debug.Log("Start Spectating");
+
+        foreach (Transform child in transform)
+        {
+            child.gameObject.SetActive(true);
+        }
+
         isSpectating = true;
         RemainingPlayers = new List<GameObject>();
         RemainingPlayers.AddRange(GameObject.FindGameObjectsWithTag("Player"));
@@ -55,12 +67,11 @@ public class SpectatorMode : MonoBehaviour
 
         transform.SetParent(null);
         gameObject.AddComponent<SpectatorCamera>(); // 쫓아다니기 시작
-        gameObject.AddComponent<CharacterController>(); // 마우스 이동 추가
         UpdateSpectatingPlayer();
     }
 
-    // 어떤 플레이어가 죽을 때마다 호출됨
-    public void UpdateSpectatingPlayer()
+    // 누군가 죽었을 때 호출되는 함수
+    private void UpdateSpectatingPlayer()
     {
         // 어떤 플레이어가 죽었을 때마다 호출됨
         // 남아있는 플레이어 중에서 다음 플레이어로 변경
