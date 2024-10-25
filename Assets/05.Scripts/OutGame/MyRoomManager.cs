@@ -6,7 +6,6 @@ using Photon.Realtime;
 using TMPro;
 using System.Linq;
 using System.Collections;
-using UnityEngine.SceneManagement;
 using System;
 
 public class MyRoomManager : MonoBehaviourPunCallbacks
@@ -185,10 +184,8 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.CurrentRoom.IsVisible = false;
 
-        if (PhotonNetwork.IsMasterClient) // 방장만 호출
-        {
-            photonView.RPC("LoadGameScene", RpcTarget.AllBuffered); // 모든 클라이언트에 동기화
-        }
+        // 씬 로딩
+        NetSceneManager.instance.LoadSceneToAllClients(NetSceneManager.instance.mainSceneName);
     }
 
     public void OnClickCancel()
@@ -269,11 +266,6 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
 
             SetEachPlayer(player);
         }
-    }
-    [PunRPC]
-    public void LoadGameScene()
-    {
-        SceneManager.LoadScene("Demo_Play");    // 씬 로딩
     }
 
     [PunRPC]

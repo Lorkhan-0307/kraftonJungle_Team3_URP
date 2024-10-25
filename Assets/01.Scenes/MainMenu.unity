@@ -80485,6 +80485,74 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1849813940}
   m_CullTransparentMesh: 0
+--- !u!1 &1850509714
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1850509716}
+  - component: {fileID: 1850509715}
+  - component: {fileID: 1850509717}
+  m_Layer: 0
+  m_Name: NetSceneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1850509715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850509714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73e8370b87c518a45b7678366b361a82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainSceneName: Demo_Play
+--- !u!4 &1850509716
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850509714}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 800.3638, y: 589.74286, z: 0.07824828}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1850509717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850509714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 31
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1859942497
 GameObject:
   m_ObjectHideFlags: 0
@@ -85083,7 +85151,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 15
+  sceneViewId: 32
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &1974944251
@@ -85102,7 +85170,7 @@ MonoBehaviour:
   chatPrefab: {fileID: 5910029121084004735, guid: bf349ff1bfd9136408e4baee28ff7423,
     type: 3}
   chatInput: {fileID: 1844056384}
-  scrollbar: {fileID: 0}
+  scrollbar: {fileID: 2094026970}
 --- !u!1 &1976577379
 GameObject:
   m_ObjectHideFlags: 0
@@ -94525,3 +94593,4 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 1166125083}
   - {fileID: 1926287054}
+  - {fileID: 1850509716}
