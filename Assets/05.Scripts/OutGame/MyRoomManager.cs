@@ -90,6 +90,9 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
         // 방장은 서버로직 추가
         if (PhotonNetwork.IsMasterClient)
             nm.AddComponent<ServerLogic>();
+
+        MyRoomSettingsManager sm = GetComponentInChildren<MyRoomSettingsManager>();
+        sm.ApplySettingsToUI();
     }
 
     // 예시: 방장(마스터 클라이언트)이 UpdatePlayerList를 실행하는 경우

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
@@ -12,7 +13,7 @@ public class ChatManager : MonoBehaviourPun
     [SerializeField] GameObject chatPrefab;
 
     [SerializeField] TMP_InputField chatInput;
-
+    [SerializeField] Scrollbar scrollbar;
 
     public void SendChat()
     {
@@ -35,7 +36,12 @@ public class ChatManager : MonoBehaviourPun
 
     private void SetEachChat(string playerName, string text)
     {
+        bool refreshScrollbar = (scrollbar.value == 1);
+
         MyRoomChat p = Instantiate(chatPrefab, chatList).GetComponent<MyRoomChat>();
         p.SetupChat(new ChatElement(playerName, text));
+
+        if(refreshScrollbar)
+            scrollbar.value = 1;
     }
 }
