@@ -33,6 +33,7 @@ public class SpectatorCamera : MonoBehaviour
     {
         remainingPlayers = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
         Cursor.lockState = CursorLockMode.Locked;
+        spectatingTarget = remainingPlayers[currentPlayerIndex];
         virtualCamera.Follow = this.transform;
         Debug.Log("Spectator Camera Start");
     }
