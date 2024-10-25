@@ -53,4 +53,33 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
         customData.Add("IsReady", false);
         PhotonNetwork.LocalPlayer.CustomProperties = customData;
     }
+
+    [PunRPC]
+    public void SendChat()
+    {
+
+    }
+}
+
+public class ChatData
+{
+    public string senderID;
+    public string text;
+
+    public ChatData() { }
+    public ChatData(string senderID, string text)
+    {
+        this.senderID = senderID;
+        this.text = text;
+    }
+
+    public static object[] InstanceToData(ChatData data)
+    {
+        return new object[] { data.senderID, data.text };
+    }
+    public static ChatData DataToInstance(object data)
+    {
+        object[] datas = (object[])data;
+        return new ChatData((string)datas[0], (string)datas[1]);
+    }
 }
