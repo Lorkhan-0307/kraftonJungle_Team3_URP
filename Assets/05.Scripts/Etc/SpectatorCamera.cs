@@ -26,6 +26,7 @@ public class SpectatorCamera : MonoBehaviour
         prevPlayerAction = playerInput.actions["PrevPlayer"];
         nextPlayerAction = playerInput.actions["NextPlayer"];
         virtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
+        Debug.Log("Spectator Camera Awake");
     }
 
     void Start()
@@ -33,6 +34,7 @@ public class SpectatorCamera : MonoBehaviour
         remainingPlayers = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
         Cursor.lockState = CursorLockMode.Locked;
         virtualCamera.Follow = this.transform;
+        Debug.Log("Spectator Camera Start");
     }
 
     // Update로 관전 대상 변경 감지, 버츄얼 카메라 위치 업데이트
@@ -79,6 +81,7 @@ public class SpectatorCamera : MonoBehaviour
             currentPlayerIndex = 0;
 
         spectatingTarget = remainingPlayers[currentPlayerIndex];
+        Debug.Log("Switching to player " + spectatingTarget.name);
     }
 
     // 다른 플레이어가 죽었을 때 SpectatorManager가 호출
