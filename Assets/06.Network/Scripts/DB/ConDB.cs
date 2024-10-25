@@ -22,12 +22,19 @@ public class DynamoDBManager : MonoBehaviour
         client = new AmazonDynamoDBClient(credentials, Amazon.RegionEndpoint.GetBySystemName(region));
 
         // 예제: 클라이언트 접속 시 확인/저장/불러오기 로직
-        string UserId = "jangwoo"; // 예제 플레이어 ID
-        string playerNickname = "Player123";
-        string UserNum = "1";
+        string UserId = "ji"; // 예제 플레이어 ID
+        string playerNickname = "jihoon";
+        string UserNum = "3";
 
         ConnectPlayer(UserId, UserNum, playerNickname);
     }
+
+    //TODO: 이런식으로 함수 만들어서 캡슐화 해주세요.
+    //public void SavePlayerData(string UserID, string nickName, string password, string token)
+    //{
+
+    //}
+
 
     // 클라이언트 접속 로직
     public async Task ConnectPlayer(string UserId, string UserNum, string playerNickname)
