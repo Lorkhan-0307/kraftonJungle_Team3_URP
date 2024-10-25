@@ -125,7 +125,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         npcManager.SpawnNPC();
 
         // 게임 낮 밤 시간 설정
-        if(TimeManager.instance != null)
+        if(TimeManager.instance == null)
         {
             Debug.Log("There is No TimeManager.");
         }
