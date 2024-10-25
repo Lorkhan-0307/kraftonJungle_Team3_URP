@@ -17,8 +17,8 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
     [SerializeField] private Transform playerList;
     [SerializeField] private GameObject playerPrefab;
 
-    [SerializeField] private GameObject startButton;
-    [SerializeField] private GameObject readyButton;
+    [SerializeField] private GameObject onMasterObjects;
+    [SerializeField] private GameObject onClientObjects;
 
     [SerializeField] MainPanelManager panelManager;
 
@@ -133,15 +133,15 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
     // Game Start Button Activate
     private void StartButtonActivate()
     {
-        startButton.SetActive(true);
-        readyButton.SetActive(false);
+        onMasterObjects.SetActive(true);
+        onClientObjects.SetActive(false);
     }
     
     // Join을 하는 경우
     private void ReadyButtonActivate()
     {
-        startButton.SetActive(false);
-        readyButton.SetActive(true);
+        onMasterObjects.SetActive(false);
+        onClientObjects.SetActive(true);
     }
 
     // Guest가 Ready 버튼을 누른 경우

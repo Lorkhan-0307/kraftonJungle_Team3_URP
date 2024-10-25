@@ -49,6 +49,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         Debug.Log($"Disconnected Cause: {cause.ToString()}");
     }
+
+    public override void OnLeftRoom()
+    {
+        Destroy(gameObject);
+        Instance = null;
+    }
     #endregion
 
     #region Static Methods:Sender
