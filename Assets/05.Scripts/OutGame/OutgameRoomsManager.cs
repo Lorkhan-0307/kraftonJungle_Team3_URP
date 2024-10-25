@@ -24,7 +24,7 @@ public class OutgameRoomsManager : MonoBehaviourPunCallbacks
         }
     }
 
-    // Todo : 서버에서 방 목록을 여기서 받아와서 작업해야 합니다.
+    // 서버에서 방 목록을 받아와서 씬에 업데이트 합니다.
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         this.roomList = roomList;

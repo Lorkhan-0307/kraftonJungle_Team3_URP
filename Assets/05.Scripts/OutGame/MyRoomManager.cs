@@ -170,7 +170,7 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
             }
         }
 
-        // TODO: 준비 완료. 게임 시작!
+        // 준비 완료. 게임 시작!
         Debug.Log("Game Start!");
 
         PhotonNetwork.CurrentRoom.IsVisible = false;
