@@ -36,12 +36,17 @@ public class ChatManager : MonoBehaviourPun
 
     private void SetEachChat(string playerName, string text)
     {
-        bool refreshScrollbar = (scrollbar.value == 1);
-
         MyRoomChat p = Instantiate(chatPrefab, chatList).GetComponent<MyRoomChat>();
         p.SetupChat(new ChatElement(playerName, text));
 
-        if(refreshScrollbar)
-            scrollbar.value = 1;
+        scrollbar.value = 0;
+        StartCoroutine(SetScrollBar());
+    }
+    IEnumerator SetScrollBar()
+    {
+        yield return null;
+        yield return null;
+
+        scrollbar.value = 0;
     }
 }
