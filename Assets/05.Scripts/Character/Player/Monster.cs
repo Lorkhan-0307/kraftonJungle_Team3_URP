@@ -19,9 +19,9 @@ public class Monster : Player
         // 여기서 Destroy 결과 전송
         if (GetComponent<PhotonView>().AmOwner)
         {
-            SpectatorManager.instance.StartSpectating();
             PhotonNetwork.Destroy(this.gameObject);
             NEPlayerDeath.PlayerDeath();
+            SpectatorManager.instance.StartSpectating();
         }
         else
         {

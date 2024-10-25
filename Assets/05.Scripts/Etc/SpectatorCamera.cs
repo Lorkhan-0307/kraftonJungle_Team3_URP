@@ -25,30 +25,14 @@ public class SpectatorCamera : MonoBehaviour
         lookAction = playerInput.actions["Look"];
         prevPlayerAction = playerInput.actions["PrevPlayer"];
         nextPlayerAction = playerInput.actions["NextPlayer"];
-        remainingPlayers = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
-
         virtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
     }
 
     void Start()
     {
+        remainingPlayers = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
         Cursor.lockState = CursorLockMode.Locked;
         virtualCamera.Follow = this.transform;
-    }
-
-    // 관전 대상 리스트 초기화
-    public void SetRemainingPlayers(List<GameObject> players)
-    {
-        remainingPlayers = players;
-        if (remainingPlayers.Count > 0)
-        {
-            currentPlayerIndex = 0;
-            spectatingTarget = remainingPlayers[currentPlayerIndex];
-        }
-        else
-        {
-            Debug.LogWarning("No players left to spectate.");
-        }
     }
 
     // Update로 관전 대상 변경 감지, 버츄얼 카메라 위치 업데이트
@@ -57,11 +41,11 @@ public class SpectatorCamera : MonoBehaviour
         // Handle switching between players
         if (prevPlayerAction.triggered)
         {
-            SwitchToPrevPlayer();
+            SwitchPlayer(-1);
         }
         if (nextPlayerAction.triggered)
         {
-            SwitchToNextPlayer();
+            SwitchPlayer(1);
         }
 
         UpdateVirtualCameraPosition();
@@ -83,31 +67,21 @@ public class SpectatorCamera : MonoBehaviour
     }
 
     // 관전 대상 변경
-    private void SwitchToPrevPlayer()
+    private void SwitchPlayer(int idx_change)
     {
         if (remainingPlayers.Count == 0)
             return;
 
-        currentPlayerIndex--;
+        currentPlayerIndex += idx_change;
         if (currentPlayerIndex < 0)
             currentPlayerIndex = remainingPlayers.Count - 1;
-
-        spectatingTarget = remainingPlayers[currentPlayerIndex];
-    }
-
-    private void SwitchToNextPlayer()
-    {
-        if (remainingPlayers.Count == 0)
-            return;
-
-        currentPlayerIndex++;
-        if (currentPlayerIndex >= remainingPlayers.Count)
+        else if (currentPlayerIndex >= remainingPlayers.Count)
             currentPlayerIndex = 0;
 
         spectatingTarget = remainingPlayers[currentPlayerIndex];
     }
 
-    // 어떤 플레이어가 죽었을 때 SpectatorManager가 호출
+    // 다른 플레이어가 죽었을 때 SpectatorManager가 호출
     public void RemovePlayer(GameObject player)
     {
         remainingPlayers.Remove(player);
