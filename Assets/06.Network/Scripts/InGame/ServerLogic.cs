@@ -32,9 +32,6 @@ public class ServerLogic : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        //TODO: 이거 NetworkManager로 이동하고 Start 함수 없애야할듯
-        NetworkManager.Instance.gameSettings = Resources.Load<GameSettings>("GameSettingsData");
-
         gameStartAction = new InputAction(type: InputActionType.Value, binding: "<Keyboard>/space");
         gameStartAction.Enable();
         gameStartAction.performed += StartGameCallback;
@@ -128,13 +125,15 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         npcManager.SpawnNPC();
 
         // 게임 낮 밤 시간 설정
-        if(GameManager.instance != null)
+        if(TimeManager.instance != null)
         {
-            Debug.Log("There is No GameManager.");
+            Debug.Log("There is No TimeManager.");
         }
         else
         {
             // TODO: Apply Time Cycle Settings
+            TimeManager.instance.dayTime = settings.dayLength;
+            TimeManager.instance.nightTime = settings.nightLength;
         }
 
 

@@ -21,6 +21,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public Monster Monster { get { return FindObjectOfType<Monster>(); } }
     public bool IsMonster() {  return (myPlayer.type == CharacterType.Monster); }
 
+    public void LoadGameSettings()
+    {
+        gameSettings = Resources.Load<GameSettings>("GameSettingsData");
+    }
+
     #region Singleton
     // 싱글톤 인스턴스
     public static NetworkManager Instance { get; set; }
@@ -75,17 +80,4 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.RaiseEvent((byte)code, content, raiseEventOptions, sendOptions);
     }
     #endregion
-
-    public void CallSyncSettings()
-    {
-        if (PhotonNetwork.IsMasterClient) // 방장만 호출
-        {
-            photonView.RPC("UpdatePlayerList", RpcTarget.Others, gameSettings.InstanceToData()); // 모든 클라이언트에 동기화
-        }
-    }
-    [PunRPC]
-    public void SyncSettings(object data)
-    {
-        gameSettings = GameSettings.DataToInstance(data);
-    }
 }

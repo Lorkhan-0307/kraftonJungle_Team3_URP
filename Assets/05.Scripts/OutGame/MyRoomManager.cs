@@ -29,6 +29,7 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
     [SerializeField] private TMP_Text roomCode;
     [SerializeField] private TMP_Text roomPing;
 
+    MyRoomSettingsManager sm = null;
     // 사용자가 방을 만들거나 참여하면 꼭 이 함수를 실행시켜주세요.
     public void OnRoomCreateOrJoin(bool isOwner)
     {
@@ -69,6 +70,9 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
     {
         Debug.Log($"{newPlayer.UserId} 님이 접속하였습니다.");
         CallUpdatePlayerList();
+
+        if(PhotonNetwork.IsMasterClient)
+            sm.SyncSettings();
     }
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
@@ -86,13 +90,16 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
 
         // Resources 폴더에서 "NetworkManager"라는 이름의 프리팹을 로드
         GameObject nm = Instantiate(Resources.Load<GameObject>("NetworkManager"));
+        sm = GetComponentInChildren<MyRoomSettingsManager>();
 
         // 방장은 서버로직 추가
         if (PhotonNetwork.IsMasterClient)
+        {
             nm.AddComponent<ServerLogic>();
+            nm.GetComponent<NetworkManager>().LoadGameSettings();
 
-        MyRoomSettingsManager sm = GetComponentInChildren<MyRoomSettingsManager>();
-        sm.ApplySettingsToUI();
+            sm.ApplySettingsToUI();
+        }
     }
 
     // 예시: 방장(마스터 클라이언트)이 UpdatePlayerList를 실행하는 경우
@@ -222,7 +229,7 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
 
             PhotonNetwork.CurrentRoom.SetCustomProperties(data);
         }
-    }       
+    }
 
     #region RPC
     // CallUpdatePlayerList() 에서 photonView.RPC() 를 통해 모든 클라이언트에서 호출하여 동기화합니다.
