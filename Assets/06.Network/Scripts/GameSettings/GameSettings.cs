@@ -12,7 +12,7 @@ public class GameSettings : ScriptableObject
 
     [Header("Monster Settings")]
     public bool monsterRandomSelect = true;
-    public int monsterActorNum = 1;
+    public int[] monsterActorNums = new int[] { 1 };
 
     [Header("Time Cycle Settings")]
     public int dayLength = 20;
@@ -31,7 +31,7 @@ public class GameSettings : ScriptableObject
             gs.players,
             gs.npcCount,
             gs.monsterRandomSelect,
-            gs.monsterActorNum,
+            gs.monsterActorNums,
             gs.monsters,
             gs.scientists,
             gs.dayLength,
@@ -45,7 +45,7 @@ public class GameSettings : ScriptableObject
         gs.players = (int)datas[0];
         gs.npcCount = (int)datas[1];
         gs.monsterRandomSelect = (bool)datas[2];
-        gs.monsterActorNum = (int)datas[3];
+        gs.monsterActorNums = (int[])datas[3];
         gs.monsters = (int)datas[4];
         gs.scientists = (int)datas[5];
         gs.dayLength = (int)datas[6];

@@ -1,10 +1,10 @@
 using Photon.Pun;
 using UnityEngine;
-using Photon.Realtime;
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using UnityEngine.InputSystem;
-using Unity.VisualScripting; // 이벤트 코드에 사용
+using System.Linq;
+using System;
 
 public enum EventCode
 {
@@ -50,7 +50,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
 
 
     #region GameLogic
-    public int monsterActorNum = -1;
+    public int[] monsterActorNums;
 
     ExitGames.Client.Photon.Hashtable isAlivePlayers = new Hashtable();
 
@@ -96,12 +96,12 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         { 
             if (settings.monsterRandomSelect)
             {
-                Random.InitState((int)Time.time);
-                monsterActorNum = Random.Range(0, playerList.Length) + 1;
+                UnityEngine.Random.InitState((int)Time.time);
+                monsterActorNums = SelectMonsters(settings.monsters);
             }
             else
             {
-                monsterActorNum = settings.monsterActorNum;
+                monsterActorNums = settings.monsterActorNums;
             }
         }
 
@@ -138,10 +138,42 @@ public class ServerLogic : MonoBehaviourPunCallbacks
 
 
         // 이벤트 데이터에 스폰 위치와 몬스터 번호를 담음
-        object[] eventData = new object[] { randomSpawnPos, monsterActorNum, npcCount };
+        object[] eventData = new object[] { randomSpawnPos, monsterActorNums, npcCount };
 
         // 이벤트 전송 (몬스터 번호와 랜덤 스폰 위치)
         NetworkManager.SendToClients(EventCode.GameStart, eventData);
+    }
+
+    public int[] SelectMonsters(int numberOfMonsters)
+    {
+        Photon.Realtime.Player[] players = PhotonNetwork.PlayerList;
+
+        List<int> playerIndices = new List<int>();
+
+        // 플레이어 ActorNumber을 리스트에 추가
+        for (int i = 0; i < players.Length; i++)
+        {
+            playerIndices.Add(players[i].ActorNumber);
+        }
+
+        // Fisher-Yates 방식으로 리스트를 섞음
+        for (int i = playerIndices.Count - 1; i > 0; i--)
+        {
+            int randomIndex = UnityEngine.Random.Range(0, i + 1);
+            int temp = playerIndices[i];
+            playerIndices[i] = playerIndices[randomIndex];
+            playerIndices[randomIndex] = temp;
+        }
+
+        // 원하는 갯수만큼 몬스터를 선택
+        int[] selectedMonsters = new int[numberOfMonsters];
+        for (int i = 0; i < numberOfMonsters; i++)
+        {
+            selectedMonsters[i] = playerIndices[i];
+        }
+        Array.Sort(selectedMonsters);
+
+        return selectedMonsters;
     }
     #endregion
 
@@ -182,22 +214,36 @@ public class ServerLogic : MonoBehaviourPunCallbacks
 
     public void CheckEndCondition()
     {
-        bool isMonsterAlive = (bool)isAlivePlayers[monsterActorNum];
+        bool isMonsterAlive = false;
+        
+        // 괴물이 살아있는지 체크
+        for(int i = 0; i < monsterActorNums.Length;i++ )
+        {
+            if ((bool)isAlivePlayers[monsterActorNums[i]])
+            {
+                isMonsterAlive = true;
+                break;
+            }
+        }
 
-        // 괴물이 죽었을 경우
+        // 괴물이 모두 죽었을 경우
         if (!isMonsterAlive)
         {
             EndGame(false);
             return;
         }
 
-        // 괴물이 살아있을 경우 모든 플레이어가 죽어야 게임 종료
-        foreach(var key in isAlivePlayers.Keys)
-        {
-            if ((int)key == monsterActorNum) continue;
 
-            if ((bool)isAlivePlayers[key])
-                return;
+
+        // 괴물이 살아있을 경우 모든 플레이어가 죽어야 게임 종료
+        foreach (var key in isAlivePlayers.Keys)
+        {
+            if (!(bool)isAlivePlayers[key]) continue;
+            int curPlayer = (int)key;
+
+            if (Array.Exists(monsterActorNums, x => x == curPlayer)) continue;
+
+            return;
         }
 
         EndGame(true);

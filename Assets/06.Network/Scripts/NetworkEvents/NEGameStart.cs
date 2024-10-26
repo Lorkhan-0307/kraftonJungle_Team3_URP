@@ -1,11 +1,21 @@
 using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class NEGameStart : NetworkEvent
 {
+
+    [SerializeField]
+    string playerScientistName;
+    [SerializeField]
+    string playerMonsterName;
+    [SerializeField]
+    GameObject playerObjectPrefab;
+
+
     protected override void Awake()
     {
         this.eventCode = EventCode.GameStart;
@@ -13,26 +23,14 @@ public class NEGameStart : NetworkEvent
     }
     public override void OnEvent(object customData)
     {
-        StartGame(customData);
-    }
-
-    #region StartGame
-    [SerializeField]
-    string playerScientistName;
-    [SerializeField]
-    string playerMonsterName;
-    [SerializeField]
-    GameObject playerObjectPrefab;
-    public void StartGame(object data)
-    {
-        object[] datas = (object[])data;
+        object[] datas = (object[])customData;
 
         Vector3[] spawnPos = (Vector3[])datas[0];
-        int monsterNum = (int)datas[1];
+        int[] monsterNums = (int[])datas[1];
         NetworkManager.Instance.NPCCount = (int)datas[2];
 
         //TODO: 자신의 플레이어 ActorNumber 가 전송받은 id와 같은지 비교하고 몬스터, 연구원으로 초기화함.
-        Debug.Log($"Monster : {monsterNum}");
+        Debug.Log($"Monster : {monsterNums.ToString()}");
 
         //Debugging
         string deb = "";
@@ -45,8 +43,11 @@ public class NEGameStart : NetworkEvent
         // 로컬 플레이어 캐릭터 스폰
         Vector3 myPosition = spawnPos[PhotonNetwork.LocalPlayer.ActorNumber - 1];
         GameObject spawnedPlayer = null;
-        if (monsterNum == PhotonNetwork.LocalPlayer.ActorNumber)
+
+        // 몬스터 스폰
+        if(Array.Exists(monsterNums, x=> x == PhotonNetwork.LocalPlayer.ActorNumber))
             spawnedPlayer = PhotonNetwork.Instantiate(playerMonsterName, myPosition, Quaternion.identity);
+        // 연구원 스폰
         else
             spawnedPlayer = PhotonNetwork.Instantiate(playerScientistName, myPosition, Quaternion.identity);
 
@@ -58,6 +59,4 @@ public class NEGameStart : NetworkEvent
         NetworkManager.Instance.curState = GameState.Playing;
         GameManager.instance.StartGame();
     }
-    #endregion
-
 }
