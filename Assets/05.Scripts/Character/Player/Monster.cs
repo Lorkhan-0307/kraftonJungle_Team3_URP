@@ -10,6 +10,20 @@ public class Monster : Player
     public override void OnAttack(GameObject victim)
     {
         base.OnAttack(victim);
+
+        // Todo: hunger time reset
+        //attacker �� hunger time reset ȣ��
+        // Monster 에게만
+        switch(victim.GetComponent<Player>().type)
+        {
+            case CharacterType.NPC:
+
+                Debug.Log("Your gauge is Max");
+                FindObjectOfType<HungerSlider>().SetHungerMax();
+                NEHungerGauge.HungerEvent(false);
+
+                break;
+        }
     }
 
     public override void OnDamaged(GameObject attacker)

@@ -17,15 +17,6 @@ public class NPC : Player
         switch (attacker.GetComponent<Player>().type)
         {
             case CharacterType.Monster:
-                // Todo: hunger time reset
-                //attacker �� hunger time reset ȣ��
-                // Monster 에게만
-                if (NetworkManager.Instance.IsMonster())
-                {
-                    Debug.Log("Monster's gage is Max");
-                    FindObjectOfType<HungerSlider>().SetHungerMax();
-                }
-                NEHungerGauge.HungerEvent(false);
                 Debug.Log("MONSTER ATTACKED NPC");
                 break;
             case CharacterType.Scientist:

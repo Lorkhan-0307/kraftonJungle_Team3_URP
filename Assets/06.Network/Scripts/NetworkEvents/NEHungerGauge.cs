@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,24 +12,29 @@ public class NEHungerGauge : NetworkEvent
     }
     public override void OnEvent(object customData)
     {
-        if (!NetworkManager.Instance.Monster) return;
+        object[] datas = (object[])customData;
+        bool ishungerzero = (bool)datas[0];
+        int monsterNum = (int)datas[1];
 
-        bool ishungerzero = (bool)customData;
+        Debug.Log($"{monsterNum} : {ishungerzero} HungerGauge OnEvent");
+
+        if (!NetworkManager.Instance.Monsters.ContainsKey(monsterNum)) return;
 
         if (ishungerzero)
         {
-            NetworkManager.Instance.Monster.OnHunger();
+            NetworkManager.Instance.Monsters[monsterNum].OnHunger();
         }
         else
         {
-            NetworkManager.Instance.Monster.NoHunger();
+            NetworkManager.Instance.Monsters[monsterNum].NoHunger();
         }
     }
 
     // 모든 클라이언트에게 이벤트를 보냄.
     public static void HungerEvent(bool ishungerzero)
     {
-        NetworkManager.SendToClients(EventCode.HungerGauge, ishungerzero);
+        NetworkManager.SendToClients(EventCode.HungerGauge, new object[] 
+            { ishungerzero, PhotonNetwork.LocalPlayer.ActorNumber});
     }
 
 }

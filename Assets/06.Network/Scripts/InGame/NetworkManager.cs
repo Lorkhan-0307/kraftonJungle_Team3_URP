@@ -1,6 +1,8 @@
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
@@ -17,8 +19,23 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         return PhotonNetwork.IsMasterClient;
     }
 
-
-    public Monster Monster { get { return FindObjectOfType<Monster>(); } }
+    public Dictionary<int, Monster> Monsters
+    {
+        get
+        {
+            if (monsters == null || monsters.Keys.Count == 0)
+            {
+                monsters = new Dictionary<int, Monster>();
+                Monster[] ms = FindObjectsOfType<Monster>();
+                foreach(Monster m in ms)
+                {
+                    monsters.Add(m.GetComponent<PhotonView>().OwnerActorNr, m);
+                }
+            }
+            return monsters;
+        }
+    }
+    Dictionary<int, Monster> monsters = null;
     public bool IsMonster() {  return (myPlayer.type == CharacterType.Monster); }
 
     public void LoadGameSettings()

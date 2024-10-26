@@ -113,8 +113,8 @@ public class MyRoomSettingsManager : MonoBehaviourPun
     public void ApplySettingsToUI(object data)
     {
         _settings = GameSettings.DataToInstance(data);
+        NetworkManager.Instance.gameSettings = _settings;
 
-        if (Settings == null) return;
 
         monsterNum.text = Settings.monsters.ToString();
         scientistNum.text = Settings.scientists.ToString();

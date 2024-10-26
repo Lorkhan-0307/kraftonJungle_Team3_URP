@@ -85,7 +85,7 @@ public class TimeManager : Singleton<TimeManager>
         // 몬스터이면
         if (NetworkManager.Instance.IsMonster())
         {
-            Monster m = FindObjectOfType<Monster>();
+            Monster m = NetworkManager.Instance.myPlayer.GetComponent<Monster>();
             m.OnDayUniteVisibilityScientist();
         }
         NPCManager.instance.SetAble();
@@ -98,7 +98,7 @@ public class TimeManager : Singleton<TimeManager>
 
         if (NetworkManager.Instance.IsMonster())
         {
-            Monster m = FindObjectOfType<Monster>();
+            Monster m = NetworkManager.Instance.myPlayer.GetComponent<Monster>();
             m.OnNightVisibleScientist();
         }
         NPCManager.instance.SetDisable();
@@ -147,7 +147,7 @@ public class TimeManager : Singleton<TimeManager>
         // 만약 현재 client가 monster 이면, hungerSlider는 GameManager.GameStart에서 생긴다.
         // 그러므로 hungerSlider가 있다면(not null) monster.
         // 이를 기반으로, 낮이 되면 hungerslider를 켜고, 밤이 되면 끈다.
-        if (hungerSlider)
+        if (NetworkManager.Instance.IsMonster())
         {
             hungerSlider.SetActive(isDay);
         }
