@@ -7,6 +7,7 @@ using TMPro;
 using System.Linq;
 using System.Collections;
 using System;
+using UnityEngine.UI;
 
 public class MyRoomManager : MonoBehaviourPunCallbacks
 {
@@ -18,6 +19,7 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
 
     [SerializeField] private GameObject onMasterObjects;
     [SerializeField] private GameObject onClientObjects;
+    [SerializeField] SwitchManager randomMonsterToggle;
 
     [SerializeField] MainPanelManager panelManager;
 
@@ -88,16 +90,16 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
         }
 
         // Resources 폴더에서 "NetworkManager"라는 이름의 프리팹을 로드
-        GameObject nm = Instantiate(Resources.Load<GameObject>("NetworkManager"));
+        NetworkManager nm = Instantiate(Resources.Load<GameObject>("NetworkManager")).GetComponent<NetworkManager>();
         sm = GetComponentInChildren<MyRoomSettingsManager>();
 
         // 방장은 서버로직 추가
         if (PhotonNetwork.IsMasterClient)
         {
-            nm.AddComponent<ServerLogic>();
-            nm.GetComponent<NetworkManager>().LoadGameSettings();
+            nm.gameObject.AddComponent<ServerLogic>();
+            nm.LoadGameSettings();
 
-            sm.ApplySettingsToUI();
+            sm.ApplySettingsToUI(nm.gameSettings);
         }
     }
 
@@ -144,6 +146,7 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
     {
         onMasterObjects.SetActive(true);
         onClientObjects.SetActive(false);
+        randomMonsterToggle.GetComponent<Button>().interactable = true;
     }
     
     // Join을 하는 경우
@@ -151,6 +154,7 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
     {
         onMasterObjects.SetActive(false);
         onClientObjects.SetActive(true);
+        randomMonsterToggle.GetComponent<Button>().interactable = false;
     }
 
     // Guest가 Ready 버튼을 누른 경우

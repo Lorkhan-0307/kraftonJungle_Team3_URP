@@ -94,13 +94,26 @@ public class MyRoomSettingsManager : MonoBehaviourPun
     public void SyncSettings()
     {
         ApplySettingsToUI();
-        photonView.RPC("ApplySettingsToUI", RpcTarget.Others); // 모든 클라이언트에 동기화
+        photonView.RPC("ApplySettingsToUI", RpcTarget.Others, (object)Settings.InstanceToData()); // 모든 클라이언트에 동기화
     }
 
-    [PunRPC]
-    public void ApplySettingsToUI()
+    public void ApplySettingsToUI(GameSettings s = null)
     {
-        //TODO: 자신이 서버이면 자신 세팅으로 설정, 클라면 인자 받아와서 수정
+        if(s != null)   _settings = s;
+
+        if (Settings == null) return;
+
+        monsterNum.text = Settings.monsters.ToString();
+        scientistNum.text = Settings.scientists.ToString();
+
+        dayLength.text = Settings.dayLength.ToString();
+        nightLength.text = Settings.nightLength.ToString();
+    }
+    [PunRPC]
+    public void ApplySettingsToUI(object data)
+    {
+        _settings = GameSettings.DataToInstance(data);
+
         if (Settings == null) return;
 
         monsterNum.text = Settings.monsters.ToString();
@@ -109,8 +122,8 @@ public class MyRoomSettingsManager : MonoBehaviourPun
         dayLength.text = Settings.dayLength.ToString();
         nightLength.text = Settings.nightLength.ToString();
 
-        // TODO: SwitchManager 코드 리팩토링. 밸류 스위칭 추가해야댐.
-        // randomMonsterToggle.
+        if (!PhotonNetwork.IsMasterClient)
+            randomMonsterToggle.AnimateSwitchSetValue(Settings.monsterRandomSelect);
     }
 
 

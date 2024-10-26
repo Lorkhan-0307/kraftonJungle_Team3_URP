@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using Photon.Pun.UtilityScripts;
 
 namespace Michsky.UI.Dark
 {
@@ -163,6 +164,11 @@ namespace Michsky.UI.Dark
                 if (saveValue == true)
                     PlayerPrefs.SetString(switchTag + "DarkUISwitch", "true");
             }
+        }
+        public void AnimateSwitchSetValue(bool value)
+        {
+            if (isOn == value) return;
+            AnimateSwitch();
         }
     }
 }

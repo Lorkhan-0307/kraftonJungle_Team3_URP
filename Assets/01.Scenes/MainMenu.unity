@@ -85127,6 +85127,7 @@ MonoBehaviour:
     type: 3}
   onMasterObjects: {fileID: 2091824183}
   onClientObjects: {fileID: 292737335}
+  randomMonsterToggle: {fileID: 1572472881}
   panelManager: {fileID: 826664453}
   playerContents: []
   roomName: {fileID: 3487435597960380993}
