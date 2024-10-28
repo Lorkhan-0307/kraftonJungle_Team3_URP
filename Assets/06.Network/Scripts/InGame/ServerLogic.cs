@@ -5,6 +5,7 @@ using ExitGames.Client.Photon;
 using UnityEngine.InputSystem;
 using System.Linq;
 using System;
+using UnityEngine.SceneManagement;
 
 public enum EventCode
 {
@@ -31,7 +32,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     private InputAction gameStartAction;
 
 
-    private void Start()
+    public void AddCallBack()
     {
         gameStartAction = new InputAction(type: InputActionType.Value, binding: "<Keyboard>/space");
         gameStartAction.Enable();
@@ -41,6 +42,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     public void StartGameCallback(InputAction.CallbackContext context)
     {
         Debug.Log("StartGame Button Clicked");
+        //if (SceneManager.GetActiveScene().name != NetSceneManager.instance.mainSceneName) return;
         if (NetworkManager.Instance.curState != GameState.OnRoom) return;
 
 
@@ -67,6 +69,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     #region GameStart
     public void StartGameWithSettings(GameSettings settings)
     {
+        gameStartAction.performed -= StartGameCallback;
         if (settings == null)
         {
             Debug.Log("There is no \"GameSettingsData\" in Resources folder.");

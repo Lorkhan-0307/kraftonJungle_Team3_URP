@@ -50,18 +50,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     // Awake는 Start보다 먼저 호출됩니다.
     private void Awake()
     {
-        // 싱글톤 인스턴스가 없는 경우 이 객체를 인스턴스로 설정
-        if (Instance == null)
+        // 싱글톤 인스턴스가 이미 있는 경우 삭제하고 새 오브젝트 생성
+        if (Instance != null)
         {
-            Instance = this;
-            // 다른 씬에서도 파괴되지 않도록 설정
-            DontDestroyOnLoad(gameObject);
+            Destroy(Instance.gameObject);
         }
-        else
-        {
-            // 이미 인스턴스가 존재하는 경우, 중복된 객체를 파괴
-            Destroy(gameObject);
-        }
+        Instance = this;
+        // 다른 씬에서도 파괴되지 않도록 설정
+        DontDestroyOnLoad(gameObject);
     }
 
     #endregion
