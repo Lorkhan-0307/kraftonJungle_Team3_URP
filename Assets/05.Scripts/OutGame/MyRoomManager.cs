@@ -99,7 +99,7 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
             nm.gameObject.AddComponent<ServerLogic>();
             nm.LoadGameSettings();
 
-            sm.ApplySettingsToUI(nm.gameSettings);
+            sm.ApplySettingsToUI();
         }
     }
 

@@ -1,8 +1,8 @@
 using UnityEngine;
 
 [System.Serializable]
-[CreateAssetMenu(fileName = "GameSettings", menuName = "GameSettings/Create New Game Settings")]
-public class GameSettings : ScriptableObject
+//[CreateAssetMenu(fileName = "GameSettings", menuName = "GameSettings/Create New Game Settings")]
+public class GameSettings// : ScriptableObject
 {
     [Header("Player Settings")]
     public int players = -1;
