@@ -27,6 +27,7 @@ public class NEPlayerDeath : NetworkEvent
     public static void PlayerDeath()
     {
         int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
+        NetworkManager.Instance.curState = GameState.Dead;
 
         NetworkManager.SendToClients(EventCode.PlayerDeath, actorNumber);
     }

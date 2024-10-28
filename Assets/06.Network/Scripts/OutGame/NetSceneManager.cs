@@ -1,25 +1,12 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(PhotonView))]
 public class NetSceneManager : MonoBehaviourPun
 {
-    private static NetSceneManager Instance;
+    public static NetSceneManager Instance;
 
-    public static NetSceneManager instance
-    {
-        get
-        {
-            if (Instance == null)
-            {
-                Instance = FindObjectOfType<NetSceneManager>();
-            }
-            return Instance;
-        }
-    }
 
     public string mainSceneName;
 

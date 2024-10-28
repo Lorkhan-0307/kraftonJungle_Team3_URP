@@ -1,13 +1,24 @@
-using Michsky.UI.Dark;
 using Photon.Pun;
-using Photon.Realtime;
 using System.Collections;
 using UnityEngine;
 
 public class MasterServerClient : MonoBehaviourPunCallbacks
 {
+    [SerializeField]
+    NetSceneManager netSceneManagerPrefab;
+
+    [HideInInspector]
     public OutgameRoomsManager orManager;
+    [HideInInspector]
     public MyRoomManager mrManager;
+
+    private void Awake()
+    {
+        if(!NetSceneManager.Instance)
+        {
+            NetSceneManager.Instance = Instantiate(netSceneManagerPrefab);
+        }
+    }
 
     void Start()
     {
@@ -16,9 +27,16 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
 
         // Photon 서버에 연결
         if(!PhotonNetwork.IsConnected)
+        {
             PhotonNetwork.ConnectUsingSettings();
-        else if(!PhotonNetwork.InLobby)
-            PhotonNetwork.JoinLobby();
+            Debug.Log("ConnectUsingSettings");
+        }
+        else if(PhotonNetwork.InRoom)
+        {
+            Debug.Log(PhotonNetwork.NetworkClientState.ToString());
+            PhotonNetwork.LeaveRoom();
+            Debug.Log("LeaveRoom");
+        }
 
         // 일정 주기로 실행되는 새로고침 코루틴 실행
         StartCoroutine(RefreshPeriod());
@@ -46,6 +64,15 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
     }
 
     public override void OnConnectedToMaster()
+    {
+        PhotonNetwork.JoinLobby();
+
+        ExitGames.Client.Photon.Hashtable customData = new ExitGames.Client.Photon.Hashtable();
+        customData.Add("IsReady", false);
+        PhotonNetwork.LocalPlayer.CustomProperties = customData;
+    }
+
+    public override void OnLeftRoom()
     {
         PhotonNetwork.JoinLobby();
 

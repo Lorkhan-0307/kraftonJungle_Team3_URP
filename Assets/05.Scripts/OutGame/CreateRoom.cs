@@ -22,6 +22,7 @@ public class CreateRoom : MonoBehaviour
         if(!PhotonNetwork.InLobby)
         {
             Debug.LogError("아직 서버에 접속되지 않았습니다.");
+            return;
         }
 
         // 현재 값들을 가지고 사용하면 됩니다.

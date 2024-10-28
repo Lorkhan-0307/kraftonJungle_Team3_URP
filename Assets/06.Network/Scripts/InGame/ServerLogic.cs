@@ -22,6 +22,7 @@ public enum GameState
 {
     OnRoom,
     Playing,
+    Dead,
     End,
 }
 
