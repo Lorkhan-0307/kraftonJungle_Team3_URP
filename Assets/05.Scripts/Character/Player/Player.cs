@@ -44,7 +44,16 @@ public class Player : MonoBehaviour, ICharacter
 
     public virtual bool AttackDetection(GameObject target)
     {
-
         return false;
+    }
+
+    public virtual void PlayKillSound()
+    {
+        
+    }
+
+    public virtual void PlayDeathSound()
+    {
+        
     }
 }
