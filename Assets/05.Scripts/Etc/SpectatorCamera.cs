@@ -5,7 +5,7 @@ using Cinemachine;
 
 public class SpectatorCamera : MonoBehaviour
 {
-    public float mouseSensitivity = 100f;
+    public float mouseSensitivity = 50f;
     private List<GameObject> remainingPlayers = new List<GameObject>();
     private GameObject spectatingTarget;
     private int currentPlayerIndex = 0;
