@@ -9,64 +9,47 @@ using UnityEngine;
 public class DynamoDBManager : MonoBehaviour
 {
     // AWS 자격 증명 - Access Key, Secret Key
-    private static string accessKey = "AKIA5FTZBVKDTJYXT35R";
-    private static string secretKey = "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";
-    private static string region = "ap-northeast-2"; // DynamoDB 리전
+    private static readonly string accessKey = "AKIA5FTZBVKDTJYXT35R";
+    private static readonly string secretKey = "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";
+    private static readonly string region = "ap-northeast-2"; // DynamoDB 리전
 
     private static AmazonDynamoDBClient client;
 
-    void Start()
+    private async void Start()
     {
-        // AWS 자격 증명 사용하여 클라이언트 생성
-        var credentials = new BasicAWSCredentials(accessKey, secretKey);
-        client = new AmazonDynamoDBClient(credentials, Amazon.RegionEndpoint.GetBySystemName(region));
+        InitializeDynamoDBClient();
 
-        // 예제: 클라이언트 접속 시 확인/저장/불러오기 로직
-        string UserId = "ji"; // 예제 플레이어 ID
-        string playerNickname = "jihoon";
-        string UserNum = "3";
+        PlayerData playerData = new PlayerData
+        {
+            UseToken = GenerateHashKey("user111"),
+            UserID = "user111",
+            Nickname = "PlayerTwo"
+        };
 
-        ConnectPlayer(UserId, UserNum, playerNickname);
+        await ConnectPlayer(playerData);
     }
 
-    //TODO: 이런식으로 함수 만들어서 캡슐화 해주세요.
-    //public void SavePlayerData(string UserID, string nickName, string password, string token)
-    //{
-
-    //}
-
-
-    // 클라이언트 접속 로직
-    public async Task ConnectPlayer(string UserId, string UserNum, string playerNickname)
+    // AWS 클라이언트 초기화 함수
+    private void InitializeDynamoDBClient()
     {
-        // 클라이언트가 서버에 접속 시 키값 확인
-        var playerData = await GetPlayerData(UserId, UserNum);
-
-        if (playerData == null)
+        if (client == null)
         {
-            // 키값이 없으므로 새로운 데이터를 생성하여 저장
-            string newKey = GenerateHashKey(UserId);
-            await SavePlayerData(UserId,UserNum, playerNickname);
-            Debug.Log($"New player data created with key: {newKey}");
-        }
-        else
-        {
-            // 키값이 있으므로 닉네임 출력
-            Debug.Log($"Player nickname found: {playerData["Nickname"].S}");
+            var credentials = new BasicAWSCredentials(accessKey, secretKey);
+            client = new AmazonDynamoDBClient(credentials, Amazon.RegionEndpoint.GetBySystemName(region));
         }
     }
 
     // DynamoDB에 플레이어 데이터를 저장하는 함수
-    public static async Task SavePlayerData(string UserId, string UserNum, string nickname)
+    public async Task SavePlayerData(PlayerData playerData)
     {
         var request = new PutItemRequest
         {
-            TableName = "player", // DynamoDB 테이블 이름
+            TableName = "GamePlayer",
             Item = new Dictionary<string, AttributeValue>
             {
-                { "UserID", new AttributeValue { S = UserId } },  // Primary Key
-                { "UserNum", new AttributeValue { N = UserNum } }, // Sort Key 추가
-                { "Nickname", new AttributeValue { S = nickname } }   // 닉네임 속성
+                { "UserID", new AttributeValue { S = playerData.UserID } },
+                { "UseToken", new AttributeValue { S = playerData.UseToken } },
+                { "Nickname", new AttributeValue { S = playerData.Nickname } }
             }
         };
 
@@ -81,17 +64,16 @@ public class DynamoDBManager : MonoBehaviour
         }
     }
 
-    // DynamoDB에서 플레이어 데이터를 가져오는 함수
-    public static async Task<Dictionary<string, AttributeValue>> GetPlayerData(string UserId, string userNum)
+    // DynamoDB에서 UserID로 플레이어 데이터를 가져오는 함수
+    public async Task<Dictionary<string, AttributeValue>> GetPlayerDataByUserID(string UserID)
     {
         var request = new GetItemRequest
         {
-            TableName = "player", // 테이블 이름
+            TableName = "GamePlayer",
             Key = new Dictionary<string, AttributeValue>
-        {
-            { "UserID", new AttributeValue { S = UserId } }, // Primary Key
-            { "UserNum", new AttributeValue { N = userNum } } // Sort Key
-        }
+            {
+                { "UserID", new AttributeValue { S = UserID } }
+            }
         };
 
         try
@@ -99,25 +81,42 @@ public class DynamoDBManager : MonoBehaviour
             var response = await client.GetItemAsync(request);
             if (response.Item != null && response.Item.Count > 0)
             {
-                return response.Item; // 플레이어 데이터 반환
+                Debug.Log("Player data retrieved successfully by UserID.");
+                return response.Item;
             }
             else
             {
-                Debug.Log("Player data not found.");
+                Debug.Log("No player data found for UserID.");
                 return null;
             }
         }
         catch (Exception e)
         {
-            Debug.LogError("Failed to retrieve player data: " + e.Message);
+            Debug.LogError("Failed to retrieve player data by UserID: " + e.Message);
             return null;
         }
     }
 
-
-    // 고유한 키를 생성하는 해시 함수 (예시)
-    private string GenerateHashKey(string UserId)
+    // 플레이어 데이터가 존재하는지 확인하고, 존재하지 않으면 저장하는 함수
+    public async Task ConnectPlayer(PlayerData playerData)
     {
-        return "KEY_" + UserId + "_" + DateTime.UtcNow.Ticks.ToString(); // 간단한 예시
+        var existingPlayerData = await GetPlayerDataByUserID(playerData.UserID);
+
+        if (existingPlayerData == null)
+        {
+            await SavePlayerData(playerData);
+            Debug.Log("New player data created.");
+        }
+        else
+        {
+            Debug.Log($"Player data found for UserID: {existingPlayerData["UserID"].S}");
+            Debug.Log($"Nickname: {existingPlayerData["Nickname"].S}");
+        }
+    }
+
+    // 고유한 키를 생성하는 해시 함수
+    private string GenerateHashKey(string UserID)
+    {
+        return $"KEY_{UserID}_{DateTime.UtcNow.Ticks}";
     }
 }
