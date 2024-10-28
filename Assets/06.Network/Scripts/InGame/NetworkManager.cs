@@ -40,7 +40,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void LoadGameSettings()
     {
-        gameSettings = Resources.Load<GameSettings>("GameSettingsData");
+        gameSettings = new GameSettings(); //Resources.Load<GameSettings>("GameSettingsData");
     }
 
     #region Singleton

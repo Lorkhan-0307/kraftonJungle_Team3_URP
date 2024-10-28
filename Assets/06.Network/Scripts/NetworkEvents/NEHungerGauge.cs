@@ -33,6 +33,7 @@ public class NEHungerGauge : NetworkEvent
     // 모든 클라이언트에게 이벤트를 보냄.
     public static void HungerEvent(bool ishungerzero)
     {
+        Debug.Log("Send HungerEvent!");
         NetworkManager.SendToClients(EventCode.HungerGauge, new object[] 
             { ishungerzero, PhotonNetwork.LocalPlayer.ActorNumber});
     }

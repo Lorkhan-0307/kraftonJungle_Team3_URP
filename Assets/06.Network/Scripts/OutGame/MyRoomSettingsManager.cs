@@ -21,21 +21,13 @@ public class MyRoomSettingsManager : MonoBehaviourPun
     {
         get
         {
-            if (_settings == null)
-            {
-                if(NetworkManager.Instance == null)
-                    return null;
-                else
-                    _settings = NetworkManager.Instance.gameSettings;
-            }
-            return _settings;
+            return NetworkManager.Instance.gameSettings;
         }
         set
         {
-            _settings = value;
+            NetworkManager.Instance.gameSettings = value;
         }
     }
-    GameSettings _settings = null;
 
     #region Buttons
     public void MonsterNumBtn(int value)
@@ -97,12 +89,8 @@ public class MyRoomSettingsManager : MonoBehaviourPun
         photonView.RPC("ApplySettingsToUI", RpcTarget.Others, (object)Settings.InstanceToData()); // 모든 클라이언트에 동기화
     }
 
-    public void ApplySettingsToUI(GameSettings s = null)
+    public void ApplySettingsToUI()
     {
-        if(s != null)   _settings = s;
-
-        if (Settings == null) return;
-
         monsterNum.text = Settings.monsters.ToString();
         scientistNum.text = Settings.scientists.ToString();
 
@@ -112,9 +100,7 @@ public class MyRoomSettingsManager : MonoBehaviourPun
     [PunRPC]
     public void ApplySettingsToUI(object data)
     {
-        _settings = GameSettings.DataToInstance(data);
-        NetworkManager.Instance.gameSettings = _settings;
-
+        Settings = GameSettings.DataToInstance(data);
 
         monsterNum.text = Settings.monsters.ToString();
         scientistNum.text = Settings.scientists.ToString();
@@ -125,12 +111,4 @@ public class MyRoomSettingsManager : MonoBehaviourPun
         if (!PhotonNetwork.IsMasterClient)
             randomMonsterToggle.AnimateSwitchSetValue(Settings.monsterRandomSelect);
     }
-
-
-    // 마스터 설정 클라한테 전송 후 동기화
-    //[PunRPC]
-    //public void SyncSettings(object data)
-    //{
-    //    gameSettings = GameSettings.DataToInstance(data);
-    //}
 }
