@@ -7,6 +7,9 @@ using UnityEngine;
 public class Monster : Player
 {
     private GameObject hungerParticle;
+
+    [SerializeField] private AudioSource monster_kill_sound;
+    
     public override void OnAttack(GameObject victim)
     {
         base.OnAttack(victim);
@@ -24,6 +27,10 @@ public class Monster : Player
 
                 break;
         }
+
+        //MonsterKillSoundPlay();
+        //GameManager.instance.OnKilled += MonsterKillSoundPlay();
+
     }
 
     public override void OnDamaged(GameObject attacker)
@@ -86,5 +93,11 @@ public class Monster : Player
             if (target.CompareTag("Player")) return true;
         }
         return false;
+    }
+
+    public override void PlayKillSound()
+    {
+        base.PlayKillSound();
+        monster_kill_sound.Play();
     }
 }

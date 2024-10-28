@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class NPC : Player
 {
+    [SerializeField] private AudioSource deathSound;
+    
     private void Start()
     {
         is_player = false;
@@ -56,4 +58,11 @@ public class NPC : Player
     {
         throw new System.NotImplementedException();
     }
+
+    public override void PlayDeathSound()
+    {
+        base.PlayDeathSound();
+        deathSound.Play();
+    }
+
 }

@@ -42,6 +42,14 @@ public class PlayerMovement : MonoBehaviour
     RaycastHit hit;
     GameObject target;
 
+    // 쿨타임 시간
+    public float killCooltime = 5f;
+    // 현재 남은 쿨타임
+    private float currentCooltime = 0f;
+    private bool isKillOn = false;
+
+    // UI 쿨타임 이미지
+    private Image killButtonImage; 
 
     private void Awake()
     {
@@ -63,15 +71,14 @@ public class PlayerMovement : MonoBehaviour
         {
             killButton = FindObjectOfType<KillButton>().GetComponent<Button>();
         }
-
+        killButtonImage = FindObjectOfType<KillButton>().GetComponent<Image>();
+        // 시작할 때는 쿨타임 없음
+        currentCooltime = 0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // 바닥 체크
-        //isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-
         isGrounded = controller.isGrounded;
         
         if (isGrounded && velocity.y < 0)
@@ -96,13 +103,16 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
+        // 쿨타임 업데이트
+        UpdatekillCooltime();
 
         // Using RayCast to detect attack
         RayCastAttackDetection();
 
-        if (killButton.interactable && killAction.triggered && target != null)
+        if (killButton.interactable && killAction.triggered && target != null && !isKillOn)
         {
-            AttackAction();   
+            AttackAction();
+            StartKillCooldown();
         }
 
         // 발걸음 소리 재생
@@ -117,6 +127,31 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void UpdatekillCooltime()
+    {
+        if (isKillOn)
+        {
+            currentCooltime -= Time.deltaTime;
+
+            // UI 쿨타임 표시
+            if (killButtonImage != null)
+            {
+                killButtonImage.fillAmount = 1 - currentCooltime / killCooltime;
+            }
+
+            if (currentCooltime <= 0)
+            {
+                isKillOn = false;
+                currentCooltime = 0f;
+            }
+        }
+    }
+
+    private void StartKillCooldown()
+    {
+        isKillOn = true;
+        currentCooltime = killCooltime;
+    }
 
     private void RayCastAttackDetection()
     {
@@ -132,7 +167,7 @@ public class PlayerMovement : MonoBehaviour
 
             bool canAttack = player.AttackDetection(target);
             
-            killButton.interactable = canAttack;
+            killButton.interactable = canAttack && !isKillOn;
 
             if (!canAttack)
                 target = null;
@@ -148,7 +183,6 @@ public class PlayerMovement : MonoBehaviour
     {
         player.OnAttack(target);
         Player targetPlayer = target.GetComponent<Player>();
-        //targetPlayer.OnDamaged(controller.gameObject);
     }
 
     private bool IsAvailableToAttack()

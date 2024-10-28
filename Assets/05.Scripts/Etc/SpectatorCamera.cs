@@ -19,6 +19,11 @@ public class SpectatorCamera : MonoBehaviour
 
     private CinemachineVirtualCamera virtualCamera;
 
+    [SerializeField] private GameObject canvasPrefab;
+
+    private GameObject canvasInstance;
+    private SpectatorText spectatorText;
+
     void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -31,10 +36,14 @@ public class SpectatorCamera : MonoBehaviour
 
     void Start()
     {
-        remainingPlayers = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
-        Cursor.lockState = CursorLockMode.Locked;
-        spectatingTarget = remainingPlayers[currentPlayerIndex];
-        virtualCamera.Follow = this.transform;
+        remainingPlayers = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player")); // 모든 플레이어를 찾아서 리스트에 추가
+        Cursor.lockState = CursorLockMode.Locked; // 마우스 커서 숨김
+        spectatingTarget = remainingPlayers[currentPlayerIndex]; // 초기 관전 대상 설정
+        virtualCamera.Follow = this.transform; // 버츄얼 카메라가 Spectator를 따라다니도록 설정
+
+        canvasInstance = Instantiate(canvasPrefab); // 캔버스 생성
+        spectatorText = canvasInstance.GetComponentInChildren<SpectatorText>(); // 관전 대상 텍스트
+        spectatorText.SetSpectatingTarget(spectatingTarget); // UI에 관전 대상 표시
         Debug.Log("Spectator Camera Start");
     }
 
@@ -82,6 +91,7 @@ public class SpectatorCamera : MonoBehaviour
             currentPlayerIndex = 0;
 
         spectatingTarget = remainingPlayers[currentPlayerIndex];
+        spectatorText.SetSpectatingTarget(spectatingTarget); // UI에 관전 대상 표시
         Debug.Log("Switching to player " + spectatingTarget.name);
     }
 

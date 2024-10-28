@@ -45,6 +45,8 @@ public class GameManager : Singleton<GameManager>
         }
         TimeManager.instance.isStarted = true;
         TimeManager.instance.SetDay();
+
+        OnKilled += OnKilledSoundPlay;
     }
 
     public void EndGame()
@@ -61,5 +63,11 @@ public class GameManager : Singleton<GameManager>
             Destroy(canvas);
         }
         TimeManager.instance.isEnd = true;
+    }
+
+    private void OnKilledSoundPlay(GameObject killer, GameObject victim)
+    {
+        killer.GetComponent<Player>().PlayKillSound();
+        victim.GetComponent<Player>().PlayDeathSound();
     }
 }
