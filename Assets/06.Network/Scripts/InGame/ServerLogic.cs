@@ -124,18 +124,6 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         npcManager.npcCount = npcCount;
         npcManager.SpawnNPC();
 
-        // 게임 낮 밤 시간 설정
-        if(TimeManager.instance == null)
-        {
-            Debug.Log("There is No TimeManager.");
-        }
-        else
-        {
-            // TODO: Apply Time Cycle Settings
-            TimeManager.instance.dayTime = settings.dayLength;
-            TimeManager.instance.nightTime = settings.nightLength;
-        }
-
 
         // 이벤트 데이터에 스폰 위치와 몬스터 번호를 담음
         object[] eventData = new object[] { randomSpawnPos, monsterActorNums, npcCount };

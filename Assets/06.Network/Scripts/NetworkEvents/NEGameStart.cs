@@ -29,7 +29,20 @@ public class NEGameStart : NetworkEvent
         int[] monsterNums = (int[])datas[1];
         NetworkManager.Instance.NPCCount = (int)datas[2];
 
-        //TODO: 자신의 플레이어 ActorNumber 가 전송받은 id와 같은지 비교하고 몬스터, 연구원으로 초기화함.
+
+        // 게임 낮 밤 시간 설정
+        if (TimeManager.instance == null)
+        {
+            Debug.LogError("There is No TimeManager.");
+        }
+        else
+        {
+            // Apply Time Cycle Settings
+            TimeManager.instance.dayTime = NetworkManager.Instance.gameSettings.dayLength;
+            TimeManager.instance.nightTime = NetworkManager.Instance.gameSettings.nightLength;
+        }
+
+        //자신의 플레이어 ActorNumber 가 전송받은 id와 같은지 비교하고 몬스터, 연구원으로 초기화함.
         Debug.Log($"Monster : {monsterNums.ToString()}");
 
         //Debugging
