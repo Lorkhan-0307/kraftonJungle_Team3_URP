@@ -8,7 +8,8 @@ public abstract class NetworkEvent : MonoBehaviour
     public EventCode eventCode;
     protected virtual void Awake()
     {
-        GetComponent<EventReceiver>().events.Add(eventCode, this);
+        if(!GetComponent<EventReceiver>().events.ContainsKey(eventCode))
+            GetComponent<EventReceiver>().events.Add(eventCode, this);
     }
     public abstract void OnEvent(object customData);
 }
