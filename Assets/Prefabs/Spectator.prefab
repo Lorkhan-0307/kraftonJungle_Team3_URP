@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 100
+  canvasPrefab: {fileID: 1457079429713853551, guid: 5038046623a1a964982a67ecb96d1684,
+    type: 3}
 --- !u!114 &6770141178040877659
 MonoBehaviour:
   m_ObjectHideFlags: 0
