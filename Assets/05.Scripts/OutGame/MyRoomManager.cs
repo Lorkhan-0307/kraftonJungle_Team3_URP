@@ -189,7 +189,7 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.IsVisible = false;
 
         // 씬 로딩
-        NetSceneManager.Instance.LoadSceneToAllClients(NetSceneManager.Instance.mainSceneName);
+        NetSceneManager.instance.LoadSceneToAllClients(NetSceneManager.instance.mainSceneName);
     }
 
     public void OnClickCancel()

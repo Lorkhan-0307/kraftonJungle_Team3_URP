@@ -5,8 +5,19 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(PhotonView))]
 public class NetSceneManager : MonoBehaviourPun
 {
-    public static NetSceneManager Instance;
+    private static NetSceneManager Instance;
 
+    public static NetSceneManager instance
+    {
+        get
+        {
+            if (Instance == null)
+            {
+                Instance = FindObjectOfType<NetSceneManager>();
+            }
+            return Instance;
+        }
+    }
 
     public string mainSceneName;
 

@@ -4,21 +4,10 @@ using UnityEngine;
 
 public class MasterServerClient : MonoBehaviourPunCallbacks
 {
-    [SerializeField]
-    NetSceneManager netSceneManagerPrefab;
-
     [HideInInspector]
     public OutgameRoomsManager orManager;
     [HideInInspector]
     public MyRoomManager mrManager;
-
-    private void Awake()
-    {
-        if(!NetSceneManager.Instance)
-        {
-            NetSceneManager.Instance = Instantiate(netSceneManagerPrefab);
-        }
-    }
 
     void Start()
     {
