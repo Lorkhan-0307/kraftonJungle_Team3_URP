@@ -22,7 +22,6 @@ public class HungerSlider : MonoBehaviour
             // 0이 되면
             if (elapsedTime < maxTime)
             {
-                elapsedTime += Time.deltaTime;
                 float t = 1 - elapsedTime / maxTime;
                 SetValue(t);
             }
