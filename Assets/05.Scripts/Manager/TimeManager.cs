@@ -41,6 +41,12 @@ public class TimeManager : Singleton<TimeManager>
     private void Start()
     {        
         lightShifter = FindObjectOfType<LightShifter>();
+        GameManager.instance.OnKilled += KillTest;
+    }
+
+    void KillTest(GameObject o1, GameObject o2)
+    {
+        Debug.Log($"Kill Event Recieved!! {o1.name}, {o2.name}");
     }
 
     private void Update()

@@ -13,6 +13,11 @@ public class GameManager : Singleton<GameManager>
 {
     public GameObject hungerSliderPrefab;
     public GameObject canvasPrefab;
+
+    public delegate void TwoGameObjects(GameObject o1, GameObject o2);
+
+    public TwoGameObjects OnKilled;
+
     GameObject canvas;
     GameObject hungerSlider;
 
