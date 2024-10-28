@@ -137,7 +137,6 @@ public class PlayerMovement : MonoBehaviour
             if (killButtonImage != null)
             {
                 killButtonImage.fillAmount = 1 - currentCooltime / killCooltime;
-                Debug.Log($"Cooldown: {currentCooltime}, FillAmount: {killButtonImage.fillAmount}");
             }
 
             if (currentCooltime <= 0)
