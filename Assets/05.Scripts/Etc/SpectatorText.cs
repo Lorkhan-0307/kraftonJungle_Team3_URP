@@ -11,7 +11,26 @@ public class SpectatorText : MonoBehaviour
     {
         spectatingTarget = target;
         tmpText = GetComponentInChildren<TextMeshProUGUI>();
-        tmpText.text = "Spectating :\n" + spectatingTarget.name;
+
+        switch (target.GetComponent<Player>().type)
+        {
+            case CharacterType.Scientist:
+                tmpText.color = Color.green;
+                tmpText.text = "Scientist\n" + spectatingTarget.name;
+                Debug.Log("Change text to Scientist");
+                break;
+            case CharacterType.Monster:
+                tmpText.color = Color.red;
+                tmpText.text = "Monster\n" + spectatingTarget.name;
+                Debug.Log("Change text to Monster");
+                break;
+            case CharacterType.NPC:
+                Debug.Log("Change text to NPC");
+                break;
+        }
+
+        tmpText = GetComponentInChildren<TextMeshProUGUI>();
+
         Debug.Log("Spectating Target Text Set : " + spectatingTarget.name);
     }
 }
