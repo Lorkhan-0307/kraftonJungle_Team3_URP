@@ -42,7 +42,7 @@ public class CreateRoom : MonoBehaviour
         ExitGames.Client.Photon.Hashtable customData = new ExitGames.Client.Photon.Hashtable();
         customData.Add("IsPublic", _connectionType);
         customData.Add("Ping", PhotonNetwork.GetPing());
-        customData.Add("Master", PhotonNetwork.NickName);
+        customData.Add("Master", PhotonNetwork.LocalPlayer.NickName);
         // Private 방 코드 생성, 등록
         // TODO: 방 코드 다른 방들과 겹치지 않게 세팅해야함.
         if (_connectionType)

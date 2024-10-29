@@ -53,6 +53,7 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
 
         Debug.Log($"Loaded {playerData.Nickname}");
         nicknameInput.text = playerData.Nickname;
+        PhotonNetwork.LocalPlayer.NickName = playerData.Nickname;
         LoginTokenManager.SaveTokenToLocal(playerData.UserToken);
     }
     public async void UpdateNickName()
