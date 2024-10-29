@@ -49,7 +49,10 @@ public class PlayerMovement : MonoBehaviour
     private bool isKillOn = false;
 
     // UI 쿨타임 이미지
-    private Image killButtonImage; 
+    private Image killButtonImage;
+
+    //
+    private Animator animator;
 
     private void Awake()
     {
@@ -62,8 +65,16 @@ public class PlayerMovement : MonoBehaviour
         
         controller = GetComponentInParent<CharacterController>();
 
-        
         player = GetComponentInParent<Player>();
+        //
+        // 부모 오브젝트
+        Transform parentTransform = transform.parent;
+
+        // Animator 가져오기
+        if (parentTransform != null)
+        {
+            animator = parentTransform.Find("Ch11_nonPBR@Idle").GetComponent<Animator>();
+        }
     }
     private void Start()
     {
@@ -72,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
             killButton = FindObjectOfType<KillButton>().GetComponent<Button>();
         }
         killButtonImage = FindObjectOfType<KillButton>().GetComponent<Image>();
-        // 시작할 때는 쿨타임 없음
+        // 시작할 때 쿨타임 초기화
         currentCooltime = 0f;
     }
 
@@ -90,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2 input = moveAction.ReadValue<Vector2>();
         Vector3 motion = transform.right * input.x + transform.forward * input.y;
         float currentSpeed = IsMonsterNightSpeed() && runAction.IsPressed() ? monsterNightSpeed : speed;
-        controller.Move(motion * currentSpeed * Time.deltaTime);
+        controller.Move(motion * currentSpeed * Time.deltaTime);        
 
         // Jump 액션으로 점프 입력 받기
         if (jumpAction.triggered && isGrounded)
@@ -123,7 +134,16 @@ public class PlayerMovement : MonoBehaviour
             {
                 GetComponent<AudioSource>().PlayOneShot(footStepSound, 0.7f);
                 nextFootstep += footStepDelay;
+                Debug.Log("Walking true");
+                // bool 파라미터 설정
+                animator.SetBool("IsWalking", true);
             }
+        }
+        else
+        {
+            Debug.Log("Walking false");
+            // bool 파라미터 설정
+            animator.SetBool("IsWalking", false);
         }
     }
 
@@ -183,6 +203,8 @@ public class PlayerMovement : MonoBehaviour
     {
         player.OnAttack(target);
         Player targetPlayer = target.GetComponent<Player>();
+        // 트리거 설정
+        animator.SetTrigger("Stab");
     }
 
     private bool IsAvailableToAttack()
