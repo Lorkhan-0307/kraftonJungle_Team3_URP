@@ -30,10 +30,12 @@ public class PlayerMovement : MonoBehaviour
     private InputAction jumpAction;
     private InputAction killAction;
     private InputAction runAction;
+    private InputAction interactAction;
 
     [SerializeField] private Transform raycastShootPos;
     [SerializeField] private float attackrange = 3f;
     private Button killButton;
+    private Button interactButton;
 
     public Player player;
 
@@ -41,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
     //Using Raycast
     RaycastHit hit;
     GameObject target;
+    GameObject interactTarget;
 
     // 쿨타임 시간
     public float killCooltime = 5f;
@@ -51,7 +54,6 @@ public class PlayerMovement : MonoBehaviour
     // UI 쿨타임 이미지
     private Image killButtonImage;
 
-    //
     private Animator animator;
 
     private void Awake()
@@ -62,11 +64,12 @@ public class PlayerMovement : MonoBehaviour
         jumpAction = playerInput.actions["Jump"];
         killAction = playerInput.actions["Kill"];
         runAction = playerInput.actions["Run"];
-        
+        interactAction = playerInput.actions["Interact"];
+
         controller = GetComponentInParent<CharacterController>();
 
         player = GetComponentInParent<Player>();
-        //
+        
         // 부모 오브젝트
         Transform parentTransform = transform.parent;
 
@@ -81,6 +84,11 @@ public class PlayerMovement : MonoBehaviour
         if (killButton == null)
         {
             killButton = FindObjectOfType<KillButton>().GetComponent<Button>();
+        }
+        if (interactButton == null)
+        {
+            interactButton = GameObject.Find("Button_interact").GetComponent<Button>();
+            interactButton.interactable = false;
         }
         killButtonImage = FindObjectOfType<KillButton>().GetComponent<Image>();
         // 시작할 때 쿨타임 초기화
@@ -126,6 +134,13 @@ public class PlayerMovement : MonoBehaviour
             StartKillCooldown();
         }
 
+        //RayCastInteractDetection();
+        if (interactButton.interactable && interactAction.triggered && interactTarget != null)
+        {
+            Debug.Log("Door Interact");
+            interactTarget.GetComponentInParent<Door>().Interaction();
+        }
+
         // 발걸음 소리 재생
         if ((input.x != 0 || input.y != 0) && isGrounded)
         {
@@ -134,15 +149,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 GetComponent<AudioSource>().PlayOneShot(footStepSound, 0.7f);
                 nextFootstep += footStepDelay;
-                Debug.Log("Walking true");
+                //Debug.Log("Walking true");
                 // bool 파라미터 설정
                 animator.SetBool("IsWalking", true);
             }
         }
         else
         {
-            Debug.Log("Walking false");
-            // bool 파라미터 설정
+            //Debug.Log("Walking false");
             animator.SetBool("IsWalking", false);
         }
     }
@@ -173,6 +187,29 @@ public class PlayerMovement : MonoBehaviour
         currentCooltime = killCooltime;
     }
 
+    private void RayCastInteractDetection(GameObject interactTarget)
+    {
+        Debug.Log("RayCastInteractDetection : " + interactTarget.name);
+
+        this.interactTarget = interactTarget;
+        if (interactTarget == null)
+        {
+            interactButton.interactable = false;
+            return;
+        }
+
+        Door doorComponent = interactTarget.GetComponentInParent<Door>();
+        if (doorComponent && doorComponent.isInteractable)
+        {
+            interactButton.interactable = true;
+        }
+        else
+        {
+            interactButton.interactable = false;
+            this.interactTarget = null;
+        }
+    }
+
     private void RayCastAttackDetection()
     {
         if (Physics.Raycast(raycastShootPos.position, transform.forward, out hit, attackrange))
@@ -185,6 +222,7 @@ public class PlayerMovement : MonoBehaviour
 
             target = hit.collider.gameObject;
 
+            RayCastInteractDetection(target);
             bool canAttack = player.AttackDetection(target);
             
             killButton.interactable = canAttack && !isKillOn;

@@ -501,9 +501,7 @@ MonoBehaviour:
   raycastShootPos: {fileID: 4064508904407749670}
   attackrange: 3
   player: {fileID: 0}
-  killCooldown: 5
-  killButtonCooldownImage: {fileID: 3996102854136409576, guid: 45e52336fb099184ea2d253b36a41bc9,
-    type: 3}
+  killCooltime: 5
 --- !u!114 &5944541352767380261
 MonoBehaviour:
   m_ObjectHideFlags: 0
