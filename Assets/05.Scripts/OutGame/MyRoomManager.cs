@@ -84,8 +84,9 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
             data.Add("IsReady", true);
             PhotonNetwork.LocalPlayer.SetCustomProperties(data);
         }
+
         // 방 접속 시 자기 자신 추가.
-        SetEachPlayer(PhotonNetwork.LocalPlayer);
+        SetEachPlayer(PhotonNetwork.LocalPlayer, PhotonNetwork.IsMasterClient);
         RoomSetup();
 
         SpawnNetworkManager();
@@ -143,10 +144,11 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
     }
 
 
-    private void SetEachPlayer(Photon.Realtime.Player player)
+    private void SetEachPlayer(Photon.Realtime.Player player, bool isMonster)
     {
+
         PlayerOnRoom p = Instantiate(playerPrefab, playerList).GetComponent<PlayerOnRoom>();
-        p.SetupPlayerOnRoom(new PlayerOnRoomElement(player));
+        p.SetupPlayerOnRoom(new PlayerOnRoomElement(player, isMonster));
         p.player = player;
         playerContents.Add(p);
     }
@@ -304,6 +306,9 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
         Dictionary<int, Photon.Realtime.Player> players = PhotonNetwork.CurrentRoom.Players;
         List<int> keys = players.Keys.ToList();
         keys.Sort();
+
+        List<int> monsters = NetworkManager.Instance.gameSettings.monsterActorNums.ToList();
+
         foreach (int key in keys)
         {
             Photon.Realtime.Player player = players[key];
@@ -314,7 +319,9 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
                 continue;
             }
 
-            SetEachPlayer(player);
+            bool isMonster = monsters.Contains(player.ActorNumber);
+
+            SetEachPlayer(player, isMonster);
         }
     }
 

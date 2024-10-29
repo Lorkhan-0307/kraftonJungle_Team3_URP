@@ -11,12 +11,14 @@ public class PlayerOnRoomElement
     public Photon.Realtime.Player player;
     public string playerName;
     public bool isReady;
+    public bool isMonster;
 
-    public PlayerOnRoomElement(Photon.Realtime.Player player)
+    public PlayerOnRoomElement(Photon.Realtime.Player player, bool isMonster)
     {
         this.player = player;   
         playerName = player.NickName;
         isReady = (bool)player.CustomProperties["IsReady"];
+        this.isMonster = isMonster;
     }
 }
 
@@ -27,11 +29,13 @@ public class PlayerOnRoom : MonoBehaviour
     [SerializeField] private GameObject starNotFilled;
     [SerializeField] private GameObject starFilled;
     [SerializeField] private TMP_Text readyText;
+    [SerializeField] private TMP_Text playerTypeText;
 
     public void SetupPlayerOnRoom(PlayerOnRoomElement pole)
     {
         player = pole.player;
         playerNameInputField.text = pole.playerName;
+        playerTypeText.text = (pole.isMonster ? "Monster" : "Scientist");
         SetPlayerOnRoomReadyState(pole.isReady);
     }
 

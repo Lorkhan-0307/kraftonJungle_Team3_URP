@@ -584,6 +584,7 @@ MonoBehaviour:
   starNotFilled: {fileID: 6689936304467263641}
   starFilled: {fileID: 2327949289164645250}
   readyText: {fileID: 660664673808289756}
+  playerTypeText: {fileID: 6281700423332032740}
 --- !u!1 &6689936304467263641
 GameObject:
   m_ObjectHideFlags: 0
