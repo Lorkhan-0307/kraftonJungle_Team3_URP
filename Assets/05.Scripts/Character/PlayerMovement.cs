@@ -188,7 +188,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void RayCastInteractDetection(GameObject interactTarget)
     {
-        Debug.Log("RayCastInteractDetection : " + interactTarget.name);
+        //Debug.Log("RayCastInteractDetection : " + interactTarget.name);
 
         this.interactTarget = interactTarget;
         if (interactTarget == null)
