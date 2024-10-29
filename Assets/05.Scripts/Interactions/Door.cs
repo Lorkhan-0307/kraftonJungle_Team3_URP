@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Door : Interact
@@ -11,7 +13,12 @@ public class Door : Interact
     [SerializeField] private float switch_pos_duration = 3.0f;
 
     private Coroutine doorCoroutine;
- 
+
+    private void Start()
+    {
+        Interaction();
+    }
+
     public override void Interaction()
     {
         base.Interaction();
