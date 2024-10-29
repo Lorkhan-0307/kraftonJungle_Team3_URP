@@ -126,7 +126,9 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
         {
             nm.gameObject.AddComponent<ServerLogic>();
             nm.LoadGameSettings();
+            nm.gameSettings.monsterActorNums[0] = PhotonNetwork.LocalPlayer.ActorNumber;
 
+            //sm.players[1] = PhotonNetwork.LocalPlayer;
             sm.ApplySettingsToUI();
         }
     }

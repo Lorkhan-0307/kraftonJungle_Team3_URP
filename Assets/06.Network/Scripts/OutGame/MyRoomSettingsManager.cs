@@ -5,8 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.VisualScripting;
+using System.Linq;
 
-public class MyRoomSettingsManager : MonoBehaviourPun
+public class MyRoomSettingsManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private TMP_Text monsterNum;
     [SerializeField] private TMP_Text scientistNum;
@@ -15,11 +16,15 @@ public class MyRoomSettingsManager : MonoBehaviourPun
     [SerializeField] private TMP_Text dayLength;
     [SerializeField] private TMP_Text nightLength;
     [SerializeField] private TMP_Text hungerLength;
+    [SerializeField] private TMP_Text selectedMonster;
 
     [SerializeField] int[] timeLengthPreset;
     int dayIndex = 6;
     int nightIndex = 4;
     int hungerIndex = 4;
+    int monsterActorNum = 1;
+
+
     GameSettings Settings
     {
         get
@@ -43,19 +48,17 @@ public class MyRoomSettingsManager : MonoBehaviourPun
         SyncSettings();
     }
 
-    /// <summary>
+
     /// [사용되지 않음]
-    /// </summary>
-    /// <param name="value"></param>
-    public void ScientistNumBtn(int value)
-    {
-        if (!PhotonNetwork.IsMasterClient) return;
+    //public void ScientistNumBtn(int value)
+    //{
+    //    if (!PhotonNetwork.IsMasterClient) return;
 
-        int newValue = Mathf.Clamp(Settings.scientists + value, 1, PhotonNetwork.CurrentRoom.PlayerCount - 1);
-        Settings.scientists = newValue;
+    //    int newValue = Mathf.Clamp(Settings.scientists + value, 1, PhotonNetwork.CurrentRoom.PlayerCount - 1);
+    //    Settings.scientists = newValue;
 
-        SyncSettings();
-    }
+    //    SyncSettings();
+    //}
 
     public void DayLengthBtn(int value)
     {
@@ -90,6 +93,23 @@ public class MyRoomSettingsManager : MonoBehaviourPun
 
         SyncSettings();
     }
+    public void SelectMonsterBtn(int value)
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        List<int> nums = PhotonNetwork.CurrentRoom.Players.Keys.ToList();
+        int i = 0;
+        for(i = 0; i < nums.Count; i++)
+        {
+            if (nums[i] == monsterActorNum) break;
+        }
+        i = (i + value + nums.Count) %nums.Count;
+
+        Settings.monsterActorNums[0] = nums[i];
+        monsterActorNum = nums[i];
+
+        SyncSettings();
+    }
 
     public void OnRandomMonsterToggle(bool value)
     {
@@ -117,6 +137,7 @@ public class MyRoomSettingsManager : MonoBehaviourPun
         dayLength.text = Settings.dayLength.ToString();
         nightLength.text = Settings.nightLength.ToString();
         hungerLength.text = Settings.hungerLength.ToString();
+        selectedMonster.text = PhotonNetwork.CurrentRoom.Players[Settings.monsterActorNums[0]].NickName;
     }
     [PunRPC]
     public void ApplySettingsToUI(object data)
