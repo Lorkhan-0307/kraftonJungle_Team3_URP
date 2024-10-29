@@ -52,7 +52,7 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
         await dbManager.LoadData(token, playerData);
 
         Debug.Log($"Loaded {playerData.Nickname}");
-
+        nicknameInput.text = playerData.Nickname;
         LoginTokenManager.SaveTokenToLocal(playerData.UserToken);
     }
     public async void UpdateNickName()
