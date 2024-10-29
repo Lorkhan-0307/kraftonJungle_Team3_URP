@@ -9,6 +9,7 @@ TagManager:
   - KillButton
   - ScientistOutline
   - MonsterOutline
+  - PlayerHead
   layers:
   - Default
   - TransparentFX
