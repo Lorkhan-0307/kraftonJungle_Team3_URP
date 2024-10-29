@@ -5359,6 +5359,11 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6970966218117749259, guid: b4e05051a0cb1a74ab1789c328f99f39,
+        type: 3}
+      propertyPath: m_TagString
+      value: MonsterOutline
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

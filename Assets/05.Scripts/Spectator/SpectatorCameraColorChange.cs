@@ -16,7 +16,14 @@ public class SpectatorCameraColorChange : MonoBehaviour
 
             if (skinnedMeshRenderer != null)
             {
-                skinnedMeshRenderer.material = ScientistOutlineMaterial;
+                Material[] materials = skinnedMeshRenderer.materials;
+
+                for (int i = 0; i < materials.Length; i++)
+                {
+                    materials[i] = ScientistOutlineMaterial;
+                }
+
+                skinnedMeshRenderer.materials = materials;
             }
         }
 
@@ -28,7 +35,14 @@ public class SpectatorCameraColorChange : MonoBehaviour
 
             if (skinnedMeshRenderer != null)
             {
-                skinnedMeshRenderer.material = MonsterOutlineMaterial;
+                Material[] materials = skinnedMeshRenderer.materials;
+
+                for (int i = 0; i < materials.Length; i++)
+                {
+                    materials[i] = MonsterOutlineMaterial;
+                }
+
+                skinnedMeshRenderer.materials = materials;
             }
         }
 
