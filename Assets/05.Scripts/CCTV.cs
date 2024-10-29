@@ -36,12 +36,17 @@ public class CCTV : Interact
         // 하긴 virtual camera pos 를 바꾸면 되기는 할꺼야...
         // 먼저 현재 virtual camera의 priority가 10 이니까, 11로 높혔다가 5로 낮춘다.
         // Ease in out 시간이 현재 2초로 되어있다.(이는 Cinemachine Blend에 있다)
+        
         SwitchCamera();
+        
+        
     }
 
     private void SwitchCamera()
     {
-        StartCoroutine(TransitionCameraCoroutine());
+        //StartCoroutine(TransitionCameraCoroutine());
+        
+        GetComponentInParent<CCTV_Manager>().SwitchCamera(1);
     }
 
 
