@@ -188,7 +188,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void RayCastInteractDetection(GameObject interactTarget)
     {
-        //Debug.Log("RayCastInteractDetection : " + interactTarget.name);
+        Debug.Log("RayCastInteractDetection : " + interactTarget.name);
 
         this.interactTarget = interactTarget;
         if (interactTarget == null)
@@ -197,8 +197,8 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        Door doorComponent = interactTarget.GetComponentInParent<Door>();
-        if (doorComponent && doorComponent.isInteractable)
+        Interact interactComponent = interactTarget.GetComponentInParent<Interact>();
+        if (interactComponent && interactComponent.isInteractable)
         {
             interactButton.interactable = true;
         }
