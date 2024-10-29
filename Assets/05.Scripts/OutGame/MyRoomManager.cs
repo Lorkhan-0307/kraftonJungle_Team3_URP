@@ -29,6 +29,13 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
     [SerializeField] private TMP_Text roomPing;
 
     MyRoomSettingsManager sm = null;
+
+    private void Start()
+    {
+        haveServer.SetActive(false);
+        noServer.SetActive(true);
+    }
+
     // 사용자가 방을 만들거나 참여하면 꼭 이 함수를 실행시켜주세요.
     public void OnRoomCreateOrJoin(bool isOwner)
     {

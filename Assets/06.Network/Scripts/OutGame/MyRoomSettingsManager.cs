@@ -15,9 +15,10 @@ public class MyRoomSettingsManager : MonoBehaviourPun
     [SerializeField] private TMP_Text dayLength;
     [SerializeField] private TMP_Text nightLength;
 
-    [SerializeField] int[] dayNightLengthPreset;
-    int dayIndex = 4;
-    int nightIndex = 2;
+    [SerializeField] int[] timeLengthPreset;
+    int dayIndex = 6;
+    int nightIndex = 4;
+    int hungerIndex = 4;
     GameSettings Settings
     {
         get
@@ -59,8 +60,8 @@ public class MyRoomSettingsManager : MonoBehaviourPun
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
-        dayIndex = Mathf.Clamp(value + dayIndex, 0, dayNightLengthPreset.Length - 1);
-        int newValue = dayNightLengthPreset[dayIndex];
+        dayIndex = Mathf.Clamp(value + dayIndex, 0, timeLengthPreset.Length - 1);
+        int newValue = timeLengthPreset[dayIndex];
 
         Settings.dayLength = newValue;
 
@@ -70,8 +71,19 @@ public class MyRoomSettingsManager : MonoBehaviourPun
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
-        nightIndex = Mathf.Clamp(value + nightIndex, 0, dayNightLengthPreset.Length - 1);
-        int newValue = dayNightLengthPreset[nightIndex];
+        nightIndex = Mathf.Clamp(value + nightIndex, 0, timeLengthPreset.Length - 1);
+        int newValue = timeLengthPreset[nightIndex];
+
+        Settings.nightLength = newValue;
+
+        SyncSettings();
+    }
+    public void HungerLengthBtn(int value)
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        hungerIndex = Mathf.Clamp(value + hungerIndex, 0, timeLengthPreset.Length - 1);
+        int newValue = timeLengthPreset[hungerIndex];
 
         Settings.nightLength = newValue;
 
