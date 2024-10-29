@@ -14,6 +14,7 @@ public class MyRoomSettingsManager : MonoBehaviourPun
 
     [SerializeField] private TMP_Text dayLength;
     [SerializeField] private TMP_Text nightLength;
+    [SerializeField] private TMP_Text hungerLength;
 
     [SerializeField] int[] timeLengthPreset;
     int dayIndex = 6;
@@ -85,7 +86,7 @@ public class MyRoomSettingsManager : MonoBehaviourPun
         hungerIndex = Mathf.Clamp(value + hungerIndex, 0, timeLengthPreset.Length - 1);
         int newValue = timeLengthPreset[hungerIndex];
 
-        Settings.nightLength = newValue;
+        Settings.hungerLength = newValue;
 
         SyncSettings();
     }
@@ -115,17 +116,14 @@ public class MyRoomSettingsManager : MonoBehaviourPun
 
         dayLength.text = Settings.dayLength.ToString();
         nightLength.text = Settings.nightLength.ToString();
+        hungerLength.text = Settings.hungerLength.ToString();
     }
     [PunRPC]
     public void ApplySettingsToUI(object data)
     {
         Settings = GameSettings.DataToInstance(data);
 
-        monsterNum.text = Settings.monsters.ToString();
-        scientistNum.text = Settings.scientists.ToString();
-
-        dayLength.text = Settings.dayLength.ToString();
-        nightLength.text = Settings.nightLength.ToString();
+        ApplySettingsToUI();
 
         if (!PhotonNetwork.IsMasterClient)
             randomMonsterToggle.AnimateSwitchSetValue(Settings.monsterRandomSelect);

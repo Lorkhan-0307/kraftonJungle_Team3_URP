@@ -30,10 +30,33 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
 
     MyRoomSettingsManager sm = null;
 
+    List<GameObject> masterObjects = new List<GameObject>();
+    List<GameObject> clientObjects = new List<GameObject>();
+
     private void Start()
     {
         haveServer.SetActive(false);
         noServer.SetActive(true);
+
+        SetObjectsArray();
+    }
+
+    void SetObjectsArray()
+    {
+        // 비활성화된 하위 오브젝트까지 포함해 모든 자식 오브젝트를 가져옴
+        Transform[] allChildren = GetComponentsInChildren<Transform>(true);
+
+        foreach (Transform child in allChildren)
+        {
+            if (child.CompareTag("MasterObjectsUI"))
+            {
+                masterObjects.Add(child.gameObject); // 특정 태그가 일치하는 오브젝트만 리스트에 추가
+            }
+            if (child.CompareTag("ClientObjectsUI"))
+            {
+                clientObjects.Add(child.gameObject); // 특정 태그가 일치하는 오브젝트만 리스트에 추가
+            }
+        }
     }
 
     // 사용자가 방을 만들거나 참여하면 꼭 이 함수를 실행시켜주세요.
@@ -145,15 +168,17 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
     {
         ReadyButtonActivate();
     }
-    
+
+
     // Game Start Button Activate
     private void StartButtonActivate()
     {
-        foreach (var masterObject in GameObject.FindGameObjectsWithTag("MasterObjectsUI"))
+
+        foreach (var masterObject in masterObjects)
         {
             masterObject.SetActive(true);
         }
-        foreach (var clientObject in GameObject.FindGameObjectsWithTag("ClientObjectsUI"))
+        foreach (var clientObject in clientObjects)
         {
             clientObject.SetActive(false);
         }
@@ -163,11 +188,11 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
     // Join을 하는 경우
     private void ReadyButtonActivate()
     {
-        foreach (var masterObject in GameObject.FindGameObjectsWithTag("MasterObjectsUI"))
+        foreach (var masterObject in masterObjects)
         {
             masterObject.SetActive(false);
         }
-        foreach (var clientObject in GameObject.FindGameObjectsWithTag("ClientObjectsUI"))
+        foreach (var clientObject in clientObjects)
         {
             clientObject.SetActive(true);
         }

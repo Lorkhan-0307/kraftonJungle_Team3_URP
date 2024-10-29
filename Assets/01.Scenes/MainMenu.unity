@@ -93624,6 +93624,7 @@ MonoBehaviour:
   randomMonsterToggle: {fileID: 1572472881}
   dayLength: {fileID: 175495938}
   nightLength: {fileID: 98104765}
+  hungerLength: {fileID: 1937855640}
   timeLengthPreset: 00000000050000000a0000000f000000140000001e0000002d0000003c0000005a000000
 --- !u!114 &3487435596080818253
 MonoBehaviour:
