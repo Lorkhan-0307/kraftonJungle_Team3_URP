@@ -148,7 +148,25 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
     {
 
         PlayerOnRoom p = Instantiate(playerPrefab, playerList).GetComponent<PlayerOnRoom>();
-        p.SetupPlayerOnRoom(new PlayerOnRoomElement(player, isMonster));
+
+        string playerType = "";
+        if (NetworkManager.Instance != null && NetworkManager.Instance.gameSettings.monsterRandomSelect)
+        {
+            playerType = "?  ";
+        }
+        else
+        {
+            if (isMonster)
+            {
+                playerType = "Monster";
+            }
+            else
+            {
+                playerType = "Scientist";
+            }
+        }
+
+        p.SetupPlayerOnRoom(new PlayerOnRoomElement(player, playerType));
         p.player = player;
         playerContents.Add(p);
     }

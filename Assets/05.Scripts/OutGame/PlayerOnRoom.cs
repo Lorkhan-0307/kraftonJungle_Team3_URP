@@ -11,9 +11,9 @@ public class PlayerOnRoomElement
     public Photon.Realtime.Player player;
     public string playerName;
     public bool isReady;
-    public bool isMonster;
+    public string isMonster;
 
-    public PlayerOnRoomElement(Photon.Realtime.Player player, bool isMonster)
+    public PlayerOnRoomElement(Photon.Realtime.Player player, string isMonster)
     {
         this.player = player;   
         playerName = player.NickName;
@@ -35,7 +35,7 @@ public class PlayerOnRoom : MonoBehaviour
     {
         player = pole.player;
         playerNameInputField.text = pole.playerName;
-        playerTypeText.text = (pole.isMonster ? "Monster" : "Scientist");
+        playerTypeText.text = pole.isMonster;
         SetPlayerOnRoomReadyState(pole.isReady);
     }
 

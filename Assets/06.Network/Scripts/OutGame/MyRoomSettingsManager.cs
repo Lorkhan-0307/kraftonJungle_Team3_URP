@@ -124,6 +124,7 @@ public class MyRoomSettingsManager : MonoBehaviourPunCallbacks
         disableSelectMonster.enabled = value;
 
         SyncSettings();
+        FindObjectOfType<MyRoomManager>().CallUpdatePlayerList();
     }
     #endregion
 
