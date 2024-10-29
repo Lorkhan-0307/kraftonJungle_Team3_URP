@@ -4,6 +4,7 @@ using Michsky.UI.Dark;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.VisualScripting;
 
 public class MyRoomSettingsManager : MonoBehaviourPun
 {
@@ -34,17 +35,21 @@ public class MyRoomSettingsManager : MonoBehaviourPun
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
-        int newValue = Mathf.Clamp(Settings.monsters + value, 1, PhotonNetwork.CurrentRoom.MaxPlayers-1);
+        int newValue = Mathf.Clamp(Settings.monsters + value, 1, PhotonNetwork.CurrentRoom.PlayerCount - 1);
         Settings.monsters = newValue;
 
         SyncSettings();
     }
 
+    /// <summary>
+    /// [사용되지 않음]
+    /// </summary>
+    /// <param name="value"></param>
     public void ScientistNumBtn(int value)
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
-        int newValue = Mathf.Clamp(Settings.scientists + value, 1, PhotonNetwork.CurrentRoom.MaxPlayers-1);
+        int newValue = Mathf.Clamp(Settings.scientists + value, 1, PhotonNetwork.CurrentRoom.PlayerCount - 1);
         Settings.scientists = newValue;
 
         SyncSettings();
@@ -91,6 +96,8 @@ public class MyRoomSettingsManager : MonoBehaviourPun
 
     public void ApplySettingsToUI()
     {
+        Settings.scientists = PhotonNetwork.CurrentRoom.PlayerCount - Settings.monsters;
+
         monsterNum.text = Settings.monsters.ToString();
         scientistNum.text = Settings.scientists.ToString();
 
