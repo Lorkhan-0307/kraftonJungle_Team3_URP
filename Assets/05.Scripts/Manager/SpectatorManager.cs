@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 
 public class SpectatorManager : Singleton<SpectatorManager>
 {
-    [SerializeField] private GameObject spectatorPrefab;
     private bool isSpectating = false;
     private List<GameObject> remainingPlayers = new List<GameObject>();
     private GameObject spectatorInstance;
@@ -22,7 +21,6 @@ public class SpectatorManager : Singleton<SpectatorManager>
         spectatorCameraColorChange = GetComponent<SpectatorCameraColorChange>();
         spectatorCameraColorChange.EnableOutlineEffect(); // 아웃라인 효과 활성화
         isSpectating = true;
-        spectatorInstance = Instantiate(spectatorPrefab);
     }
 
     // TODO : 동시에 죽었을 때 리스트 제대로 업뎃 안되는 문제 해결

@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7711277013734532161}
-  - component: {fileID: 3242690123656044670}
   - component: {fileID: 6770141178040877659}
+  - component: {fileID: 1815505336849003688}
   m_Layer: 0
   m_Name: Spectator
   m_TagString: Untagged
@@ -36,21 +36,6 @@ Transform:
   - {fileID: 1780050175014573732}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3242690123656044670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 730964386139664229}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8434f8a4b3738c84ba29ecb73508b881, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mouseSensitivity: 100
-  canvasPrefab: {fileID: 1457079429713853551, guid: 5038046623a1a964982a67ecb96d1684,
-    type: 3}
 --- !u!114 &6770141178040877659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,6 +79,21 @@ MonoBehaviour:
   m_DefaultActionMap: SpectatorActions
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1815505336849003688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730964386139664229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c1045bf291417e41a47a8bc3a289ec4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseSensitivity: 50
+  canvasPrefab: {fileID: 1457079429713853551, guid: 5038046623a1a964982a67ecb96d1684,
+    type: 3}
 --- !u!1 &737727672906619768
 GameObject:
   m_ObjectHideFlags: 0
