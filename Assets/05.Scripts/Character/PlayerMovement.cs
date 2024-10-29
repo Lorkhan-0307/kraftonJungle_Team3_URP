@@ -134,11 +134,10 @@ public class PlayerMovement : MonoBehaviour
             StartKillCooldown();
         }
 
-        //RayCastInteractDetection();
         if (interactButton.interactable && interactAction.triggered && interactTarget != null)
         {
-            Debug.Log("Door Interact");
-            interactTarget.GetComponentInParent<Door>().Interaction();
+            Debug.Log("Interact");
+            interactTarget.GetComponentInParent<Interact>().Interaction();
         }
 
         // 발걸음 소리 재생
@@ -189,7 +188,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void RayCastInteractDetection(GameObject interactTarget)
     {
-        Debug.Log("RayCastInteractDetection : " + interactTarget.name);
+        //Debug.Log("RayCastInteractDetection : " + interactTarget.name);
 
         this.interactTarget = interactTarget;
         if (interactTarget == null)
