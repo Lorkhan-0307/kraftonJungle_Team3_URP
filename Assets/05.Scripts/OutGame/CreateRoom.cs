@@ -55,7 +55,7 @@ public class CreateRoom : MonoBehaviour
         }
 
         roomOptions.CustomRoomProperties = customData;
-        roomOptions.CustomRoomPropertiesForLobby = new string[] { "IsPublic", "Ping", "AccessCode" };
+        roomOptions.CustomRoomPropertiesForLobby = new string[] { "IsPublic", "Ping", "AccessCode", "Master" };
         roomOptions.PublishUserId = true;
 
         //        roomOptions.CustomRoomProperties

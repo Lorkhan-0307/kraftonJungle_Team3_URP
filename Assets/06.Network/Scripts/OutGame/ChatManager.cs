@@ -23,7 +23,7 @@ public class ChatManager : MonoBehaviourPun
 
         //TODO: 인자로 UserID 대신 PlayerName 넣어줘야함.
         photonView.RPC("SendChatToClients", RpcTarget.AllBuffered,
-            PhotonNetwork.LocalPlayer.UserId, text); // 모든 클라이언트에 동기화
+            PhotonNetwork.LocalPlayer.NickName, text); // 모든 클라이언트에 동기화
 
         chatInput.text = "";
     }
