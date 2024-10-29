@@ -17,8 +17,6 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
     [SerializeField] private Transform playerList;
     [SerializeField] private GameObject playerPrefab;
 
-    [SerializeField] private GameObject onMasterObjects;
-    [SerializeField] private GameObject onClientObjects;
     [SerializeField] SwitchManager randomMonsterToggle;
 
     [SerializeField] MainPanelManager panelManager;
@@ -144,16 +142,28 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
     // Game Start Button Activate
     private void StartButtonActivate()
     {
-        onMasterObjects.SetActive(true);
-        onClientObjects.SetActive(false);
+        foreach (var masterObject in GameObject.FindGameObjectsWithTag("MasterObjectsUI"))
+        {
+            masterObject.SetActive(true);
+        }
+        foreach (var clientObject in GameObject.FindGameObjectsWithTag("ClientObjectsUI"))
+        {
+            clientObject.SetActive(false);
+        }
         randomMonsterToggle.GetComponent<Button>().interactable = true;
     }
     
     // Join을 하는 경우
     private void ReadyButtonActivate()
     {
-        onMasterObjects.SetActive(false);
-        onClientObjects.SetActive(true);
+        foreach (var masterObject in GameObject.FindGameObjectsWithTag("MasterObjectsUI"))
+        {
+            masterObject.SetActive(false);
+        }
+        foreach (var clientObject in GameObject.FindGameObjectsWithTag("ClientObjectsUI"))
+        {
+            clientObject.SetActive(true);
+        }
         randomMonsterToggle.GetComponent<Button>().interactable = false;
     }
 

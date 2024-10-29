@@ -9,6 +9,8 @@ TagManager:
   - KillButton
   - ScientistOutline
   - MonsterOutline
+  - MasterObjectsUI
+  - ClientObjectsUI
   layers:
   - Default
   - TransparentFX
