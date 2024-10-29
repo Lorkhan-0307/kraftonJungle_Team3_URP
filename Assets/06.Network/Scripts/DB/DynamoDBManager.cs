@@ -15,10 +15,10 @@ public class DynamoDBManager : MonoBehaviour
 
     private static AmazonDynamoDBClient client;
 
-    //private void Start()
-    //{
-    //    LoadData("");
-    //}
+    private void Start()
+    {
+        LoadData("KEY_638657850476966626");
+    }
 
     public async void LoadData(string token)
     {
@@ -40,7 +40,7 @@ public class DynamoDBManager : MonoBehaviour
 
             // 생성한 PlayerData를 데이터베이스에 저장
             await SavePlayerData(playerData);
-            Debug.Log("New player data saved to the database.");
+            await ConnectPlayer(playerData);
         }
         else
         {
@@ -122,18 +122,8 @@ public class DynamoDBManager : MonoBehaviour
     public async Task ConnectPlayer(PlayerData playerData)
     {
         var existingPlayerData = await GetPlayerDataByUserToken(playerData.UserToken);
+        Debug.Log($"Nickname: {existingPlayerData["Nickname"].S}");
 
-        if (existingPlayerData == null)
-        {
-            // 데이터가 존재하지 않을 경우에만 새로 저장
-            await SavePlayerData(playerData);
-            Debug.Log("New player data created.");
-        }
-        else
-        {
-            // 데이터가 존재할 경우, 닉네임을 로그에 출력
-            Debug.Log($"Nickname: {existingPlayerData["Nickname"].S}");
-        }
     }
 
 
