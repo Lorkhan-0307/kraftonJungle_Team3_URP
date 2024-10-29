@@ -583,6 +583,7 @@ MonoBehaviour:
   playerNameInputField: {fileID: 4626862641990466809}
   starNotFilled: {fileID: 6689936304467263641}
   starFilled: {fileID: 2327949289164645250}
+  readyText: {fileID: 660664673808289756}
 --- !u!1 &6689936304467263641
 GameObject:
   m_ObjectHideFlags: 0
