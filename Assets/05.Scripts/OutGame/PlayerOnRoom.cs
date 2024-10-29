@@ -12,7 +12,7 @@ public class PlayerOnRoomElement
 
     public PlayerOnRoomElement(Photon.Realtime.Player player)
     {
-        playerName = player.UserId;
+        playerName = player.NickName;
         isReady = (bool)player.CustomProperties["IsReady"];
     }
 }

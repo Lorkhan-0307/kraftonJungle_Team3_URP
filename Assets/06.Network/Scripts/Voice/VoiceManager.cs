@@ -12,7 +12,7 @@ public class VoiceManager : MonoBehaviourPunCallbacks
         recorder = GetComponent<Recorder>();
 
         // 마이크 활성화 및 음성 전송 시작
-        recorder.TransmitEnabled = true;
+        recorder.TransmitEnabled = (Microphone.devices.Length != 0);
         PunVoiceClient.Instance.ConnectAndJoinRoom();
     }
 }
