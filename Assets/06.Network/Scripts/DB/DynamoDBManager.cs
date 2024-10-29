@@ -9,15 +9,15 @@ using static UnityEngine.Rendering.DebugUI.Table;
 
 public class DynamoDBManager : MonoBehaviour
 {
+    private static AmazonDynamoDBClient client;
+
     private static readonly string accessKey = "AKIA5FTZBVKDTJYXT35R";
     private static readonly string secretKey = "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";
-    private static readonly string region = "ap-northeast-2";
-
-    private static AmazonDynamoDBClient client;
+    private static readonly string region = "ap-northeast-2"; // DynamoDB 리전
 
     private void Start()
     {
-        LoadData("KEY_638657850476966626");
+        LoadData("");
     }
 
     public async void LoadData(string token)
@@ -59,10 +59,20 @@ public class DynamoDBManager : MonoBehaviour
     {
         if (client == null)
         {
+            //var accessKey = Environment.GetEnvironmentVariable("AWS_ACCESS_KEY_ID");
+            //var secretKey = Environment.GetEnvironmentVariable("AWS_SECRET_ACCESS_KEY");
+            //var region = Environment.GetEnvironmentVariable("AWS_REGION");
+
+            //// 각 변수를 로그로 출력
+            //Debug.Log($"Access Key: {accessKey}");
+            //Debug.Log($"Secret Key: {secretKey}");
+            //Debug.Log($"Region: {region}");
+
             var credentials = new BasicAWSCredentials(accessKey, secretKey);
             client = new AmazonDynamoDBClient(credentials, Amazon.RegionEndpoint.GetBySystemName(region));
         }
     }
+
 
     public async Task SavePlayerData(PlayerData playerData)
     {
