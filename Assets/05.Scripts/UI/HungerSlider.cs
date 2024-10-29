@@ -10,6 +10,10 @@ public class HungerSlider : MonoBehaviour
     private void Start()
     {
         slider = GetComponent<Slider>();
+
+        // 헝거 시간 게임 설정에 맞게 변경
+        if (NetworkManager.Instance)
+            maxTime = NetworkManager.Instance.gameSettings.hungerLength;
     }
 
     private void Update()
