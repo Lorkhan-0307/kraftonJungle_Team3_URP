@@ -97,7 +97,7 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
     }
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
-        Debug.Log($"{newPlayer.UserId} 님이 접속하였습니다.");
+        Debug.Log($"{newPlayer.NickName} 님이 접속하였습니다.");
         CallUpdatePlayerList();
 
         if(PhotonNetwork.IsMasterClient)
@@ -105,7 +105,7 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
     }
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
-        Debug.Log($"{otherPlayer.UserId} 님이 접속을 해제하였습니다.");
+        Debug.Log($"{otherPlayer.NickName} 님이 접속을 해제하였습니다.");
         CallUpdatePlayerList();
     }
 
@@ -202,7 +202,7 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
     // Guest가 Ready 버튼을 누른 경우
     public void OnClickReady()
     {
-        Debug.Log($"{PhotonNetwork.LocalPlayer.UserId} Pressed Ready");
+        Debug.Log($"{PhotonNetwork.LocalPlayer.NickName} Pressed Ready");
 
         ExitGames.Client.Photon.Hashtable data = new ExitGames.Client.Photon.Hashtable();
         data.Add("IsReady", true);

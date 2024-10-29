@@ -1,6 +1,8 @@
 using Photon.Pun;
 using System.Collections;
 using UnityEngine;
+using TMPro;
+using Amazon.Runtime.Internal.Auth;
 
 public class MasterServerClient : MonoBehaviourPunCallbacks
 {
@@ -8,6 +10,11 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
     public OutgameRoomsManager orManager;
     [HideInInspector]
     public MyRoomManager mrManager;
+
+    [SerializeField]
+    TMP_InputField nicknameInput;
+
+    DynamoDBManager dbManager;
 
     void Start()
     {
@@ -29,7 +36,34 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
 
         // 일정 주기로 실행되는 새로고침 코루틴 실행
         StartCoroutine(RefreshPeriod());
+
+        LoginWithToken();
     }
+
+    public async void LoginWithToken()
+    {
+        // DB 통해 로그인
+        dbManager=GetComponent<DynamoDBManager>();
+
+        string token = LoginTokenManager.LoadDataWithToken();
+
+        PlayerData playerData = new PlayerData();
+
+        await dbManager.LoadData(token, playerData);
+
+        Debug.Log($"Loaded {playerData.Nickname}");
+
+        LoginTokenManager.SaveTokenToLocal(playerData.UserToken);
+    }
+    public async void UpdateNickName()
+    {
+        string token = LoginTokenManager.LoadDataWithToken();
+        string name = nicknameInput.text;
+
+        await dbManager.UpdateNickname(token, name);
+        PhotonNetwork.LocalPlayer.NickName = name;
+    }
+
 
     IEnumerator RefreshPeriod()
     {
@@ -68,12 +102,6 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
         ExitGames.Client.Photon.Hashtable customData = new ExitGames.Client.Photon.Hashtable();
         customData.Add("IsReady", false);
         PhotonNetwork.LocalPlayer.CustomProperties = customData;
-    }
-
-    [PunRPC]
-    public void SendChat()
-    {
-
     }
 }
 

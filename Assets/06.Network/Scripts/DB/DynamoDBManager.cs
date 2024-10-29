@@ -15,16 +15,11 @@ public class DynamoDBManager : MonoBehaviour
     private static readonly string secretKey = "Nk+vo5CCr5Xa3ZiC6UwCX4h9aTEXrKgvWBqk70VV";
     private static readonly string region = "ap-northeast-2"; // DynamoDB 리전
 
-    private void Start()
-    {
-        LoadData("");
-    }
 
-    public async void LoadData(string token)
+    public async Task LoadData(string token, PlayerData playerData)
     {
         InitializeDynamoDBClient();
 
-        PlayerData playerData;
 
         // UserToken이 빈 문자열일 경우 새로운 UserToken과 랜덤 닉네임 생성 및 저장
         if (string.IsNullOrEmpty(token))
@@ -32,11 +27,8 @@ public class DynamoDBManager : MonoBehaviour
             string newUserToken = GenerateHashKey(); // 새로운 UserToken 생성
             string randomNickname = GenerateRandomNickname(); // 랜덤 닉네임 생성
 
-            playerData = new PlayerData
-            {
-                UserToken = newUserToken,
-                Nickname = randomNickname
-            };
+            playerData.UserToken = newUserToken;
+            playerData.Nickname = randomNickname;
 
             // 생성한 PlayerData를 데이터베이스에 저장
             await SavePlayerData(playerData);
@@ -45,10 +37,7 @@ public class DynamoDBManager : MonoBehaviour
         else
         {
             // UserToken이 비어있지 않은 경우 기존 플레이어 데이터에 연결
-            playerData = new PlayerData
-            {
-                UserToken = token,
-            };
+            playerData.UserToken = token;
 
             await ConnectPlayer(playerData); // 기존 데이터와 연결
         }
