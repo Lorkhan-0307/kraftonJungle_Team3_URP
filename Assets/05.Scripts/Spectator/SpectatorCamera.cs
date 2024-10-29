@@ -8,42 +8,48 @@ public class SpectatorCamera : MonoBehaviour
     public float mouseSensitivity = 50f;
     private List<GameObject> remainingPlayers = new List<GameObject>();
     private GameObject spectatingTarget;
+    private GameObject TargetHead;
     private int currentPlayerIndex = 0;
 
-    private float xRotation = 0f;
-
     private PlayerInput playerInput;
-    private InputAction lookAction;
     private InputAction prevPlayerAction;
     private InputAction nextPlayerAction;
 
-    private CinemachineVirtualCamera virtualCamera;
+    private CinemachineFreeLook FreeLockCamera;
 
     [SerializeField] private GameObject canvasPrefab;
 
     private GameObject canvasInstance;
     private SpectatorText spectatorText;
 
+    private void FollowAndLookAtTarget(GameObject spectatingTarget)
+    {
+        TargetHead = spectatingTarget.transform.Find("Head").gameObject; // 플레이어의 머리 위치 찾기
+        FreeLockCamera.Follow = TargetHead.transform; // 버츄얼 카메라가 관전 대상의 머리를 따라다니도록 설정
+        FreeLockCamera.LookAt = TargetHead.transform; // 버츄얼 카메라가 관전 대상의 머리를 바라보도록 설정
+    }
+
     void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
-        lookAction = playerInput.actions["Look"];
         prevPlayerAction = playerInput.actions["PrevPlayer"];
         nextPlayerAction = playerInput.actions["NextPlayer"];
-        virtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
+        FreeLockCamera = GetComponentInChildren<CinemachineFreeLook>();
+
         Debug.Log("Spectator Camera Awake");
     }
 
     void Start()
     {
-        remainingPlayers = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player")); // 모든 플레이어를 찾아서 리스트에 추가
         Cursor.lockState = CursorLockMode.Locked; // 마우스 커서 숨김
+
+        remainingPlayers = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player")); // 모든 플레이어를 찾아서 리스트에 추가
         spectatingTarget = remainingPlayers[currentPlayerIndex]; // 초기 관전 대상 설정
-        virtualCamera.Follow = this.transform; // 버츄얼 카메라가 Spectator를 따라다니도록 설정
+        FollowAndLookAtTarget(spectatingTarget); // 버츄얼 카메라가 관전 대상을 따라다니도록 설정        
 
         canvasInstance = Instantiate(canvasPrefab); // 캔버스 생성
         spectatorText = canvasInstance.GetComponentInChildren<SpectatorText>(); // 관전 대상 텍스트
-        spectatorText.SetSpectatingTarget(spectatingTarget); // UI에 관전 대상 표시
+        spectatorText.SetSpectatingTarget(spectatingTarget); // UI에 관전 대상 표시        
 
         Debug.Log("Spectator Camera Start");
     }
@@ -60,23 +66,6 @@ public class SpectatorCamera : MonoBehaviour
         {
             SwitchPlayer(1);
         }
-
-        UpdateVirtualCameraPosition();
-    }
-
-    // 버츄얼 카메라 위치 업데이트
-    private void UpdateVirtualCameraPosition()
-    {
-        this.transform.position = spectatingTarget.transform.position;
-        Vector2 mouseDelta = lookAction.ReadValue<Vector2>();
-
-        float mouseX = mouseDelta.x * mouseSensitivity * Time.deltaTime;
-        float mouseY = mouseDelta.y * mouseSensitivity * Time.deltaTime;
-
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-
-        transform.Rotate(Vector3.up * mouseX);
     }
 
     // 관전 대상 변경
@@ -93,6 +82,8 @@ public class SpectatorCamera : MonoBehaviour
 
         spectatingTarget = remainingPlayers[currentPlayerIndex];
         spectatorText.SetSpectatingTarget(spectatingTarget); // UI에 관전 대상 표시
+        FollowAndLookAtTarget(spectatingTarget); // 버츄얼 카메라가 관전 대상을 따라다니도록 설정
+
         Debug.Log("Switching to player " + spectatingTarget.name);
     }
 
@@ -103,7 +94,9 @@ public class SpectatorCamera : MonoBehaviour
         if (spectatingTarget == player)
         {
             currentPlayerIndex = currentPlayerIndex % remainingPlayers.Count;
-            spectatingTarget = remainingPlayers[currentPlayerIndex];
+            spectatingTarget = remainingPlayers[currentPlayerIndex]; // 관전 대상을 남아있는 플레이어 중 하나로 변경
+            spectatorText.SetSpectatingTarget(spectatingTarget); // UI에 관전 대상 표시
+            FollowAndLookAtTarget(spectatingTarget); // 버츄얼 카메라가 관전 대상을 따라다니도록 설정
         }
     }
 }

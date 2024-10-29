@@ -4,10 +4,9 @@ using UnityEngine.InputSystem;
 
 public class SpectatorManager : Singleton<SpectatorManager>
 {
-    [SerializeField] private GameObject spectatorPrefab;
     private bool isSpectating = false;
     private List<GameObject> remainingPlayers = new List<GameObject>();
-    private GameObject spectatorInstance;
+    [SerializeField] private GameObject spectatorInstance;
     private SpectatorCameraColorChange spectatorCameraColorChange;
 
     // private void Awake()
@@ -21,8 +20,8 @@ public class SpectatorManager : Singleton<SpectatorManager>
         Debug.Log("Start Spectating");
         spectatorCameraColorChange = GetComponent<SpectatorCameraColorChange>();
         spectatorCameraColorChange.EnableOutlineEffect(); // 아웃라인 효과 활성화
+        spectatorInstance = Instantiate(spectatorInstance); // 관전 카메라 생성
         isSpectating = true;
-        spectatorInstance = Instantiate(spectatorPrefab);
     }
 
     // TODO : 동시에 죽었을 때 리스트 제대로 업뎃 안되는 문제 해결

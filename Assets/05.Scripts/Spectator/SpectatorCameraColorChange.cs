@@ -3,8 +3,10 @@ using UnityEngine;
 
 public class SpectatorCameraColorChange : MonoBehaviour
 {
-    public Material ScientistOutlineMaterial; // 과학자 아웃라인 머테리얼
-    public Material MonsterOutlineMaterial; // 몬스터 아웃라인 머테리얼
+    public Material ScientistBodyMaterial; // 과학자 몸통 머테리얼
+    public Material ScientistBody1Mateiral; // 과학자 손발 머테리얼
+    public Material MonsterBodyMaterial; // 몬스터 몸통 머테리얼
+    public Material MonsterBody1Material; // 몬스터 손발 머테리얼
 
     public void EnableOutlineEffect()
     {
@@ -16,7 +18,10 @@ public class SpectatorCameraColorChange : MonoBehaviour
 
             if (skinnedMeshRenderer != null)
             {
-                skinnedMeshRenderer.material = ScientistOutlineMaterial;
+                Material[] materials = skinnedMeshRenderer.materials;
+                materials[1] = ScientistBodyMaterial;
+                materials[0] = ScientistBody1Mateiral;
+                skinnedMeshRenderer.materials = materials;
             }
         }
 
@@ -28,7 +33,10 @@ public class SpectatorCameraColorChange : MonoBehaviour
 
             if (skinnedMeshRenderer != null)
             {
-                skinnedMeshRenderer.material = MonsterOutlineMaterial;
+                Material[] materials = skinnedMeshRenderer.materials;
+                materials[1] = MonsterBodyMaterial;
+                materials[0] = MonsterBody1Material;
+                skinnedMeshRenderer.materials = materials;
             }
         }
 
