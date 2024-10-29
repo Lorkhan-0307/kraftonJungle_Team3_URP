@@ -69,16 +69,32 @@ public class PlayerMovement : MonoBehaviour
         controller = GetComponentInParent<CharacterController>();
 
         player = GetComponentInParent<Player>();
-        
+
         // 부모 오브젝트
         Transform parentTransform = transform.parent;
 
-        // Animator 가져오기
         if (parentTransform != null)
         {
-            animator = parentTransform.Find("Ch11_nonPBR@Idle").GetComponent<Animator>();
+            GameObject targetObject = parentTransform.Find("Ch11_nonPBR@Idle").gameObject;
+            SetLayerRecursive(targetObject, 3);
+
+            //parentTransform.Find("Ch11_nonPBR@Idle").gameObject.layer = 3;
+        }
+        animator = GetComponentInChildren<Animator>();
+    }
+
+    void SetLayerRecursive(GameObject obj, int newLayer)
+    {
+        // 현재 오브젝트의 레이어 변경
+        obj.layer = newLayer;
+
+        // 모든 자식 오브젝트의 레이어 변경
+        foreach (Transform child in obj.transform)
+        {
+            SetLayerRecursive(child.gameObject, newLayer);
         }
     }
+
     private void Start()
     {
         if (killButton == null)
@@ -148,14 +164,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 GetComponent<AudioSource>().PlayOneShot(footStepSound, 0.7f);
                 nextFootstep += footStepDelay;
-                //Debug.Log("Walking true");
+                Debug.Log("Walking true");
                 // bool 파라미터 설정
                 animator.SetBool("IsWalking", true);
             }
         }
         else
         {
-            //Debug.Log("Walking false");
+            Debug.Log("Walking false");
             animator.SetBool("IsWalking", false);
         }
     }
