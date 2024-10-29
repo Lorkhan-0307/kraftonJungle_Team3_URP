@@ -122,11 +122,13 @@ public class DynamoDBManager : MonoBehaviour
     public async Task ConnectPlayer(PlayerData playerData)
     {
         var existingPlayerData = await GetPlayerDataByUserToken(playerData.UserToken);
-        Debug.Log($"Nickname: {existingPlayerData["Nickname"].S}");
 
+        playerData.Nickname = existingPlayerData["Nickname"].S;
+
+        Debug.Log($"Nickname: {playerData.Nickname}");
     }
 
-
+    
     // 고유한 키를 생성하는 해시 함수
     private string GenerateHashKey()
     {
