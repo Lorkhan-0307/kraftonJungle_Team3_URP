@@ -10,10 +10,10 @@ public class SpectatorManager : Singleton<SpectatorManager>
     private GameObject spectatorInstance;
     private SpectatorCameraColorChange spectatorCameraColorChange;
 
-    private void Awake()
-    {
-        StartSpectating();
-    }
+    // private void Awake()
+    // {
+    //     StartSpectating();
+    // }
 
     // 자신이 죽었을 때 호출
     public void StartSpectating()
