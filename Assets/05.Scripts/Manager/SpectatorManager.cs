@@ -8,6 +8,7 @@ public class SpectatorManager : Singleton<SpectatorManager>
     private bool isSpectating = false;
     private List<GameObject> remainingPlayers = new List<GameObject>();
     private GameObject spectatorInstance;
+    private SpectatorCameraColorChange spectatorCameraColorChange;
 
     // private void Awake()
     // {
@@ -18,6 +19,8 @@ public class SpectatorManager : Singleton<SpectatorManager>
     public void StartSpectating()
     {
         Debug.Log("Start Spectating");
+        spectatorCameraColorChange = GetComponent<SpectatorCameraColorChange>();
+        spectatorCameraColorChange.EnableOutlineEffect(); // 아웃라인 효과 활성화
         isSpectating = true;
         spectatorInstance = Instantiate(spectatorPrefab);
     }
