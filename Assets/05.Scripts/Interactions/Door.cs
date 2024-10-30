@@ -19,7 +19,7 @@ public class Door : Interact
         Interaction();
     }
 
-    public override void Interaction()
+    protected override void Interaction()
     {
         base.Interaction();
         if (isOpened)

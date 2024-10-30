@@ -160,7 +160,7 @@ public class PlayerMovement : MonoBehaviour
         if (interactButton.interactable && interactAction.triggered && interactTarget != null)
         {
             Debug.Log("Interact");
-            interactTarget.GetComponentInParent<Interact>().Interaction();
+            interactTarget.GetComponentInParent<Interact>().BroadcastInteraction();
         }
 
         // 발걸음 소리 재생
