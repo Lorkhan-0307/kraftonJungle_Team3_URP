@@ -10,21 +10,19 @@ public class VoiceManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
+        recorder = GetComponent<Recorder>();
+
         recorder.enabled = (Microphone.devices.Length != 0);
     }
     private void Start()
     {
-
-        AudioSource audioSource = null; GetComponent<AudioSource>();
+        AudioSource audioSource = GetComponent<AudioSource>();
         if(audioSource != null)
         {
             audioSource.volume = 10.0f;
         }
 
-        recorder = GetComponent<Recorder>();
-
         // 마이크 활성화 및 음성 전송 시작
-        recorder.TransmitEnabled = true;
         PunVoiceClient.Instance.ConnectAndJoinRoom();
     }
 }
