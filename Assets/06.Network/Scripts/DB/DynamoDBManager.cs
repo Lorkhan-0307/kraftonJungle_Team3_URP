@@ -102,7 +102,6 @@ public class DynamoDBManager : MonoBehaviour
             var response = await client.GetItemAsync(request);
             if (response.Item != null && response.Item.Count > 0)
             {
-                Debug.Log("Player data retrieved successfully by UserToken.");
                 return response.Item;
             }
             else
@@ -123,8 +122,6 @@ public class DynamoDBManager : MonoBehaviour
         var existingPlayerData = await GetPlayerDataByUserToken(playerData.UserToken);
 
         playerData.Nickname = existingPlayerData["Nickname"].S;
-
-        Debug.Log($"Nickname: {playerData.Nickname}");
     }
 
     

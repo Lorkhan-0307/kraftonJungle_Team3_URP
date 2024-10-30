@@ -45,7 +45,6 @@ public class AnimationSync : MonoBehaviourPun
 
         if (send)
         {
-            Debug.Log("SendANI!");
             photonView.RPC("SyncAniBools", RpcTarget.Others, BoolsToData());
         }
     }
@@ -61,8 +60,6 @@ public class AnimationSync : MonoBehaviourPun
         object[] datas = (object[])data;
         isWalking = (bool)datas[0];
         isRunning = (bool)datas[1];
-
-        Debug.Log("ReceiveANI!");
 
         ani.SetBool(isWalkingKey, isWalking);
         ani.SetBool(isRunningKey, isRunning);
