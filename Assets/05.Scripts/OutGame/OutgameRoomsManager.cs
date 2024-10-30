@@ -63,5 +63,22 @@ public class OutgameRoomsManager : MonoBehaviourPunCallbacks
     {
         Instantiate(serverButton, serverList).GetComponent<ServerButton>().SetupServerButton(sbe);
     }
+
+    public void PrivateCodeAccess(string value)
+    {
+        RoomInfo r = roomList.Find(r =>
+        {
+            return (int)r.CustomProperties["AccessCode"] != 0 &&
+            (int)r.CustomProperties["AccessCode"] == int.Parse(value);
+        });
+        if (r != null)
+        {
+            PhotonNetwork.JoinRoom(r.Name);
+
+
+            // 참여하게 되는 경우이므로, Guest로 참여합니다.
+            FindObjectOfType<MyRoomManager>().OnRoomCreateOrJoin(false);
+        }
+    }
 }
  
