@@ -320,6 +320,7 @@ GameObject:
   - component: {fileID: 1644753712566836990}
   - component: {fileID: 1059134910758406533}
   - component: {fileID: 8075285967836002271}
+  - component: {fileID: 5801543045995314031}
   m_Layer: 5
   m_Name: Kill_Log
   m_TagString: Untagged
@@ -404,6 +405,20 @@ MonoBehaviour:
   keepAlphaValue: 1
   useCustomColor: 0
   colorType: 4
+--- !u!114 &5801543045995314031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6462751116159850083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78751c0c249a4344885241bb1cacb088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  killerText: {fileID: 3318315489973848163}
+  victimText: {fileID: 6582208876600044489}
 --- !u!1 &7206293563947806714
 GameObject:
   m_ObjectHideFlags: 0
