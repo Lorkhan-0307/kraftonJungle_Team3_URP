@@ -31,7 +31,7 @@ public class Player : MonoBehaviour, ICharacter
         Destroy(cc);
 
         Transform playerObjectTransform = transform.Find("PlayerObjects(Clone)");
-        Destroy(playerObjectTransform.gameObject);
+        if(playerObjectTransform) Destroy(playerObjectTransform.gameObject);
     }
 
     public virtual void OnDead()
