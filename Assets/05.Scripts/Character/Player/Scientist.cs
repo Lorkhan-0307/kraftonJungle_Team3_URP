@@ -15,8 +15,7 @@ public class Scientist : Player
     public override void OnDamaged(GameObject attacker)
     {
         base.OnDamaged(attacker);
-        Debug.Log("ONDAMAGED");        
-        GetComponentInChildren<Animator>().SetTrigger("Death");
+        Debug.Log("ONDAMAGED");
         // 여기서 Destroy 결과 전송
         if (GetComponent<PhotonView>().AmOwner)
         {
