@@ -88,7 +88,6 @@ public class TimeManager : Singleton<TimeManager>
         {
             Monster m = NetworkManager.Instance.myPlayer.GetComponent<Monster>();
             m.OnDayUniteVisibilityScientist();
-            m.OffTransformation();
         }
         foreach (Monster m in NetworkManager.Instance.Monsters.Values)
         {
