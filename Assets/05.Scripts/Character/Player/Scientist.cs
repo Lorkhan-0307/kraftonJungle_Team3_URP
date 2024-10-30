@@ -16,6 +16,7 @@ public class Scientist : Player
     {
         base.OnDamaged(attacker);
         Debug.Log("ONDAMAGED");        
+        GetComponentInChildren<Animator>().SetTrigger("Death");
         // 여기서 Destroy 결과 전송
         if (GetComponent<PhotonView>().AmOwner)
         {

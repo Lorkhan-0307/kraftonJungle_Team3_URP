@@ -46,6 +46,7 @@ public class Monster : Player
     {
         base.OnDamaged(attacker);
 
+        GetComponentInChildren<Animator>().SetTrigger("Death");
         // 여기서 Destroy 결과 전송
         if (GetComponent<PhotonView>().AmOwner)
         {

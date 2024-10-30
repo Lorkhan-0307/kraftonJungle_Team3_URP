@@ -26,7 +26,6 @@ public class Player : MonoBehaviour, ICharacter
     public virtual void OnDamaged(GameObject attacker)
     {
         Debug.Log(attacker.gameObject.name);
-        GetComponentInChildren<Animator>().SetTrigger("Death");
     }
 
     public virtual void OnDead()
