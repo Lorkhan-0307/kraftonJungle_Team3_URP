@@ -14,9 +14,11 @@ public class Monster : Player
 
     private PlayerMovement playerMovement;
 
+    AnimationSync aniSync;
     private void Start()
     {
         playerMovement = GetComponentInChildren<PlayerMovement>();
+        aniSync = GetComponent<AnimationSync>();
     }
 
     public override void OnAttack(GameObject victim)
@@ -45,8 +47,7 @@ public class Monster : Player
     public override void OnDamaged(GameObject attacker)
     {
         base.OnDamaged(attacker);
-
-        GetComponentInChildren<Animator>().SetTrigger("Death");
+        
         // 여기서 Destroy 결과 전송
         if (GetComponent<PhotonView>().AmOwner)
         {
@@ -90,6 +91,7 @@ public class Monster : Player
             playerMovement.animator = monsterObj.GetComponent<Animator>();
             playerMovement.OnMonsterFPS();
         }
+        aniSync.ani = monsterObj.GetComponent<Animator>();
     }
 
     public void OffTransformation()
@@ -103,6 +105,7 @@ public class Monster : Player
             playerMovement.animator = scientistObj.GetComponent<Animator>();
             playerMovement.OffMonsterFPS();
         }
+        aniSync.ani = scientistObj.GetComponent<Animator>();
     }
 
     // Use this when Hunger Gauge reach 0

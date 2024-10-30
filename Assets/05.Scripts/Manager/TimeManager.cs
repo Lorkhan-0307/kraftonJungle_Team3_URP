@@ -90,6 +90,10 @@ public class TimeManager : Singleton<TimeManager>
             m.OnDayUniteVisibilityScientist();
             m.OffTransformation();
         }
+        foreach (Monster m in NetworkManager.Instance.Monsters.Values)
+        {
+            m.OffTransformation();
+        }
         NPCManager.instance.SetAble();
         lightShifter.OnDayShift();
     }
@@ -103,8 +107,12 @@ public class TimeManager : Singleton<TimeManager>
         {
             Monster m = NetworkManager.Instance.myPlayer.GetComponent<Monster>();
             m.OnNightVisibleScientist();
+        }
+        foreach(Monster m in NetworkManager.Instance.Monsters.Values)
+        {
             m.OnTransformation();
         }
+
         NPCManager.instance.SetDisable();
         lightShifter.OnNightShift();
     }

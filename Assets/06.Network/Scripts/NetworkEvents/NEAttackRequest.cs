@@ -22,6 +22,9 @@ public class NEAttackRequest : NetworkEvent
     {
         AnimationSync ani = o1.GetComponentInChildren<AnimationSync>();
         ani?.SyncAniTrigger("Stab");
+
+        ani = o2.GetComponentInChildren<AnimationSync>();
+        ani?.SyncAniTrigger("Death");
     }
     public override void OnEvent(object customData)
     {
