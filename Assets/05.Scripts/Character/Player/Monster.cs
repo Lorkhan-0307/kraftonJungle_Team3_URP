@@ -23,18 +23,22 @@ public class Monster : Player
     [SerializeField] private int vc_original_priority = 5;
     [SerializeField] private int vc_lookat_priority = 20;
 
+    private MouseComponent mc;
+
     private void Start()
     {
         playerMovement = GetComponentInChildren<PlayerMovement>();
+        mc = GetComponentInChildren<MouseComponent>();
     }
 
     public override void OnAttack(GameObject victim)
     {
         base.OnAttack(victim);
 
-        OnTransformation();
+        OnTransformation(TimeManager.instance.GetisDay());
 
         playerMovement.isAttacking = true;
+        mc.isAttacking = true;
         TransitionCamera(true);
 
         // Todo: hunger time reset
@@ -108,7 +112,7 @@ public class Monster : Player
     }
 
     // 괴물 모습 변환
-    public void OnTransformation()
+    public void OnTransformation(bool isAttackingInDay)
     {
         // 연구원 모습 비활성화
         scientistObj.SetActive(false);
@@ -117,7 +121,7 @@ public class Monster : Player
         if (playerMovement)
         {
             playerMovement.animator = monsterObj.GetComponent<Animator>();
-            playerMovement.OnMonsterFPS();
+            playerMovement.OnMonsterFPS(isAttackingInDay);
         }
         aniSync.ani = monsterObj.GetComponent<Animator>();
     }
