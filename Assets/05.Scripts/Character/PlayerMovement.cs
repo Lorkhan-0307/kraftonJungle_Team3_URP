@@ -318,10 +318,11 @@ public class PlayerMovement : MonoBehaviour
         return !TimeManager.instance.isDay && player.type == CharacterType.Monster;
     }
 
-    public void OnMonsterFPS()
+    public void OnMonsterFPS(bool isAttackInDay)
     {
         scientistFPS.SetActive(false);
-        monsterFPS.SetActive(true);
+        monsterFPS.SetActive(false);
+        if(!isAttackInDay) monsterFPS.SetActive(true);
         fpsAnimator = monsterFPS.GetComponent<Animator>();
     }
 

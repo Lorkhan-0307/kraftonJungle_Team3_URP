@@ -42,7 +42,7 @@ public class NEAttackRequest : NetworkEvent
 
         if (from.GetComponent<Player>().type == CharacterType.Monster)
         {
-            from.GetComponent<Monster>().OnTransformation();
+            from.GetComponent<Monster>().OnTransformation(TimeManager.instance.GetisDay());
         }
 
         //게임매니저 이벤트 실행
