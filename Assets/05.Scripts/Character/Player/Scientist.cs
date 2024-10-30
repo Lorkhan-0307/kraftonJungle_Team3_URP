@@ -15,11 +15,11 @@ public class Scientist : Player
     public override void OnDamaged(GameObject attacker)
     {
         base.OnDamaged(attacker);
-        Debug.Log("ONDAMAGED");
+        Debug.Log("ONDAMAGED");        
         // 여기서 Destroy 결과 전송
         if (GetComponent<PhotonView>().AmOwner)
         {
-            PhotonNetwork.Destroy(this.gameObject);
+            //PhotonNetwork.Destroy(this.gameObject);
             NEPlayerDeath.PlayerDeath();
             SpectatorManager.instance.StartSpectating();
         }
