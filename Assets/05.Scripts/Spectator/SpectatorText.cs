@@ -36,4 +36,9 @@ public class SpectatorText : MonoBehaviour
 
         Debug.Log("Spectating Target Text Set : " + spectatingTarget.name);
     }
+
+    public void EndSpectating()
+    {
+        Destroy(gameObject);
+    }
 }
