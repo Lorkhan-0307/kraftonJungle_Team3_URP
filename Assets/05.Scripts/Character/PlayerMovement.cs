@@ -54,6 +54,10 @@ public class PlayerMovement : MonoBehaviour
     private Image killButtonImage;
 
     public Animator animator;
+    public Animator fpsAnimator;
+
+    [SerializeField] private GameObject scientistFPS;
+    [SerializeField] private GameObject monsterFPS;
 
     private void Awake()
     {
@@ -76,13 +80,14 @@ public class PlayerMovement : MonoBehaviour
         {
             GameObject targetObject = parentTransform.Find("Ch11_nonPBR@Idle").gameObject;
             SetLayerRecursive(targetObject, 3);
+            animator = targetObject.GetComponent<Animator>();
             if (NetworkManager.Instance.IsMonster())
             {
                 targetObject = parentTransform.Find("Parasite L Starkie").gameObject;
                 SetLayerRecursive(targetObject, 3);
             }
         }
-        animator = GetComponentInChildren<Animator>();
+        fpsAnimator = GetComponentInChildren<Animator>();
     }
 
     void SetLayerRecursive(GameObject obj, int newLayer)
@@ -166,15 +171,17 @@ public class PlayerMovement : MonoBehaviour
             {
                 GetComponent<AudioSource>().PlayOneShot(footStepSound, 0.7f);
                 nextFootstep += footStepDelay;
-                Debug.Log("Walking true");
+                //Debug.Log("Walking true");
                 // bool 파라미터 설정
                 animator.SetBool("IsWalking", true);
+                fpsAnimator.SetBool("IsWalking", true);
             }
         }
         else
         {
-            Debug.Log("Walking false");
+            //Debug.Log("Walking false");
             animator.SetBool("IsWalking", false);
+            fpsAnimator.SetBool("IsWalking", false);
         }
     }
 
@@ -273,6 +280,7 @@ public class PlayerMovement : MonoBehaviour
         Player targetPlayer = target.GetComponent<Player>();
         // 트리거 설정
         animator.SetTrigger("Stab");
+        fpsAnimator.SetTrigger("Stab");
     }
 
     private bool IsAvailableToAttack()
@@ -298,6 +306,20 @@ public class PlayerMovement : MonoBehaviour
     private bool IsMonsterNightSpeed()
     {
         return !TimeManager.instance.isDay && player.type == CharacterType.Monster;
+    }
+
+    public void OnMonsterFPS()
+    {
+        scientistFPS.SetActive(false);
+        monsterFPS.SetActive(true);
+        fpsAnimator = monsterFPS.GetComponent<Animator>();
+    }
+
+    public void OffMonsterFPS()
+    {
+        scientistFPS.SetActive(true);
+        monsterFPS.SetActive(false);
+        fpsAnimator = scientistFPS.GetComponent<Animator>();
     }
 }
     

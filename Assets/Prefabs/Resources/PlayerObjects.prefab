@@ -505,6 +505,9 @@ MonoBehaviour:
   player: {fileID: 0}
   killCooltime: 5
   animator: {fileID: 0}
+  fpsAnimator: {fileID: 0}
+  scientistFPS: {fileID: 5460565928310685593}
+  monsterFPS: {fileID: 132853539920342564}
 --- !u!114 &5944541352767380261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -738,6 +741,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FPSMonster
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e83486ed99ede7c45a7475d7bc2cb52f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

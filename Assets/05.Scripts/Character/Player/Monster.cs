@@ -84,7 +84,11 @@ public class Monster : Player
         scientistObj.SetActive(false);
         monsterObj.SetActive(true);
         // 애니메이터 변환
-        playerMovement.animator = monsterObj.GetComponent<Animator>();
+        if (playerMovement)
+        {
+            playerMovement.animator = monsterObj.GetComponent<Animator>();
+            playerMovement.OnMonsterFPS();
+        }
     }
 
     public void OffTransformation()
@@ -92,8 +96,12 @@ public class Monster : Player
         // 연구원 모습 활성화
         scientistObj.SetActive(true);
         monsterObj.SetActive(false);
-        // 애니메이터 변환
-        playerMovement.animator = scientistObj.GetComponent<Animator>();
+        if (playerMovement)
+        {
+            // 애니메이터 변환
+            playerMovement.animator = scientistObj.GetComponent<Animator>();
+            playerMovement.OffMonsterFPS();
+        }
     }
 
     // Use this when Hunger Gauge reach 0
