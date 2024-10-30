@@ -3,8 +3,10 @@ using UnityEngine.Rendering;
 
 public class MonsterOutlineEffect : MonoBehaviour
 {
-    public Material outlineMaterial; // 여러 아웃라인 마테리얼 배열
-    public Material originalMaterial; // 여러 아웃라인 마테리얼 배열
+    public Material outlineMaterialbody1; // 여러 아웃라인 마테리얼 배열
+    public Material outlineMaterialbody; // 여러 아웃라인 마테리얼 배열
+    public Material originalMaterialbody1; // 여러 아웃라인 마테리얼 배열
+    public Material originalMaterialbody; // 여러 아웃라인 마테리얼 배열
 
     public void EnableOutlineEffect()
     {
@@ -16,7 +18,10 @@ public class MonsterOutlineEffect : MonoBehaviour
 
             if (skinnedMeshRenderer != null)
             {
-                skinnedMeshRenderer.material = outlineMaterial;
+                Material[] newMats = skinnedMeshRenderer.materials;
+                newMats[0] = outlineMaterialbody1;
+                newMats[1] = outlineMaterialbody;
+                skinnedMeshRenderer.materials = newMats;
             }
         }
     }
@@ -33,7 +38,11 @@ public class MonsterOutlineEffect : MonoBehaviour
 
             if (skinnedMeshRenderer != null)
             {
-                skinnedMeshRenderer.material = originalMaterial;
+                
+                Material[] newMats = skinnedMeshRenderer.materials;
+                newMats[0] = originalMaterialbody1;
+                newMats[1] = originalMaterialbody;
+                skinnedMeshRenderer.materials = newMats;
             }
         }
     }
