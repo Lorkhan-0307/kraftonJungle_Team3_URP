@@ -58,8 +58,24 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
         string token = LoginTokenManager.LoadDataWithToken();
         string name = nicknameInput.text;
 
+        name = name.Trim();
+        if (name == "")
+            return;
+
+        nicknameInput.text = name;
+
         await dbManager.UpdateNickname(token, name);
         PhotonNetwork.LocalPlayer.NickName = name;
+    }
+
+    public void ResetButton()
+    {
+        LoginTokenManager.ResetData();
+
+        //TODO: DB에 있는 데이터 삭제
+
+
+        LoginWithToken();
     }
 
 
