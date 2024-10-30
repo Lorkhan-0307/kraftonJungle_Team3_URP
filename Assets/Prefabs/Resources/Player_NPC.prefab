@@ -334,7 +334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  deathSound: {fileID: 0}
+  deathSound: {fileID: 4171223830259576634}
 --- !u!114 &5194387607558945149
 MonoBehaviour:
   m_ObjectHideFlags: 0
