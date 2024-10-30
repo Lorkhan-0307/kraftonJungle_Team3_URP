@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 1730846438010732069}
   - component: {fileID: 5860058039061850642}
   - component: {fileID: -2821392836767039996}
+  - component: {fileID: 3218510447070477133}
+  - component: {fileID: -6984049241393554040}
   m_Layer: 0
   m_Name: VoiceManager
   m_TagString: Untagged
@@ -283,3 +285,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amplificationFactor: 50
+--- !u!165 &3218510447070477133
+AudioHighPassFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251469466147729761}
+  m_Enabled: 1
+  m_CutoffFrequency: 300
+  m_HighpassResonanceQ: 1
+--- !u!169 &-6984049241393554040
+AudioLowPassFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251469466147729761}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_LowpassResonanceQ: 1
+  lowpassLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.13597089
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
