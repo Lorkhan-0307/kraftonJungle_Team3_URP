@@ -21,7 +21,7 @@ public class AnimationSync : MonoBehaviourPun
     }
 
     // 네트워크 동기화를 위한 메서드
-    public void FixedUpdate()
+    public void Update()
     {
         SendBools();
     }
@@ -36,20 +36,23 @@ public class AnimationSync : MonoBehaviourPun
         bool newData = ani.GetBool(isWalkingKey);
         if (isWalking != newData)
             send = true;
+        isWalking = newData;
+
         newData = ani.GetBool(isRunningKey);
         if (isRunning != newData)
             send = true;
+        isRunning = newData;
 
         if (send)
         {
+            Debug.Log("SendANI!");
             photonView.RPC("SyncAniBools", RpcTarget.Others, BoolsToData());
         }
     }
 
     object BoolsToData()
     {
-        object[] data = { isWalking, isRunning };
-        return data;
+        return new object[] { isWalking, isRunning };
     }
 
     [PunRPC]
@@ -58,6 +61,8 @@ public class AnimationSync : MonoBehaviourPun
         object[] datas = (object[])data;
         isWalking = (bool)datas[0];
         isRunning = (bool)datas[1];
+
+        Debug.Log("ReceiveANI!");
 
         ani.SetBool(isWalkingKey, isWalking);
         ani.SetBool(isRunningKey, isRunning);
