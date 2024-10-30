@@ -9,12 +9,8 @@ public class GameOverPopup : MonoBehaviour
     [SerializeField] private GameObject[] winnerObjects;
 
 
-    private ModalWindowManager _mwm;
+    [SerializeField] ModalWindowManager _mwm;
 
-    private void Start()
-    {
-        _mwm = GetComponent<ModalWindowManager>();
-    }
 
     public void SetupWinner(bool isMonsterWon)
     {
