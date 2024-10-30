@@ -15,6 +15,13 @@ public class NEAttackRequest : NetworkEvent
     {
         killLogger = FindObjectOfType<KillLogManager>();
         GameManager.instance.OnKilled += KillLogCallback;
+        GameManager.instance.OnKilled += KillAniCallback;
+    }
+
+    void KillAniCallback(GameObject o1, GameObject o2)
+    {
+        AnimationSync ani = o1.GetComponentInChildren<AnimationSync>();
+        ani?.SyncAniTrigger("Stab");
     }
     public override void OnEvent(object customData)
     {
