@@ -20,6 +20,12 @@ public class VoiceManager : MonoBehaviourPunCallbacks
         if(audioSource != null)
         {
             audioSource.volume = 10.0f;
+            audioSource.panStereo = 2.0f;
+
+            AudioReverbFilter reverbfilter = audioSource.gameObject.AddComponent<AudioReverbFilter>();
+            reverbfilter.reverbPreset = AudioReverbPreset.Cave;
+            reverbfilter.dryLevel = 0;
+            reverbfilter.reverbLevel = 1;
         }
 
         // 마이크 활성화 및 음성 전송 시작
