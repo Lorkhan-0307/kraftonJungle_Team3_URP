@@ -8,7 +8,7 @@ public class VoiceFollower : MonoBehaviour
     {
         get
         {
-            return NetworkManager.Instance.myPlayer.transform;
+            return NetworkManager.Instance?.myPlayer?.transform;
         }
     }
 
