@@ -14,6 +14,9 @@ public class Monster : Player
 
     private PlayerMovement playerMovement;
 
+    private bool isAttacking = false;
+    private bool isDayShiftedWhileAttacking = false;
+
     [SerializeField] AnimationSync aniSync;
     private void Start()
     {
