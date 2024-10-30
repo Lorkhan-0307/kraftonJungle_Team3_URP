@@ -9,7 +9,16 @@ public class Monster : Player
     private GameObject hungerParticle;
 
     [SerializeField] private AudioSource monster_kill_sound;
-    
+    [SerializeField] private GameObject scientistObj;
+    [SerializeField] private GameObject monsterObj;
+
+    private PlayerMovement playerMovement;
+
+    private void Start()
+    {
+        playerMovement = GetComponent<PlayerMovement>();
+    }
+
     public override void OnAttack(GameObject victim)
     {
         base.OnAttack(victim);
@@ -66,6 +75,25 @@ public class Monster : Player
     {
         MonsterOutlineEffect moe = GetComponentInChildren<MonsterOutlineEffect>();
         moe.DisableOutlineEffect();
+    }
+
+    // 괴물 모습 변환
+    public void OnTransformation()
+    {
+        // 연구원 모습 비활성화
+        scientistObj.SetActive(false);
+        monsterObj.SetActive(true);
+        // 애니메이터 변환
+        playerMovement.animator = monsterObj.GetComponent<Animator>();
+    }
+
+    public void OffTransformation()
+    {
+        // 연구원 모습 활성화
+        scientistObj.SetActive(true);
+        monsterObj.SetActive(false);
+        // 애니메이터 변환
+        playerMovement.animator = scientistObj.GetComponent<Animator>();
     }
 
     // Use this when Hunger Gauge reach 0

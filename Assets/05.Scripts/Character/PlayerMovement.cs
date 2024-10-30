@@ -39,7 +39,6 @@ public class PlayerMovement : MonoBehaviour
 
     public Player player;
 
-
     //Using Raycast
     RaycastHit hit;
     GameObject target;
@@ -54,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
     // UI 쿨타임 이미지
     private Image killButtonImage;
 
-    private Animator animator;
+    public Animator animator;
 
     private void Awake()
     {
@@ -77,8 +76,6 @@ public class PlayerMovement : MonoBehaviour
         {
             GameObject targetObject = parentTransform.Find("Ch11_nonPBR@Idle").gameObject;
             SetLayerRecursive(targetObject, 3);
-
-            //parentTransform.Find("Ch11_nonPBR@Idle").gameObject.layer = 3;
         }
         animator = GetComponentInChildren<Animator>();
     }
@@ -164,14 +161,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 GetComponent<AudioSource>().PlayOneShot(footStepSound, 0.7f);
                 nextFootstep += footStepDelay;
-                //Debug.Log("Walking true");
+                Debug.Log("Walking true");
                 // bool 파라미터 설정
                 animator.SetBool("IsWalking", true);
             }
         }
         else
         {
-            //Debug.Log("Walking false");
+            Debug.Log("Walking false");
             animator.SetBool("IsWalking", false);
         }
     }
