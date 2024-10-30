@@ -15,16 +15,16 @@ public class DynamoDBManager : MonoBehaviour
     private static readonly string secretKey = "Nk+vo5CCr5Xa3ZiC6UwCX4h9aTEXrKgvWBqk70VV";
     private static readonly string region = "ap-northeast-2"; // DynamoDB 리전
 
-    //private async void Start()
-    //{
-    //    InitializeDynamoDBClient();
+    private async void Start()
+    {
+        InitializeDynamoDBClient();
 
-    //    string tokenToDelete = "KEY_638658907918309697";
+        string tokenToDelete = "KEY_638658907918309697";
 
-    //    PlayerData playerData = new PlayerData { UserToken = tokenToDelete };
+        PlayerData playerData = new PlayerData { UserToken = tokenToDelete };
 
-    //    await DeletePlayerData(playerData);
-    //}
+        await DeletePlayerDataByToken(playerData);
+    }
 
     public async Task LoadData(string token, PlayerData playerData)
     {
@@ -200,11 +200,11 @@ public class DynamoDBManager : MonoBehaviour
 
     public async Task DeletePlayerData(PlayerData playerData)
     {
-        if (client == null)
-        {
-            Debug.LogError("DynamoDB client is not initialized.");
-            return;
-        }
+        //if (client == null)
+        //{
+        //    Debug.LogError("DynamoDB client is not initialized.");
+        //    return;
+        //}
 
         // 삭제 요청 생성
         var request = new DeleteItemRequest
@@ -227,5 +227,4 @@ public class DynamoDBManager : MonoBehaviour
             Debug.LogError("Failed to delete player data: " + e.Message);
         }
     }
-
 }
