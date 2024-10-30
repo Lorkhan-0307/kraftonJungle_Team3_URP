@@ -75,6 +75,10 @@ public class NEGameStart : NetworkEvent
             spawnedPlayer.transform.rotation, spawnedPlayer.transform);
 
         NetworkManager.Instance.curState = GameState.Playing;
+
+        // 모든 이벤트 초기화 하면 좋을거같은데 지금 당장은 초기화 할게 이거밖에 없다
+        GetComponent<NEAttackRequest>().Init();
+
         GameManager.instance.StartGame();
     }
 }

@@ -10,6 +10,12 @@ public class NEAttackRequest : NetworkEvent
         this.eventCode = EventCode.AttackRequest;
         base.Awake();
     }
+
+    public override void Init()
+    {
+        killLogger = FindObjectOfType<KillLogManager>();
+        GameManager.instance.OnKilled += KillLogCallback;
+    }
     public override void OnEvent(object customData)
     {
         object[] datas = (object[])customData; // 전송된 데이터를 받음
@@ -26,6 +32,7 @@ public class NEAttackRequest : NetworkEvent
 
         //게임매니저 이벤트 실행
         GameManager.instance.OnKilled?.Invoke(from.gameObject, to.gameObject);
+
     }
 
     public static void AttackEntity(PhotonView from, PhotonView to)
@@ -33,5 +40,18 @@ public class NEAttackRequest : NetworkEvent
         object[] result = { from.ViewID, to.ViewID };
 
         NetworkManager.SendToClients(EventCode.AttackRequest, result);
+    }
+
+    KillLogManager killLogger = null;
+
+    void KillLogCallback(GameObject from, GameObject to)
+    {
+        string killer = from.GetComponent<PhotonView>().Owner.NickName;
+        string victim = "NPC";
+
+        if(to.GetComponent<Player>().type != CharacterType.NPC)
+            victim = to.GetComponent<PhotonView>().Owner.NickName;
+
+        killLogger.AddKillLog(new KillLogElement(killer, victim));
     }
 }

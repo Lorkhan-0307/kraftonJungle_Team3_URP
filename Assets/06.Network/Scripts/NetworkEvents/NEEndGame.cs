@@ -26,7 +26,7 @@ public class NEEndGame : NetworkEvent
         AddResult(isMonsterWon, resultStr);
 
 
-        GameOverPopup popup = FindObjectOfType<GameOverPopup>();
+        GameOverPopup popup = FindObjectOfType<GameOverPopup>(true);
         popup.SetupWinner(isMonsterWon);
         popup.GetComponent<ModalWindowManager>().ModalWindowIn();
     }

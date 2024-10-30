@@ -12,4 +12,9 @@ public abstract class NetworkEvent : MonoBehaviour
             GetComponent<EventReceiver>().events.Add(eventCode, this);
     }
     public abstract void OnEvent(object customData);
+
+    public virtual void Init()
+    {
+
+    }
 }

@@ -7,6 +7,12 @@ public class KillLogElement
 {
     public string killer;
     public string victim;
+
+    public KillLogElement(string killer, string victim)
+    {
+        this.killer = killer;
+        this.victim = victim;
+    }
 }
 
 public class KillLog : MonoBehaviour
