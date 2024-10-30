@@ -321,6 +321,7 @@ MonoBehaviour:
   monster_kill_sound: {fileID: 4551253632687446621}
   scientistObj: {fileID: 2252754391221710655}
   monsterObj: {fileID: 6602002429370248734}
+  aniSync: {fileID: 8648778524623116933}
 --- !u!114 &2402085082251486151
 MonoBehaviour:
   m_ObjectHideFlags: 0

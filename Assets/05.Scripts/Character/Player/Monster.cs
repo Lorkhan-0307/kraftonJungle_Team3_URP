@@ -14,11 +14,13 @@ public class Monster : Player
 
     private PlayerMovement playerMovement;
 
-    AnimationSync aniSync;
+    private bool isAttacking = false;
+    private bool isDayShiftedWhileAttacking = false;
+
+    [SerializeField] AnimationSync aniSync;
     private void Start()
     {
         playerMovement = GetComponentInChildren<PlayerMovement>();
-        aniSync = GetComponent<AnimationSync>();
     }
 
     public override void OnAttack(GameObject victim)

@@ -8,14 +8,13 @@ public class VoiceManager : MonoBehaviourPunCallbacks
 {
     Recorder recorder;  // 음성을 송신하는 Recorder
 
-    private void Awake()
+
+    private void Start()
     {
         recorder = GetComponent<Recorder>();
 
         recorder.enabled = (Microphone.devices.Length != 0);
-    }
-    private void Start()
-    {
+
         AudioSource audioSource = GetComponent<AudioSource>();
         if(audioSource != null)
         {
