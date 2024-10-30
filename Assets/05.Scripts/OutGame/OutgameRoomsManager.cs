@@ -3,11 +3,14 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class OutgameRoomsManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameObject serverButton;
     [SerializeField] private Transform serverList;
+
+    [SerializeField] TMP_InputField roomCodeInput;
 
     List<RoomInfo> roomList = new List<RoomInfo>();
 
@@ -62,6 +65,28 @@ public class OutgameRoomsManager : MonoBehaviourPunCallbacks
     private void AddServerButtonOnServerList(ServerButtonElements sbe)
     {
         Instantiate(serverButton, serverList).GetComponent<ServerButton>().SetupServerButton(sbe);
+    }
+
+    public void PrivateCodeAccess()
+    {
+        string value = roomCodeInput.text;
+        RoomInfo r = roomList.Find(r =>
+        {
+            return (int)r.CustomProperties["AccessCode"] != 0 &&
+            (int)r.CustomProperties["AccessCode"] == int.Parse(value);
+        });
+        if (r != null)
+        {
+            PhotonNetwork.JoinRoom(r.Name);
+
+
+            // 참여하게 되는 경우이므로, Guest로 참여합니다.
+            FindObjectOfType<MyRoomManager>().OnRoomCreateOrJoin(false);
+        }
+        else
+        {
+            Debug.Log("해당 코드의 방이 존재하지 않습니다.");
+        }
     }
 }
  
