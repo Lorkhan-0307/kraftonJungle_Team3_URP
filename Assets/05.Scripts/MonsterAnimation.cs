@@ -12,5 +12,10 @@ public class MonsterAnimation : MonoBehaviour
             m.OffTransformation();
         // 항상
         m.TransitionCamera(false);
+
+        // 부모 오브젝트
+        Transform parentTransform = transform.parent;
+        PlayerMovement playerMovement = parentTransform.GetComponentInChildren<PlayerMovement>();
+        playerMovement.isAttacking = false;
     }
 }

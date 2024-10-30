@@ -60,6 +60,8 @@ public class PlayerMovement : MonoBehaviour
     //[SerializeField] 
     public GameObject monsterFPS;
 
+    public bool isAttacking = false;
+
     private void Awake()
     {
         // PlayerInput 컴포넌트에서 InputAction 가져오기
@@ -129,61 +131,68 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = -2f;
         }
 
-        // Move 액션으로 이동 입력 받기
-        Vector2 input = moveAction.ReadValue<Vector2>();
-        Vector3 motion = transform.right * input.x + transform.forward * input.y;
-        float currentSpeed = IsMonsterNightSpeed() && runAction.IsPressed() ? monsterNightSpeed : speed;
-        controller.Move(motion * currentSpeed * Time.deltaTime);        
-
-        // Jump 액션으로 점프 입력 받기
-        if (jumpAction.triggered && isGrounded)
+        if (!isAttacking)
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            Debug.Log("JUMP ACTION");
+            // Move 액션으로 이동 입력 받기
+            Vector2 input = moveAction.ReadValue<Vector2>();
+            Vector3 motion = transform.right * input.x + transform.forward * input.y;
+            float currentSpeed = IsMonsterNightSpeed() && runAction.IsPressed() ? monsterNightSpeed : speed;
+            controller.Move(motion * currentSpeed * Time.deltaTime);        
+
+            // Jump 액션으로 점프 입력 받기
+            if (jumpAction.triggered && isGrounded)
+            {
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                Debug.Log("JUMP ACTION");
+            }
+
+
+            // 발걸음 소리 재생
+            if ((input.x != 0 || input.y != 0) && isGrounded)
+            {
+                nextFootstep -= Time.deltaTime;
+                if (nextFootstep <= 0)
+                {
+                    GetComponent<AudioSource>().PlayOneShot(footStepSound, 0.7f);
+                    nextFootstep += footStepDelay;
+                    //Debug.Log("Walking true");
+                    // bool 파라미터 설정
+                    animator.SetBool("IsWalking", true);
+                    fpsAnimator.SetBool("IsWalking", true);
+                }
+            }
+            else
+            {
+                //Debug.Log("Walking false");
+                animator.SetBool("IsWalking", false);
+                fpsAnimator.SetBool("IsWalking", false);
+            }
+
+            // Using RayCast to detect attack
+            RayCastAttackDetection();
+
+            if (killButton.interactable && killAction.triggered && target != null && !isKillOn)
+            {
+                AttackAction();
+                StartKillCooldown();
+            }
+
+            if (interactButton.interactable && interactAction.triggered && interactTarget != null)
+            {
+                Debug.Log("Interact");
+                interactTarget.GetComponentInParent<Interact>().BroadcastInteraction();
+            }
         }
 
+        //
         // 중력 적용
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+        //
 
         // 쿨타임 업데이트
         UpdatekillCooltime();
 
-        // Using RayCast to detect attack
-        RayCastAttackDetection();
-
-        if (killButton.interactable && killAction.triggered && target != null && !isKillOn)
-        {
-            AttackAction();
-            StartKillCooldown();
-        }
-
-        if (interactButton.interactable && interactAction.triggered && interactTarget != null)
-        {
-            Debug.Log("Interact");
-            interactTarget.GetComponentInParent<Interact>().BroadcastInteraction();
-        }
-
-        // 발걸음 소리 재생
-        if ((input.x != 0 || input.y != 0) && isGrounded)
-        {
-            nextFootstep -= Time.deltaTime;
-            if (nextFootstep <= 0)
-            {
-                GetComponent<AudioSource>().PlayOneShot(footStepSound, 0.7f);
-                nextFootstep += footStepDelay;
-                //Debug.Log("Walking true");
-                // bool 파라미터 설정
-                animator.SetBool("IsWalking", true);
-                fpsAnimator.SetBool("IsWalking", true);
-            }
-        }
-        else
-        {
-            //Debug.Log("Walking false");
-            animator.SetBool("IsWalking", false);
-            fpsAnimator.SetBool("IsWalking", false);
-        }
     }
 
     private void UpdatekillCooltime()

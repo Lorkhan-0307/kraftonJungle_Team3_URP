@@ -34,7 +34,7 @@ public class Monster : Player
 
         OnTransformation();
 
-        //cvc.Priority = vc_lookat_priority;
+        playerMovement.isAttacking = true;
         TransitionCamera(true);
 
         // Todo: hunger time reset
