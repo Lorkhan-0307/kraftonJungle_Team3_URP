@@ -31,6 +31,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
 {
     private InputAction gameStartAction;
 
+    string voicePrefabName = "VoiceManager";
 
     public void AddCallBack()
     {
@@ -108,6 +109,9 @@ public class ServerLogic : MonoBehaviourPunCallbacks
                 monsterActorNums = settings.monsterActorNums;
             }
         }
+
+
+        GameObject voice = PhotonNetwork.Instantiate(voicePrefabName, Vector3.zero, Quaternion.identity);
 
 
         // 각 플레이어에게 랜덤 스폰 위치와 몬스터 번호를 전송

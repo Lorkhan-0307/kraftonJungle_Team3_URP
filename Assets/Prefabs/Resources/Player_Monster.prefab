@@ -5394,6 +5394,7 @@ GameObject:
   - component: {fileID: 2449464793017386873}
   - component: {fileID: 5142997325411853438}
   - component: {fileID: 2864671377182117154}
+  - component: {fileID: 6680925332814120039}
   m_Layer: 0
   m_Name: Virtual Camera
   m_TagString: Untagged
@@ -5487,6 +5488,25 @@ MonoBehaviour:
   m_DefaultActionMap: PlayerActions
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &6680925332814120039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7687109572428340248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8325aeb719a2e744a1704885b805cef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMaterialbody1: {fileID: 2100000, guid: fa72cedaeedac51459f1341d77bf2a41,
+    type: 2}
+  outlineMaterialbody: {fileID: 2100000, guid: fa72cedaeedac51459f1341d77bf2a41, type: 2}
+  originalMaterialbody1: {fileID: -2005726437634315250, guid: b4e05051a0cb1a74ab1789c328f99f39,
+    type: 3}
+  originalMaterialbody: {fileID: 4646176674502666069, guid: b4e05051a0cb1a74ab1789c328f99f39,
+    type: 3}
 --- !u!1001 &1405701422610485870
 PrefabInstance:
   m_ObjectHideFlags: 0
