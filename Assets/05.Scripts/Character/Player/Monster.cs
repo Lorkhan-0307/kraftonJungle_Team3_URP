@@ -16,7 +16,7 @@ public class Monster : Player
 
     private void Start()
     {
-        playerMovement = GetComponent<PlayerMovement>();
+        playerMovement = GetComponentInChildren<PlayerMovement>();
     }
 
     public override void OnAttack(GameObject victim)

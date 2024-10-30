@@ -76,6 +76,11 @@ public class PlayerMovement : MonoBehaviour
         {
             GameObject targetObject = parentTransform.Find("Ch11_nonPBR@Idle").gameObject;
             SetLayerRecursive(targetObject, 3);
+            if (NetworkManager.Instance.IsMonster())
+            {
+                targetObject = parentTransform.Find("Parasite L Starkie").gameObject;
+                SetLayerRecursive(targetObject, 3);
+            }
         }
         animator = GetComponentInChildren<Animator>();
     }
