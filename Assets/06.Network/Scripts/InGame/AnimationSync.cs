@@ -21,7 +21,7 @@ public class AnimationSync : MonoBehaviourPun
     }
 
     // 네트워크 동기화를 위한 메서드
-    public void FixedUpdate()
+    public void Update()
     {
         SendBools();
     }
@@ -36,9 +36,12 @@ public class AnimationSync : MonoBehaviourPun
         bool newData = ani.GetBool(isWalkingKey);
         if (isWalking != newData)
             send = true;
+        isWalking = newData;
+
         newData = ani.GetBool(isRunningKey);
         if (isRunning != newData)
             send = true;
+        isRunning = newData;
 
         if (send)
         {
@@ -48,8 +51,7 @@ public class AnimationSync : MonoBehaviourPun
 
     object BoolsToData()
     {
-        object[] data = { isWalking, isRunning };
-        return data;
+        return new object[] { isWalking, isRunning };
     }
 
     [PunRPC]

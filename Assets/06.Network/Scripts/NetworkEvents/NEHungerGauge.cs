@@ -16,7 +16,6 @@ public class NEHungerGauge : NetworkEvent
         bool ishungerzero = (bool)datas[0];
         int monsterNum = (int)datas[1];
 
-        Debug.Log($"{monsterNum} : {ishungerzero} HungerGauge OnEvent");
 
         if (!NetworkManager.Instance.Monsters.ContainsKey(monsterNum)) return;
 
@@ -33,7 +32,6 @@ public class NEHungerGauge : NetworkEvent
     // 모든 클라이언트에게 이벤트를 보냄.
     public static void HungerEvent(bool ishungerzero)
     {
-        Debug.Log("Send HungerEvent!");
         NetworkManager.SendToClients(EventCode.HungerGauge, new object[] 
             { ishungerzero, PhotonNetwork.LocalPlayer.ActorNumber});
     }

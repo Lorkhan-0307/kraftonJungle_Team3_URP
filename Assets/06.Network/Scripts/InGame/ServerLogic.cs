@@ -41,7 +41,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
 
     public void StartGameCallback(InputAction.CallbackContext context)
     {
-        Debug.Log("StartGame Button Clicked");
+        //Debug.Log("StartGame Button Clicked");
         //if (SceneManager.GetActiveScene().name != NetSceneManager.instance.mainSceneName) return;
         if (NetworkManager.Instance.curState != GameState.OnRoom) return;
 
@@ -116,8 +116,6 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         {
             // 각 플레이어의 랜덤 스폰 위치 설정
             randomSpawnPos[i] = NPCManager.GetRandomNavMeshPosition();
-
-            Debug.Log($"{i}: {randomSpawnPos[i]}");
         }
 
         // 필드에 랜덤으로 NPC 뿌림

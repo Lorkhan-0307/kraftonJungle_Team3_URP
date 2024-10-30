@@ -44,15 +44,6 @@ public class NEGameStart : NetworkEvent
         }
 
         //자신의 플레이어 ActorNumber 가 전송받은 id와 같은지 비교하고 몬스터, 연구원으로 초기화함.
-        Debug.Log($"Monster : {monsterNums.ToString()}");
-
-        //Debugging
-        string deb = "";
-        foreach (Vector3 v in spawnPos)
-        {
-            deb += $"{v.ToString()}, ";
-        }
-        Debug.Log($"current Actornum:{PhotonNetwork.LocalPlayer.ActorNumber}  {deb}");
 
         // 로컬 플레이어 캐릭터 스폰
         Vector3 myPosition = spawnPos[PhotonNetwork.LocalPlayer.ActorNumber - 1];

@@ -25,13 +25,11 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
         if(!PhotonNetwork.IsConnected)
         {
             PhotonNetwork.ConnectUsingSettings();
-            Debug.Log("ConnectUsingSettings");
         }
         else if(PhotonNetwork.InRoom)
         {
             Debug.Log(PhotonNetwork.NetworkClientState.ToString());
             PhotonNetwork.LeaveRoom();
-            Debug.Log("LeaveRoom");
         }
 
         // 일정 주기로 실행되는 새로고침 코루틴 실행
@@ -51,7 +49,6 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
 
         await dbManager.LoadData(token, playerData);
 
-        Debug.Log($"Loaded {playerData.Nickname}");
         nicknameInput.text = playerData.Nickname;
         PhotonNetwork.LocalPlayer.NickName = playerData.Nickname;
         LoginTokenManager.SaveTokenToLocal(playerData.UserToken);

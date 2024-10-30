@@ -75,7 +75,6 @@ public class NPCManager : Singleton<NPCManager>
     public void FindAllNPC()
     {
         GameObject[] npcs = GameObject.FindGameObjectsWithTag("NPC");
-        Debug.Log($"NPC Count : {npcs.Length}");
 
         // 리스트 초기화 후 NPC 추가
         allNPC.Clear();
