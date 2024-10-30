@@ -7,7 +7,7 @@ public class MonsterAnimation : MonoBehaviour
     {
         // 부모 오브젝트
         Transform parentTransform = transform.parent;
-        if (NetworkManager.Instance.myPlayer == parentTransform.gameObject)
+        if (NetworkManager.Instance.IsMonster())
         {
             Transform monsterTransform = transform.parent;
             Monster m = monsterTransform.gameObject.GetComponent<Monster>();
