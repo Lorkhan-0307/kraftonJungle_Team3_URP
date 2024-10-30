@@ -43,23 +43,24 @@ public class NPC : Player
         npcManager.allNPC.Remove(this.gameObject);
         NetworkManager.Instance.NPCCount--;
 
-        
-        
+
+
         // 여기서 Destroy 결과 전송
-        
-        
-        
+
+
+
         // 10.30 오전 작업물
-        
+
         // 이 Trigger도 서버 전송 필요
-       
-        
+
+
         // 여기서 죽음 처리를 해야하는데...
         // 스크립트를 떼거나, 더이상 Detection이 안되게 하고, collider도 없애야 한다.
-        
+
         // 아래에 해당하는 사항을 서버로 쏴야한다..!
         GetComponent<NavMeshAgent>().isStopped = true;
         GetComponentInChildren<Animator>().SetTrigger("Death");
+        gameObject.tag = "Untagged";
         CapsuleCollider cc = GetComponent<CapsuleCollider>();
         Destroy(cc);
 

@@ -32,13 +32,10 @@ public class Monster : Player
     {
         base.OnAttack(victim);
 
-        gameObject.GetComponent<Monster>().OnTransformation();
+        OnTransformation();
 
-        cvc.Priority = vc_lookat_priority;
-
-        playerMovement.SetLayerRecursive(monsterObj, 0);
-        // Monster FPS 팔 끄기
-        playerMovement.monsterFPS.SetActive(false);
+        //cvc.Priority = vc_lookat_priority;
+        TransitionCamera(true);
 
         // Todo: hunger time reset
         //attacker �� hunger time reset ȣ��
@@ -57,6 +54,22 @@ public class Monster : Player
         //MonsterKillSoundPlay();
         //GameManager.instance.OnKilled += MonsterKillSoundPlay();
 
+    }
+
+    public void TransitionCamera(bool isThird)
+    {
+        if (isThird)
+        {
+            cvc.Priority = vc_lookat_priority;
+            playerMovement.SetLayerRecursive(monsterObj, 0);
+            // Monster FPS 팔 끄기
+            playerMovement.monsterFPS.SetActive(false);
+        }
+        else
+        {
+            cvc.Priority = vc_original_priority;
+            playerMovement.SetLayerRecursive(monsterObj, 3);
+        }
     }
 
     public override void OnDamaged(GameObject attacker)
