@@ -57,7 +57,8 @@ public class PlayerMovement : MonoBehaviour
     public Animator fpsAnimator;
 
     [SerializeField] private GameObject scientistFPS;
-    [SerializeField] private GameObject monsterFPS;
+    //[SerializeField] 
+    public GameObject monsterFPS;
 
     private void Awake()
     {
@@ -90,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
         fpsAnimator = GetComponentInChildren<Animator>();
     }
 
-    void SetLayerRecursive(GameObject obj, int newLayer)
+    public void SetLayerRecursive(GameObject obj, int newLayer)
     {
         // 현재 오브젝트의 레이어 변경
         obj.layer = newLayer;

@@ -1,3 +1,4 @@
+using Cinemachine;
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,10 +15,14 @@ public class Monster : Player
 
     private PlayerMovement playerMovement;
 
-    private bool isAttacking = false;
-    private bool isDayShiftedWhileAttacking = false;
+    //private bool isAttacking = false;
+    //private bool isDayShiftedWhileAttacking = false;
 
     [SerializeField] AnimationSync aniSync;
+    [SerializeField] private CinemachineVirtualCamera cvc;
+    [SerializeField] private int vc_original_priority = 5;
+    [SerializeField] private int vc_lookat_priority = 20;
+
     private void Start()
     {
         playerMovement = GetComponentInChildren<PlayerMovement>();
@@ -27,10 +32,18 @@ public class Monster : Player
     {
         base.OnAttack(victim);
 
+        gameObject.GetComponent<Monster>().OnTransformation();
+
+        cvc.Priority = vc_lookat_priority;
+
+        playerMovement.SetLayerRecursive(monsterObj, 0);
+        // Monster FPS 팔 끄기
+        playerMovement.monsterFPS.SetActive(false);
+
         // Todo: hunger time reset
         //attacker �� hunger time reset ȣ��
         // Monster 에게만
-        switch(victim.GetComponent<Player>().type)
+        switch (victim.GetComponent<Player>().type)
         {
             case CharacterType.NPC:
 
