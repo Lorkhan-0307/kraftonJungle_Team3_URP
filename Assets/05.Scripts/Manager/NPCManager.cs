@@ -41,6 +41,10 @@ public class NPCManager : Singleton<NPCManager>
             // 우선순위를 NPC마다 다르게 설정
             agent.avoidancePriority = Random.Range(0, 100);
             npc.transform.parent = NPCGroup.transform;
+            
+            Animator animator = npc.GetComponentInChildren<Animator>();
+            if (animator != null) animator.SetBool("IsWalking", true);
+            
             SetNewDestination(npc.GetComponent<NavMeshAgent>());
         }
     }
@@ -54,9 +58,15 @@ public class NPCManager : Singleton<NPCManager>
             foreach (GameObject npc in allNPC)
             {
                 NavMeshAgent agent = npc.GetComponent<NavMeshAgent>();
+                Animator animator = npc.GetComponentInChildren<Animator>();
                 if (agent.remainingDistance < 0.1f)
                 {
                     SetNewDestination(agent);
+                    if (animator != null) animator.SetBool("IsWalking", false);
+                }
+                else
+                {
+                    if (animator != null) animator.SetBool("IsWalking", true);
                 }
             }
         }
