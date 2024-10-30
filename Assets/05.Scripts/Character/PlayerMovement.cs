@@ -164,14 +164,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 GetComponent<AudioSource>().PlayOneShot(footStepSound, 0.7f);
                 nextFootstep += footStepDelay;
-                Debug.Log("Walking true");
+                //Debug.Log("Walking true");
                 // bool 파라미터 설정
                 animator.SetBool("IsWalking", true);
             }
         }
         else
         {
-            Debug.Log("Walking false");
+            //Debug.Log("Walking false");
             animator.SetBool("IsWalking", false);
         }
     }
@@ -202,31 +202,34 @@ public class PlayerMovement : MonoBehaviour
         currentCooltime = killCooltime;
     }
 
-    private void RayCastInteractDetection(GameObject interactTarget)
+    private void RayCastInteractDetection(GameObject detectedObject)
     {
-        //Debug.Log("RayCastInteractDetection : " + interactTarget.name);
 
-        this.interactTarget = interactTarget;
-        if (interactTarget == null)
+        Interact interactComponent;
+        
+        if(detectedObject.TryGetComponent<Interact>(out interactComponent))
         {
-            interactButton.interactable = false;
-            return;
-        }
-
-        Interact interactComponent = interactTarget.GetComponentInParent<Interact>();
-        if (interactComponent && interactComponent.isInteractable)
-        {
-            interactButton.interactable = true;
+            if (interactComponent.isInteractable)
+            {
+                interactTarget = detectedObject;
+                interactButton.interactable = true;
+            }
+            else interactButton.interactable = false;
         }
         else
         {
+            interactTarget = null;
             interactButton.interactable = false;
-            this.interactTarget = null;
         }
     }
 
     private void RayCastAttackDetection()
     {
+        target = null;
+        interactTarget = null;
+        killButton.interactable = false;
+        interactButton.interactable = false;
+        
         if (Physics.Raycast(raycastShootPos.position, transform.forward, out hit, attackrange))
         {
             // 낮, 연구원 : 현재 로직
@@ -235,15 +238,25 @@ public class PlayerMovement : MonoBehaviour
             // 밤, 몬스터 : 현재 로직
             // 낮, 몬스터 : NPC만 Kill
 
-            target = hit.collider.gameObject;
+            // obsolete version
+            //target = hit.collider.gameObject;
 
-            RayCastInteractDetection(target);
-            bool canAttack = player.AttackDetection(target);
-            
-            killButton.interactable = canAttack && !isKillOn;
+            GameObject detectedGameObject = hit.collider.gameObject;
 
-            if (!canAttack)
-                target = null;
+
+            bool canAttack = player.AttackDetection(detectedGameObject);
+
+            if (canAttack && !isKillOn)
+            {
+                target = detectedGameObject;
+                killButton.interactable = true;
+            }
+            //killButton.interactable = canAttack && !isKillOn;
+
+            //if (!canAttack)
+                //target = null;
+                
+            RayCastInteractDetection(detectedGameObject);
         }
         else
         {
