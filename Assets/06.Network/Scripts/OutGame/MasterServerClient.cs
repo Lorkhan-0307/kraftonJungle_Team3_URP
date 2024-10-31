@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 using Amazon.Runtime.Internal.Auth;
+using Michsky.UI.Dark;
 
 public class MasterServerClient : MonoBehaviourPunCallbacks
 {
@@ -15,6 +16,9 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
     TMP_InputField nicknameInput;
 
     DynamoDBManager dbManager;
+
+    bool isPhotonConnected = false;
+    bool isDBConnected = false;
 
     void Start()
     {
@@ -52,6 +56,8 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
         nicknameInput.text = playerData.Nickname;
         PhotonNetwork.LocalPlayer.NickName = playerData.Nickname;
         LoginTokenManager.SaveTokenToLocal(playerData.UserToken);
+
+        OnJoinedDB();
     }
     public async void UpdateNickName()
     {
@@ -107,6 +113,26 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
         ExitGames.Client.Photon.Hashtable customData = new ExitGames.Client.Photon.Hashtable();
         customData.Add("IsReady", false);
         PhotonNetwork.LocalPlayer.CustomProperties = customData;
+    }
+    public override void OnJoinedLobby()
+    {
+        isPhotonConnected = true;
+        OnConnectFinished();
+    }
+    void OnJoinedDB()
+    {
+        isDBConnected = true;
+        OnConnectFinished();
+    }
+
+    void OnConnectFinished()
+    {
+        if(isPhotonConnected && isDBConnected)
+        {
+            //TODO: 로딩 완료
+            Debug.Log("로딩 완료!");
+            FindObjectOfType<SplashScreenManager>().skipOnAnyKeyPress = true;
+        }
     }
 
     public override void OnLeftRoom()
