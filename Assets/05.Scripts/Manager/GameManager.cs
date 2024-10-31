@@ -13,7 +13,6 @@ public class GameManager : Singleton<GameManager>
 {
     public GameObject hungerSliderPrefab;
     public GameObject canvasPrefab;
-    public GameObject spectatorCanvas;
 
     public delegate void TwoGameObjects(GameObject o1, GameObject o2);
 
@@ -54,10 +53,8 @@ public class GameManager : Singleton<GameManager>
     {
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
-        if (spectatorCanvas != null)
-        {
-            FindObjectOfType<SpectatorText>().EndSpectating();
-        }
+        
+        FindObjectOfType<SpectatorText>().EndSpectating();
         if (hungerSlider != null)
         {
             Destroy(hungerSlider);
@@ -67,8 +64,6 @@ public class GameManager : Singleton<GameManager>
         {
             Destroy(canvas);
         }
-
-            //FindObjectOfType<SpectatorText>().EndSpectating();
 
         TimeManager.instance.isEnd = true;
     }

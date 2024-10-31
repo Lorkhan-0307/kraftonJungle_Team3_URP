@@ -48,7 +48,6 @@ public class SpectatorCamera : MonoBehaviour
         FollowAndLookAtTarget(spectatingTarget); // 버츄얼 카메라가 관전 대상을 따라다니도록 설정        
 
         canvasInstance = Instantiate(canvasPrefab); // 캔버스 생성
-        GameManager.instance.spectatorCanvas = canvasInstance;
         spectatorText = canvasInstance.GetComponentInChildren<SpectatorText>(); // 관전 대상 텍스트
         spectatorText.SetSpectatingTarget(spectatingTarget); // UI에 관전 대상 표시        
 
