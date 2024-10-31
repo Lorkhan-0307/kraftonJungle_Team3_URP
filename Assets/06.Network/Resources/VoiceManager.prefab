@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisconnectAfterKeepAlive: 0
   KeepAliveInBackground: 60000
-  ApplyDontDestroyOnLoad: 1
+  ApplyDontDestroyOnLoad: 0
   runInBackground: 1
   statsResetInterval: 1000
   speakerPrefab: {fileID: 2844177319290572745, guid: 9fec04aed317a754f8b7fa46dbff5a34,
