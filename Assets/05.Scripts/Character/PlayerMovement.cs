@@ -94,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (parentTransform != null)
         {
-            GameObject targetObject = parentTransform.Find("Ch11_nonPBR@Idle").gameObject;
+            GameObject targetObject = parentTransform.Find("Astronaut_Pilot_Full").gameObject;
             SetLayerRecursive(targetObject, 3);
             animator = targetObject.GetComponent<Animator>();
             if (NetworkManager.Instance.IsMonster())
