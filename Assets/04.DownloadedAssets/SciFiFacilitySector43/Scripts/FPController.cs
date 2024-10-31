@@ -1,60 +1,90 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class FPController : MonoBehaviour {
+public class FPController : MonoBehaviour
+{
+    public float speed = 6f;
+    public float mouseSensitivity = 5f;
+    public float jumpSpeed = 10f;
 
-	public float speed = 6f;
-	public float mouseSensitivity =5f;
-	public float jumpSpeed = 10f;
+    private float rotationLeftRight;
+    private float verticalRotation;
+    private float forwardSpeed;
+    private float sideSpeed;
+    private float verticalVelocity;
+    private Vector3 speedCombined;
+    private CharacterController cc;
+    private Camera cam;
 
-	private float rotationLeftRight;
-	private float verticalRotation;
-	private float forwardspeed;
-	private float sideSpeed;
-	private float verticalVelocity; 
-	private Vector3 speedCombined;
-	private CharacterController cc;
+    private Vector2 moveInput;
+    private Vector2 lookInput;
+    private bool isJumping;
+    private bool isRunning;
 
-	private Camera cam;
+    void Start()
+    {
+        cam = GetComponentInChildren<Camera>();
+        cc = GetComponent<CharacterController>();
+        Cursor.visible = false;
+    }
 
-	// Use this for initialization
-	void Start () {
-		cam = GetComponentInChildren<Camera> ();
-		cc = GetComponent<CharacterController> ();
-		Cursor.visible = false;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        moveInput = context.ReadValue<Vector2>();
+    }
 
-		rotationLeftRight = Input.GetAxis ("Mouse X") * mouseSensitivity;
-		transform.Rotate (0, rotationLeftRight,0);
+    public void OnLook(InputAction.CallbackContext context)
+    {
+        lookInput = context.ReadValue<Vector2>();
+    }
 
-		verticalRotation -= Input.GetAxis ("Mouse Y") * mouseSensitivity;
-		verticalRotation = Mathf.Clamp (verticalRotation, -60f, 60f);
-		cam.transform.localRotation = Quaternion.Euler (verticalRotation, 0,0);
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            isJumping = true;
+        }
+    }
 
-		forwardspeed = Input.GetAxis ("Vertical") * speed;
-		sideSpeed = Input.GetAxis ("Horizontal") * speed;
+    public void OnRun(InputAction.CallbackContext context)
+    {
+        isRunning = context.ReadValueAsButton();
+    }
 
-		if (Input.GetKey(KeyCode.LeftShift)) {
-			forwardspeed *= 2f;
-		}
+    void Update()
+    {
+        // Mouse Look
+        rotationLeftRight = lookInput.x * mouseSensitivity;
+        transform.Rotate(0, rotationLeftRight, 0);
 
-		verticalVelocity += Physics.gravity.y * Time.deltaTime;
+        verticalRotation -= lookInput.y * mouseSensitivity;
+        verticalRotation = Mathf.Clamp(verticalRotation, -60f, 60f);
+        cam.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
 
-		if (cc.isGrounded && Input.GetButtonDown ("Jump")) {
-			verticalVelocity = jumpSpeed;
-		}
+        // Movement Input
+        forwardSpeed = moveInput.y * speed;
+        sideSpeed = moveInput.x * speed;
 
-		speedCombined = new Vector3 (sideSpeed, verticalVelocity, forwardspeed);
+        if (isRunning)
+        {
+            forwardSpeed *= 2f;
+        }
 
-		speedCombined = transform.rotation * speedCombined;
+        // Gravity
+        verticalVelocity += Physics.gravity.y * Time.deltaTime;
 
-		cc.Move (speedCombined * Time.deltaTime);
+        // Jump
+        if (cc.isGrounded && isJumping)
+        {
+            verticalVelocity = jumpSpeed;
+            isJumping = false; // Reset jump after use
+        }
 
-
-
-	}
+        // Move Character
+        speedCombined = new Vector3(sideSpeed, verticalVelocity, forwardSpeed);
+        speedCombined = transform.rotation * speedCombined;
+        cc.Move(speedCombined * Time.deltaTime);
+    }
 }
