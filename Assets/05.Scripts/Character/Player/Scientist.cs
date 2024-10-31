@@ -18,10 +18,11 @@ public class Scientist : Player
         Debug.Log("ONDAMAGED");
         // 여기서 Destroy 결과 전송
         if (GetComponent<PhotonView>().AmOwner)
-        {
-            //PhotonNetwork.Destroy(this.gameObject);
+        {            
             NEPlayerDeath.PlayerDeath();
-            SpectatorManager.instance.StartSpectating();
+            // 게임이 끝났으면 실행 X
+            if (!TimeManager.instance.isEnd)
+                SpectatorManager.instance.StartSpectating();
         }
         else
         {
@@ -36,7 +37,7 @@ public class Scientist : Player
 
     public override bool AttackDetection(GameObject target)
     {
-        // 낮일 떄
+        // 낮일 때
         if (TimeManager.instance.GetisDay())
         {
             if (target.CompareTag("Player") || target.CompareTag("NPC")) return true;
