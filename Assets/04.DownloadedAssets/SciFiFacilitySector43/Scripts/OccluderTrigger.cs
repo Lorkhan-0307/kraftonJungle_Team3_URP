@@ -15,20 +15,20 @@ public class OccluderTrigger : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        if(OcclusionAction == Occlusion.enable_Zone && other.tag.Equals("GameController")) {
+        if(OcclusionAction == Occlusion.enable_Zone && other.tag.Equals("Player")) {
             Occl.enableZone();
         }
     }
 
     private void OnTriggerExit(Collider other) {
-        if (OcclusionAction == Occlusion.disable_Zone && other.tag.Equals("GameController")) {
+        if (OcclusionAction == Occlusion.disable_Zone && other.tag.Equals("Player")) {
             Occl.disableZone();
         }
     }
 
     // neccessary for initial enable of a Zone
     private void OnTriggerStay(Collider other) {
-        if(Time.timeSinceLevelLoad < 3 && other.tag.Equals("GameController")) {
+        if(Time.timeSinceLevelLoad < 3 && other.tag.Equals("Player")) {
             Occl.enableZone();
         }
         
