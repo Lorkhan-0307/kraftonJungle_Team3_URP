@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class DoorTrigger : MonoBehaviour
 {
-    private Door_New door;
+    private Door_Download door;
 
     void Start()
     {
-        door = GetComponentInParent<Door_New>();
+        door = GetComponentInParent<Door_Download>();
     }
 
     void OnTriggerEnter(Collider c) {
