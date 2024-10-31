@@ -151,6 +151,11 @@ public class Monster : Player
             hungerCanvas = GetComponentInChildren<HungerCanvasEffect>(true).GameObject();
             hungerCanvas.SetActive(true);
         }
+        else
+        {
+            hungerCanvas = GetComponentInChildren<HungerCanvasEffect>(true).GameObject();
+            hungerCanvas.SetActive(false);
+        }
     }
 
     // Use this when Hunger Gauge reset
