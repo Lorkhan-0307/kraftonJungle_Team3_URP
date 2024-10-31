@@ -63,7 +63,7 @@ public class GameManager : Singleton<GameManager>
             Destroy(canvas);
         }
 
-        FindObjectOfType<SpectatorText>().EndSpectating();
+        //FindObjectOfType<SpectatorText>().EndSpectating();
 
         TimeManager.instance.isEnd = true;
     }
