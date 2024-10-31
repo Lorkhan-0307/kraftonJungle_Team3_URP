@@ -14,6 +14,8 @@ public class NEGameStart : NetworkEvent
     string playerMonsterName;
     [SerializeField]
     GameObject playerObjectPrefab;
+    [SerializeField]
+    GameObject voicePrefab;
 
     protected override void Awake()
     {
@@ -56,8 +58,7 @@ public class NEGameStart : NetworkEvent
             spawnedPlayer = PhotonNetwork.Instantiate(playerScientistName, myPosition, Quaternion.identity);
 
 
-        //string voicePrefabName = "VoiceManager";
-        //GameObject voice = PhotonNetwork.Instantiate(voicePrefabName, Vector3.zero, Quaternion.identity);
+        GameObject voice = Instantiate(voicePrefab, Vector3.zero, Quaternion.identity);
 
         NetworkManager.Instance.myPlayer = spawnedPlayer.GetComponent<Player>();
 
