@@ -1,25 +1,48 @@
+using Photon.Pun;
+using Photon.Realtime;
+using Photon.Voice.Unity;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class VoiceFollower : MonoBehaviour
+public class VoiceFollower : MonoBehaviourPun
 {
-    Transform target
+    Transform target = null;
+
+    private void Start()
     {
-        get
+        AudioSource audioSource = GetComponent<AudioSource>();
+        if (audioSource != null)
         {
-            return Camera.main?.transform;
+            audioSource.volume = 10.0f;
+            audioSource.panStereo = 2.0f;
+
+            AudioReverbFilter reverbfilter = audioSource.gameObject.AddComponent<AudioReverbFilter>();
+            reverbfilter.reverbPreset = AudioReverbPreset.Cave;
+            reverbfilter.dryLevel = 0;
+            reverbfilter.reverbLevel = 1;
         }
     }
-
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if(target)
+        if (target == null)
         {
-            transform.position = target.position;
-            transform.rotation = target.rotation;
+            // 리모트 캐릭터 따라가기
+            List<Player> players = FindObjectsOfType<Player>().ToList();
+            Player myPlayer = players.Find(x => x.GetComponent<PhotonView>().
+            Owner.ActorNumber == GetComponent<Speaker>().RemoteVoice.PlayerId);
+
+            if (!myPlayer)
+                return;
+                
+            target = myPlayer.transform;
+            Debug.Log("Set PARENT Voice");
+
+            transform.SetParent(target.transform);
+            transform.localPosition = Vector3.zero;
+            transform.localRotation = Quaternion.identity;
+
         }
     }
 }
