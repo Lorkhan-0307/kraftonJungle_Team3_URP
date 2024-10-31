@@ -31,6 +31,18 @@ public class PlayerMovement : MonoBehaviour
     private InputAction killAction;
     private InputAction runAction;
     private InputAction interactAction;
+    private InputAction voiceAction;
+
+
+    VoiceManager VoiceManager { 
+        get 
+        {
+            if (voiceManager == null)
+                voiceManager = FindObjectOfType<VoiceManager>();
+            return voiceManager;
+        }
+    }
+    VoiceManager voiceManager;
 
     [SerializeField] private Transform raycastShootPos;
     [SerializeField] private float attackrange = 3f;
@@ -71,6 +83,7 @@ public class PlayerMovement : MonoBehaviour
         killAction = playerInput.actions["Kill"];
         runAction = playerInput.actions["Run"];
         interactAction = playerInput.actions["Interact"];
+        voiceAction = playerInput.actions["Voice"];
 
         controller = GetComponentInParent<CharacterController>();
 
@@ -124,6 +137,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(VoiceManager)
+        {
+            VoiceManager.PressToTalk(voiceAction.IsPressed());
+        }
         isGrounded = controller.isGrounded;
         
         if (isGrounded && velocity.y < 0)

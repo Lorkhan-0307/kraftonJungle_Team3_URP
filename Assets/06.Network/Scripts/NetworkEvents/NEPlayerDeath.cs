@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Voice.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,6 +29,8 @@ public class NEPlayerDeath : NetworkEvent
     {
         int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
         NetworkManager.Instance.curState = GameState.Dead;
+
+        FindObjectOfType<Recorder>().enabled = false;
 
         NetworkManager.SendToClients(EventCode.PlayerDeath, actorNumber);
     }
