@@ -48,8 +48,5 @@ public class Door_Download : Interact {
     public void DoorAnimFin()
     {
         isInteractable = true;
-        Debug.Log("DoorAnimFin : isInteractable is True");
     }
-
-
 }
