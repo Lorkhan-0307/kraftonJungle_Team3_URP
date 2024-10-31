@@ -15,20 +15,10 @@ public class DynamoDBManager : MonoBehaviour
     private static readonly string secretKey = "Nk+vo5CCr5Xa3ZiC6UwCX4h9aTEXrKgvWBqk70VV";
     private static readonly string region = "ap-northeast-2"; // DynamoDB 리전
 
-    private async void Start()
-    {
-        InitializeDynamoDBClient();
-
-        string tokenToDelete = "KEY_638658907918309697";
-
-        PlayerData playerData = new PlayerData { UserToken = tokenToDelete };
-
-        await DeletePlayerDataByToken(playerData);
-    }
 
     public async Task LoadData(string token, PlayerData playerData)
     {
-        InitializeDynamoDBClient();
+        InitializeDB();
 
 
         // UserToken이 빈 문자열일 경우 새로운 UserToken과 랜덤 닉네임 생성 및 저장
@@ -54,7 +44,7 @@ public class DynamoDBManager : MonoBehaviour
     }
 
 
-    private void InitializeDynamoDBClient()
+    public void InitializeDB()
     {
         if (client == null)
         {
