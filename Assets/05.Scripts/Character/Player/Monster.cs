@@ -8,6 +8,7 @@ using UnityEngine;
 public class Monster : Player
 {
     private GameObject hungerParticle;
+    private GameObject hungerCanvas;
 
     [SerializeField] private AudioSource monster_kill_sound;
     [SerializeField] private GameObject scientistObj;
@@ -145,6 +146,11 @@ public class Monster : Player
     {
         hungerParticle = GetComponentInChildren<ParticleSystem>(true).GameObject();
         hungerParticle.SetActive(true);
+        if (NetworkManager.Instance.IsMonster())
+        {
+            hungerCanvas = GetComponentInChildren<HungerCanvasEffect>(true).GameObject();
+            hungerCanvas.SetActive(true);
+        }
     }
 
     // Use this when Hunger Gauge reset
