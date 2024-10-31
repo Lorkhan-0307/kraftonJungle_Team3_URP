@@ -19,13 +19,14 @@ public class MyRoomSettingsManager : MonoBehaviourPunCallbacks
     [SerializeField] private TMP_Text nightLength;
     [SerializeField] private TMP_Text hungerLength;
     [SerializeField] private TMP_Text selectedMonster;
+    [SerializeField] private TMP_Text NPCCountText;
 
     [SerializeField] Image disableSelectMonster;
 
     [SerializeField] int[] timeLengthPreset;
     int dayIndex = 6;
     int nightIndex = 4;
-    int hungerIndex = 4;
+    int hungerIndex = 5;
     int monsterActorNum = 1;
 
 
@@ -116,6 +117,16 @@ public class MyRoomSettingsManager : MonoBehaviourPunCallbacks
         FindObjectOfType<MyRoomManager>().CallUpdatePlayerList();
     }
 
+    public void NPCCountButton(int value)
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+        
+        int newValue = Mathf.Clamp(Settings.npcCount + value, 0, 100);
+        Settings.npcCount = newValue;
+
+        SyncSettings();
+    }
+
     public void OnRandomMonsterToggle(bool value)
     {
         if (!PhotonNetwork.IsMasterClient) return;
@@ -146,6 +157,7 @@ public class MyRoomSettingsManager : MonoBehaviourPunCallbacks
         hungerLength.text = Settings.hungerLength.ToString();
         disableSelectMonster.enabled = Settings.monsterRandomSelect;
         selectedMonster.text = PhotonNetwork.CurrentRoom.Players[Settings.monsterActorNums[0]].NickName;
+        NPCCountText.text = Settings.npcCount.ToString();
     }
     [PunRPC]
     public void ApplySettingsToUI(object data)
