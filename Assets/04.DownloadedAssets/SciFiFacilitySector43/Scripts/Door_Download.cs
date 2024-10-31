@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Door_Download : MonoBehaviour {
+public class Door_Download : Interact {
 
     
 
@@ -11,32 +11,40 @@ public class Door_Download : MonoBehaviour {
     private Animator animator;
     private AudioSource audioSource;
 
+    private bool isOpened = false;
+
 	void Start() {
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
 	}
 
-
-	void OnTriggerEnter(Collider c) {
-        openDoor(c);
-    }
-
-	void OnTriggerExit(Collider c) {
-        closeDoor(c);
-	}
-
-    public void openDoor(Collider c) {
-        if (c.tag.Equals("GameController")) {
-            audioSource.Play();
-            animator.SetTrigger(trDoorOpen);
-
+    protected override void Interaction()
+    {
+        base.Interaction();
+        isInteractable = false;
+        if (isOpened)
+        {
+            CloseDoor();
+        }
+        else
+        {
+            OpenDoor();
         }
     }
-    public void closeDoor(Collider c) {
-        if (c.tag.Equals("GameController")) {
-            audioSource.Play();
-            animator.SetTrigger(trDoorClose);
-        }
+
+    public void OpenDoor() {
+        audioSource.Play();
+        animator.SetTrigger(trDoorOpen);
+
+    }
+    public void CloseDoor() {
+        audioSource.Play();
+        animator.SetTrigger(trDoorClose);
+    }
+
+    public void DoorAnimFin()
+    {
+        isInteractable = true;
     }
 
 

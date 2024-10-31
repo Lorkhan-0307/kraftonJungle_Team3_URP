@@ -13,11 +13,11 @@ public class DoorTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider c) {
 
-        door.openDoor(c);
+        door.OpenDoor();
 
     }
 
     void OnTriggerExit(Collider c) {
-        door.closeDoor(c);
+        door.CloseDoor();
     }
 }
