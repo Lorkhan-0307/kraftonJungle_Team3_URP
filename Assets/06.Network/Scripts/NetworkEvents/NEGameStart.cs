@@ -27,7 +27,6 @@ public class NEGameStart : NetworkEvent
         Vector3[] spawnPos = (Vector3[])datas[0];
         int[] monsterNums = (int[])datas[1];
         NetworkManager.Instance.NPCCount = (int)datas[2];
-        string voicePrefabName = "VoiceManager";
 
         GameSettings settings = NetworkManager.Instance.gameSettings;
 
@@ -57,7 +56,8 @@ public class NEGameStart : NetworkEvent
             spawnedPlayer = PhotonNetwork.Instantiate(playerScientistName, myPosition, Quaternion.identity);
 
 
-        GameObject voice = PhotonNetwork.Instantiate(voicePrefabName, Vector3.zero, Quaternion.identity);
+        //string voicePrefabName = "VoiceManager";
+        //GameObject voice = PhotonNetwork.Instantiate(voicePrefabName, Vector3.zero, Quaternion.identity);
 
         NetworkManager.Instance.myPlayer = spawnedPlayer.GetComponent<Player>();
 
