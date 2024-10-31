@@ -24,11 +24,14 @@ public class Monster : Player
     [SerializeField] private int vc_lookat_priority = 20;
 
     private MouseComponent mc;
+    private CinemachineBrain brain;
 
     private void Start()
     {
         playerMovement = GetComponentInChildren<PlayerMovement>();
         mc = GetComponentInChildren<MouseComponent>();
+        // CinemachineBrain 컴포넌트 가져오기
+        brain = Camera.main.GetComponent<CinemachineBrain>();
     }
 
     public override void OnAttack(GameObject victim)
@@ -72,8 +75,22 @@ public class Monster : Player
         else
         {
             cvc.Priority = vc_original_priority;
-            playerMovement.SetLayerRecursive(monsterObj, 3);
+            //playerMovement.SetLayerRecursive(monsterObj, 3);
+            // 코루틴 시작
+            StartCoroutine(WaitForCinemachine());
         }
+    }
+
+    private IEnumerator WaitForCinemachine()
+    {
+        // 블렌드가 완료될 때까지 대기
+        while (brain.IsBlending)
+        {
+            yield return null;
+        }
+
+        // 블렌드 완료 후 실행
+        playerMovement.SetLayerRecursive(monsterObj, 3);
     }
 
     public override void OnDamaged(GameObject attacker)
