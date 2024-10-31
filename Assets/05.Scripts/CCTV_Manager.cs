@@ -47,7 +47,7 @@ public class CCTV_Manager : MonoBehaviour
 
         // 인덱스 업데이트
         currentCameraIndex += direction;
-        Debug.Log("CURRENT IDX :" + currentCameraIndex);
+
         
         if (currentCameraIndex < 0)
             currentCameraIndex = cctv_cameras.Length - 1;
