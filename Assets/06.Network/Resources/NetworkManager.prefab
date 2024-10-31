@@ -72,6 +72,8 @@ GameObject:
   - component: {fileID: 2614432952297017284}
   - component: {fileID: 3785735150168781355}
   - component: {fileID: 7621449153401180963}
+  - component: {fileID: 5439758156321487643}
+  - component: {fileID: 1031243732574820278}
   - component: {fileID: 3780648650000633309}
   - component: {fileID: 1627562016394821786}
   - component: {fileID: 6376347778157284329}
@@ -167,6 +169,32 @@ MonoBehaviour:
     type: 3}
   voicePrefab: {fileID: 251469466147729761, guid: 0260291ef16c7db40b36a5f4ceb1b740,
     type: 3}
+--- !u!114 &5439758156321487643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4308312680685940333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73e8370b87c518a45b7678366b361a82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventCode: 0
+--- !u!114 &1031243732574820278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4308312680685940333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cfca841b887f56459a40d1eb99404dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventCode: 0
 --- !u!114 &3780648650000633309
 MonoBehaviour:
   m_ObjectHideFlags: 0
