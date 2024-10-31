@@ -37,6 +37,10 @@ public class NEAttackRequest : NetworkEvent
         if (!from) return;
         if (!to) return;
 
+        //게임매니저 이벤트 실행
+        GameManager.instance.OnKilled?.Invoke(from.gameObject, to.gameObject);
+
+
         //공격자 피격자 이용해서 해야하는 로직들 처리하기
         to.GetComponent<Player>().OnDamaged(from.gameObject);
 
@@ -44,10 +48,6 @@ public class NEAttackRequest : NetworkEvent
         {
             from.GetComponent<Monster>().OnTransformation(TimeManager.instance.GetisDay());
         }
-
-        //게임매니저 이벤트 실행
-        GameManager.instance.OnKilled?.Invoke(from.gameObject, to.gameObject);
-
     }
 
     public static void AttackEntity(PhotonView from, PhotonView to)
@@ -61,11 +61,13 @@ public class NEAttackRequest : NetworkEvent
 
     void KillLogCallback(GameObject from, GameObject to)
     {
-        string killer = from.GetComponent<PhotonView>().Owner.NickName;
-        string victim = "NPC";
+        //string killer = from.GetComponent<PhotonView>().Owner.NickName;
+        //string victim = "NPC";
 
-        if(to.GetComponent<Player>().type != CharacterType.NPC)
-            victim = to.GetComponent<PhotonView>().Owner.NickName;
+        //if(to.GetComponent<Player>().type != CharacterType.NPC)
+        //    victim = to.GetComponent<PhotonView>().Owner.NickName;
+        string killer = from.GetComponent<Player>()?.type.ToString();
+        string victim = to.GetComponent<Player>()?.type.ToString();
 
         killLogger.AddKillLog(new KillLogElement(killer, victim));
     }

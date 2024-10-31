@@ -17,7 +17,7 @@ public class GameSettings// : ScriptableObject
     [Header("Time Cycle Settings")]
     public int dayLength = 45;
     public int nightLength = 20;
-    public int hungerLength = 20;
+    public int hungerLength = 30;
 
     //[Header("Not Working")]
 
