@@ -22,7 +22,8 @@ public class OccluderTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other) {
         if (OcclusionAction == Occlusion.disable_Zone && other.tag.Equals("Player")) {
-            Occl.disableZone();
+            
+            //Occl.disableZone();
         }
     }
 

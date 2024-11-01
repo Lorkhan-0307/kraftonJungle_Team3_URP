@@ -8,7 +8,7 @@ public class Occluder : MonoBehaviour
     public GameObject Zone;
 
     private void Start() {
-        Zone.SetActive(false);
+        Zone.SetActive(true);
     }
 
     public void disableZone() {
