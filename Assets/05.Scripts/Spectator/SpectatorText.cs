@@ -34,7 +34,7 @@ public class SpectatorText : MonoBehaviour
 
         tmpText = GetComponentInChildren<TextMeshProUGUI>();
 
-        Debug.Log("Spectating Target Text Set : " + spectatingTarget.name);
+        //Debug.Log("Spectating Target Text Set : " + spectatingTarget.name);
     }
 
     public void EndSpectating()
