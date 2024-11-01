@@ -42,7 +42,7 @@ public class MouseComponent : MonoBehaviour
 
             // 상하 회전 제한
             xRotation -= mouseY;
-            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+            xRotation = Mathf.Clamp(xRotation, -90f, 60f);
 
             // 카메라 상하 회전
             transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);

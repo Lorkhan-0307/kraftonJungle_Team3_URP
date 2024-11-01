@@ -54,7 +54,7 @@ public class GameManager : Singleton<GameManager>
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
         
-        FindObjectOfType<SpectatorText>().EndSpectating();
+        //FindObjectOfType<SpectatorText>().EndSpectating();
         if (hungerSlider != null)
         {
             Destroy(hungerSlider);
