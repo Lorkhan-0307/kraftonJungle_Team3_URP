@@ -509,7 +509,7 @@ MonoBehaviour:
   killCooltime: 5
   animator: {fileID: 0}
   fpsAnimator: {fileID: 0}
-  scientistFPS: {fileID: 1853520199585588858}
+  scientistFPS: {fileID: 7072496416953946970}
   monsterFPS: {fileID: 5688925097743129028}
   isAttacking: 0
 --- !u!114 &5944541352767380261
@@ -1603,12 +1603,6 @@ PrefabInstance:
 --- !u!4 &1365389351344618688 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 44468547ba2add14badf2cf529d33573,
-    type: 3}
-  m_PrefabInstance: {fileID: 1547108642283739947}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1853520199585588858 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 44468547ba2add14badf2cf529d33573,
     type: 3}
   m_PrefabInstance: {fileID: 1547108642283739947}
   m_PrefabAsset: {fileID: 0}
