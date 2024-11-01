@@ -1,3 +1,4 @@
+using Cinemachine;
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using UnityEngine;
 public class Monster : Player
 {
     private GameObject hungerParticle;
+    private GameObject hungerCanvas;
 
     [SerializeField] private AudioSource monster_kill_sound;
     [SerializeField] private GameObject scientistObj;
@@ -14,23 +16,36 @@ public class Monster : Player
 
     private PlayerMovement playerMovement;
 
-    private bool isAttacking = false;
-    private bool isDayShiftedWhileAttacking = false;
+    //private bool isAttacking = false;
+    //private bool isDayShiftedWhileAttacking = false;
 
     [SerializeField] AnimationSync aniSync;
+    [SerializeField] private CinemachineVirtualCamera cvc;
+    [SerializeField] private int vc_original_priority = 5;
+    [SerializeField] private int vc_lookat_priority = 20;
+
+    private MouseComponent mc;
+
     private void Start()
     {
         playerMovement = GetComponentInChildren<PlayerMovement>();
+        mc = GetComponentInChildren<MouseComponent>();
     }
 
     public override void OnAttack(GameObject victim)
     {
         base.OnAttack(victim);
 
+        OnTransformation(TimeManager.instance.GetisDay());
+
+        playerMovement.isAttacking = true;
+        mc.isAttacking = true;
+        TransitionCamera(true);
+
         // Todo: hunger time reset
         //attacker �� hunger time reset ȣ��
         // Monster 에게만
-        switch(victim.GetComponent<Player>().type)
+        switch (victim.GetComponent<Player>().type)
         {
             case CharacterType.NPC:
 
@@ -44,6 +59,22 @@ public class Monster : Player
         //MonsterKillSoundPlay();
         //GameManager.instance.OnKilled += MonsterKillSoundPlay();
 
+    }
+
+    public void TransitionCamera(bool isThird)
+    {
+        if (isThird)
+        {
+            cvc.Priority = vc_lookat_priority;
+            playerMovement.SetLayerRecursive(monsterObj, 0);
+            // Monster FPS 팔 끄기
+            playerMovement.monsterFPS.SetActive(false);
+        }
+        else
+        {
+            cvc.Priority = vc_original_priority;
+            playerMovement.SetLayerRecursive(monsterObj, 3);
+        }
     }
 
     public override void OnDamaged(GameObject attacker)
@@ -82,7 +113,7 @@ public class Monster : Player
     }
 
     // 괴물 모습 변환
-    public void OnTransformation()
+    public void OnTransformation(bool isAttackingInDay)
     {
         // 연구원 모습 비활성화
         scientistObj.SetActive(false);
@@ -91,7 +122,7 @@ public class Monster : Player
         if (playerMovement)
         {
             playerMovement.animator = monsterObj.GetComponent<Animator>();
-            playerMovement.OnMonsterFPS();
+            playerMovement.OnMonsterFPS(isAttackingInDay);
         }
         aniSync.ani = monsterObj.GetComponent<Animator>();
     }
@@ -115,6 +146,16 @@ public class Monster : Player
     {
         hungerParticle = GetComponentInChildren<ParticleSystem>(true).GameObject();
         hungerParticle.SetActive(true);
+        if (NetworkManager.Instance.IsMonster())
+        {
+            hungerCanvas = GetComponentInChildren<HungerCanvasEffect>(true).GameObject();
+            hungerCanvas.SetActive(true);
+        }
+        else
+        {
+            hungerCanvas = GetComponentInChildren<HungerCanvasEffect>(true).GameObject();
+            hungerCanvas.SetActive(false);
+        }
     }
 
     // Use this when Hunger Gauge reset

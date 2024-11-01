@@ -248,14 +248,10 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
         }
 
         // 준비 완료. 게임 시작!
-        Debug.Log("Game Start!");
-
         PhotonNetwork.CurrentRoom.IsVisible = false;
 
-        // 게임 실행시 스페이스바 입력 콜백 등록
-        NetworkManager.Instance.GetComponent<ServerLogic>().AddCallBack();
         // 씬 로딩
-        NetSceneManager.instance.LoadSceneToAllClients(NetSceneManager.instance.mainSceneName);
+        NELoadScene.LoadSceneToAllClients();
     }
 
     public void OnClickCancel()

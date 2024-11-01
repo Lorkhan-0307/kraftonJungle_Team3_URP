@@ -31,10 +31,12 @@ public class CreateRoom : MonoBehaviour
         int _maxPlayerNum = (int)totalPlayerNumSlider.saveValue;
         // 헷갈릴만한건 connectionType. True면 public입니다.
         bool _connectionType = connectionTypeSwitch.isOn;
+
+        _serverName = _serverName.Trim();
+        if (_serverName == "")
+            return;
         
-        
-        
-        // Todo : 이 값들을 이용해서 서버에서 방을 만드는 코드를 여기에 작성하시면, Create Room Button을 누르면 동작합니다.
+        // 이 값들을 이용해서 서버에서 방을 만드는 코드를 여기에 작성하시면, Create Room Button을 누르면 동작합니다.
         // 현재는 동시에 My Room 으로 넘어가도록 되어있습니다. Loading은 추후에 추가하겠습니다.
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = _maxPlayerNum;
@@ -44,7 +46,7 @@ public class CreateRoom : MonoBehaviour
         customData.Add("Ping", PhotonNetwork.GetPing());
         customData.Add("Master", PhotonNetwork.LocalPlayer.NickName);
         // Private 방 코드 생성, 등록
-        // TODO: 방 코드 다른 방들과 겹치지 않게 세팅해야함.
+        // 방 코드 다른 방들과 겹치지 않게 세팅해야함.
         if (_connectionType)
         {
             customData.Add("AccessCode", 0);

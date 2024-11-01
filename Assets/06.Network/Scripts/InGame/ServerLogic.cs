@@ -16,6 +16,8 @@ public enum EventCode
     SwitchDayNight,
     HungerGauge,
     AccelTime,
+    LoadScene,
+    OnSceneLoaded,
     OnDisconnected,
 }
 
@@ -29,29 +31,6 @@ public enum GameState
 
 public class ServerLogic : MonoBehaviourPunCallbacks
 {
-    private InputAction gameStartAction;
-
-
-    public void AddCallBack()
-    {
-        gameStartAction = new InputAction(type: InputActionType.Value, binding: "<Keyboard>/space");
-        gameStartAction.Enable();
-        gameStartAction.performed += StartGameCallback;
-    }
-
-    public void StartGameCallback(InputAction.CallbackContext context)
-    {
-        //Debug.Log("StartGame Button Clicked");
-        //if (SceneManager.GetActiveScene().name != NetSceneManager.instance.mainSceneName) return;
-        if (NetworkManager.Instance.curState != GameState.OnRoom) return;
-
-
-        // TODO: 게임 시작 기능 구현
-        StartGameWithSettings(NetworkManager.Instance.gameSettings);
-    }
-
-
-
     #region GameLogic
     public int[] monsterActorNums;
 
@@ -67,9 +46,30 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     #endregion
 
     #region GameStart
+    Dictionary<int, bool> isPlayerSceneLoaded = new Dictionary<int, bool>();
+    public void InitPlayerList()
+    {
+        isPlayerSceneLoaded = new Dictionary<int, bool>();
+
+        foreach (int k in PhotonNetwork.CurrentRoom.Players.Keys)
+        {
+            isPlayerSceneLoaded.Add(k, false);
+        }
+    }
+    public void PlayerSceneLoaded(int actorNum)
+    {
+        isPlayerSceneLoaded[actorNum] = true;
+        foreach(bool b in isPlayerSceneLoaded.Values)
+        {
+            if (!b) return;
+        }
+
+        // TODO: 모든 플레이어들이 접속되었습니다.
+        Debug.Log("모든 플레이어들이 접속되었습니다.");
+        StartGameWithSettings(NetworkManager.Instance.gameSettings);
+    }
     public void StartGameWithSettings(GameSettings settings)
     {
-        gameStartAction.performed -= StartGameCallback;
         if (settings == null)
         {
             Debug.Log("There is no \"GameSettingsData\" in Resources folder.");
@@ -108,6 +108,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
                 monsterActorNums = settings.monsterActorNums;
             }
         }
+
 
 
         // 각 플레이어에게 랜덤 스폰 위치와 몬스터 번호를 전송

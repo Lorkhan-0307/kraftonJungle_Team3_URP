@@ -109,7 +109,7 @@ public class TimeManager : Singleton<TimeManager>
         }
         foreach(Monster m in NetworkManager.Instance.Monsters.Values)
         {
-            m.OnTransformation();
+            m.OnTransformation(false);
         }
 
         NPCManager.instance.SetDisable();

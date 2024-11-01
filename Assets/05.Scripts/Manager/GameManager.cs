@@ -53,6 +53,8 @@ public class GameManager : Singleton<GameManager>
     {
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
+        
+        //FindObjectOfType<SpectatorText>().EndSpectating();
         if (hungerSlider != null)
         {
             Destroy(hungerSlider);
@@ -62,6 +64,7 @@ public class GameManager : Singleton<GameManager>
         {
             Destroy(canvas);
         }
+
         TimeManager.instance.isEnd = true;
     }
 

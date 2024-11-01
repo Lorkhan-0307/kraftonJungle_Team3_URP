@@ -27,6 +27,11 @@ public class Player : MonoBehaviour, ICharacter
     {
         Debug.Log(attacker.gameObject.name);
         GetComponentInChildren<Animator>().SetTrigger("Death");
+        CapsuleCollider cc = GetComponent<CapsuleCollider>();
+        Destroy(cc);
+
+        Transform playerObjectTransform = transform.Find("PlayerObjects(Clone)");
+        if(playerObjectTransform) Destroy(playerObjectTransform.gameObject);
     }
 
     public virtual void OnDead()

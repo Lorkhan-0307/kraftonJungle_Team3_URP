@@ -31,6 +31,18 @@ public class PlayerMovement : MonoBehaviour
     private InputAction killAction;
     private InputAction runAction;
     private InputAction interactAction;
+    private InputAction voiceAction;
+
+
+    VoiceManager VoiceManager { 
+        get 
+        {
+            if (voiceManager == null)
+                voiceManager = FindObjectOfType<VoiceManager>();
+            return voiceManager;
+        }
+    }
+    VoiceManager voiceManager;
 
     [SerializeField] private Transform raycastShootPos;
     [SerializeField] private float attackrange = 3f;
@@ -57,7 +69,10 @@ public class PlayerMovement : MonoBehaviour
     public Animator fpsAnimator;
 
     [SerializeField] private GameObject scientistFPS;
-    [SerializeField] private GameObject monsterFPS;
+    //[SerializeField] 
+    public GameObject monsterFPS;
+
+    public bool isAttacking = false;
 
     private void Awake()
     {
@@ -68,6 +83,7 @@ public class PlayerMovement : MonoBehaviour
         killAction = playerInput.actions["Kill"];
         runAction = playerInput.actions["Run"];
         interactAction = playerInput.actions["Interact"];
+        voiceAction = playerInput.actions["Voice"];
 
         controller = GetComponentInParent<CharacterController>();
 
@@ -78,8 +94,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (parentTransform != null)
         {
-            GameObject targetObject = parentTransform.Find("Ch11_nonPBR@Idle").gameObject;
-            SetLayerRecursive(targetObject, 3);
+            GameObject targetObject = parentTransform.Find("Astronaut_Pilot_Full").gameObject;
+            
+            //SetLayerRecursive(targetObject, 3);
+            //SetLayerRecursive(targetObject.transform.Find("root").Find("pelvis").Find("spine_01").gameObject, 3);
             animator = targetObject.GetComponent<Animator>();
             if (NetworkManager.Instance.IsMonster())
             {
@@ -90,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
         fpsAnimator = GetComponentInChildren<Animator>();
     }
 
-    void SetLayerRecursive(GameObject obj, int newLayer)
+    public void SetLayerRecursive(GameObject obj, int newLayer)
     {
         // 현재 오브젝트의 레이어 변경
         obj.layer = newLayer;
@@ -121,6 +139,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(VoiceManager)
+        {
+            VoiceManager.PressToTalk(voiceAction.IsPressed());
+        }
         isGrounded = controller.isGrounded;
         
         if (isGrounded && velocity.y < 0)
@@ -128,61 +150,68 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = -2f;
         }
 
-        // Move 액션으로 이동 입력 받기
-        Vector2 input = moveAction.ReadValue<Vector2>();
-        Vector3 motion = transform.right * input.x + transform.forward * input.y;
-        float currentSpeed = IsMonsterNightSpeed() && runAction.IsPressed() ? monsterNightSpeed : speed;
-        controller.Move(motion * currentSpeed * Time.deltaTime);        
-
-        // Jump 액션으로 점프 입력 받기
-        if (jumpAction.triggered && isGrounded)
+        if (!isAttacking)
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            Debug.Log("JUMP ACTION");
+            // Move 액션으로 이동 입력 받기
+            Vector2 input = moveAction.ReadValue<Vector2>();
+            Vector3 motion = transform.right * input.x + transform.forward * input.y;
+            float currentSpeed = IsMonsterNightSpeed() && runAction.IsPressed() ? monsterNightSpeed : speed;
+            controller.Move(motion * currentSpeed * Time.deltaTime);        
+
+            // Jump 액션으로 점프 입력 받기
+            if (jumpAction.triggered && isGrounded)
+            {
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                Debug.Log("JUMP ACTION");
+            }
+
+
+            // 발걸음 소리 재생
+            if ((input.x != 0 || input.y != 0) && isGrounded)
+            {
+                nextFootstep -= Time.deltaTime;
+                if (nextFootstep <= 0)
+                {
+                    GetComponent<AudioSource>().PlayOneShot(footStepSound, 0.7f);
+                    nextFootstep += footStepDelay;
+                    //Debug.Log("Walking true");
+                    // bool 파라미터 설정
+                    animator.SetBool("IsWalking", true);
+                    fpsAnimator.SetBool("IsWalking", true);
+                }
+            }
+            else
+            {
+                //Debug.Log("Walking false");
+                animator.SetBool("IsWalking", false);
+                fpsAnimator.SetBool("IsWalking", false);
+            }
+
+            // Using RayCast to detect attack
+            RayCastAttackDetection();
+
+            if (killButton.interactable && killAction.triggered && target != null && !isKillOn)
+            {
+                AttackAction();
+                StartKillCooldown();
+            }
+
+            if (interactButton.interactable && interactAction.triggered && interactTarget != null)
+            {
+                Debug.Log("Interact");
+                interactTarget.GetComponentInParent<Interact>().BroadcastInteraction();
+            }
         }
 
+        //
         // 중력 적용
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+        //
 
         // 쿨타임 업데이트
         UpdatekillCooltime();
 
-        // Using RayCast to detect attack
-        RayCastAttackDetection();
-
-        if (killButton.interactable && killAction.triggered && target != null && !isKillOn)
-        {
-            AttackAction();
-            StartKillCooldown();
-        }
-
-        if (interactButton.interactable && interactAction.triggered && interactTarget != null)
-        {
-            Debug.Log("Interact");
-            interactTarget.GetComponentInParent<Interact>().Interaction();
-        }
-
-        // 발걸음 소리 재생
-        if ((input.x != 0 || input.y != 0) && isGrounded)
-        {
-            nextFootstep -= Time.deltaTime;
-            if (nextFootstep <= 0)
-            {
-                GetComponent<AudioSource>().PlayOneShot(footStepSound, 0.7f);
-                nextFootstep += footStepDelay;
-                //Debug.Log("Walking true");
-                // bool 파라미터 설정
-                animator.SetBool("IsWalking", true);
-                fpsAnimator.SetBool("IsWalking", true);
-            }
-        }
-        else
-        {
-            //Debug.Log("Walking false");
-            animator.SetBool("IsWalking", false);
-            fpsAnimator.SetBool("IsWalking", false);
-        }
     }
 
     private void UpdatekillCooltime()
@@ -308,10 +337,11 @@ public class PlayerMovement : MonoBehaviour
         return !TimeManager.instance.isDay && player.type == CharacterType.Monster;
     }
 
-    public void OnMonsterFPS()
+    public void OnMonsterFPS(bool isAttackInDay)
     {
         scientistFPS.SetActive(false);
-        monsterFPS.SetActive(true);
+        monsterFPS.SetActive(false);
+        if(!isAttackInDay) monsterFPS.SetActive(true);
         fpsAnimator = monsterFPS.GetComponent<Animator>();
     }
 

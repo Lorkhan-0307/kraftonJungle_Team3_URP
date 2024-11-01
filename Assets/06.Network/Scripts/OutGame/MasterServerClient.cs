@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 using Amazon.Runtime.Internal.Auth;
+using Michsky.UI.Dark;
 
 public class MasterServerClient : MonoBehaviourPunCallbacks
 {
@@ -16,6 +17,9 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
 
     DynamoDBManager dbManager;
 
+    bool isPhotonConnected = false;
+    bool isDBConnected = false;
+
     void Start()
     {
         orManager = FindObjectOfType<OutgameRoomsManager>(true);
@@ -25,13 +29,11 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
         if(!PhotonNetwork.IsConnected)
         {
             PhotonNetwork.ConnectUsingSettings();
-            Debug.Log("ConnectUsingSettings");
         }
         else if(PhotonNetwork.InRoom)
         {
             Debug.Log(PhotonNetwork.NetworkClientState.ToString());
             PhotonNetwork.LeaveRoom();
-            Debug.Log("LeaveRoom");
         }
 
         // 일정 주기로 실행되는 새로고침 코루틴 실행
@@ -51,18 +53,35 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
 
         await dbManager.LoadData(token, playerData);
 
-        Debug.Log($"Loaded {playerData.Nickname}");
         nicknameInput.text = playerData.Nickname;
         PhotonNetwork.LocalPlayer.NickName = playerData.Nickname;
         LoginTokenManager.SaveTokenToLocal(playerData.UserToken);
+
+        OnJoinedDB();
     }
     public async void UpdateNickName()
     {
         string token = LoginTokenManager.LoadDataWithToken();
         string name = nicknameInput.text;
 
+        name = name.Trim();
+        if (name == "")
+            return;
+
+        nicknameInput.text = name;
+
         await dbManager.UpdateNickname(token, name);
         PhotonNetwork.LocalPlayer.NickName = name;
+    }
+
+    public void ResetButton()
+    {
+        LoginTokenManager.ResetData();
+
+        //TODO: DB에 있는 데이터 삭제
+
+
+        LoginWithToken();
     }
 
 
@@ -94,6 +113,26 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
         ExitGames.Client.Photon.Hashtable customData = new ExitGames.Client.Photon.Hashtable();
         customData.Add("IsReady", false);
         PhotonNetwork.LocalPlayer.CustomProperties = customData;
+    }
+    public override void OnJoinedLobby()
+    {
+        isPhotonConnected = true;
+        OnConnectFinished();
+    }
+    void OnJoinedDB()
+    {
+        isDBConnected = true;
+        OnConnectFinished();
+    }
+
+    void OnConnectFinished()
+    {
+        if(isPhotonConnected && isDBConnected)
+        {
+            //TODO: 로딩 완료
+            Debug.Log("로딩 완료!");
+            FindObjectOfType<SplashScreenManager>().skipOnAnyKeyPress = true;
+        }
     }
 
     public override void OnLeftRoom()

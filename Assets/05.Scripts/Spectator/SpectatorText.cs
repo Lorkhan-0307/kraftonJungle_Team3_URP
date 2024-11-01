@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Photon.Pun;
 
 public class SpectatorText : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class SpectatorText : MonoBehaviour
 
     public void SetSpectatingTarget(GameObject target)
     {
+        string name = target.GetComponent<PhotonView>().Owner.NickName;
+
         spectatingTarget = target;
         tmpText = GetComponentInChildren<TextMeshProUGUI>();
 
@@ -16,12 +19,12 @@ public class SpectatorText : MonoBehaviour
         {
             case CharacterType.Scientist:
                 tmpText.color = Color.green;
-                tmpText.text = "Scientist\n" + spectatingTarget.name;
+                tmpText.text = "Scientist\n" + name;
                 Debug.Log("Change text to Scientist");
                 break;
             case CharacterType.Monster:
                 tmpText.color = Color.red;
-                tmpText.text = "Monster\n" + spectatingTarget.name;
+                tmpText.text = "Monster\n" + name;
                 Debug.Log("Change text to Monster");
                 break;
             case CharacterType.NPC:
@@ -31,6 +34,11 @@ public class SpectatorText : MonoBehaviour
 
         tmpText = GetComponentInChildren<TextMeshProUGUI>();
 
-        Debug.Log("Spectating Target Text Set : " + spectatingTarget.name);
+        //Debug.Log("Spectating Target Text Set : " + spectatingTarget.name);
+    }
+
+    public void EndSpectating()
+    {
+        Destroy(gameObject);
     }
 }

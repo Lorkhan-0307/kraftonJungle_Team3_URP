@@ -26,7 +26,7 @@ public class CCTV : Interact
 
     }
 
-    public override void Interaction()
+    protected override void Interaction()
     {
         base.Interaction();
         

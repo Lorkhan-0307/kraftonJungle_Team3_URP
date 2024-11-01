@@ -45,18 +45,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71ae12f517627ac41b4d1d1e5ddc44fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameSettings:
+    players: -1
+    npcCount: 20
+    monsters: 1
+    scientists: 4
+    monsterRandomSelect: 1
+    monsterActorNums: 01000000
+    dayLength: 45
+    nightLength: 20
+    hungerLength: 30
   curState: 0
   myPlayer: {fileID: 0}
   NPCCount: 0
-  testAction:
-    m_Name: Test
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 12fe651e-17c9-4653-abfb-69ab26f51223
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
 --- !u!1 &4308312680685940333
 GameObject:
   m_ObjectHideFlags: 0
@@ -71,6 +72,8 @@ GameObject:
   - component: {fileID: 2614432952297017284}
   - component: {fileID: 3785735150168781355}
   - component: {fileID: 7621449153401180963}
+  - component: {fileID: 5439758156321487643}
+  - component: {fileID: 1031243732574820278}
   - component: {fileID: 3780648650000633309}
   - component: {fileID: 1627562016394821786}
   - component: {fileID: 6376347778157284329}
@@ -164,6 +167,34 @@ MonoBehaviour:
   playerMonsterName: Player_Monster
   playerObjectPrefab: {fileID: 6033922063256332061, guid: 1174927c3e36d014fbd09f2da7f68217,
     type: 3}
+  voicePrefab: {fileID: 251469466147729761, guid: 0260291ef16c7db40b36a5f4ceb1b740,
+    type: 3}
+--- !u!114 &5439758156321487643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4308312680685940333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73e8370b87c518a45b7678366b361a82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventCode: 0
+--- !u!114 &1031243732574820278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4308312680685940333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cfca841b887f56459a40d1eb99404dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventCode: 0
 --- !u!114 &3780648650000633309
 MonoBehaviour:
   m_ObjectHideFlags: 0

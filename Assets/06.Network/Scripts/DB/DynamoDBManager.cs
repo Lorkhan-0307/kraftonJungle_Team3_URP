@@ -18,7 +18,7 @@ public class DynamoDBManager : MonoBehaviour
 
     public async Task LoadData(string token, PlayerData playerData)
     {
-        InitializeDynamoDBClient();
+        InitializeDB();
 
 
         // UserToken이 빈 문자열일 경우 새로운 UserToken과 랜덤 닉네임 생성 및 저장
@@ -44,7 +44,7 @@ public class DynamoDBManager : MonoBehaviour
     }
 
 
-    private void InitializeDynamoDBClient()
+    public void InitializeDB()
     {
         if (client == null)
         {
@@ -102,7 +102,6 @@ public class DynamoDBManager : MonoBehaviour
             var response = await client.GetItemAsync(request);
             if (response.Item != null && response.Item.Count > 0)
             {
-                Debug.Log("Player data retrieved successfully by UserToken.");
                 return response.Item;
             }
             else
@@ -123,8 +122,6 @@ public class DynamoDBManager : MonoBehaviour
         var existingPlayerData = await GetPlayerDataByUserToken(playerData.UserToken);
 
         playerData.Nickname = existingPlayerData["Nickname"].S;
-
-        Debug.Log($"Nickname: {playerData.Nickname}");
     }
 
     
@@ -171,6 +168,53 @@ public class DynamoDBManager : MonoBehaviour
         catch (Exception e)
         {
             Debug.LogError("Failed to update nickname: " + e.Message);
+        }
+    }
+
+
+    public async Task DeletePlayerDataByToken(PlayerData playerData)
+    {
+        // UserToken을 통해 PlayerData 조회
+        var existingPlayerData = await GetPlayerDataByUserToken(playerData.UserToken);
+
+        if (existingPlayerData != null)
+        {
+            // PlayerData가 존재하는 경우, 삭제 요청을 실행합니다.
+            await DeletePlayerData(playerData);
+        }
+        else
+        {
+            Debug.Log("No player data found for the provided UserToken. Deletion skipped.");
+        }
+    }
+
+    public async Task DeletePlayerData(PlayerData playerData)
+    {
+        //if (client == null)
+        //{
+        //    Debug.LogError("DynamoDB client is not initialized.");
+        //    return;
+        //}
+
+        // 삭제 요청 생성
+        var request = new DeleteItemRequest
+        {
+            TableName = "PlayerData",
+            Key = new Dictionary<string, AttributeValue>
+        {
+            { "UserToken", new AttributeValue { S = playerData.UserToken } }
+        }
+        };
+
+        try
+        {
+            // 삭제 요청 실행
+            var response = await client.DeleteItemAsync(request);
+            Debug.Log($"Player data with UserToken {playerData.UserToken} deleted successfully.");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Failed to delete player data: " + e.Message);
         }
     }
 }

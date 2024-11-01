@@ -2,6 +2,7 @@ using ExitGames.Client.Photon;
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class LoginTokenManager
@@ -24,5 +25,10 @@ public class LoginTokenManager
     public static string LoadDataWithToken()
     {
         return PlayerPrefs.GetString(tokenKey, "");
+    }
+
+    public static void ResetData()
+    {
+        PlayerPrefs.SetString(tokenKey, "");
     }
 }
