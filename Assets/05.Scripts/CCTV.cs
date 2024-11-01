@@ -8,9 +8,6 @@ public class CCTV : Interact
 {
     [SerializeField] private MeshRenderer screenMeshRenderer;
     [SerializeField] private Material originalMaterial;
-    [SerializeField] private CinemachineVirtualCamera cvc;
-    [SerializeField] private int vc_original_priority = 5;
-    [SerializeField] private int vc_lookat_priority = 5;
 
     private RenderTexture _screenTexture;
 
@@ -21,7 +18,7 @@ public class CCTV : Interact
         curScreenMat.SetTexture("_BaseMap", _screenTexture);
 
         Material[] materials = screenMeshRenderer.materials;
-        materials[1] = curScreenMat;
+        materials[0] = curScreenMat;
         screenMeshRenderer.materials = materials;
 
     }
@@ -50,7 +47,10 @@ public class CCTV : Interact
     }
 
 
-    private IEnumerator TransitionCameraCoroutine()
+    // Obsolete Method
+    // Reuse on camera Transition
+
+    /*private IEnumerator TransitionCameraCoroutine()
     {
         isInteractable = false;
         if (cvc.Priority == vc_original_priority)
@@ -72,5 +72,5 @@ public class CCTV : Interact
         // Transition 완료 후 isInteractable을 다시 true로 설정
         isInteractable = true;
         
-    }
+    }*/
 }

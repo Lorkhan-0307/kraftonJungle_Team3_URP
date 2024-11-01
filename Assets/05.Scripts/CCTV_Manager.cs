@@ -35,6 +35,8 @@ public class CCTV_Manager : MonoBehaviour
             cctvs[index].ApplyScreen(currentRenderTexture);
         }*/
 
+        if (tv_screen == null) tv_screen = GetComponent<CCTV>();
+
         currentCameraIndex = 0;
         SetActiveCamera(currentCameraIndex);
     }
