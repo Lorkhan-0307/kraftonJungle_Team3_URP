@@ -16,10 +16,9 @@ public class VoiceFollower : MonoBehaviourPun
         if (audioSource != null)
         {
             audioSource.volume = 10.0f;
-            audioSource.panStereo = 2.0f;
 
             AudioReverbFilter reverbfilter = audioSource.gameObject.AddComponent<AudioReverbFilter>();
-            reverbfilter.reverbPreset = AudioReverbPreset.Cave;
+            reverbfilter.reverbPreset = AudioReverbPreset.Room;
             reverbfilter.dryLevel = 0;
             reverbfilter.reverbLevel = 1;
         }
@@ -37,7 +36,7 @@ public class VoiceFollower : MonoBehaviourPun
                 return;
                 
             target = myPlayer.transform;
-            Debug.Log("Set PARENT Voice");
+            //Debug.Log("Set PARENT Voice");
 
             transform.SetParent(target.transform);
             transform.localPosition = Vector3.zero;
