@@ -17,6 +17,7 @@ public class NPC : Player
 
     public override void OnDamaged(GameObject attacker)
     {
+        GetComponent<BloodEffect>().OnBloodEffect();
         switch (attacker.GetComponent<Player>().type)
         {
             case CharacterType.Monster:

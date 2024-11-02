@@ -207,6 +207,7 @@ GameObject:
   - component: {fileID: 6285171166944961644}
   - component: {fileID: 5913564522040278332}
   - component: {fileID: 3866305328468130339}
+  - component: {fileID: 5554838401304134939}
   m_Layer: 0
   m_Name: Player_NPC
   m_TagString: NPC
@@ -378,6 +379,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ani: {fileID: 2352373569448773604}
+--- !u!114 &5554838401304134939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7344563461369970091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88fd2d568bf01a544bfc243f84d8b7a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bloodDecalPrefab: {fileID: 8477787130947067767, guid: 5ea8fbd9938f15a408170b7045cabbcf,
+    type: 3}
 --- !u!1001 &4964909400589039112
 PrefabInstance:
   m_ObjectHideFlags: 0
