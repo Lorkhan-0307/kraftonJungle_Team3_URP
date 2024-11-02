@@ -43,7 +43,6 @@ public class Monster : Player
         TransitionCamera(true);
 
         // Todo: hunger time reset
-        //attacker �� hunger time reset ȣ��
         // Monster 에게만
         switch (victim.GetComponent<Player>().type)
         {

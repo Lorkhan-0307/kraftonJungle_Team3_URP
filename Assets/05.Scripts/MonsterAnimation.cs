@@ -7,14 +7,15 @@ public class MonsterAnimation : MonoBehaviour
     {
         // 부모 오브젝트
         Transform parentTransform = transform.parent;
+        Transform monsterTransform = transform.parent;
+        Monster m = monsterTransform.gameObject.GetComponent<Monster>();
+        // 낮이면
+        // 몬스터 아니어도 실행되어야 함
+        if(TimeManager.instance.GetisDay())
+            m.OffTransformation();
         if (NetworkManager.Instance.IsMonster())
         {
-            Transform monsterTransform = transform.parent;
-            Monster m = monsterTransform.gameObject.GetComponent<Monster>();
-            // 낮이면
-            if(TimeManager.instance.GetisDay())
-                m.OffTransformation();
-            // 항상
+            // 낮, 밤 상관없이 실행
             m.TransitionCamera(false);
 
             PlayerMovement playerMovement = parentTransform.GetComponentInChildren<PlayerMovement>();
