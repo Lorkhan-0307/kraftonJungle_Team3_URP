@@ -15,7 +15,7 @@ public class BloodEffect : MonoBehaviour
         {
             // 바닥에 Decal 생성
             Quaternion rotation = Quaternion.LookRotation(-hit.normal);
-            Instantiate(bloodDecalPrefab, hit.point, rotation);
+            Instantiate(bloodDecalPrefab, hit.point + Vector3.up * 0.1f, rotation);
         }
     }
 }
