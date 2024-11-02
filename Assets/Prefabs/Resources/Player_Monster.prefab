@@ -265,6 +265,7 @@ GameObject:
   - component: {fileID: 4160618565708385934}
   - component: {fileID: 2402085082251486151}
   - component: {fileID: 8648778524623116933}
+  - component: {fileID: 2193848959786335179}
   m_Layer: 0
   m_Name: Player_Monster
   m_TagString: Player
@@ -424,6 +425,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ani: {fileID: 6101505932280377615}
+--- !u!114 &2193848959786335179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5722733983999574982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88fd2d568bf01a544bfc243f84d8b7a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bloodDecalPrefab: {fileID: 8477787130947067767, guid: 5ea8fbd9938f15a408170b7045cabbcf,
+    type: 3}
 --- !u!1 &5868934100538815841
 GameObject:
   m_ObjectHideFlags: 0
