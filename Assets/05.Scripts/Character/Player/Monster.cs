@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class Monster : Player
 {
@@ -23,6 +24,10 @@ public class Monster : Player
     [SerializeField] private CinemachineVirtualCamera cvc;
     [SerializeField] private int vc_original_priority = 5;
     [SerializeField] private int vc_lookat_priority = 20;
+
+
+    [SerializeField] private PlayableDirector transformationDirector;
+    [SerializeField] private PlayableDirector transformationDirectorWithoutCam;
 
     private MouseComponent mc;
 
@@ -111,6 +116,20 @@ public class Monster : Player
         moe.DisableOutlineEffect();
     }
 
+    public void OnTransformationTimelineFinished()
+    {
+        if(transformationDirector.gameObject.activeInHierarchy) transformationDirector.gameObject.SetActive(false);
+        scientistObj.SetActive(false);
+        monsterObj.SetActive(true);
+        // 애니메이터 변환
+        if (playerMovement)
+        {
+            playerMovement.animator = monsterObj.GetComponent<Animator>();
+            playerMovement.OnMonsterFPS(false);
+        }
+        aniSync.ani = monsterObj.GetComponent<Animator>();
+    }
+
     // 괴물 모습 변환
     public void OnTransformation(bool isAttackingInDay)
     {
@@ -181,5 +200,20 @@ public class Monster : Player
     {
         base.PlayKillSound();
         monster_kill_sound.Play();
+    }
+
+    public void OnTransformationTimeline(bool isNeededCam)
+    {
+        if (isNeededCam)
+        {
+            transformationDirector.gameObject.SetActive(true);
+            transformationDirector.Play();
+        }
+        else
+        {
+            transformationDirectorWithoutCam.gameObject.SetActive(true);
+            transformationDirectorWithoutCam.Play();
+        }
+        
     }
 }
