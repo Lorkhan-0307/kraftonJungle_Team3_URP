@@ -70,21 +70,8 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     }
     public void StartGameWithSettings(GameSettings settings)
     {
-        if (settings == null)
-        {
-            Debug.Log("There is no \"GameSettingsData\" in Resources folder.");
-            settings = new GameSettings();
-        }
         // 현재 룸에 접속되어있는 플레이어 목록을 가져옴
         Photon.Realtime.Player[] playerList = PhotonNetwork.PlayerList;
-
-        // 인원 체크
-        if (playerList.Length < settings.players && settings.players > 0)
-        {
-            Debug.Log($"[{playerList.Length}/{settings.players}] 인원이 부족합니다.");
-            return;
-        }
-
 
 
         // 플레이어 생존 여부 배열 초기화

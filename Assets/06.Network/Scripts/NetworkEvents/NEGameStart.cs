@@ -71,5 +71,7 @@ public class NEGameStart : NetworkEvent
         GetComponent<NEAttackRequest>().Init();
 
         GameManager.instance.StartGame();
+
+        LoadingManager.instance.LoadingEnd();
     }
 }
