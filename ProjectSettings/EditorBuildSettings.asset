@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01.Scenes/MergeProject.unity
     guid: fbc2f1bf13a4ea24c923bf67a3f8057e
+  - enabled: 1
+    path: Assets/01.Scenes/maprebuilding.unity
+    guid: c6941176f9198614d9f833ca00086f86
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 3744d8b7ba3dbd746a979d56a8b79c4e,
       type: 3}

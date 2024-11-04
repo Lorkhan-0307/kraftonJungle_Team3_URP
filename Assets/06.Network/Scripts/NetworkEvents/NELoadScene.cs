@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class NELoadScene : NetworkEvent
 {
-    public static string mainSceneName = "MergeProject";
+    public static string mainSceneName = "maprebuilding";
 
     protected override void Awake()
     {
