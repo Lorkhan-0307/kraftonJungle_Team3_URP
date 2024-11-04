@@ -266,6 +266,7 @@ GameObject:
   - component: {fileID: 2402085082251486151}
   - component: {fileID: 8648778524623116933}
   - component: {fileID: 2193848959786335179}
+  - component: {fileID: 2546109773513282259}
   m_Layer: 0
   m_Name: Player_Monster
   m_TagString: Player
@@ -443,6 +444,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bloodDecalPrefab: {fileID: 8477787130947067767, guid: 5ea8fbd9938f15a408170b7045cabbcf,
     type: 3}
+--- !u!114 &2546109773513282259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5722733983999574982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 86fddde3393b4674e82cc96a691f7234, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4160618565708385934}
+          m_TargetAssemblyTypeName: Monster, Assembly-CSharp
+          m_MethodName: OnTransformationTimelineFinished
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &5868934100538815841
 GameObject:
   m_ObjectHideFlags: 0
@@ -7684,27 +7715,27 @@ PrefabInstance:
     - target: {fileID: 929719766163092718, guid: 87bf4c8c74348bc4a966be88ad483457,
         type: 3}
       propertyPath: m_Priority
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1091424009881150507, guid: 87bf4c8c74348bc4a966be88ad483457,
         type: 3}
       propertyPath: m_Priority
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1648717306150202173, guid: 87bf4c8c74348bc4a966be88ad483457,
         type: 3}
       propertyPath: m_Priority
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3311022209801297314, guid: 87bf4c8c74348bc4a966be88ad483457,
         type: 3}
       propertyPath: m_Priority
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4392839198485667721, guid: 87bf4c8c74348bc4a966be88ad483457,
         type: 3}
       propertyPath: m_Priority
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4834153227490234324, guid: 87bf4c8c74348bc4a966be88ad483457,
         type: 3}
@@ -7759,17 +7790,17 @@ PrefabInstance:
     - target: {fileID: 4925578255500512145, guid: 87bf4c8c74348bc4a966be88ad483457,
         type: 3}
       propertyPath: m_Priority
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5160047398812195167, guid: 87bf4c8c74348bc4a966be88ad483457,
         type: 3}
       propertyPath: m_Priority
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5864804537869031982, guid: 87bf4c8c74348bc4a966be88ad483457,
         type: 3}
       propertyPath: m_Priority
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7219912885329296920, guid: 87bf4c8c74348bc4a966be88ad483457,
         type: 3}
@@ -7784,12 +7815,12 @@ PrefabInstance:
     - target: {fileID: 8254325611885416648, guid: 87bf4c8c74348bc4a966be88ad483457,
         type: 3}
       propertyPath: m_Priority
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8479920614604595604, guid: 87bf4c8c74348bc4a966be88ad483457,
         type: 3}
       propertyPath: m_Priority
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
