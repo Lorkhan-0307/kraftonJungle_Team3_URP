@@ -119,8 +119,11 @@ public class Monster : Player
     public void OnTransformationTimelineFinished()
     {
         if(transformationDirector.gameObject.activeInHierarchy) transformationDirector.gameObject.SetActive(false);
-        scientistObj.SetActive(false);
-        monsterObj.SetActive(true);
+        bool isDay = TimeManager.instance.isDay;
+        scientistObj.SetActive(isDay);
+        monsterObj.SetActive(!isDay);
+        
+        
         // 애니메이터 변환
         if (playerMovement)
         {
@@ -204,6 +207,9 @@ public class Monster : Player
 
     public void OnTransformationTimeline(bool isNeededCam)
     {
+        scientistObj.SetActive(false);
+        monsterObj.SetActive(false);
+        
         if (isNeededCam)
         {
             transformationDirector.gameObject.SetActive(true);
