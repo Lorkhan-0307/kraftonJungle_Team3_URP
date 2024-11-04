@@ -10,11 +10,12 @@ public class MouseComponent : MonoBehaviour
     public Transform playerBody;
     float xRotation = 0f;
 
-    public bool isAttacking = false;
 
     // Input Actions 변수
     private PlayerInput playerInput;
     private InputAction lookAction;
+
+    private PlayerMovement pm;
 
     void Awake()
     {
@@ -22,6 +23,7 @@ public class MouseComponent : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         lookAction = playerInput.actions["Look"];
         playerBody = GetComponentInParent<CharacterController>().transform;
+        pm = FindObjectOfType<PlayerMovement>();
     }
 
     void Start()
@@ -32,7 +34,7 @@ public class MouseComponent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isAttacking)
+        if (pm.isMovable)
         {
             // Look 액션으로 마우스 움직임 입력 받기
             Vector2 mouseDelta = lookAction.ReadValue<Vector2>();

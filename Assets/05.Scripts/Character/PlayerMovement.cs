@@ -153,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = -2f;
         }
 
-        if (!isMovable)
+        if (isMovable)
         {
             // Move 액션으로 이동 입력 받기
             Vector2 input = moveAction.ReadValue<Vector2>();
@@ -352,7 +352,14 @@ public class PlayerMovement : MonoBehaviour
     {
         scientistFPS.SetActive(true);
         monsterFPS.SetActive(false);
-        fpsAnimator = scientistFPS.GetComponent<Animator>();
+        fpsAnimator = scientistFPS.transform.GetComponentInChildren<Animator>();
+    }
+
+    public void OffAllFPS()
+    {
+        scientistFPS.SetActive(false);
+        monsterFPS.SetActive(false);
+        Debug.Log("OFF ALL FPS");
     }
 }
     

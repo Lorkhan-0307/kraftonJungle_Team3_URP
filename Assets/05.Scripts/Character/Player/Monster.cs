@@ -45,7 +45,6 @@ public class Monster : Player
         OnTransformation(TimeManager.instance.GetisDay());
 
         if(playerMovement != null) playerMovement.isMovable = false;
-        mc.isAttacking = true;
         TransitionCamera(true);
 
         // Todo: hunger time reset
@@ -124,7 +123,7 @@ public class Monster : Player
         bool isDay = TimeManager.instance.isDay;
         scientistObj.SetActive(isDay);
         monsterObj.SetActive(!isDay);
-        if(playerMovement != null) playerMovement.isMovable = false;
+        if(playerMovement != null) playerMovement.isMovable = true;
         
         
         // 애니메이터 변환
@@ -213,6 +212,7 @@ public class Monster : Player
         scientistObj.SetActive(false);
         monsterObj.SetActive(false);
         
+        
         if (isNeededCam)
         {
             transformationDirector.gameObject.SetActive(true);
@@ -220,7 +220,7 @@ public class Monster : Player
             if (playerMovement != null)
             {
                 playerMovement.isMovable = false;
-                playerMovement.monsterFPS.SetActive(false);
+                playerMovement.OffAllFPS();
             }
         }
         else

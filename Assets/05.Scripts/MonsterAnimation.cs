@@ -21,7 +21,6 @@ public class MonsterAnimation : MonoBehaviour
             PlayerMovement playerMovement = parentTransform.GetComponentInChildren<PlayerMovement>();
             MouseComponent mc = parentTransform.GetComponentInChildren<MouseComponent>();
 
-            mc.isAttacking = false;
             playerMovement.isMovable = true;
         }
     }
