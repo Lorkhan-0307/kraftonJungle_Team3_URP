@@ -39,14 +39,6 @@ public class TransformSync : MonoBehaviourPunCallbacks, IPunObservable
             Vector3 extrapolatedPos = latestPos + velocity * extrapolationTime; // 예측 위치 계산
 
 
-            // 유효성 검사 추가
-            //if (float.IsNaN(extrapolatedPos.x) || float.IsInfinity(extrapolatedPos.x) ||
-            //    float.IsNaN(extrapolatedPos.y) || float.IsInfinity(extrapolatedPos.y) ||
-            //    float.IsNaN(extrapolatedPos.z) || float.IsInfinity(extrapolatedPos.z))
-            //{
-            //    extrapolatedPos = latestPos; // 예측 위치가 유효하지 않으면 최신 위치 사용
-            //}
-
             // 예측 위치와 회전 적용
             transform.position = Vector3.Lerp(transform.position, extrapolatedPos, Time.deltaTime * 10); // 위치 보간
             transform.rotation = Quaternion.Lerp(transform.rotation, latestRot, Time.deltaTime * 10); // 회전 보간
