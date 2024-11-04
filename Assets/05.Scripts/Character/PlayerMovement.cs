@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
     //[SerializeField] 
     public GameObject monsterFPS;
 
-    public bool isMovable = false;
+    public bool isMovable = true;
 
     private void Awake()
     {
