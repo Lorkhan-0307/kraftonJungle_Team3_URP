@@ -71,6 +71,8 @@ public class SpectatorCamera : MonoBehaviour
     // 관전 대상 변경
     private void SwitchPlayer(int idx_change)
     {
+        if (NetworkManager.Instance == null || 
+            NetworkManager.Instance.curState == GameState.End) return;
         if (remainingPlayers.Count == 0)
             return;
 

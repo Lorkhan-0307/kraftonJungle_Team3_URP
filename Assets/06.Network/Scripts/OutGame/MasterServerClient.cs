@@ -30,17 +30,11 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
         if(!PhotonNetwork.IsConnected)
         {
             PhotonNetwork.ConnectUsingSettings();
-        }
-        else if(PhotonNetwork.InRoom)
-        {
-            Debug.Log(PhotonNetwork.NetworkClientState.ToString());
-            PhotonNetwork.LeaveRoom();
+            LoginWithToken();
         }
 
         // 일정 주기로 실행되는 새로고침 코루틴 실행
         StartCoroutine(RefreshPeriod());
-
-        LoginWithToken();
     }
 
     public async void LoginWithToken()

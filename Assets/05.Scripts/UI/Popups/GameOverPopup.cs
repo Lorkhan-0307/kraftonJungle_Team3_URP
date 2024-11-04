@@ -34,6 +34,6 @@ public class GameOverPopup : MonoBehaviour
     {
         // 여기에서 메인 화면으로 돌아가는 코드를 작성하면 됩니다.
         Destroy(NetworkManager.Instance.gameObject);
-        SceneManager.LoadScene(0);
+        LoadingManager.instance.LoadMainScene();
     }
 }
