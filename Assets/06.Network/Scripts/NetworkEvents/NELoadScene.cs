@@ -22,6 +22,9 @@ public class NELoadScene : NetworkEvent
     }
     IEnumerator LoadCoroutine(string sceneName)
     {
+        LoadingManager.instance.LoadingStart();
+        yield return new WaitForSeconds(1f);
+
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName); // 씬 로딩
         asyncLoad.allowSceneActivation = true;
 

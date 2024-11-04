@@ -2,7 +2,6 @@ using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using TMPro;
-using Amazon.Runtime.Internal.Auth;
 using Michsky.UI.Dark;
 
 public class MasterServerClient : MonoBehaviourPunCallbacks
