@@ -44,7 +44,7 @@ public class Monster : Player
 
         OnTransformation(TimeManager.instance.GetisDay());
 
-        if(playerMovement != null) playerMovement.isMovable = true;
+        if(playerMovement != null) playerMovement.isMovable = false;
         mc.isAttacking = true;
         TransitionCamera(true);
 
@@ -120,6 +120,7 @@ public class Monster : Player
     public void OnTransformationTimelineFinished()
     {
         if(transformationDirector.gameObject.activeInHierarchy) transformationDirector.gameObject.SetActive(false);
+        if(transformationDirectorWithoutCam.gameObject.activeInHierarchy) transformationDirectorWithoutCam.gameObject.SetActive(false);
         bool isDay = TimeManager.instance.isDay;
         scientistObj.SetActive(isDay);
         monsterObj.SetActive(!isDay);
