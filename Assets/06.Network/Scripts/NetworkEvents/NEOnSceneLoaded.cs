@@ -24,7 +24,6 @@ public class NEOnSceneLoaded : NetworkEvent
     public override void OnEvent(object customData)
     {
         int actorNum = (int)customData;
-        Debug.Log("11111");
 
         // TODO: 해당 캐릭터가 접속되었음. 모든 캐릭터가 접속되었을 시 게임 실행
         if (!Server) return;
@@ -34,7 +33,6 @@ public class NEOnSceneLoaded : NetworkEvent
     // 서버에게 이벤트를 보냄.
     public static void SceneLoaded()
     {
-        Debug.Log("00000");
         object content = PhotonNetwork.LocalPlayer.ActorNumber;
         NetworkManager.SendToServer(EventCode.OnSceneLoaded, content);
     }

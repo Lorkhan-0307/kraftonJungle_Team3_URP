@@ -22,6 +22,8 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        PhotonNetwork.SerializationRate = 20; // 초당 20회 동기화
+
         orManager = FindObjectOfType<OutgameRoomsManager>(true);
         mrManager = FindObjectOfType<MyRoomManager>(true);
 
