@@ -44,7 +44,7 @@ public class Monster : Player
 
         OnTransformation(TimeManager.instance.GetisDay());
 
-        playerMovement.isAttacking = true;
+        if(playerMovement != null) playerMovement.isMovable = true;
         mc.isAttacking = true;
         TransitionCamera(true);
 
@@ -123,6 +123,7 @@ public class Monster : Player
         bool isDay = TimeManager.instance.isDay;
         scientistObj.SetActive(isDay);
         monsterObj.SetActive(!isDay);
+        if(playerMovement != null) playerMovement.isMovable = false;
         
         
         // 애니메이터 변환
@@ -215,6 +216,11 @@ public class Monster : Player
         {
             transformationDirector.gameObject.SetActive(true);
             transformationDirector.Play();
+            if (playerMovement != null)
+            {
+                playerMovement.isMovable = false;
+                playerMovement.monsterFPS.SetActive(false);
+            }
         }
         else
         {

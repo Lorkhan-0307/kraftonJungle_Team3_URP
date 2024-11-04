@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.HID;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
@@ -72,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
     //[SerializeField] 
     public GameObject monsterFPS;
 
-    public bool isAttacking = false;
+    public bool isMovable = false;
 
     private void Awake()
     {
@@ -152,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = -2f;
         }
 
-        if (!isAttacking)
+        if (!isMovable)
         {
             // Move 액션으로 이동 입력 받기
             Vector2 input = moveAction.ReadValue<Vector2>();
