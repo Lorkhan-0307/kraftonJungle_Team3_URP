@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Timeline;
 
 public class Monster : Player
 {
@@ -43,7 +44,7 @@ public class Monster : Player
 
         OnTransformation(TimeManager.instance.GetisDay());
 
-        playerMovement.isAttacking = true;
+        if(playerMovement != null) playerMovement.isMovable = true;
         mc.isAttacking = true;
         TransitionCamera(true);
 
@@ -122,6 +123,7 @@ public class Monster : Player
         bool isDay = TimeManager.instance.isDay;
         scientistObj.SetActive(isDay);
         monsterObj.SetActive(!isDay);
+        if(playerMovement != null) playerMovement.isMovable = false;
         
         
         // 애니메이터 변환
@@ -214,6 +216,11 @@ public class Monster : Player
         {
             transformationDirector.gameObject.SetActive(true);
             transformationDirector.Play();
+            if (playerMovement != null)
+            {
+                playerMovement.isMovable = false;
+                playerMovement.monsterFPS.SetActive(false);
+            }
         }
         else
         {
@@ -221,5 +228,16 @@ public class Monster : Player
             transformationDirectorWithoutCam.Play();
         }
         
+    }
+
+    public void SetupCinemachinBrainOnPlayableAssets()
+    {
+        TimelineAsset ta = transformationDirector.playableAsset as TimelineAsset;
+        IEnumerable<TrackAsset> temp = ta.GetOutputTracks();
+        foreach (var track in temp)
+        {
+            if(track is CinemachineTrack)
+                transformationDirector.SetGenericBinding(track, FindObjectOfType<CinemachineBrain>());
+        }
     }
 }
