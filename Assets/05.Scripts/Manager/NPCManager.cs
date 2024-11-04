@@ -150,7 +150,7 @@ public class NPCManager : Singleton<NPCManager>
             //Debug.DrawLine(agent.transform.position, randomDirection, Color.red);
             if (path.status == NavMeshPathStatus.PathComplete)
             {
-                agent.SetDestination(randomDirection);
+                agent.GetComponent<NPCSync>().SetDestination(randomDirection);
                 return;
             }
             //Debug.LogWarning("Path can't be completed");
