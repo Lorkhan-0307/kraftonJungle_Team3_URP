@@ -172,49 +172,37 @@ public class DynamoDBManager : MonoBehaviour
     }
 
 
-    public async Task DeletePlayerDataByToken(PlayerData playerData)
+    public async Task DeletePlayerDataByToken(string UserToken)
     {
         // UserToken을 통해 PlayerData 조회
-        var existingPlayerData = await GetPlayerDataByUserToken(playerData.UserToken);
+        var existingPlayerData = await GetPlayerDataByUserToken(UserToken);
 
         if (existingPlayerData != null)
         {
             // PlayerData가 존재하는 경우, 삭제 요청을 실행합니다.
-            await DeletePlayerData(playerData);
+            var request = new DeleteItemRequest
+            {
+                TableName = "PlayerData",
+                Key = new Dictionary<string, AttributeValue>
+                {
+                    { "UserToken", new AttributeValue { S = UserToken } }
+                }
+            };
+
+            try
+            {
+                // 삭제 요청 실행
+                var response = await client.DeleteItemAsync(request);
+                Debug.Log($"Player data with UserToken {UserToken} deleted successfully.");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Failed to delete player data: " + e.Message);
+            }
         }
         else
         {
             Debug.Log("No player data found for the provided UserToken. Deletion skipped.");
-        }
-    }
-
-    public async Task DeletePlayerData(PlayerData playerData)
-    {
-        //if (client == null)
-        //{
-        //    Debug.LogError("DynamoDB client is not initialized.");
-        //    return;
-        //}
-
-        // 삭제 요청 생성
-        var request = new DeleteItemRequest
-        {
-            TableName = "PlayerData",
-            Key = new Dictionary<string, AttributeValue>
-        {
-            { "UserToken", new AttributeValue { S = playerData.UserToken } }
-        }
-        };
-
-        try
-        {
-            // 삭제 요청 실행
-            var response = await client.DeleteItemAsync(request);
-            Debug.Log($"Player data with UserToken {playerData.UserToken} deleted successfully.");
-        }
-        catch (Exception e)
-        {
-            Debug.LogError("Failed to delete player data: " + e.Message);
         }
     }
 }

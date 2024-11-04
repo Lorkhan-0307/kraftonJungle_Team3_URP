@@ -25,9 +25,10 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
 
         orManager = FindObjectOfType<OutgameRoomsManager>(true);
         mrManager = FindObjectOfType<MyRoomManager>(true);
+        dbManager = GetComponent<DynamoDBManager>();
 
         // Photon 서버에 연결
-        if(!PhotonNetwork.IsConnected)
+        if (!PhotonNetwork.IsConnected)
         {
             PhotonNetwork.ConnectUsingSettings();
             LoginWithToken();
@@ -40,9 +41,7 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
     public async void LoginWithToken()
     {
         // DB 통해 로그인
-        dbManager=GetComponent<DynamoDBManager>();
-
-        string token = LoginTokenManager.LoadDataWithToken();
+        string token = LoginTokenManager.GetToken();
 
         PlayerData playerData = new PlayerData();
 
@@ -56,7 +55,7 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
     }
     public async void UpdateNickName()
     {
-        string token = LoginTokenManager.LoadDataWithToken();
+        string token = LoginTokenManager.GetToken();
         string name = nicknameInput.text;
 
         name = name.Trim();
@@ -69,12 +68,12 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
         PhotonNetwork.LocalPlayer.NickName = name;
     }
 
-    public void ResetButton()
+    public async void ResetButton()
     {
-        LoginTokenManager.ResetData();
+        // DB에 있는 데이터 삭제
+        await dbManager.DeletePlayerDataByToken(LoginTokenManager.GetToken());
 
-        //TODO: DB에 있는 데이터 삭제
-
+        LoginTokenManager.ResetToken();
 
         LoginWithToken();
     }

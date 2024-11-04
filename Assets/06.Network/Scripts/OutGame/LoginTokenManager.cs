@@ -22,12 +22,12 @@ public class LoginTokenManager
     /// PlayerPrefs 안에 있는 로컬 클라이언트의 토큰 값을 불러옵니다.
     /// </summary>
     /// <returns></returns>
-    public static string LoadDataWithToken()
+    public static string GetToken()
     {
         return PlayerPrefs.GetString(tokenKey, "");
     }
 
-    public static void ResetData()
+    public static void ResetToken()
     {
         PlayerPrefs.SetString(tokenKey, "");
     }
