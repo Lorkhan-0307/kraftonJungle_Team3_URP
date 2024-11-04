@@ -203,11 +203,11 @@ GameObject:
   - component: {fileID: 8380113029329633828}
   - component: {fileID: 407002003618631886}
   - component: {fileID: 7923490552873536213}
-  - component: {fileID: 5194387607558945149}
   - component: {fileID: 6285171166944961644}
   - component: {fileID: 5913564522040278332}
   - component: {fileID: 3866305328468130339}
   - component: {fileID: 5554838401304134939}
+  - component: {fileID: 3635335514000588465}
   m_Layer: 0
   m_Name: Player_NPC
   m_TagString: NPC
@@ -309,18 +309,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   deathSound: {fileID: 4171223830259576634}
---- !u!114 &5194387607558945149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7344563461369970091}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0860d8208cda75c419d923ecda87ddcf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!195 &6285171166944961644
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -361,8 +349,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: 5194387607558945149}
+  ObservedComponents: []
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -393,6 +380,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bloodDecalPrefab: {fileID: 8477787130947067767, guid: 5ea8fbd9938f15a408170b7045cabbcf,
     type: 3}
+--- !u!114 &3635335514000588465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7344563461369970091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1720d2ac9e1202b4ea6139777849d043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4964909400589039112
 PrefabInstance:
   m_ObjectHideFlags: 0
