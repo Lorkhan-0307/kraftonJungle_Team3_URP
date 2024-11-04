@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Timeline;
 
 public class Monster : Player
 {
@@ -221,5 +222,16 @@ public class Monster : Player
             transformationDirectorWithoutCam.Play();
         }
         
+    }
+
+    public void SetupCinemachinBrainOnPlayableAssets()
+    {
+        TimelineAsset ta = transformationDirector.playableAsset as TimelineAsset;
+        IEnumerable<TrackAsset> temp = ta.GetOutputTracks();
+        foreach (var track in temp)
+        {
+            if(track is CinemachineTrack)
+                transformationDirector.SetGenericBinding(track, FindObjectOfType<CinemachineBrain>());
+        }
     }
 }
