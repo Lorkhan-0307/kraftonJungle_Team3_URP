@@ -391,7 +391,8 @@ MonoBehaviour:
   cvc: {fileID: 5142997325411853438}
   vc_original_priority: 5
   vc_lookat_priority: 20
-  transformationDirector: {fileID: 0}
+  transformationDirector: {fileID: 6799646292442089130}
+  transformationDirectorWithoutCam: {fileID: 8229834833064115974}
 --- !u!114 &2402085082251486151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7786,6 +7787,12 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!320 &6799646292442089130 stripped
+PlayableDirector:
+  m_CorrespondingSourceObject: {fileID: 926930578396155982, guid: 87bf4c8c74348bc4a966be88ad483457,
+    type: 3}
+  m_PrefabInstance: {fileID: 5944800117823379172}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9145440157664292680
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7907,6 +7914,12 @@ MonoBehaviour:
 --- !u!4 &4466864811051917468 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4834153227490234324, guid: 87bf4c8c74348bc4a966be88ad483457,
+    type: 3}
+  m_PrefabInstance: {fileID: 9145440157664292680}
+  m_PrefabAsset: {fileID: 0}
+--- !u!320 &8229834833064115974 stripped
+PlayableDirector:
+  m_CorrespondingSourceObject: {fileID: 926930578396155982, guid: 87bf4c8c74348bc4a966be88ad483457,
     type: 3}
   m_PrefabInstance: {fileID: 9145440157664292680}
   m_PrefabAsset: {fileID: 0}
