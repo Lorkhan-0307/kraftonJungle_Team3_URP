@@ -20,7 +20,7 @@ public class CCTV_Manager : MonoBehaviour
     [SerializeField] private CCTV tv_screen;
     [SerializeField] private Camera[] cctv_cameras;
 
-    private RenderTexture cRenderTexture;
+    private RenderTexture cRenderTexture;   
 
     private int currentCameraIndex;
 
