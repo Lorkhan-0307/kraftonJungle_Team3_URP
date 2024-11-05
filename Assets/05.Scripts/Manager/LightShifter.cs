@@ -20,6 +20,8 @@ public class LightShifter : MonoBehaviour
     public bool isDay = false;
     private static readonly int Exposure = Shader.PropertyToID("_Exposure");
 
+    private AudioSource sirenAS;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,10 +36,13 @@ public class LightShifter : MonoBehaviour
 
         isDay = true;
         OnDayShift();
+
+        sirenAS = GetComponent<AudioSource>();
     }
 
     public void OnDayShift()
     {
+        if(sirenAS != null && sirenAS.isPlaying) sirenAS.Stop();
         isDay = true;
         skybox.SetFloat(Exposure, daySkyboxExposure);
         RenderSettings.reflectionIntensity = dayEnvReflectIntensity;
@@ -60,6 +65,7 @@ public class LightShifter : MonoBehaviour
 
     public void OnNightShift()
     {
+        if(!sirenAS.isPlaying) sirenAS.Play();
         isDay = false;
         skybox.SetFloat(Exposure, nightSkyboxExposure);
         RenderSettings.reflectionIntensity = nightEnvReflectIntensity;

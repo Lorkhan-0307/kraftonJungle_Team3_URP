@@ -6,13 +6,14 @@ using UnityEngine.UI;
 public class DissolveIntro : MonoBehaviour
 {
     [SerializeField] private Image targetImage; 
-    [SerializeField] private float dissolveTime = 2f;
+    [SerializeField] private float dissolveTime = 5f;
     [SerializeField] private GameObject monsterUI;
     [SerializeField] private GameObject scientistUI;
     
-
     void Start()
     {
+        StartCoroutine(ScaleOverTime(dissolveTime));
+        
         if (NetworkManager.Instance.IsMonster())
         {
             monsterUI.SetActive(true);
@@ -21,7 +22,6 @@ public class DissolveIntro : MonoBehaviour
         {
             scientistUI.SetActive(true);
         }
-        StartCoroutine(ScaleOverTime(dissolveTime));
     }
 
     IEnumerator ScaleOverTime(float duration)
