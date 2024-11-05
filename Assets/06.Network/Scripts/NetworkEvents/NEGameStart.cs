@@ -74,8 +74,8 @@ public class NEGameStart : NetworkEvent
 
         GameManager.instance.StartGame();
 
-        Instantiate(introCanvas);
-
         LoadingManager.instance.LoadingEnd();
+        
+        Instantiate(introCanvas);
     }
 }
