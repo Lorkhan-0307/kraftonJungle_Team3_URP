@@ -213,6 +213,15 @@ public class PlayerMovement : MonoBehaviour
                 interactTarget.GetComponentInParent<Interact>().BroadcastInteraction();
             }
         }
+        else
+        {
+            target = null;
+            interactTarget = null;
+            killButton.interactable = false;
+            interactButton.interactable = false;
+            killButtonText.text = "";
+            interactButtonText.text = "";
+        }
 
         //
         // 중력 적용
