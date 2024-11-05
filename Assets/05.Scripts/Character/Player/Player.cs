@@ -31,7 +31,7 @@ public class Player : MonoBehaviour, ICharacter
         Destroy(cc);
 
         Transform playerObjectTransform = transform.Find("PlayerObjects(Clone)");
-        if(playerObjectTransform) Destroy(playerObjectTransform.gameObject);
+        if (playerObjectTransform) Destroy(playerObjectTransform.gameObject);
         GetComponent<BloodEffect>().OnBloodEffect();
     }
 
@@ -56,11 +56,11 @@ public class Player : MonoBehaviour, ICharacter
 
     public virtual void PlayKillSound()
     {
-        
+
     }
 
     public virtual void PlayDeathSound()
     {
-        
+
     }
 }
