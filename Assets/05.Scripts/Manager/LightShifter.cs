@@ -42,7 +42,7 @@ public class LightShifter : MonoBehaviour
 
     public void OnDayShift()
     {
-        if(sirenAS.isPlaying) sirenAS.Stop();
+        if(sirenAS != null && sirenAS.isPlaying) sirenAS.Stop();
         isDay = true;
         skybox.SetFloat(Exposure, daySkyboxExposure);
         RenderSettings.reflectionIntensity = dayEnvReflectIntensity;
