@@ -94,6 +94,7 @@ MonoBehaviour:
   mouseSensitivity: 50
   canvasPrefab: {fileID: 1457079429713853551, guid: 5038046623a1a964982a67ecb96d1684,
     type: 3}
+  fpCam: {fileID: 9076893459757729875, guid: 2a879a9fb23758847be09b6ecc98a0e8, type: 3}
 --- !u!1 &737727672906619768
 GameObject:
   m_ObjectHideFlags: 0
@@ -872,8 +873,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8325aeb719a2e744a1704885b805cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMaterial: {fileID: 2100000, guid: fa72cedaeedac51459f1341d77bf2a41, type: 2}
-  originalMaterial: {fileID: 2100000, guid: 14948590691ea624caa281f0cb53ed57, type: 2}
+  outlineMaterialbody1: {fileID: 0}
+  outlineMaterialbody: {fileID: 0}
+  originalMaterialbody1: {fileID: 0}
+  originalMaterialbody: {fileID: 0}
 --- !u!1 &6034033000185144686
 GameObject:
   m_ObjectHideFlags: 0

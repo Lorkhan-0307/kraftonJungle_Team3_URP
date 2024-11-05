@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,6 +9,11 @@ public class SpectatorManager : Singleton<SpectatorManager>
     private List<GameObject> remainingPlayers = new List<GameObject>();
     [SerializeField] private GameObject spectatorInstance;
     private SpectatorCameraColorChange spectatorCameraColorChange;
+
+    private void Start()
+    {
+        StartSpectating();
+    }
 
     // 자신이 죽었을 때 호출
     public void StartSpectating()

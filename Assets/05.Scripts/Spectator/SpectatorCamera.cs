@@ -14,6 +14,9 @@ public class SpectatorCamera : MonoBehaviour
     private PlayerInput playerInput;
     private InputAction prevPlayerAction;
     private InputAction nextPlayerAction;
+    
+    
+    private InputAction switchAngleAction;
 
     private CinemachineFreeLook FreeLockCamera;
 
@@ -22,6 +25,12 @@ public class SpectatorCamera : MonoBehaviour
     private GameObject canvasInstance;
     private SpectatorText spectatorText;
 
+    private bool isThirdPersonView = true;
+    [SerializeField] private GameObject fpCam;
+    private GameObject curFPCam;
+
+    private static Vector3 FPVector3Pos = new Vector3(-0.00547218323f, 1.6472013f, 0.295999527f);
+
     private void FollowAndLookAtTarget(GameObject spectatingTarget)
     {
         TargetHead = spectatingTarget.transform.Find("Head").gameObject; // 플레이어의 머리 위치 찾기
@@ -29,11 +38,20 @@ public class SpectatorCamera : MonoBehaviour
         FreeLockCamera.LookAt = TargetHead.transform; // 버츄얼 카메라가 관전 대상의 머리를 바라보도록 설정
     }
 
+    private void SetAsFpView()
+    {
+        
+        curFPCam = Instantiate(fpCam, spectatingTarget.transform);
+        curFPCam.transform.localPosition = FPVector3Pos;
+        curFPCam.GetComponent<CinemachineVirtualCamera>().Priority = FreeLockCamera.Priority + 1;
+    }
+
     void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
         prevPlayerAction = playerInput.actions["PrevPlayer"];
         nextPlayerAction = playerInput.actions["NextPlayer"];
+        switchAngleAction = playerInput.actions["SwitchAngle"];
         FreeLockCamera = GetComponentInChildren<CinemachineFreeLook>();
 
         Debug.Log("Spectator Camera Awake");
@@ -49,7 +67,7 @@ public class SpectatorCamera : MonoBehaviour
 
         canvasInstance = Instantiate(canvasPrefab); // 캔버스 생성
         spectatorText = canvasInstance.GetComponentInChildren<SpectatorText>(); // 관전 대상 텍스트
-        spectatorText.SetSpectatingTarget(spectatingTarget); // UI에 관전 대상 표시        
+        //spectatorText.SetSpectatingTarget(spectatingTarget); // UI에 관전 대상 표시        
 
         Debug.Log("Spectator Camera Start");
     }
@@ -66,11 +84,41 @@ public class SpectatorCamera : MonoBehaviour
         {
             SwitchPlayer(1);
         }
+
+        if (switchAngleAction.triggered)
+        {
+            SwitchAngle();
+            Debug.Log("Cam Shift : current isThird : " + isThirdPersonView);
+        }
+    }
+
+    private void SwitchAngle()
+    {
+        if (isThirdPersonView)
+        {
+            // 1인칭으로 변환
+            isThirdPersonView = false;
+            // spectating target의 spectate Cam pos 를 현재 캠으로 변경?
+            SetAsFpView();
+
+        }
+        else
+        {
+            // 3인칭으로 변환
+            SwitchPlayer(currentPlayerIndex);
+        }
+        
     }
 
     // 관전 대상 변경
     private void SwitchPlayer(int idx_change)
     {
+        isThirdPersonView = true;
+        if (curFPCam != null)
+        {
+            Destroy(curFPCam);
+            curFPCam = null;
+        }
         if (NetworkManager.Instance == null || 
             NetworkManager.Instance.curState == GameState.End) return;
         if (remainingPlayers.Count == 0)
