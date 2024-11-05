@@ -20,21 +20,12 @@ public class CCTV_Manager : MonoBehaviour
     [SerializeField] private CCTV tv_screen;
     [SerializeField] private Camera[] cctv_cameras;
 
-    [SerializeField] private RenderTexture originalRenderTexture;
+    private RenderTexture cRenderTexture;   
 
     private int currentCameraIndex;
 
     private void Start()
     {
-        /*
-        for (int index = 0; index < cctv_cameras.Length; index++)
-        {
-            Debug.Log("doing " + index + " Camera");
-            RenderTexture currentRenderTexture = new RenderTexture(originalRenderTexture);
-            cctv_cameras[index].targetTexture = currentRenderTexture;
-            cctvs[index].ApplyScreen(currentRenderTexture);
-        }*/
-
         if (tv_screen == null) tv_screen = GetComponent<CCTV>();
 
         currentCameraIndex = 0;
@@ -63,7 +54,12 @@ public class CCTV_Manager : MonoBehaviour
     private void SetActiveCamera(int index)
     {
         cctv_cameras[index].gameObject.SetActive(true);
-        cctv_cameras[index].targetTexture = originalRenderTexture;
-        tv_screen.ApplyScreen(originalRenderTexture);
+        cRenderTexture = new RenderTexture(1024, 512, 24);
+        cRenderTexture.graphicsFormat = UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm;
+        cRenderTexture.depthStencilFormat = UnityEngine.Experimental.Rendering.GraphicsFormat.D24_UNorm_S8_UInt;
+
+        cctv_cameras[index].targetTexture = cRenderTexture;
+        
+        tv_screen.ApplyScreen(cRenderTexture);
     }
 }

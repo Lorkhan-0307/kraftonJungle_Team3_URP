@@ -22,7 +22,7 @@ public class HungerCanvasEffect : MonoBehaviour
         while (true)
         {
             Color color = boundaryImage.color;
-            color.a = Mathf.Abs(Mathf.Sin(Time.time * flickerSpeed));
+            color.a = Mathf.Abs(Mathf.Sin(Time.time * flickerSpeed))/2;
             boundaryImage.color = color;
             yield return null;
         }

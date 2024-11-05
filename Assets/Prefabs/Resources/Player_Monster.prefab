@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.36078432}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -8175,12 +8175,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 926930578396155982, guid: 87bf4c8c74348bc4a966be88ad483457,
         type: 3}
+      propertyPath: m_ExposedReferences.m_References.Array.data[11].second
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 926930578396155982, guid: 87bf4c8c74348bc4a966be88ad483457,
+        type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[12].second
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 926930578396155982, guid: 87bf4c8c74348bc4a966be88ad483457,
         type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[13].second
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 926930578396155982, guid: 87bf4c8c74348bc4a966be88ad483457,
+        type: 3}
+      propertyPath: m_ExposedReferences.m_References.Array.data[14].second
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 926930578396155982, guid: 87bf4c8c74348bc4a966be88ad483457,
@@ -8196,6 +8206,11 @@ PrefabInstance:
     - target: {fileID: 926930578396155982, guid: 87bf4c8c74348bc4a966be88ad483457,
         type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[17].second
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 926930578396155982, guid: 87bf4c8c74348bc4a966be88ad483457,
+        type: 3}
+      propertyPath: m_ExposedReferences.m_References.Array.data[18].second
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4834153227490234324, guid: 87bf4c8c74348bc4a966be88ad483457,
