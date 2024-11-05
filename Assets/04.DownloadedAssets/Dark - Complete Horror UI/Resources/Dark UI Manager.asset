@@ -19,7 +19,7 @@ MonoBehaviour:
   rootFolder: Dark - Complete Horror UI/Prefabs/
   backgroundColorTint: {r: 1, g: 1, b: 1, a: 1}
   backgroundType: 0
-  backgroundImage: {fileID: 21300000, guid: 8634284f5333ced47881595313de88df, type: 3}
+  backgroundImage: {fileID: 21300000, guid: 7f875b71bb7ea1347951ea41a71dea35, type: 3}
   backgroundVideo: {fileID: 0}
   backgroundPreserveAspect: 0
   backgroundSpeed: 1
