@@ -241,4 +241,48 @@ public class Monster : Player
                 transformationDirector.SetGenericBinding(track, FindObjectOfType<CinemachineBrain>());
         }
     }
+
+
+    #region AttackAni
+    [SerializeField] private PlayableDirector attackDirector;
+    [SerializeField] private PlayableDirector attackDirectorWithoutCam;
+
+    public void OnAttackTimeLine(bool isNeededCam)
+    {
+        scientistObj.SetActive(false);
+        monsterObj.SetActive(false);
+
+
+        if (isNeededCam)
+        {
+            attackDirector.gameObject.SetActive(true);
+            attackDirector.Play();
+            if (playerMovement != null)
+            {
+                playerMovement.isMovable = false;
+                playerMovement.OffAllFPS();
+            }
+        }
+        else
+        {
+            attackDirectorWithoutCam.gameObject.SetActive(true);
+            attackDirectorWithoutCam.Play();
+        }
+    }
+
+    // 공격 애니메이션이 끝난 시점에 시그널로 실행합니다.
+    public void OnAttackFinished()
+    {
+        if (attackDirector.gameObject.activeInHierarchy) attackDirector.gameObject.SetActive(false);
+        if (attackDirectorWithoutCam.gameObject.activeInHierarchy) attackDirectorWithoutCam.gameObject.SetActive(false);
+
+        if (playerMovement)
+        {
+            playerMovement.isMovable = true;
+            playerMovement.OnMonsterFPS(false);
+        }
+        //aniSync.ani = monsterObj.GetComponent<Animator>();
+
+    }
+    #endregion
 }
