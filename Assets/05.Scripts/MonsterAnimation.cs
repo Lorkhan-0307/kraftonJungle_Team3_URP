@@ -16,7 +16,7 @@ public class MonsterAnimation : MonoBehaviour
         if (NetworkManager.Instance.IsMonster())
         {
             // 낮, 밤 상관없이 실행
-            m.TransitionCamera(false);
+            //m.TransitionCamera(false);
 
             PlayerMovement playerMovement = parentTransform.GetComponentInChildren<PlayerMovement>();
             MouseComponent mc = parentTransform.GetComponentInChildren<MouseComponent>();

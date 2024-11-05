@@ -1,4 +1,6 @@
+using Cinemachine;
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +17,6 @@ public class NEAttackRequest : NetworkEvent
     {
         killLogger = FindObjectOfType<KillLogManager>();
         GameManager.instance.OnKilled += KillLogCallback;
-        GameManager.instance.OnKilled += KillAniCallback;
     }
 
     void KillAniCallback(GameObject o1, GameObject o2)
@@ -40,10 +41,19 @@ public class NEAttackRequest : NetworkEvent
         if (from.GetComponent<Player>().type == CharacterType.Monster)
         {
             from.GetComponent<Monster>().OnTransformation(TimeManager.instance.GetisDay());
+            
+            // 내가 피격 or 공격자일 경우 True, 외에는 false
+            GameObject myPlayer = NetworkManager.Instance.myPlayer.gameObject;
+            from.GetComponent<Monster>().OnAttackTimeLine(
+                (myPlayer == from.gameObject || myPlayer == to.gameObject));
         }
+        else
+        {
+            KillAniCallback(from.gameObject, to.gameObject);
+        }
+
         //게임매니저 이벤트 실행
         GameManager.instance.OnKilled?.Invoke(from.gameObject, to.gameObject);
-
 
         //공격자 피격자 이용해서 해야하는 로직들 처리하기
         to.GetComponent<Player>().OnDamaged(from.gameObject);

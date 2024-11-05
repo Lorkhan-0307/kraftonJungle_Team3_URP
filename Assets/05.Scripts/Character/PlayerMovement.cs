@@ -378,6 +378,15 @@ public class PlayerMovement : MonoBehaviour
         fpsAnimator = scientistFPS.transform.GetComponentInChildren<Animator>();
     }
 
+    public void MonsterFPSOnTime()
+    {
+        bool _isDay = TimeManager.instance.isDay;
+        scientistFPS.SetActive(_isDay);
+        monsterFPS.SetActive(!_isDay);
+        if(_isDay) fpsAnimator = scientistFPS.transform.GetComponentInChildren<Animator>();
+        else fpsAnimator = monsterFPS.GetComponent<Animator>();
+    }
+
     public void OffAllFPS()
     {
         scientistFPS.SetActive(false);
