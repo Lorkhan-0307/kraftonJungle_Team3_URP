@@ -12,6 +12,7 @@ TagManager:
   - MasterObjectsUI
   - ClientObjectsUI
   - PlayerHead
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX
