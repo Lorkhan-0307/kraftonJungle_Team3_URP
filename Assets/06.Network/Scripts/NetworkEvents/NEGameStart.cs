@@ -17,6 +17,8 @@ public class NEGameStart : NetworkEvent
     [SerializeField]
     GameObject voicePrefab;
 
+    [SerializeField] private GameObject introCanvas;
+
     protected override void Awake()
     {
         this.eventCode = EventCode.GameStart;
@@ -71,6 +73,8 @@ public class NEGameStart : NetworkEvent
         GetComponent<NEAttackRequest>().Init();
 
         GameManager.instance.StartGame();
+
+        Instantiate(introCanvas);
 
         LoadingManager.instance.LoadingEnd();
     }
