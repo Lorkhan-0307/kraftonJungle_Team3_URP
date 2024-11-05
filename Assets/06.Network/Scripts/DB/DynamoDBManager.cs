@@ -120,8 +120,20 @@ public class DynamoDBManager : MonoBehaviour
     public async Task ConnectPlayer(PlayerData playerData)
     {
         var existingPlayerData = await GetPlayerDataByUserToken(playerData.UserToken);
+        if (existingPlayerData == null)
+        {
+            string randomNickname = GenerateRandomNickname(); // 랜덤 닉네임 생성
 
-        playerData.Nickname = existingPlayerData["Nickname"].S;
+            playerData.UserToken = playerData.UserToken;
+            playerData.Nickname = randomNickname;
+
+            // 생성한 PlayerData를 데이터베이스에 저장
+            await SavePlayerData(playerData);
+        }
+        else
+        {
+            playerData.Nickname = existingPlayerData["Nickname"].S;
+        }
     }
 
     
