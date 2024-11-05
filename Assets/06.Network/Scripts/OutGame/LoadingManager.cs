@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class LoadingManager : MonoBehaviour
 {
     [SerializeField] ModalWindowManager loadingPanel;
+    [SerializeField] GameObject introCanvas;
 
     public static LoadingManager instance;
     private void Awake()
@@ -36,6 +37,7 @@ public class LoadingManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1.5f);
         loadingPanel.ModalWindowOut();
+        Instantiate(introCanvas);
     }
 
     public void LoadMainScene()
