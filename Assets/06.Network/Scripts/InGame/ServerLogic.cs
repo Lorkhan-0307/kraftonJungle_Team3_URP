@@ -34,8 +34,6 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     #region GameLogic
     public int[] monsterActorNums;
 
-    public Vector3[] SpawnPos;
-
     ExitGames.Client.Photon.Hashtable isAlivePlayers = new Hashtable();
 
 
@@ -99,15 +97,23 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         }
 
         // 플레이어가 스폰될 수 있는 위치 가져오기
-        SpawnPos = GameObject.FindGameObjectsWithTag("SpawnPoint").Select(x => x.transform.position).ToArray();
+        Dictionary<int, string> randomSpawnPos = new Dictionary<int, string>();
 
-        // 각 플레이어에게 랜덤 스폰 위치와 몬스터 번호를 전송
-        Vector3[] randomSpawnPos = new Vector3[playerList.Length];
-        for (int i = 0; i < randomSpawnPos.Length; i++)
+
+        string[] spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint").
+            Select(x => x.name).ToArray();
+
+        // Fisher-Yates 방식으로 리스트를 섞음
+        for (int i = spawnPoints.Length - 1; i > 0; i--)
         {
-            // 각 플레이어의 랜덤 스폰 위치 설정
-            // randomSpawnPos[i] = NPCManager.GetRandomNavMeshPosition();
-            randomSpawnPos[i] = SpawnPos[UnityEngine.Random.Range(0, SpawnPos.Length)];
+            int randomIndex = UnityEngine.Random.Range(0, i + 1);
+            string temp = spawnPoints[i];
+            spawnPoints[i] = spawnPoints[randomIndex];
+            spawnPoints[randomIndex] = temp;
+        }
+        for(int i = 0; i < playerList.Length; i++)
+        {
+            randomSpawnPos.Add(playerList[i].ActorNumber, spawnPoints[i]);
         }
 
         // 필드에 랜덤으로 NPC 뿌림
