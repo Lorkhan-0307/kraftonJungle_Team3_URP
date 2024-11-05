@@ -7,7 +7,7 @@ public class HungerSlider : MonoBehaviour
     public float maxTime = 20f;
     float elapsedTime = 0f;
 
-    private void Start()
+    private void Awake()
     {
         slider = GetComponent<Slider>();
 

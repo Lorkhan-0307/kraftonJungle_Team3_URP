@@ -88,11 +88,15 @@ public class TimeManager : Singleton<TimeManager>
         {
             Monster m = NetworkManager.Instance.myPlayer.GetComponent<Monster>();
             m.OnDayUniteVisibilityScientist();
+            // 낮이 될 때 hunger 슬라이더 초기화
+            hungerSlider.GetComponent<HungerSlider>().SetHungerMax();
         }
+
         foreach (Monster m in NetworkManager.Instance.Monsters.Values)
         {
             m.OffTransformation();
         }
+
         NPCManager.instance.SetAble();
         lightShifter.OnDayShift();
     }
@@ -106,10 +110,11 @@ public class TimeManager : Singleton<TimeManager>
         {
             Monster m = NetworkManager.Instance.myPlayer.GetComponent<Monster>();
             m.OnNightVisibleScientist();
+            // 밤이 될 때 effect off
+            m.NoHunger();
         }
 
-
-        foreach(Monster m in NetworkManager.Instance.Monsters.Values)
+        foreach (Monster m in NetworkManager.Instance.Monsters.Values)
         {
             // 여기에서 Timeline 실행
             m.OnTransformationTimeline(NetworkManager.Instance.IsMonster());
