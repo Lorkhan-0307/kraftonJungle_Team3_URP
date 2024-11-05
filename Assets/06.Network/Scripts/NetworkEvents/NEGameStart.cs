@@ -47,7 +47,8 @@ public class NEGameStart : NetworkEvent
         //자신의 플레이어 ActorNumber 가 전송받은 id와 같은지 비교하고 몬스터, 연구원으로 초기화함.
 
         // 로컬 플레이어 캐릭터 스폰
-        Vector3 myPosition = GameObject.Find(spawnPos[PhotonNetwork.LocalPlayer.ActorNumber]).transform.position;// spawnPos[PhotonNetwork.LocalPlayer.ActorNumber - 1];
+        Vector3 myPosition = GameObject.Find(spawnPos[PhotonNetwork.LocalPlayer.ActorNumber]).
+            GetComponent<SpawnMonitor>().spawnPos.position;
         GameObject spawnedPlayer = null;
 
         // 몬스터 스폰
