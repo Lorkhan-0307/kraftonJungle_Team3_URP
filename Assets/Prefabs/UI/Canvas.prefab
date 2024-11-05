@@ -986,10 +986,10 @@ RectTransform:
   - {fileID: 7936954740958085854}
   m_Father: {fileID: 2320247737915586886}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 165, y: -415}
-  m_SizeDelta: {x: 167.1802, y: 171.1925}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 167.18018, y: 171.1925}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5116061189867880175
 CanvasRenderer:
@@ -1054,7 +1054,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1582,7 +1582,7 @@ PrefabInstance:
     - target: {fileID: 2776313903136348430, guid: 45e52336fb099184ea2d253b36a41bc9,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2776313903136348430, guid: 45e52336fb099184ea2d253b36a41bc9,
         type: 3}
@@ -1592,7 +1592,7 @@ PrefabInstance:
     - target: {fileID: 2776313903136348430, guid: 45e52336fb099184ea2d253b36a41bc9,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2776313903136348430, guid: 45e52336fb099184ea2d253b36a41bc9,
         type: 3}
@@ -1647,12 +1647,12 @@ PrefabInstance:
     - target: {fileID: 2776313903136348430, guid: 45e52336fb099184ea2d253b36a41bc9,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -165
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2776313903136348430, guid: 45e52336fb099184ea2d253b36a41bc9,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -415
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2776313903136348430, guid: 45e52336fb099184ea2d253b36a41bc9,
         type: 3}
@@ -1673,6 +1673,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Button_kill
+      objectReference: {fileID: 0}
+    - target: {fileID: 5583931991397536092, guid: 45e52336fb099184ea2d253b36a41bc9,
+        type: 3}
+      propertyPath: m_Colors.m_NormalColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5583931991397536092, guid: 45e52336fb099184ea2d253b36a41bc9,
+        type: 3}
+      propertyPath: m_Colors.m_DisabledColor.a
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

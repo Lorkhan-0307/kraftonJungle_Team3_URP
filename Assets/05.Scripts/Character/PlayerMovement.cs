@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -35,8 +36,9 @@ public class PlayerMovement : MonoBehaviour
     private InputAction voiceAction;
 
 
-    VoiceManager VoiceManager { 
-        get 
+    VoiceManager VoiceManager
+    {
+        get
         {
             if (voiceManager == null)
                 voiceManager = FindObjectOfType<VoiceManager>();
@@ -48,7 +50,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform raycastShootPos;
     [SerializeField] private float attackrange = 3f;
     private Button killButton;
+    private TextMeshProUGUI killButtonText;
     private Button interactButton;
+    private TextMeshProUGUI interactButtonText;
 
     public Player player;
 
@@ -73,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
     //[SerializeField] 
     public GameObject monsterFPS;
 
+
     public bool isMovable = true;
 
     private void Awake()
@@ -96,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
         if (parentTransform != null)
         {
             GameObject targetObject = parentTransform.Find("Astronaut_Pilot_Full").gameObject;
-            
+
             //SetLayerRecursive(targetObject, 3);
             //SetLayerRecursive(targetObject.transform.Find("root").Find("pelvis").Find("spine_01").gameObject, 3);
             animator = targetObject.GetComponent<Animator>();
@@ -128,11 +133,14 @@ public class PlayerMovement : MonoBehaviour
         if (killButton == null)
         {
             killButton = FindObjectOfType<KillButton>().GetComponent<Button>();
+            killButtonText = killButton.GetComponentInChildren<TextMeshProUGUI>();
         }
         if (interactButton == null)
         {
             interactButton = GameObject.Find("Button_interact").GetComponent<Button>();
+            interactButtonText = interactButton.GetComponentInChildren<TextMeshProUGUI>();
             interactButton.interactable = false;
+            interactButtonText.text = "";
         }
         killButtonImage = FindObjectOfType<KillButton>().GetComponent<Image>();
         // 시작할 때 쿨타임 초기화
@@ -142,12 +150,12 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(VoiceManager)
+        if (VoiceManager)
         {
             VoiceManager.PressToTalk(voiceAction.IsPressed());
         }
         isGrounded = controller.isGrounded;
-        
+
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
@@ -159,7 +167,7 @@ public class PlayerMovement : MonoBehaviour
             Vector2 input = moveAction.ReadValue<Vector2>();
             Vector3 motion = transform.right * input.x + transform.forward * input.y;
             float currentSpeed = IsMonsterNightSpeed() && runAction.IsPressed() ? monsterNightSpeed : speed;
-            controller.Move(motion * currentSpeed * Time.deltaTime);        
+            controller.Move(motion * currentSpeed * Time.deltaTime);
 
             // Jump 액션으로 점프 입력 받기
             if (jumpAction.triggered && isGrounded)
@@ -247,15 +255,19 @@ public class PlayerMovement : MonoBehaviour
     {
 
         Interact interactComponent;
-        
-        if(detectedObject.TryGetComponent<Interact>(out interactComponent))
+
+        if (detectedObject.TryGetComponent<Interact>(out interactComponent))
         {
             if (interactComponent.isInteractable)
             {
                 interactTarget = detectedObject;
                 interactButton.interactable = true;
+                interactButtonText.text = "Interact";
             }
-            else interactButton.interactable = false;
+            else
+            {
+                interactButton.interactable = false;
+            }
         }
         else
         {
@@ -270,7 +282,9 @@ public class PlayerMovement : MonoBehaviour
         interactTarget = null;
         killButton.interactable = false;
         interactButton.interactable = false;
-        
+        killButtonText.text = "";
+        interactButtonText.text = "";
+
         if (Physics.Raycast(raycastShootPos.position, transform.forward, out hit, attackrange))
         {
             // 낮, 연구원 : 현재 로직
@@ -284,19 +298,19 @@ public class PlayerMovement : MonoBehaviour
 
             GameObject detectedGameObject = hit.collider.gameObject;
 
-
             bool canAttack = player.AttackDetection(detectedGameObject);
 
             if (canAttack && !isKillOn)
             {
                 target = detectedGameObject;
                 killButton.interactable = true;
+                killButtonText.text = "Kill";
             }
             //killButton.interactable = canAttack && !isKillOn;
 
             //if (!canAttack)
-                //target = null;
-                
+            //target = null;
+
             RayCastInteractDetection(detectedGameObject);
         }
         else
@@ -344,7 +358,7 @@ public class PlayerMovement : MonoBehaviour
     {
         scientistFPS.SetActive(false);
         monsterFPS.SetActive(false);
-        if(!isAttackInDay) monsterFPS.SetActive(true);
+        if (!isAttackInDay) monsterFPS.SetActive(true);
         fpsAnimator = monsterFPS.GetComponent<Animator>();
     }
 
@@ -362,4 +376,3 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("OFF ALL FPS");
     }
 }
-    
