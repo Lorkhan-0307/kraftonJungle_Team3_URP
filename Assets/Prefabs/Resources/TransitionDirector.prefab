@@ -7447,6 +7447,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -34.08
       objectReference: {fileID: 0}
+    - target: {fileID: 198040504240803878, guid: 3c657dedc43d33a4987fbf09e6363067,
+        type: 3}
+      propertyPath: ShapeModule.angle
+      value: 7.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 198040504240803878, guid: 3c657dedc43d33a4987fbf09e6363067,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.015
+      objectReference: {fileID: 0}
+    - target: {fileID: 198040504240803878, guid: 3c657dedc43d33a4987fbf09e6363067,
+        type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 198040504240803878, guid: 3c657dedc43d33a4987fbf09e6363067,
+        type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 198040504240803878, guid: 3c657dedc43d33a4987fbf09e6363067,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 199066084704966636, guid: 3c657dedc43d33a4987fbf09e6363067,
         type: 3}
       propertyPath: m_Materials.Array.size
