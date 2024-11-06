@@ -169,8 +169,6 @@ MonoBehaviour:
     type: 3}
   voicePrefab: {fileID: 251469466147729761, guid: 0260291ef16c7db40b36a5f4ceb1b740,
     type: 3}
-  introCanvas: {fileID: 3258801935106408589, guid: 20d2ec2e8e291cc4c8090a3cd692feba,
-    type: 3}
 --- !u!114 &5439758156321487643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,6 +182,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventCode: 0
+  introCanvas: {fileID: 3258801935106408589, guid: 20d2ec2e8e291cc4c8090a3cd692feba,
+    type: 3}
+  isLoadingEnded: 0
 --- !u!114 &1031243732574820278
 MonoBehaviour:
   m_ObjectHideFlags: 0

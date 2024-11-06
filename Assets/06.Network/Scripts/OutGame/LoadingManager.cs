@@ -3,15 +3,18 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class LoadingManager : MonoBehaviour
 {
     [SerializeField] ModalWindowManager loadingPanel;
-    [SerializeField] GameObject introCanvas;
 
     public static LoadingManager instance;
+
+    public bool isAniEnded = false;
+
     private void Awake()
     {
         if (instance == null)
@@ -25,36 +28,37 @@ public class LoadingManager : MonoBehaviour
         }
     }
 
-    public void LoadingStart()
+    public void LoadingStart(IEnumerator coroutine, System.Action onComplete)
     {
+        StartCoroutine(ExecuteCoroutineWithCallback(coroutine, onComplete));
+    }
+
+    private IEnumerator ExecuteCoroutineWithCallback(IEnumerator coroutine, System.Action onComplete)
+    {
+        isAniEnded = false;
         loadingPanel.ModalWindowIn();
-    }
-    public void LoadingEnd()
-    {
-        StartCoroutine(EndCoroutine());
-    }
-    IEnumerator EndCoroutine()
-    {
+
+        yield return StartCoroutine(coroutine);
+
         yield return new WaitForSeconds(1.5f);
         loadingPanel.ModalWindowOut();
-        Instantiate(introCanvas);
+
+        while(isAniEnded) yield return null;
+
+        onComplete?.Invoke();
     }
 
     public void LoadMainScene()
     {
-        StartCoroutine(LoadCoroutine());
+        LoadingStart(LoadMainSceneCoroutine(), null);
     }
-    IEnumerator LoadCoroutine()
-    {
-        LoadingStart();
 
-        yield return new WaitForSeconds(1f);
-        
+    IEnumerator LoadMainSceneCoroutine()
+    {
         if (PhotonNetwork.InRoom)
         {
             PhotonNetwork.LeaveRoom();
         }
-
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(0); // 씬 로딩
         asyncLoad.allowSceneActivation = true;
@@ -69,7 +73,5 @@ public class LoadingManager : MonoBehaviour
         {
             yield return null;
         }
-
-        LoadingEnd();
     }
 }

@@ -5,7 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class NELoadScene : NetworkEvent
 {
+    [SerializeField] GameObject introCanvas;
     public static string mainSceneName = "maprebuilding";
+
+    public bool isLoadingEnded = false;
 
     protected override void Awake()
     {
@@ -18,23 +21,23 @@ public class NELoadScene : NetworkEvent
     {
         string sceneName = (string)customData;
 
-        StartCoroutine(LoadCoroutine(sceneName));
+
+        LoadingManager.instance.LoadingStart(LoadCoroutine(sceneName),
+        () => { Instantiate(introCanvas); });
     }
     IEnumerator LoadCoroutine(string sceneName)
     {
-        LoadingManager.instance.LoadingStart();
-        yield return new WaitForSeconds(1f);
-
+        isLoadingEnded = false;
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName); // 씬 로딩
         asyncLoad.allowSceneActivation = true;
 
-        // 로딩이 완료될 때까지 대기
-        while (!asyncLoad.isDone)
-        {
-            yield return null;
-        }
+        // 씬 로딩이 완료될 때까지 대기
+        while (!asyncLoad.isDone) yield return null;
 
         NEOnSceneLoaded.SceneLoaded();
+
+        // 다른 플레이어 로딩 완료시 까지 대기
+        while(!isLoadingEnded) yield return null;
     }
 
     public static void LoadSceneToAllClients()

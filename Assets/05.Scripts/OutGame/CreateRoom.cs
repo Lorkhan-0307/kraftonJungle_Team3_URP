@@ -19,9 +19,10 @@ public class CreateRoom : MonoBehaviour
 
     public void OnClickCreateRoom()
     {
-        if(!PhotonNetwork.InLobby)
+        if(PhotonNetwork.NetworkClientState != ClientState.JoinedLobby &&
+            PhotonNetwork.NetworkClientState != ClientState.ConnectedToMasterServer)
         {
-            Debug.LogError("아직 서버에 접속되지 않았습니다.");
+            //Debug.LogError("아직 서버에 접속되지 않았습니다.");
             return;
         }
 

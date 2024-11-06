@@ -21,17 +21,23 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        PhotonNetwork.SerializationRate = 20; // 초당 20회 동기화
-
         orManager = FindObjectOfType<OutgameRoomsManager>(true);
         mrManager = FindObjectOfType<MyRoomManager>(true);
         dbManager = GetComponent<DynamoDBManager>();
 
-        // Photon 서버에 연결
+
+        // 이미 연결 되어있는 경우
         if (!PhotonNetwork.IsConnected)
         {
             PhotonNetwork.ConnectUsingSettings();
             LoginWithToken();
+        }
+        //최초 접속시 한번만 실행
+        else
+        {
+            PhotonNetwork.SerializationRate = 20; // 초당 20회 동기화
+            QualitySettings.vSyncCount = 0;     //Vsync 해제
+            Application.targetFrameRate = 60;   //초당 프레임 60으로 제한
         }
 
         // 일정 주기로 실행되는 새로고침 코루틴 실행
@@ -121,7 +127,7 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
 
     void OnConnectFinished()
     {
-        if(isPhotonConnected && isDBConnected)
+        if(isPhotonConnected && isDBConnected && PhotonNetwork.InLobby)
         {
             //TODO: 로딩 완료
             Debug.Log("로딩 완료!");
