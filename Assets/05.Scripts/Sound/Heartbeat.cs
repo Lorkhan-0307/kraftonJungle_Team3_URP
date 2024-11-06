@@ -11,7 +11,7 @@ public class Heartbeat : MonoBehaviour
 
     private void Update()
     {
-        if (NetworkManager.Instance.IsMonster()) return;
+        if (!NetworkManager.Instance || NetworkManager.Instance.IsMonster()) return;
 
         if (Monster == null)
         {
