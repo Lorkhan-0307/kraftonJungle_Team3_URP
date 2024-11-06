@@ -3,6 +3,7 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +13,9 @@ public class LoadingManager : MonoBehaviour
     [SerializeField] GameObject introCanvas;
 
     public static LoadingManager instance;
+
+    public bool isAniEnded = false;
+
     private void Awake()
     {
         if (instance == null)
@@ -27,6 +31,7 @@ public class LoadingManager : MonoBehaviour
 
     public void LoadingStart()
     {
+        isAniEnded = false;
         loadingPanel.ModalWindowIn();
     }
     public void LoadingEnd()
@@ -37,14 +42,17 @@ public class LoadingManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1.5f);
         loadingPanel.ModalWindowOut();
+
+        while(isAniEnded) yield return null;
+
         Instantiate(introCanvas);
     }
 
     public void LoadMainScene()
     {
-        StartCoroutine(LoadCoroutine());
+        StartCoroutine(LoadMainSceneCoroutine());
     }
-    IEnumerator LoadCoroutine()
+    IEnumerator LoadMainSceneCoroutine()
     {
         LoadingStart();
 
