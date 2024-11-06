@@ -170,7 +170,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (isMovable)
         {
-            Aim.SetActive(true);
+            Aim?.SetActive(true);
 
             // Move 액션으로 이동 입력 받기
             Vector2 input = moveAction.ReadValue<Vector2>();
