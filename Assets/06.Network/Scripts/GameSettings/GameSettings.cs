@@ -13,7 +13,7 @@ public class GameSettings// : ScriptableObject
     [Header("Monster Settings")]
     public bool monsterRandomSelect = true;
     public int[] monsterActorNums = new int[] { 1 };
-    public int spectatorActorNum = 1;
+    public int spectatorActorNum = -1;
 
     [Header("Time Cycle Settings")]
     public int dayLength = 45;
