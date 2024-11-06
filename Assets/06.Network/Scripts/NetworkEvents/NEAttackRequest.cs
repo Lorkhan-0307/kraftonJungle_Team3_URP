@@ -41,11 +41,14 @@ public class NEAttackRequest : NetworkEvent
         if (from.GetComponent<Player>().type == CharacterType.Monster)
         {
             from.GetComponent<Monster>().OnTransformation(TimeManager.instance.GetisDay());
-            
+
             // 내가 피격 or 공격자일 경우 True, 외에는 false
-            GameObject myPlayer = NetworkManager.Instance.myPlayer.gameObject;
-            from.GetComponent<Monster>().OnAttackTimeLine(
-                (myPlayer == from.gameObject || myPlayer == to.gameObject), to.gameObject);
+            if(NetworkManager.Instance.myPlayer)
+            {
+                GameObject myPlayer = NetworkManager.Instance.myPlayer.gameObject;
+                from.GetComponent<Monster>().OnAttackTimeLine(
+                    (myPlayer == from.gameObject || myPlayer == to.gameObject), to.gameObject);
+            }
         }
         else
         {
@@ -55,6 +58,7 @@ public class NEAttackRequest : NetworkEvent
         //게임매니저 이벤트 실행
         GameManager.instance.OnKilled?.Invoke(from.gameObject, to.gameObject);
 
+        //Debug.Log("Server Send OnDamaged Event");
         //공격자 피격자 이용해서 해야하는 로직들 처리하기
         to.GetComponent<Player>().OnDamaged(from.gameObject);
 
