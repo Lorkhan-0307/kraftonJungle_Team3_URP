@@ -72,14 +72,20 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     public void StartGameWithSettings(GameSettings settings)
     {
         // 현재 룸에 접속되어있는 플레이어 목록을 가져옴
-        Photon.Realtime.Player[] playerList = PhotonNetwork.PlayerList;
+        List<Photon.Realtime.Player> playerList = PhotonNetwork.PlayerList.ToList();
 
 
         // 플레이어 생존 여부 배열 초기화
         isAlivePlayers = new Hashtable();
 
-        for (int i = 0; i < playerList.Length; i++)
+        for (int i = 0; i < playerList.Count; i++)
         {
+            if (settings.spectatorActorNum == playerList[i].ActorNumber)
+            {
+                playerList.RemoveAt(i);
+                i--;
+                continue;
+            }
             isAlivePlayers.Add(playerList[i].ActorNumber, true);
         }
 
@@ -89,7 +95,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
             if (settings.monsterRandomSelect)
             {
                 UnityEngine.Random.InitState((int)Time.time);
-                monsterActorNums = SelectMonsters(settings.monsters);
+                monsterActorNums = SelectMonsters(playerList, settings.monsters);
             }
             else
             {
@@ -101,7 +107,7 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         SpawnPos = GameObject.FindGameObjectsWithTag("SpawnPoint").Select(x => x.transform.position).ToArray();
 
         // 각 플레이어에게 랜덤 스폰 위치와 몬스터 번호를 전송
-        Vector3[] randomSpawnPos = new Vector3[playerList.Length];
+        Vector3[] randomSpawnPos = new Vector3[playerList.Count];
         for (int i = 0; i < randomSpawnPos.Length; i++)
         {
             // 각 플레이어의 랜덤 스폰 위치 설정
@@ -125,16 +131,14 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         NetworkManager.SendToClients(EventCode.GameStart, eventData);
     }
 
-    public int[] SelectMonsters(int numberOfMonsters)
+    public int[] SelectMonsters(List<Photon.Realtime.Player> playerList, int numberOfMonsters)
     {
-        Photon.Realtime.Player[] players = PhotonNetwork.PlayerList;
-
         List<int> playerIndices = new List<int>();
 
         // 플레이어 ActorNumber을 리스트에 추가
-        for (int i = 0; i < players.Length; i++)
+        for (int i = 0; i < playerList.Count; i++)
         {
-            playerIndices.Add(players[i].ActorNumber);
+            playerIndices.Add(playerList[i].ActorNumber);
         }
 
         // Fisher-Yates 방식으로 리스트를 섞음
