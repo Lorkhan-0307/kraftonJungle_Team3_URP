@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class SpectatorManager : Singleton<SpectatorManager>
 {
-    private bool isSpectating = false;
+    public bool isSpectating = false;
     private List<GameObject> remainingPlayers = new List<GameObject>();
     [SerializeField] private GameObject spectatorInstance;
     private SpectatorCameraColorChange spectatorCameraColorChange;
