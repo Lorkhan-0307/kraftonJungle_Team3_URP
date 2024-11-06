@@ -49,6 +49,10 @@ public class NEAttackRequest : NetworkEvent
                 from.GetComponent<Monster>().OnAttackTimeLine(
                     (myPlayer == from.gameObject || myPlayer == to.gameObject), to.gameObject);
             }
+            else
+            {
+                from.GetComponent<Monster>().OnAttackTimeLine(false, to.gameObject);
+            }
         }
         else
         {
