@@ -27,7 +27,7 @@ public class NEGameStart : NetworkEvent
     {
         object[] datas = (object[])customData;
 
-        Vector3[] spawnPos = (Vector3[])datas[0];
+        Dictionary<int, string> spawnPos = (Dictionary<int, string>)datas[0];
         int[] monsterNums = (int[])datas[1];
         NetworkManager.Instance.NPCCount = (int)datas[2];
 
@@ -45,26 +45,34 @@ public class NEGameStart : NetworkEvent
             TimeManager.instance.nightTime = settings.nightLength;
         }
 
-        //자신의 플레이어 ActorNumber 가 전송받은 id와 같은지 비교하고 몬스터, 연구원으로 초기화함.
 
-        // 로컬 플레이어 캐릭터 스폰
-        Vector3 myPosition = spawnPos[PhotonNetwork.LocalPlayer.ActorNumber - 1];
-        GameObject spawnedPlayer = null;
-
-        // 몬스터 스폰
-        if(Array.Exists(monsterNums, x=> x == PhotonNetwork.LocalPlayer.ActorNumber))
-            spawnedPlayer = PhotonNetwork.Instantiate(playerMonsterName, myPosition, Quaternion.identity);
-        // 연구원 스폰
+        // 내가 관전자일 경우
+        if (settings.spectatorActorNum == PhotonNetwork.LocalPlayer.ActorNumber)
+        {
+            //SpectatorManager.instance.StartSpectating();
+        }
         else
-            spawnedPlayer = PhotonNetwork.Instantiate(playerScientistName, myPosition, Quaternion.identity);
+        {           
+            // 로컬 플레이어 캐릭터 스폰
+            Vector3 myPosition = GameObject.Find(spawnPos[PhotonNetwork.LocalPlayer.ActorNumber]).transform.position;
+            GameObject spawnedPlayer = null;
+
+            // 몬스터 스폰
+            if (Array.Exists(monsterNums, x => x == PhotonNetwork.LocalPlayer.ActorNumber))
+                spawnedPlayer = PhotonNetwork.Instantiate(playerMonsterName, myPosition, Quaternion.identity);
+            // 연구원 스폰
+            else
+                spawnedPlayer = PhotonNetwork.Instantiate(playerScientistName, myPosition, Quaternion.identity);
 
 
-        GameObject voice = Instantiate(voicePrefab, Vector3.zero, Quaternion.identity);
+            GameObject voice = Instantiate(voicePrefab, Vector3.zero, Quaternion.identity);
 
-        NetworkManager.Instance.myPlayer = spawnedPlayer.GetComponent<Player>();
+            NetworkManager.Instance.myPlayer = spawnedPlayer.GetComponent<Player>();
 
-        GameObject po = Instantiate(playerObjectPrefab, spawnedPlayer.transform.position,
-            spawnedPlayer.transform.rotation, spawnedPlayer.transform);
+            GameObject po = Instantiate(playerObjectPrefab, spawnedPlayer.transform.position,
+                spawnedPlayer.transform.rotation, spawnedPlayer.transform);
+
+        }
 
         NetworkManager.Instance.curState = GameState.Playing;
 
@@ -74,5 +82,6 @@ public class NEGameStart : NetworkEvent
         GameManager.instance.StartGame();
 
         GetComponent<NELoadScene>().isLoadingEnded = true;
+        Debug.Log("Loading Ended!");
     }
 }

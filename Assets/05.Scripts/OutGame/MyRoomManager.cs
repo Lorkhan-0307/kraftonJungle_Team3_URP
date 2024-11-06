@@ -293,6 +293,25 @@ public class MyRoomManager : MonoBehaviourPunCallbacks
             PhotonNetwork.CurrentRoom.SetCustomProperties(data);
         }
     }
+    [SerializeField]
+    ButtonManager specButton;
+    public void ToggleSpectating()
+    {
+        NetworkManager.Instance.gameSettings.spectatorActorNum *= -1;
+
+        //  관전모드 on
+        if(NetworkManager.Instance.gameSettings.spectatorActorNum==1)
+        {
+            specButton.buttonText = "Spectator";
+            specButton.UpdateUI();
+
+        }   //off
+        else
+        {
+            specButton.buttonText = "Player";
+            specButton.UpdateUI();
+        }
+    }
 
     #region RPC
     // CallUpdatePlayerList() 에서 photonView.RPC() 를 통해 모든 클라이언트에서 호출하여 동기화합니다.

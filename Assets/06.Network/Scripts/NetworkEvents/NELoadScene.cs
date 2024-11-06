@@ -23,7 +23,11 @@ public class NELoadScene : NetworkEvent
 
 
         LoadingManager.instance.LoadingStart(LoadCoroutine(sceneName),
-        () => { Instantiate(introCanvas); });
+        () => { Instantiate(introCanvas);
+
+            if(NetworkManager.Instance.gameSettings.spectatorActorNum == PhotonNetwork.LocalPlayer.ActorNumber)
+                SpectatorManager.instance.StartSpectating();
+        });
     }
     IEnumerator LoadCoroutine(string sceneName)
     {

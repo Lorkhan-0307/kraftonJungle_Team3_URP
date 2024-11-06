@@ -13,6 +13,7 @@ public class GameSettings// : ScriptableObject
     [Header("Monster Settings")]
     public bool monsterRandomSelect = true;
     public int[] monsterActorNums = new int[] { 1 };
+    public int spectatorActorNum = -1;
 
     [Header("Time Cycle Settings")]
     public int dayLength = 45;
@@ -38,6 +39,7 @@ public class GameSettings// : ScriptableObject
             gs.dayLength,
             gs.nightLength,
             gs.hungerLength,
+            gs.spectatorActorNum,
         };
     }
     public static GameSettings DataToInstance(object data)
@@ -53,6 +55,7 @@ public class GameSettings// : ScriptableObject
         gs.dayLength = (int)datas[6];
         gs.nightLength = (int)datas[7];
         gs.hungerLength = (int)datas[8];
+        gs.spectatorActorNum = (int)datas[9];
 
         return gs;
     }

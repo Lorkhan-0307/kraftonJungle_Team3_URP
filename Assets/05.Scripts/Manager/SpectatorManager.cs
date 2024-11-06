@@ -14,6 +14,9 @@ public class SpectatorManager : Singleton<SpectatorManager>
     public void StartSpectating()
     {
         Debug.Log("Start Spectating");
+        // 버튼 Destroy
+        Destroy(GameObject.Find("Button_interact"));
+        Destroy(GameObject.Find("Button_kill"));
         spectatorCameraColorChange = GetComponent<SpectatorCameraColorChange>();
         spectatorCameraColorChange.EnableOutlineEffect(); // 아웃라인 효과 활성화
         spectatorInstance = Instantiate(spectatorInstance); // 관전 카메라 생성

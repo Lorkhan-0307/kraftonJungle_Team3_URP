@@ -3,6 +3,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
@@ -36,7 +37,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
     }
     Dictionary<int, Monster> monsters = null;
-    public bool IsMonster() {  return (myPlayer.type == CharacterType.Monster); }
+    public bool IsMonster() {
+        if (myPlayer == null) return false;
+        return (myPlayer.type == CharacterType.Monster);
+    }
 
     public void LoadGameSettings()
     {

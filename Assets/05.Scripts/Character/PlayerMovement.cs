@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float attackrange = 3f;
     private Button killButton;
     private TextMeshProUGUI killButtonText;
-    private Button interactButton;
+    public Button interactButton;
     private TextMeshProUGUI interactButtonText;
     private GameObject Aim;
 
