@@ -66,6 +66,8 @@ public class NPC : Player
         gameObject.tag = "Untagged";
         CapsuleCollider cc = GetComponent<CapsuleCollider>();
         Destroy(cc);
+        CharacterController chc = GetComponent<CharacterController>();
+        Destroy(chc);
 
         //if(GetComponent<PhotonView>().AmOwner)
         //PhotonNetwork.Destroy(this.gameObject);
