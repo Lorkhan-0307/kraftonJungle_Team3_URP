@@ -336,7 +336,17 @@ public class Monster : Player
         else if(wasDay && !_isDay){
             // 낮 -> 밤
             // TransformationTimeline 실행
-            OnTransformationTimeline(NetworkManager.Instance.IsMonster());
+            //OnTransformationTimeline(NetworkManager.Instance.IsMonster());
+            // 연구원 모습 활성화
+            scientistObj.SetActive(true);
+            monsterObj.SetActive(false);
+            if (playerMovement)
+            {
+                // 애니메이터 변환
+                playerMovement.animator = scientistObj.GetComponent<Animator>();
+                playerMovement.OffMonsterFPS();
+            }
+            aniSync.ani = scientistObj.GetComponent<Animator>();
         }
         
         _victim.GetComponentInChildren<Animator>().transform.GetChild(0).gameObject.SetActive(true);
