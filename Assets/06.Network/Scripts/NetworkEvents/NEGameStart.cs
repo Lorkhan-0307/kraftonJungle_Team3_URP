@@ -49,7 +49,7 @@ public class NEGameStart : NetworkEvent
         // 내가 관전자일 경우
         if (settings.spectatorActorNum == PhotonNetwork.LocalPlayer.ActorNumber)
         {
-            SpectatorManager.instance.StartSpectating();
+            //SpectatorManager.instance.StartSpectating();
         }
         else
         {           
