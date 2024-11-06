@@ -53,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
     private TextMeshProUGUI killButtonText;
     private Button interactButton;
     private TextMeshProUGUI interactButtonText;
+    private GameObject Aim;
 
     public Player player;
 
@@ -142,6 +143,12 @@ public class PlayerMovement : MonoBehaviour
             interactButton.interactable = false;
             interactButtonText.text = "";
         }
+        if (Aim == null)
+        {
+            Aim = GameObject.Find("Aim");
+            Aim.SetActive(true);
+        }
+
         killButtonImage = FindObjectOfType<KillButton>().GetComponent<Image>();
         // 시작할 때 쿨타임 초기화
         currentCooltime = 0f;
@@ -163,6 +170,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (isMovable)
         {
+            Aim.SetActive(true);
+
             // Move 액션으로 이동 입력 받기
             Vector2 input = moveAction.ReadValue<Vector2>();
             Vector3 motion = transform.right * input.x + transform.forward * input.y;
@@ -221,6 +230,7 @@ public class PlayerMovement : MonoBehaviour
             interactButton.interactable = false;
             killButtonText.text = "";
             interactButtonText.text = "";
+            Aim.SetActive(false);
         }
 
         //
@@ -361,6 +371,8 @@ public class PlayerMovement : MonoBehaviour
         return isAttackable;
     }
 
+
+
     private bool IsMonsterNightSpeed()
     {
         return !TimeManager.instance.isDay && player.type == CharacterType.Monster;
@@ -386,7 +398,7 @@ public class PlayerMovement : MonoBehaviour
         bool _isDay = TimeManager.instance.isDay;
         scientistFPS.SetActive(_isDay);
         monsterFPS.SetActive(!_isDay);
-        if(_isDay) fpsAnimator = scientistFPS.transform.GetComponentInChildren<Animator>();
+        if (_isDay) fpsAnimator = scientistFPS.transform.GetComponentInChildren<Animator>();
         else fpsAnimator = monsterFPS.GetComponent<Animator>();
     }
 
