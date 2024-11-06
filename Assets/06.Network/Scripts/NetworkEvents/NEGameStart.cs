@@ -73,7 +73,6 @@ public class NEGameStart : NetworkEvent
 
         GameManager.instance.StartGame();
 
-        LoadingManager.instance.LoadingEnd();
-        
+        GetComponent<NELoadScene>().isLoadingEnded = true;
     }
 }
