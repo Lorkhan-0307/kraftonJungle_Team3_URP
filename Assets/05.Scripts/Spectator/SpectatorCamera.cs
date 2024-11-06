@@ -75,14 +75,6 @@ public class SpectatorCamera : MonoBehaviour
     // Update로 관전 대상 변경 감지, 버츄얼 카메라 위치 업데이트
     void Update()
     {
-        // 끝났으면 관전 종료
-        if (TimeManager.instance.isEnd)
-        {
-            transform.Find("FreeLock Camera").GetComponent<CinemachineInputProvider>().enabled = false;
-            this.enabled = false;
-            return;
-        }
-
         // Handle switching between players
         if (prevPlayerAction.triggered)
         {
