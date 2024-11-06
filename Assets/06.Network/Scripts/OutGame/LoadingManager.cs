@@ -10,7 +10,6 @@ using UnityEngine.SceneManagement;
 public class LoadingManager : MonoBehaviour
 {
     [SerializeField] ModalWindowManager loadingPanel;
-    [SerializeField] GameObject introCanvas;
 
     public static LoadingManager instance;
 
@@ -29,12 +28,12 @@ public class LoadingManager : MonoBehaviour
         }
     }
 
-    public void LoadingStart(IEnumerator coroutine)
+    public void LoadingStart(IEnumerator coroutine, System.Action onComplete)
     {
-        StartCoroutine(ExecuteCoroutineWithCallback(coroutine));
+        StartCoroutine(ExecuteCoroutineWithCallback(coroutine, onComplete));
     }
 
-    private IEnumerator ExecuteCoroutineWithCallback(IEnumerator coroutine)
+    private IEnumerator ExecuteCoroutineWithCallback(IEnumerator coroutine, System.Action onComplete)
     {
         isAniEnded = false;
         loadingPanel.ModalWindowIn();
@@ -46,13 +45,14 @@ public class LoadingManager : MonoBehaviour
 
         while(isAniEnded) yield return null;
 
-        Instantiate(introCanvas);
+        onComplete?.Invoke();
     }
 
     public void LoadMainScene()
     {
-        LoadingStart(LoadMainSceneCoroutine());
+        LoadingStart(LoadMainSceneCoroutine(), null);
     }
+
     IEnumerator LoadMainSceneCoroutine()
     {
         if (PhotonNetwork.InRoom)

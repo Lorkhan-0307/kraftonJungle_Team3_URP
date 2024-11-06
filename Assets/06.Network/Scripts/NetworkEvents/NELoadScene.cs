@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class NELoadScene : NetworkEvent
 {
+    [SerializeField] GameObject introCanvas;
     public static string mainSceneName = "maprebuilding";
 
     public bool isLoadingEnded = false;
@@ -21,7 +22,8 @@ public class NELoadScene : NetworkEvent
         string sceneName = (string)customData;
 
 
-        LoadingManager.instance.LoadingStart(LoadCoroutine(sceneName));
+        LoadingManager.instance.LoadingStart(LoadCoroutine(sceneName),
+        () => { Instantiate(introCanvas); });
     }
     IEnumerator LoadCoroutine(string sceneName)
     {
