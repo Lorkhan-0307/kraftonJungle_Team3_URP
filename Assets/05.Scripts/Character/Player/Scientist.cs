@@ -19,7 +19,7 @@ public class Scientist : Player
         Debug.Log("ONDAMAGED");
 
         // pos 값 timeline 기준으로 변경
-        Transform attackedScientist = attacker.transform.Find("astronaut");
+        Transform attackedScientist = attacker.transform.Find("MonsterKill/astronaut");
         
         Vector3 currentPos = transform.position;
         Vector3 targetPos = attackedScientist.position;
