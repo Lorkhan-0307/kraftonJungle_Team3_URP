@@ -27,7 +27,7 @@ public class NEGameStart : NetworkEvent
     {
         object[] datas = (object[])customData;
 
-        Dictionary<int, Vector3> spawnPos = (Dictionary<int, Vector3>)datas[0];
+        Dictionary<int, string> spawnPos = (Dictionary<int, string>)datas[0];
         int[] monsterNums = (int[])datas[1];
         NetworkManager.Instance.NPCCount = (int)datas[2];
 
@@ -54,7 +54,7 @@ public class NEGameStart : NetworkEvent
         else
         {           
             // 로컬 플레이어 캐릭터 스폰
-            Vector3 myPosition = spawnPos[PhotonNetwork.LocalPlayer.ActorNumber];
+            Vector3 myPosition = GameObject.Find(spawnPos[PhotonNetwork.LocalPlayer.ActorNumber]).transform.position;
             GameObject spawnedPlayer = null;
 
             // 몬스터 스폰

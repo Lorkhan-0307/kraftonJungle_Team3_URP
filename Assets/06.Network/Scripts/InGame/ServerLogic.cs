@@ -104,11 +104,11 @@ public class ServerLogic : MonoBehaviourPunCallbacks
 
         // 플레이어가 스폰될 수 있는 위치 가져오기
 
-        Vector3[] SpawnPos = GameObject.FindGameObjectsWithTag("SpawnPoint")
-            .Select(x => x.transform.position).ToArray();
+        string[] SpawnPos = GameObject.FindGameObjectsWithTag("SpawnPoint")
+            .Select(x => x.name).ToArray();
     
         // 각 플레이어에게 랜덤 스폰 위치와 몬스터 번호를 전송
-        Dictionary<int, Vector3> randomSpawnPos = new Dictionary<int, Vector3>();
+        Dictionary<int, string> randomSpawnPos = new Dictionary<int, string>();
         for (int i = 0; i < playerList.Count; i++)
         {
             // 각 플레이어의 랜덤 스폰 위치 설정
