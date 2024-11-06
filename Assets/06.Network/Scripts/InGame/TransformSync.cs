@@ -40,7 +40,14 @@ public class TransformSync : MonoBehaviourPunCallbacks, IPunObservable
 
 
             // 예측 위치와 회전 적용
-            transform.position = Vector3.Lerp(transform.position, extrapolatedPos, Time.deltaTime * 10); // 위치 보간
+            try
+            {
+                transform.position = Vector3.Lerp(transform.position, extrapolatedPos, Time.deltaTime * 10); // 위치 보간
+            }
+            catch
+            {
+                Debug.Log($"{transform.position.ToString()}, {extrapolatedPos.ToString()}, : {Time.deltaTime.ToString()} Error!");
+            }
             transform.rotation = Quaternion.Lerp(transform.rotation, latestRot, Time.deltaTime * 10); // 회전 보간
         }
     }
