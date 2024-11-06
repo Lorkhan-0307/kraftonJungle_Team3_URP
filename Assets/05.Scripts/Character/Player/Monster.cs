@@ -32,6 +32,8 @@ public class Monster : Player
 
     private MouseComponent mc;
 
+    private bool isAttacking = false;
+
     private GameObject _victim;
 
 
@@ -215,6 +217,9 @@ public class Monster : Player
 
     public void OnTransformationTimeline(bool isNeededCam)
     {
+        // 만약 공격중이었다면 공격 끝나고 한다... 그거는 코드가 있으니까...
+        if (isAttacking) return;
+        
         scientistObj.SetActive(false);
         monsterObj.SetActive(false);
         
@@ -263,6 +268,7 @@ public class Monster : Player
 
     public void OnAttackTimeLine(bool isNeededCam, GameObject victim)
     {
+        isAttacking = true;
         scientistObj.SetActive(false);
         monsterObj.SetActive(false);
 
@@ -296,6 +302,7 @@ public class Monster : Player
     // 공격 애니메이션이 끝난 시점에 시그널로 실행합니다.
     public void OnAttackFinished()
     {
+        isAttacking = false;
         Debug.Log("1111");
         if (attackDirector.gameObject.activeInHierarchy) attackDirector.gameObject.SetActive(false);
 
