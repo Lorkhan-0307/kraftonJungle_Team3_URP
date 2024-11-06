@@ -55,6 +55,12 @@ public class Monster : Player
         if(playerMovement != null) playerMovement.isMovable = false;
         //TransitionCamera(true);
 
+        // victim pos 값 timeline 기준으로 변경
+        Vector3 currentPos = victim.transform.position;
+        Vector3 targetPos = transform.Find("MonsterKill/astronaut").position;
+
+        victim.transform.position = new Vector3(targetPos.x, currentPos.y, targetPos.z);
+
         // Todo: hunger time reset
         // Monster 에게만
         switch (victim.GetComponent<Player>().type)
@@ -278,9 +284,6 @@ public class Monster : Player
         
         // Victim의 렌더러를 잠시 껐다가, 종료 후에 Victim의 시체를 보여준다.
         _victim.GetComponentInChildren<Animator>().transform.GetChild(0).gameObject.SetActive(false);
-
-
-
 
         if (isNeededCam)
         {

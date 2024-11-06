@@ -18,14 +18,6 @@ public class Scientist : Player
         base.OnDamaged(attacker);
         Debug.Log("ONDAMAGED");
 
-        // pos 값 timeline 기준으로 변경
-        Transform attackedScientist = attacker.transform.Find("MonsterKill/astronaut");
-        
-        Vector3 currentPos = transform.position;
-        Vector3 targetPos = attackedScientist.position;
-
-        transform.position = new Vector3(targetPos.x, currentPos.y, targetPos.z);
-
         // 여기서 Destroy 결과 전송
         if (GetComponent<PhotonView>().AmOwner)
         {            
