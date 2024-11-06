@@ -29,17 +29,18 @@ public class LoadingManager : MonoBehaviour
         }
     }
 
-    public void LoadingStart()
+    public void LoadingStart(IEnumerator coroutine)
+    {
+        StartCoroutine(ExecuteCoroutineWithCallback(coroutine));
+    }
+
+    private IEnumerator ExecuteCoroutineWithCallback(IEnumerator coroutine)
     {
         isAniEnded = false;
         loadingPanel.ModalWindowIn();
-    }
-    public void LoadingEnd()
-    {
-        StartCoroutine(EndCoroutine());
-    }
-    IEnumerator EndCoroutine()
-    {
+
+        yield return StartCoroutine(coroutine);
+
         yield return new WaitForSeconds(1.5f);
         loadingPanel.ModalWindowOut();
 
@@ -50,19 +51,14 @@ public class LoadingManager : MonoBehaviour
 
     public void LoadMainScene()
     {
-        StartCoroutine(LoadMainSceneCoroutine());
+        LoadingStart(LoadMainSceneCoroutine());
     }
     IEnumerator LoadMainSceneCoroutine()
     {
-        LoadingStart();
-
-        yield return new WaitForSeconds(1f);
-        
         if (PhotonNetwork.InRoom)
         {
             PhotonNetwork.LeaveRoom();
         }
-
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(0); // 씬 로딩
         asyncLoad.allowSceneActivation = true;
@@ -77,7 +73,5 @@ public class LoadingManager : MonoBehaviour
         {
             yield return null;
         }
-
-        LoadingEnd();
     }
 }
