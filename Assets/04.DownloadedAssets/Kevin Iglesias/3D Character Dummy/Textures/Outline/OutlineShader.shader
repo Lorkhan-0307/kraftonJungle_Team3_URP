@@ -6,7 +6,7 @@ Shader "Unlit/OutlineShader"
     }
     SubShader
     {
-        Tags { "Queue" = "Geometry+1" "RenderType"="Opaque" }
+        Tags { "Queue" = "Geometry+10" "RenderType"="Opaque" }
         LOD 100
 
         Pass
