@@ -14,8 +14,8 @@ public class SpectatorCamera : MonoBehaviour
     private PlayerInput playerInput;
     private InputAction prevPlayerAction;
     private InputAction nextPlayerAction;
-    
-    
+
+
     private InputAction switchAngleAction;
 
     private CinemachineFreeLook FreeLockCamera;
@@ -40,7 +40,7 @@ public class SpectatorCamera : MonoBehaviour
 
     private void SetAsFpView()
     {
-        
+
         curFPCam = Instantiate(fpCam, spectatingTarget.transform);
         curFPCam.transform.localPosition = FPVector3Pos;
         curFPCam.GetComponent<CinemachineVirtualCamera>().Priority = FreeLockCamera.Priority + 1;
@@ -75,6 +75,14 @@ public class SpectatorCamera : MonoBehaviour
     // Update로 관전 대상 변경 감지, 버츄얼 카메라 위치 업데이트
     void Update()
     {
+        // 끝났으면 관전 종료
+        if (TimeManager.instance.isEnd)
+        {
+            transform.Find("FreeLock Camera").GetComponent<CinemachineInputProvider>().enabled = false;
+            this.enabled = false;
+            return;
+        }
+
         // Handle switching between players
         if (prevPlayerAction.triggered)
         {
@@ -107,7 +115,7 @@ public class SpectatorCamera : MonoBehaviour
             // 3인칭으로 변환
             SwitchPlayer(currentPlayerIndex);
         }
-        
+
     }
 
     // 관전 대상 변경
@@ -119,7 +127,7 @@ public class SpectatorCamera : MonoBehaviour
             Destroy(curFPCam);
             curFPCam = null;
         }
-        if (NetworkManager.Instance == null || 
+        if (NetworkManager.Instance == null ||
             NetworkManager.Instance.curState == GameState.End) return;
         if (remainingPlayers.Count == 0)
             return;
