@@ -67,7 +67,6 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         }
 
         // TODO: 모든 플레이어들이 접속되었습니다.
-        Debug.Log("모든 플레이어들이 접속되었습니다.");
         StartGameWithSettings(NetworkManager.Instance.gameSettings);
     }
     public void StartGameWithSettings(GameSettings settings)

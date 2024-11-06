@@ -211,7 +211,6 @@ namespace Photon.Voice
                 RoomName = voiceRoomName
             };
 
-            Debug.Log($"Calling OpJoinOrCreateRoom for room name '{voiceRoomName}' region {this.Client.CloudRegion}.");  // TODO: remove when done debugging VoiceFollowClient
             return this.Client.OpJoinOrCreateRoom(roomParams);
         }
 

@@ -32,7 +32,6 @@ public class VoiceManager : MonoBehaviourPunCallbacks
         if (!recorder.enabled) return;
         if (recorder.TransmitEnabled == value) return;
 
-        Debug.Log($"PressToTalk: {value}");
         recorder.TransmitEnabled = value;
     }
 

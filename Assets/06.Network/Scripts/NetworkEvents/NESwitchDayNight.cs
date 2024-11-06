@@ -12,7 +12,6 @@ public class NESwitchDayNight : NetworkEvent
     public override void OnEvent(object customData)
     {
         bool isDay = (bool)customData;
-        Debug.Log($"SwitchDayNight {isDay}");
         TimeManager.instance.SwitchTime(isDay);
         TimeManager.instance.SyncTime(0);
     }
