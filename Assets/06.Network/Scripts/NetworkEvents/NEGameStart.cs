@@ -27,7 +27,7 @@ public class NEGameStart : NetworkEvent
     {
         object[] datas = (object[])customData;
 
-        Vector3[] spawnPos = (Vector3[])datas[0];
+        Dictionary<int, Vector3> spawnPos = (Dictionary<int, Vector3>)datas[0];
         int[] monsterNums = (int[])datas[1];
         NetworkManager.Instance.NPCCount = (int)datas[2];
 
@@ -54,7 +54,7 @@ public class NEGameStart : NetworkEvent
         else
         {           
             // 로컬 플레이어 캐릭터 스폰
-            Vector3 myPosition = spawnPos[PhotonNetwork.LocalPlayer.ActorNumber - 1];
+            Vector3 myPosition = spawnPos[PhotonNetwork.LocalPlayer.ActorNumber];
             GameObject spawnedPlayer = null;
 
             // 몬스터 스폰
@@ -82,5 +82,6 @@ public class NEGameStart : NetworkEvent
         GameManager.instance.StartGame();
 
         GetComponent<NELoadScene>().isLoadingEnded = true;
+        Debug.Log("Loading Ended!");
     }
 }

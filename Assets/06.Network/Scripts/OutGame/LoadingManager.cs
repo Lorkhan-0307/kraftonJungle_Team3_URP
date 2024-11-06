@@ -44,7 +44,7 @@ public class LoadingManager : MonoBehaviour
         loadingPanel.ModalWindowOut();
 
         while(isAniEnded) yield return null;
-
+        Debug.Log("22222");
         onComplete?.Invoke();
     }
 
