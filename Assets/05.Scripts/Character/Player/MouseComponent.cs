@@ -34,6 +34,13 @@ public class MouseComponent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 끝났으면 마우스로 시점 조종 불가
+        if (TimeManager.instance.isEnd)
+        {
+            this.enabled = false;
+            return;
+        }
+
         if (pm.isMovable)
         {
             // Look 액션으로 마우스 움직임 입력 받기
@@ -48,10 +55,10 @@ public class MouseComponent : MonoBehaviour
 
             // 카메라 상하 회전
             transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        
+
             // 플레이어 좌우 회전
             playerBody.Rotate(Vector3.up * mouseX);
         }
-        
+
     }
 }
