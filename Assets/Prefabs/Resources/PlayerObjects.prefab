@@ -134,7 +134,6 @@ GameObject:
   - component: {fileID: 8505361130360240799}
   - component: {fileID: 1100140189999291913}
   - component: {fileID: 2968446353826989785}
-  - component: {fileID: 626411724492907566}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -294,22 +293,6 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &626411724492907566
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2850975349110160554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8325aeb719a2e744a1704885b805cef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMaterialbody1: {fileID: 0}
-  outlineMaterialbody: {fileID: 0}
-  originalMaterialbody1: {fileID: 0}
-  originalMaterialbody: {fileID: 0}
 --- !u!1 &3739888059094696870
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,6 +420,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: c8235efa-023d-4375-a0f9-c7dc5364b7e7
     m_ActionName: SpectatorActions/Look[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 416e6ff3-53da-4d15-8834-32f99e5d833b
+    m_ActionName: SpectatorActions/SwitchAngle[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: SpectatorActions
