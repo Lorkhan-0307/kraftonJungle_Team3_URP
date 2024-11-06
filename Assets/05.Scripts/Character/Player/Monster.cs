@@ -56,10 +56,9 @@ public class Monster : Player
         //TransitionCamera(true);
 
         // victim pos 값 timeline 기준으로 변경
-        Vector3 currentPos = victim.transform.position;
         Vector3 targetPos = transform.Find("MonsterKill/astronaut").position;
 
-        victim.transform.position = new Vector3(targetPos.x, currentPos.y, targetPos.z);
+        victim.transform.position = targetPos;
 
         // Todo: hunger time reset
         // Monster 에게만
