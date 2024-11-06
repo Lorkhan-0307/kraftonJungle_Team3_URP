@@ -31,8 +31,6 @@ public class Player : MonoBehaviour, ICharacter
         Destroy(cc);
 
         Transform playerObjectTransform = transform.Find("PlayerObjects(Clone)");
-        // 버튼 Destroy
-        Destroy(playerObjectTransform.GetComponent<PlayerMovement>().interactButton.gameObject);
         if (playerObjectTransform) Destroy(playerObjectTransform.gameObject);
         //GetComponent<BloodEffect>().OnBloodEffect();
     }
