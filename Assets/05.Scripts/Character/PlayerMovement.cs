@@ -334,8 +334,11 @@ public class PlayerMovement : MonoBehaviour
         player.OnAttack(target);
         Player targetPlayer = target.GetComponent<Player>();
         // 트리거 설정
-        animator.SetTrigger("Stab");
-        fpsAnimator.SetTrigger("Stab");
+        if (!NetworkManager.Instance.IsMonster())
+        {
+            animator.SetTrigger("Stab");
+            fpsAnimator.SetTrigger("Stab");
+        }
     }
 
     private bool IsAvailableToAttack()

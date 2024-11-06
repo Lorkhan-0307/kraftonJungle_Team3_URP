@@ -32,7 +32,7 @@ public class Player : MonoBehaviour, ICharacter
 
         Transform playerObjectTransform = transform.Find("PlayerObjects(Clone)");
         if (playerObjectTransform) Destroy(playerObjectTransform.gameObject);
-        GetComponent<BloodEffect>().OnBloodEffect();
+        //GetComponent<BloodEffect>().OnBloodEffect();
     }
 
     public virtual void OnDead()
@@ -46,7 +46,6 @@ public class Player : MonoBehaviour, ICharacter
         Debug.Log("TRANSMIT TO SERVER");
 
         NEAttackRequest.AttackEntity(GetComponent<PhotonView>(), victim.GetComponent<PhotonView>());
-        //throw new System.NotImplementedException();
     }
 
     public virtual bool AttackDetection(GameObject target)

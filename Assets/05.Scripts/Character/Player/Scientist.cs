@@ -10,6 +10,7 @@ public class Scientist : Player
     public override void OnAttack(GameObject victim)
     {
         base.OnAttack(victim);
+        victim.GetComponent<BloodEffect>().OnBloodEffect();
     }
 
     public override void OnDamaged(GameObject attacker)

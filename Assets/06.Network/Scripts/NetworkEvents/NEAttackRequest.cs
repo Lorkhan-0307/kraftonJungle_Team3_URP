@@ -45,7 +45,7 @@ public class NEAttackRequest : NetworkEvent
             // 내가 피격 or 공격자일 경우 True, 외에는 false
             GameObject myPlayer = NetworkManager.Instance.myPlayer.gameObject;
             from.GetComponent<Monster>().OnAttackTimeLine(
-                (myPlayer == from.gameObject || myPlayer == to.gameObject));
+                (myPlayer == from.gameObject || myPlayer == to.gameObject), to.gameObject);
         }
         else
         {

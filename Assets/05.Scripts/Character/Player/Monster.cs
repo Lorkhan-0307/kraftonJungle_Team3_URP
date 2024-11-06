@@ -32,6 +32,8 @@ public class Monster : Player
 
     private MouseComponent mc;
 
+    private GameObject _victim;
+
 
     private bool wasDay = false;
 
@@ -44,6 +46,7 @@ public class Monster : Player
     public override void OnAttack(GameObject victim)
     {
         base.OnAttack(victim);
+        _victim = victim;
 
         OnTransformation(TimeManager.instance.GetisDay());
 
@@ -258,12 +261,19 @@ public class Monster : Player
     [SerializeField] private PlayableDirector attackDirector;
     [SerializeField] private PlayableDirector attackDirectorWithoutCam;
 
-    public void OnAttackTimeLine(bool isNeededCam)
+    public void OnAttackTimeLine(bool isNeededCam, GameObject victim)
     {
         scientistObj.SetActive(false);
         monsterObj.SetActive(false);
 
         wasDay = TimeManager.instance.isDay;
+
+        _victim = victim;
+        
+        // Victim의 렌더러를 잠시 껐다가, 종료 후에 Victim의 시체를 보여준다.
+        _victim.GetComponentInChildren<Animator>().transform.GetChild(0).gameObject.SetActive(false);
+
+
 
 
         if (isNeededCam)
@@ -318,7 +328,10 @@ public class Monster : Player
             // TransformationTimeline 실행
             OnTransformationTimeline(NetworkManager.Instance.IsMonster());
         }
-
+        
+        _victim.GetComponentInChildren<Animator>().transform.GetChild(0).gameObject.SetActive(true);
+        _victim.GetComponentInChildren<Animator>().Play("Zombie Death", 0, 300);
+        _victim.GetComponent<BloodEffect>().OnBloodEffect();
         //OnTransformation(TimeManager.instance.isDay);
     }
     #endregion
