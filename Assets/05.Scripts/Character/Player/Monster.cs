@@ -306,22 +306,17 @@ public class Monster : Player
     public void OnAttackFinished()
     {
         isAttacking = false;
-        Debug.Log("1111");
         if (attackDirector.gameObject.activeInHierarchy) attackDirector.gameObject.SetActive(false);
 
-        Debug.Log("2222");
         if (attackDirectorWithoutCam.gameObject.activeInHierarchy) attackDirectorWithoutCam.gameObject.SetActive(false);
 
         if (playerMovement)
         {
-            Debug.Log("3333");
             playerMovement.isMovable = true;
             playerMovement.MonsterFPSOnTime();
             playerMovement.animator = scientistObj.GetComponent<Animator>();
         }
-        //aniSync.ani = monsterObj.GetComponent<Animator>();
 
-        Debug.Log("4444");
 
         bool _isDay = TimeManager.instance.isDay;
 
@@ -352,7 +347,6 @@ public class Monster : Player
         _victim.GetComponentInChildren<Animator>().transform.GetChild(0).gameObject.SetActive(true);
         _victim.GetComponentInChildren<Animator>().Play("Standing Death Forward", 0, 95);
         _victim.GetComponent<BloodEffect>().OnBloodEffect();
-        //OnTransformation(TimeManager.instance.isDay);
     }
     #endregion
 }
