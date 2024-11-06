@@ -5365,10 +5365,85 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6565988133518559259}
     m_Modifications:
+    - target: {fileID: 7224804625157222892, guid: 3abf423777bac7f4da672ad985e92fd4,
+        type: 3}
+      propertyPath: m_WarningMessage
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7224804625164599840, guid: 3abf423777bac7f4da672ad985e92fd4,
         type: 3}
       propertyPath: m_Name
       value: Astronaut_Pilot_Full
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224804625164599842, guid: 3abf423777bac7f4da672ad985e92fd4,
+        type: 3}
+      propertyPath: m_TagString
+      value: ScientistOutline
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224804625164599844, guid: 3abf423777bac7f4da672ad985e92fd4,
+        type: 3}
+      propertyPath: m_TagString
+      value: ScientistOutline
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224804625164599846, guid: 3abf423777bac7f4da672ad985e92fd4,
+        type: 3}
+      propertyPath: m_TagString
+      value: ScientistOutline
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224804625164599848, guid: 3abf423777bac7f4da672ad985e92fd4,
+        type: 3}
+      propertyPath: m_TagString
+      value: ScientistOutline
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224804625164599850, guid: 3abf423777bac7f4da672ad985e92fd4,
+        type: 3}
+      propertyPath: m_TagString
+      value: ScientistOutline
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224804625164599852, guid: 3abf423777bac7f4da672ad985e92fd4,
+        type: 3}
+      propertyPath: m_TagString
+      value: ScientistOutline
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224804625164599854, guid: 3abf423777bac7f4da672ad985e92fd4,
+        type: 3}
+      propertyPath: m_TagString
+      value: ScientistOutline
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224804625164599856, guid: 3abf423777bac7f4da672ad985e92fd4,
+        type: 3}
+      propertyPath: m_TagString
+      value: ScientistOutline
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224804625164599860, guid: 3abf423777bac7f4da672ad985e92fd4,
+        type: 3}
+      propertyPath: m_TagString
+      value: ScientistOutline
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224804625164599862, guid: 3abf423777bac7f4da672ad985e92fd4,
+        type: 3}
+      propertyPath: m_TagString
+      value: ScientistOutline
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224804625164599864, guid: 3abf423777bac7f4da672ad985e92fd4,
+        type: 3}
+      propertyPath: m_TagString
+      value: ScientistOutline
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224804625164599866, guid: 3abf423777bac7f4da672ad985e92fd4,
+        type: 3}
+      propertyPath: m_TagString
+      value: ScientistOutline
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224804625164599868, guid: 3abf423777bac7f4da672ad985e92fd4,
+        type: 3}
+      propertyPath: m_TagString
+      value: ScientistOutline
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224804625164599870, guid: 3abf423777bac7f4da672ad985e92fd4,
+        type: 3}
+      propertyPath: m_TagString
+      value: ScientistOutline
       objectReference: {fileID: 0}
     - target: {fileID: 7224804625164599872, guid: 3abf423777bac7f4da672ad985e92fd4,
         type: 3}
@@ -5376,6 +5451,26 @@ PrefabInstance:
       value: ScientistOutline
       objectReference: {fileID: 0}
     - target: {fileID: 7224804625164599874, guid: 3abf423777bac7f4da672ad985e92fd4,
+        type: 3}
+      propertyPath: m_TagString
+      value: ScientistOutline
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224804625164599880, guid: 3abf423777bac7f4da672ad985e92fd4,
+        type: 3}
+      propertyPath: m_TagString
+      value: ScientistOutline
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224804625164599882, guid: 3abf423777bac7f4da672ad985e92fd4,
+        type: 3}
+      propertyPath: m_TagString
+      value: ScientistOutline
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224804625164599884, guid: 3abf423777bac7f4da672ad985e92fd4,
+        type: 3}
+      propertyPath: m_TagString
+      value: ScientistOutline
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224804625164599886, guid: 3abf423777bac7f4da672ad985e92fd4,
         type: 3}
       propertyPath: m_TagString
       value: ScientistOutline

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,9 +23,21 @@ public class SpectatorCameraColorChange : MonoBehaviour
             }
         }
 
-        GameObject[] Monsters = GameObject.FindGameObjectsWithTag("MonsterOutline");
+        Debug.Log("Outline Effect Enabled");
+        
+        StartCoroutine(EnableMonsterOutlineEffectWhenDay());
+    }
+    
+    
+    private IEnumerator EnableMonsterOutlineEffectWhenDay()
+    {
+        Debug.Log("Coroutine Entered");
+        // TimeManager.instance.IsDay가 true가 될 때까지 기다림
+        yield return new WaitUntil(() => GameObject.FindGameObjectsWithTag("MonsterOutline").Length > 0);
 
-        foreach (GameObject obj in Monsters)
+        GameObject[] monTaggedObjects = GameObject.FindGameObjectsWithTag("MonsterOutline");
+    
+        foreach (GameObject obj in monTaggedObjects)
         {
             SkinnedMeshRenderer skinnedMeshRenderer = obj.GetComponent<SkinnedMeshRenderer>();
 
@@ -35,7 +48,5 @@ public class SpectatorCameraColorChange : MonoBehaviour
                 skinnedMeshRenderer.materials = newMats;
             }
         }
-
-        Debug.Log("Outline Effect Enabled");
     }
 }
