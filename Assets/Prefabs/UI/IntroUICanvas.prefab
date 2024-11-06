@@ -199,7 +199,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Search the Monster and destory it
+  m_text: 'Search the Monster and destroy it
 
     Survive the Night'
   m_isRightToLeft: 0
