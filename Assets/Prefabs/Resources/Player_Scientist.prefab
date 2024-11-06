@@ -78,6 +78,7 @@ GameObject:
   - component: {fileID: 1107913715593803093}
   - component: {fileID: 2090660449637813755}
   - component: {fileID: 5974968739709458781}
+  - component: {fileID: 5244038370785188612}
   m_Layer: 0
   m_Name: Player_Scientist
   m_TagString: Player
@@ -220,6 +221,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bloodDecalPrefab: {fileID: 8477787130947067767, guid: 5ea8fbd9938f15a408170b7045cabbcf,
     type: 3}
+--- !u!136 &5244038370785188612
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5722733983999574982}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.8048897
+  m_Height: 1.9571809
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.93253905, z: 0}
 --- !u!1 &5898555978683735609
 GameObject:
   m_ObjectHideFlags: 0

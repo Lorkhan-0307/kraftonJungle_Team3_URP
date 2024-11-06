@@ -576,6 +576,7 @@ GameObject:
   - component: {fileID: 8648778524623116933}
   - component: {fileID: 2193848959786335179}
   - component: {fileID: 2546109773513282259}
+  - component: {fileID: 7079259515582899315}
   m_Layer: 0
   m_Name: Player_Monster
   m_TagString: Player
@@ -781,6 +782,29 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!136 &7079259515582899315
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5722733983999574982}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.8048897
+  m_Height: 1.9724245
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.9401609, z: 0}
 --- !u!1 &5868934100538815841
 GameObject:
   m_ObjectHideFlags: 0
