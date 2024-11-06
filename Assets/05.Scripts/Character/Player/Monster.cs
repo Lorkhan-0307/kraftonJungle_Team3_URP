@@ -32,6 +32,9 @@ public class Monster : Player
 
     private MouseComponent mc;
 
+
+    private bool wasDay = false;
+
     private void Start()
     {
         playerMovement = GetComponentInChildren<PlayerMovement>();
@@ -45,7 +48,7 @@ public class Monster : Player
         OnTransformation(TimeManager.instance.GetisDay());
 
         if(playerMovement != null) playerMovement.isMovable = false;
-        TransitionCamera(true);
+        //TransitionCamera(true);
 
         // Todo: hunger time reset
         // Monster 에게만
@@ -237,8 +240,86 @@ public class Monster : Player
         IEnumerable<TrackAsset> temp = ta.GetOutputTracks();
         foreach (var track in temp)
         {
-            if(track is CinemachineTrack)
+            if (track is CinemachineTrack)
                 transformationDirector.SetGenericBinding(track, FindObjectOfType<CinemachineBrain>());
         }
+
+        ta = attackDirector.playableAsset as TimelineAsset;
+        temp = ta.GetOutputTracks();
+        foreach (var track in temp)
+        {
+            if (track is CinemachineTrack)
+                attackDirector.SetGenericBinding(track, FindObjectOfType<CinemachineBrain>());
+        }
     }
+
+
+    #region AttackAni
+    [SerializeField] private PlayableDirector attackDirector;
+    [SerializeField] private PlayableDirector attackDirectorWithoutCam;
+
+    public void OnAttackTimeLine(bool isNeededCam)
+    {
+        scientistObj.SetActive(false);
+        monsterObj.SetActive(false);
+
+        wasDay = TimeManager.instance.isDay;
+
+
+        if (isNeededCam)
+        {
+            attackDirector.gameObject.SetActive(true);
+            attackDirector.Play();
+            if (playerMovement != null)
+            {
+                playerMovement.isMovable = false;
+                playerMovement.OffAllFPS();
+            }
+        }
+        else
+        {
+            attackDirectorWithoutCam.gameObject.SetActive(true);
+            attackDirectorWithoutCam.Play();
+        }
+    }
+
+    // 공격 애니메이션이 끝난 시점에 시그널로 실행합니다.
+    public void OnAttackFinished()
+    {
+        Debug.Log("1111");
+        if (attackDirector.gameObject.activeInHierarchy) attackDirector.gameObject.SetActive(false);
+
+        Debug.Log("2222");
+        if (attackDirectorWithoutCam.gameObject.activeInHierarchy) attackDirectorWithoutCam.gameObject.SetActive(false);
+
+        if (playerMovement)
+        {
+            Debug.Log("3333");
+            playerMovement.isMovable = true;
+            playerMovement.MonsterFPSOnTime();
+            playerMovement.animator = scientistObj.GetComponent<Animator>();
+        }
+        //aniSync.ani = monsterObj.GetComponent<Animator>();
+
+        Debug.Log("4444");
+
+        bool _isDay = TimeManager.instance.isDay;
+
+        if((wasDay && _isDay) || (!wasDay && _isDay))
+        {
+            // 낮 -> 낮
+            // 인간으로 변신
+            scientistObj.SetActive(true);
+            monsterObj.SetActive(false);
+            aniSync.ani = scientistObj.GetComponent<Animator>();
+        }
+        else if(wasDay && !_isDay){
+            // 낮 -> 밤
+            // TransformationTimeline 실행
+            OnTransformationTimeline(NetworkManager.Instance.IsMonster());
+        }
+
+        //OnTransformation(TimeManager.instance.isDay);
+    }
+    #endregion
 }
