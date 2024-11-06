@@ -50,7 +50,12 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'root'\n\tTransform 'lowerarm_l'\n\tTransform
+    'root'\n\tTransform 'neck_01'\n\tTransform 'clavicle_l'\n\tTransform 'hand_l'\n\tTransform
+    'ring_01_r'\n\tTransform 'spine_02'\n\tTransform 'upperarm_r'\n\tTransform 'upperarm_l'\n\tand
+    more ...\n\tFrom animation clip 'Standing Death Forward'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -820,7 +825,7 @@ GameObject:
   - component: {fileID: 7224804625161490224}
   m_Layer: 0
   m_Name: Astronaut_Suit_Body_Mesh
-  m_TagString: Untagged
+  m_TagString: ScientistOutline
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1691,7 +1696,7 @@ GameObject:
   - component: {fileID: 7224804625161490250}
   m_Layer: 0
   m_Name: Astronaut_Suit_Helmet_Glass_02_Mesh
-  m_TagString: Untagged
+  m_TagString: ScientistOutline
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1780,7 +1785,7 @@ GameObject:
   - component: {fileID: 7224804625161490244}
   m_Layer: 0
   m_Name: Astronaut_Suit_Helmet_Glass_03_Mesh
-  m_TagString: Untagged
+  m_TagString: ScientistOutline
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

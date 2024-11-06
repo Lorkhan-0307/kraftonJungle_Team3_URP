@@ -1,12 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class MonsterOutlineEffect : MonoBehaviour
 {
-    public Material outlineMaterialbody1; // 여러 아웃라인 마테리얼 배열
-    public Material outlineMaterialbody; // 여러 아웃라인 마테리얼 배열
-    public Material originalMaterialbody1; // 여러 아웃라인 마테리얼 배열
-    public Material originalMaterialbody; // 여러 아웃라인 마테리얼 배열
+    public Material outlineMaterialbody;  // 아웃라인 마테리얼
+    private Dictionary<GameObject, Material[]> originalMaterials = new Dictionary<GameObject, Material[]>(); // 원래 마테리얼을 동적으로 저장
 
     public void EnableOutlineEffect()
     {
@@ -18,9 +16,14 @@ public class MonsterOutlineEffect : MonoBehaviour
 
             if (skinnedMeshRenderer != null)
             {
-                Material[] newMats = skinnedMeshRenderer.materials;
-                newMats[0] = outlineMaterialbody1;
-                newMats[1] = outlineMaterialbody;
+                if (!originalMaterials.ContainsKey(obj))
+                {
+                    // 원래 마테리얼 저장
+                    originalMaterials[obj] = skinnedMeshRenderer.materials;
+                }
+
+                Material[] newMats = skinnedMeshRenderer.materials.Clone() as Material[];
+                newMats[0] = outlineMaterialbody;
                 skinnedMeshRenderer.materials = newMats;
             }
         }
@@ -28,23 +31,19 @@ public class MonsterOutlineEffect : MonoBehaviour
 
     public void DisableOutlineEffect()
     {
-        GameObject[] taggedObjects = GameObject.FindGameObjectsWithTag("ScientistOutline");
-
-        if (taggedObjects.Length == 0) return;
-    
-        foreach (GameObject obj in taggedObjects)
+        foreach (var entry in originalMaterials)
         {
+            GameObject obj = entry.Key;
             SkinnedMeshRenderer skinnedMeshRenderer = obj.GetComponent<SkinnedMeshRenderer>();
 
             if (skinnedMeshRenderer != null)
             {
-                
-                Material[] newMats = skinnedMeshRenderer.materials;
-                newMats[0] = originalMaterialbody1;
-                newMats[1] = originalMaterialbody;
-                skinnedMeshRenderer.materials = newMats;
+                // 원래 마테리얼로 복원
+                skinnedMeshRenderer.materials = originalMaterials[obj];
             }
         }
-    }
 
+        // 메모리 정리를 위해 리스트 초기화
+        originalMaterials.Clear();
+    }
 }

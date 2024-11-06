@@ -5370,6 +5370,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Astronaut_Pilot_Full
       objectReference: {fileID: 0}
+    - target: {fileID: 7224804625164599872, guid: 3abf423777bac7f4da672ad985e92fd4,
+        type: 3}
+      propertyPath: m_TagString
+      value: ScientistOutline
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224804625164599874, guid: 3abf423777bac7f4da672ad985e92fd4,
+        type: 3}
+      propertyPath: m_TagString
+      value: ScientistOutline
+      objectReference: {fileID: 0}
     - target: {fileID: 7224804625164967424, guid: 3abf423777bac7f4da672ad985e92fd4,
         type: 3}
       propertyPath: m_LocalPosition.x
