@@ -328,7 +328,7 @@ public class Monster : Player
             monsterObj.SetActive(false);
             aniSync.ani = scientistObj.GetComponent<Animator>();
         }
-        else if(wasDay && !_isDay){
+        else{
             // 낮 -> 밤
             // TransformationTimeline 실행
             //OnTransformationTimeline(NetworkManager.Instance.IsMonster());
