@@ -330,7 +330,7 @@ public class Monster : Player
         }
         
         _victim.GetComponentInChildren<Animator>().transform.GetChild(0).gameObject.SetActive(true);
-        _victim.GetComponentInChildren<Animator>().Play("Zombie Death", 0, 300);
+        _victim.GetComponentInChildren<Animator>().Play("Standing React Death Left", 0, 95);
         _victim.GetComponent<BloodEffect>().OnBloodEffect();
         //OnTransformation(TimeManager.instance.isDay);
     }
