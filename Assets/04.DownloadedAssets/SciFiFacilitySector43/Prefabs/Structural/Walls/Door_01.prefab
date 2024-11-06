@@ -1604,8 +1604,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3, y: 3, z: 0.7843992}
-  m_Center: {x: -2, y: 1.5, z: -0.47555766}
+  m_Size: {x: 3, y: 3, z: 0.87}
+  m_Center: {x: -2, y: 1.5, z: -0.54}
 --- !u!82 &190074253597506798
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3665,7 +3665,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9105968364491208140
 Transform:
   m_ObjectHideFlags: 0
@@ -3727,7 +3727,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6512643286712968329
 Transform:
   m_ObjectHideFlags: 0
@@ -3789,7 +3789,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7309188922800779233
 Transform:
   m_ObjectHideFlags: 0
@@ -3851,7 +3851,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8917121211944414542
 Transform:
   m_ObjectHideFlags: 0
@@ -3913,7 +3913,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7858983743611611935
 Transform:
   m_ObjectHideFlags: 0
