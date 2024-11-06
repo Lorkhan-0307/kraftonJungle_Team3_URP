@@ -344,7 +344,7 @@ public class Monster : Player
             if (playerMovement)
             {
                 playerMovement.animator = monsterObj.GetComponent<Animator>();
-                playerMovement.OnMonsterFPS(true);
+                playerMovement.OnMonsterFPS(false);
             }
             aniSync.ani = monsterObj.GetComponent<Animator>();
         }
