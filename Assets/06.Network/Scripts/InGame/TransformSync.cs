@@ -34,21 +34,22 @@ public class TransformSync : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (!photonView.IsMine) // 다른 클라이언트의 오브젝트일 때
         {
+            float deltaTime = Time.smoothDeltaTime;
             // Extrapolation을 사용해 위치 예측
-            float extrapolationTime = Mathf.Clamp(Time.deltaTime, 0, 0.5f); // 예측 시간 제한
+            float extrapolationTime = Mathf.Clamp(deltaTime, 0, 0.5f); // 예측 시간 제한
             Vector3 extrapolatedPos = latestPos + velocity * extrapolationTime; // 예측 위치 계산
 
 
             // 예측 위치와 회전 적용
             try
             {
-                transform.position = Vector3.Lerp(transform.position, extrapolatedPos, Time.deltaTime * 10); // 위치 보간
+                transform.position = Vector3.Lerp(transform.position, extrapolatedPos, deltaTime * 10); // 위치 보간
             }
             catch
             {
-                Debug.Log($"{transform.position.ToString()}, {extrapolatedPos.ToString()}, : {Time.deltaTime.ToString()} Error!");
+                Debug.Log($"{transform.position.ToString()}, {extrapolatedPos.ToString()}, : {deltaTime.ToString()} Error!");
             }
-            transform.rotation = Quaternion.Lerp(transform.rotation, latestRot, Time.deltaTime * 10); // 회전 보간
+            transform.rotation = Quaternion.Lerp(transform.rotation, latestRot, deltaTime * 10); // 회전 보간
         }
     }
 }

@@ -185,8 +185,8 @@ public class PlayerMovement : MonoBehaviour
             }
             
             // 중력 적용
-            velocity.y += gravity * Time.deltaTime;
-            controller.Move((motion * currentSpeed + velocity) * Time.deltaTime);
+            velocity.y += gravity * Time.smoothDeltaTime;
+            controller.Move((motion * currentSpeed + velocity) * Time.smoothDeltaTime);
 
             // 발걸음 소리 재생
             if ((input.x != 0 || input.y != 0) && isGrounded)
