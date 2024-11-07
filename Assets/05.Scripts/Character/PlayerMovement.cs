@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
-    Vector3 velocity;
+    Vector3 velocity = Vector3.zero;
     bool isGrounded;
 
     public AudioClip footStepSound;
@@ -162,6 +162,8 @@ public class PlayerMovement : MonoBehaviour
             VoiceManager.PressToTalk(voiceAction.IsPressed());
         }
         isGrounded = controller.isGrounded;
+        
+        velocity = Vector3.zero;
 
         if (isGrounded && velocity.y < 0)
         {
@@ -176,7 +178,6 @@ public class PlayerMovement : MonoBehaviour
             Vector2 input = moveAction.ReadValue<Vector2>();
             Vector3 motion = transform.right * input.x + transform.forward * input.y;
             float currentSpeed = IsMonsterNightSpeed() && runAction.IsPressed() ? monsterNightSpeed : speed;
-            controller.Move(motion * currentSpeed * Time.deltaTime);
 
             // Jump 액션으로 점프 입력 받기
             if (jumpAction.triggered && isGrounded)
@@ -185,6 +186,12 @@ public class PlayerMovement : MonoBehaviour
                 Debug.Log("JUMP ACTION");
             }
 
+            if (!controller.isGrounded)
+            {
+                // 중력 적용
+                velocity.y += gravity * Time.deltaTime;
+            }
+            controller.Move((motion * currentSpeed + velocity) * Time.deltaTime);
 
             // 발걸음 소리 재생
             if ((input.x != 0 || input.y != 0) && isGrounded)
@@ -234,9 +241,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //
-        // 중력 적용
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+        
         //
 
         // 쿨타임 업데이트
