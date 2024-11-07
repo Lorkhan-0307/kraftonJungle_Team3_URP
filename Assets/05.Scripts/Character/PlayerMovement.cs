@@ -162,8 +162,6 @@ public class PlayerMovement : MonoBehaviour
             VoiceManager.PressToTalk(voiceAction.IsPressed());
         }
         isGrounded = controller.isGrounded;
-        
-        velocity = Vector3.zero;
 
         if (isGrounded && velocity.y < 0)
         {
@@ -185,12 +183,9 @@ public class PlayerMovement : MonoBehaviour
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 Debug.Log("JUMP ACTION");
             }
-
-            if (!controller.isGrounded)
-            {
-                // 중력 적용
-                velocity.y += gravity * Time.deltaTime;
-            }
+            
+            // 중력 적용
+            velocity.y += gravity * Time.deltaTime;
             controller.Move((motion * currentSpeed + velocity) * Time.deltaTime);
 
             // 발걸음 소리 재생

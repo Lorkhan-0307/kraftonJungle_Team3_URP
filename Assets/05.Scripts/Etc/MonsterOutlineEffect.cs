@@ -35,7 +35,7 @@ public class MonsterOutlineEffect : MonoBehaviour
         foreach (var entry in originalMaterials)
         {
             GameObject obj = entry.Key;
-            if (obj != null) continue;
+            if (obj == null) continue;
             SkinnedMeshRenderer skinnedMeshRenderer = obj.GetComponent<SkinnedMeshRenderer>();
 
             if (skinnedMeshRenderer != null)
