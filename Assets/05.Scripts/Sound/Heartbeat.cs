@@ -8,7 +8,7 @@ public class Heartbeat : MonoBehaviour
     private AudioSource audioSource;
     private float distance;
 
-    [SerializeField] private GameObject Monster;
+    public GameObject Monster;
 
     void Start()
     {
