@@ -232,7 +232,7 @@ public class PlayerMovement : MonoBehaviour
             interactButton.interactable = false;
             killButtonText.text = "";
             interactButtonText.text = "";
-            Aim.SetActive(false);
+            Aim?.SetActive(false);
         }
 
         //

@@ -60,12 +60,23 @@ public class ServerLogic : MonoBehaviourPunCallbacks
     public void PlayerSceneLoaded(int actorNum)
     {
         isPlayerSceneLoaded[actorNum] = true;
+
+        // Test
+        string a = "";
+        foreach (int i in isPlayerSceneLoaded.Keys)
+        {
+            a += $"Actornum: {i} || {isPlayerSceneLoaded[i].ToString()}\n";
+        }
+        Debug.Log(a);
+        //Test
+
+
         foreach (bool b in isPlayerSceneLoaded.Values)
         {
             if (!b) return;
         }
 
-        // TODO: 모든 플레이어들이 접속되었습니다.
+        // 모든 플레이어들이 접속되었습니다.
         StartGameWithSettings(NetworkManager.Instance.gameSettings);
     }
     public void StartGameWithSettings(GameSettings settings)
@@ -77,12 +88,11 @@ public class ServerLogic : MonoBehaviourPunCallbacks
         // 플레이어 생존 여부 배열 초기화
         isAlivePlayers = new Hashtable();
 
-        for (int i = 0; i < playerList.Count; i++)
+        for (int i = playerList.Count-1; i >= 0; i--)
         {
             if (settings.spectatorActorNum == playerList[i].ActorNumber)
             {
                 playerList.RemoveAt(i);
-                i--;
                 continue;
             }
             isAlivePlayers.Add(playerList[i].ActorNumber, true);
