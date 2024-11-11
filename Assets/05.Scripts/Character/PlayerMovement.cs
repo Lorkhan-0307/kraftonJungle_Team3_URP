@@ -158,12 +158,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        // 떨어지면 강제로 복구
-        if(transform.position.y < -1f)
-        {
-            GameObject[] obs = GameObject.FindGameObjectsWithTag("SpawnPoint");
-            controller.transform.position = obs[Random.Range(0, obs.Length)].transform.position;
-        }
 
         if (VoiceManager)
         {
@@ -230,6 +224,13 @@ public class PlayerMovement : MonoBehaviour
             {
                 Debug.Log("Interact");
                 interactTarget.GetComponentInParent<Interact>().BroadcastInteraction();
+            }
+            // 떨어지면 강제로 복구
+            if (transform.position.y < -5f)
+            {
+                Debug.Log("낙하!");
+                GameObject[] obs = GameObject.FindGameObjectsWithTag("SpawnPoint");
+                controller.transform.position = obs[Random.Range(0, obs.Length)].transform.position;
             }
         }
         else
