@@ -105,7 +105,8 @@ public class TimeManager : Singleton<TimeManager>
     {
         isDay = false;
 
-        Monster m = NetworkManager.Instance.myPlayer.GetComponent<Monster>();
+        // Monster m = NetworkManager.Instance.myPlayer.GetComponent<Monster>();
+        Monster m = FindObjectOfType<Monster>();
         // 몬스터이면
         if (NetworkManager.Instance.IsMonster())
         {
