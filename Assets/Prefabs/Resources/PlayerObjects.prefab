@@ -441,7 +441,7 @@ GameObject:
   - component: {fileID: 9209981303765505174}
   - component: {fileID: 5944541352767380261}
   - component: {fileID: 6222289218014860933}
-  - component: {fileID: 8953050134259302364}
+  - component: {fileID: 4491877110483161332}
   m_Layer: 0
   m_Name: PlayerObjects
   m_TagString: Untagged
@@ -627,7 +627,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8953050134259302364
+--- !u!114 &4491877110483161332
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -640,7 +640,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Monster: {fileID: 0}
-  heartbeat: {fileID: 8300000, guid: 58c6afbc351fa684c86132c6e66704db, type: 3}
 --- !u!1 &6682433432159190336
 GameObject:
   m_ObjectHideFlags: 0
