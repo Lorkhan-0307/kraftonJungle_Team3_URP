@@ -57,6 +57,8 @@ public class NPCManager : Singleton<NPCManager>
         {
             foreach (GameObject npc in allNPC)
             {
+                if(npc == null) continue;
+
                 NavMeshAgent agent = npc.GetComponent<NavMeshAgent>();
                 Animator animator = npc.GetComponentInChildren<Animator>();
                 if (agent.remainingDistance < 0.1f)
