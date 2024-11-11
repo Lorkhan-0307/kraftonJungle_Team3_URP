@@ -105,22 +105,21 @@ public class TimeManager : Singleton<TimeManager>
     {
         isDay = false;
 
+        // Monster m = NetworkManager.Instance.myPlayer.GetComponent<Monster>();
+        Monster m = FindObjectOfType<Monster>();
         // 몬스터이면
         if (NetworkManager.Instance.IsMonster())
         {
-            Monster m = NetworkManager.Instance.myPlayer.GetComponent<Monster>();
             m.OnNightVisibleScientist();
-            // 밤이 될 때 effect off
-            m.NoHunger();
         }
+        // 밤이 될 때 effect off
+        m.NoHunger();
 
-        foreach (Monster m in NetworkManager.Instance.Monsters.Values)
+        foreach (Monster mon in NetworkManager.Instance.Monsters.Values)
         {
             // 여기에서 Timeline 실행
-            m.OnTransformationTimeline(NetworkManager.Instance.IsMonster());
-            //m.OnTransformation(false);
+            mon.OnTransformationTimeline(NetworkManager.Instance.IsMonster());
         }
-        
 
         NPCManager.instance.SetDisable();
         lightShifter.OnNightShift();

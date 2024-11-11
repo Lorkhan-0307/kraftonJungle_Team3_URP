@@ -28,11 +28,11 @@ public class Heartbeat : MonoBehaviour
             if (Monsters.Count > 0)
             {
                 Monster = Monsters[0];
-                Debug.Log("Hearbeat.cs :: 몬스터 찾음. 이름은 " + Monster.name);
+                // Debug.Log("Hearbeat.cs :: 몬스터 찾음. 이름은 " + Monster.name);
             }
             else
             {
-                Debug.Log("Hearbeat.cs :: 몬스터가 없음");
+                // Debug.Log("Hearbeat.cs :: 몬스터가 없음");
                 return;
             }
         }
@@ -40,7 +40,7 @@ public class Heartbeat : MonoBehaviour
         // 밤이고, 관전 중이 아닐 때, 몬스터와 가까워질수록 빠르고 크게 심장소리 재생
         if (!TimeManager.instance.isDay && !SpectatorManager.instance.isSpectating)
         {
-            Debug.Log("Hearbeat.cs :: 심장소리 재생");
+            // Debug.Log("Hearbeat.cs :: 심장소리 재생");
             if (!audioSource.isPlaying)
             {
                 audioSource.Play();
@@ -55,7 +55,7 @@ public class Heartbeat : MonoBehaviour
         }
         else
         {
-            Debug.Log("Hearbeat.cs :: 심장소리 멈춤");
+            // Debug.Log("Hearbeat.cs :: 심장소리 멈춤");
             audioSource.Stop();
         }
 
