@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -157,6 +158,13 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        // 떨어지면 강제로 복구
+        if(transform.position.y < -1f)
+        {
+            GameObject[] obs = GameObject.FindGameObjectsWithTag("SpawnPoint");
+            controller.transform.position = obs[Random.Range(0, obs.Length)].transform.position;
+        }
+
         if (VoiceManager)
         {
             VoiceManager.PressToTalk(voiceAction.IsPressed());
