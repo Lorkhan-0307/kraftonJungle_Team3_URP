@@ -183,7 +183,6 @@ public class Monster : Player
     // Use this when Hunger Gauge reach 0
     public void OnHunger()
     {
-        Debug.Log("On Hunger");
         // particle systen on
         // hungerParticle = GetComponentInChildren<ParticleSystem>(true).GameObject();
         // hungerParticle.SetActive(true);
@@ -193,6 +192,7 @@ public class Monster : Player
         
         if (NetworkManager.Instance.IsMonster())
         {
+            Debug.Log("On Hunger Canvas");
             hungerCanvas = GetComponentInChildren<HungerCanvasEffect>(true).GameObject();
             hungerCanvas.SetActive(true);
         }
@@ -210,6 +210,9 @@ public class Monster : Player
         // particle system off
         // hungerParticle = GetComponentInChildren<ParticleSystem>(true).GameObject();
         // hungerParticle.SetActive(false);
+        
+        if(hungerCanvas)
+            hungerCanvas.SetActive(false);
 
         if (hungerOutline){
             monsterMovement.SetLayerRecursive(hungerOutline, 0);
