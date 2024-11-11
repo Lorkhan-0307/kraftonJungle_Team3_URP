@@ -18,6 +18,7 @@ public class Monster : Player
     [SerializeField] private GameObject monsterObj;
 
     private PlayerMovement playerMovement;
+    private PlayerMovement monsterMovement;
 
     //private bool isAttacking = false;
     //private bool isDayShiftedWhileAttacking = false;
@@ -44,6 +45,7 @@ public class Monster : Player
     {
         playerMovement = GetComponentInChildren<PlayerMovement>();
         mc = GetComponentInChildren<MouseComponent>();
+        monsterMovement = FindObjectOfType<PlayerMovement>();
     }
 
     public override void OnAttack(GameObject victim)
@@ -79,21 +81,21 @@ public class Monster : Player
 
     }
 
-    public void TransitionCamera(bool isThird)
-    {
-        if (isThird)
-        {
-            cvc.Priority = vc_lookat_priority;
-            playerMovement.SetLayerRecursive(monsterObj, 0);
-            // Monster FPS 팔 끄기
-            playerMovement.monsterFPS.SetActive(false);
-        }
-        else
-        {
-            cvc.Priority = vc_original_priority;
-            playerMovement.SetLayerRecursive(monsterObj, 3);
-        }
-    }
+    // public void TransitionCamera(bool isThird)
+    // {
+    //     if (isThird)
+    //     {
+    //         cvc.Priority = vc_lookat_priority;
+    //         playerMovement.SetLayerRecursive(monsterObj, 0);
+    //         // Monster FPS 팔 끄기
+    //         playerMovement.monsterFPS.SetActive(false);
+    //     }
+    //     else
+    //     {
+    //         cvc.Priority = vc_original_priority;
+    //         playerMovement.SetLayerRecursive(monsterObj, 3);
+    //     }
+    // }
 
     public override void OnDamaged(GameObject attacker)
     {
@@ -183,11 +185,11 @@ public class Monster : Player
     {
         Debug.Log("On Hunger");
         // particle systen on
-        hungerParticle = GetComponentInChildren<ParticleSystem>(true).GameObject();
-        hungerParticle.SetActive(true);
+        // hungerParticle = GetComponentInChildren<ParticleSystem>(true).GameObject();
+        // hungerParticle.SetActive(true);
 
         hungerOutline = scientistObj.transform.Find("Renderer/Outline").gameObject;
-        playerMovement.SetLayerRecursive(hungerOutline, 6);
+        monsterMovement.SetLayerRecursive(hungerOutline, 6);
         
         if (NetworkManager.Instance.IsMonster())
         {
@@ -206,11 +208,13 @@ public class Monster : Player
     {
         Debug.Log("No Hunger");
         // particle system off
-        hungerParticle = GetComponentInChildren<ParticleSystem>(true).GameObject();
-        hungerParticle.SetActive(false);
+        // hungerParticle = GetComponentInChildren<ParticleSystem>(true).GameObject();
+        // hungerParticle.SetActive(false);
 
-        if (hungerOutline)
-            playerMovement.SetLayerRecursive(hungerOutline, 0);
+        if (hungerOutline){
+            monsterMovement.SetLayerRecursive(hungerOutline, 0);
+        }
+
     }
 
     public override bool AttackDetection(GameObject target)
