@@ -10,6 +10,7 @@ using UnityEngine.Timeline;
 public class Monster : Player
 {
     private GameObject hungerParticle;
+    private GameObject hungerOutline;
     private GameObject hungerCanvas;
 
     [SerializeField] private AudioSource monster_kill_sound;
@@ -180,8 +181,14 @@ public class Monster : Player
     // Use this when Hunger Gauge reach 0
     public void OnHunger()
     {
+        Debug.Log("On Hunger");
+        // particle systen on
         hungerParticle = GetComponentInChildren<ParticleSystem>(true).GameObject();
         hungerParticle.SetActive(true);
+
+        hungerOutline = scientistObj.transform.Find("Renderer/Outline").gameObject;
+        playerMovement.SetLayerRecursive(hungerOutline, 6);
+        
         if (NetworkManager.Instance.IsMonster())
         {
             hungerCanvas = GetComponentInChildren<HungerCanvasEffect>(true).GameObject();
@@ -197,8 +204,13 @@ public class Monster : Player
     // Use this when Hunger Gauge reset
     public void NoHunger()
     {
+        Debug.Log("No Hunger");
+        // particle system off
         hungerParticle = GetComponentInChildren<ParticleSystem>(true).GameObject();
         hungerParticle.SetActive(false);
+
+        if (hungerOutline)
+            playerMovement.SetLayerRecursive(hungerOutline, 0);
     }
 
     public override bool AttackDetection(GameObject target)
