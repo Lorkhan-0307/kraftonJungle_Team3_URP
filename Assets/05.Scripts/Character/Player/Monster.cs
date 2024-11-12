@@ -36,8 +36,7 @@ public class Monster : Player
     private bool isAttacking = false;
 
     private GameObject _victim;
-    //private GameObject _attacker;
-
+    private GameObject _attacker;
 
     private bool wasDay = false;
 
@@ -153,13 +152,15 @@ public class Monster : Player
     public void OnDeadTimelineFinished()
     {
         Debug.Log("Dead Timeline Finished");
-        //if (_attacker)
-        //    // 공격자 모델 켜기
-        //    _attacker.SetActive(false);
+
+        if(_attacker)
+            // 공격자 모델 켜기
+            _attacker.SetActive(true);
+        
         if (GetComponent<PhotonView>().IsMine)
         {
-            //Transform playerObjectTransform = transform.Find("PlayerObjects(Clone)");
-            //if (playerObjectTransform) Destroy(playerObjectTransform.gameObject);
+            Transform playerObjectTransform = transform.Find("PlayerObjects(Clone)");
+            if (playerObjectTransform) Destroy(playerObjectTransform.gameObject);
             // timeline이 끝나는 시점에 호출
             NEPlayerDeath.PlayerDeath();
             SpectatorManager.instance.StartSpectating();
@@ -289,9 +290,9 @@ public class Monster : Player
         monsterObj.SetActive(false);
 
         // 공격자 모델 끄기
-        //_attacker = attacker;
+        _attacker = attacker.GetComponentInChildren<Animator>().gameObject;
         //attacker.SetActive(false);
-        attacker.GetComponentInChildren<Animator>().gameObject.SetActive(false);
+        _attacker.SetActive(false);
 
         deadDirector.gameObject.SetActive(true);
         deadDirector.Play();

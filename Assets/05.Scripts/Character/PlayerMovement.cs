@@ -111,9 +111,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 targetObject = parentTransform.Find("Parasite L Starkie").gameObject;
                 SetLayerRecursive(targetObject, 3);
-                // 여기에서 Timeline의 cam에 cinebrain 넣기
-                GetComponentInParent<Monster>().SetupCinemachinBrainOnPlayableAssets();
             }
+            // 여기에서 Timeline의 cam에 cinebrain 넣기
+            GetComponentInParent<Monster>().SetupCinemachinBrainOnPlayableAssets();
+            // dead timeline brain 셋업만 추가로 하기
         }
         fpsAnimator = GetComponentInChildren<Animator>();
     }
