@@ -42,6 +42,8 @@ public class Monster : Player
         monsterMovement = GetComponentInChildren<PlayerMovement>();
         mc = GetComponentInChildren<MouseComponent>();
         playerMovement = FindObjectOfType<PlayerMovement>();
+        // 여기에서 Timeline의 cam에 cinebrain 넣기
+        SetupCinemachinBrainOnPlayableAssets();
     }
 
     public override void OnAttack(GameObject victim)
