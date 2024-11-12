@@ -13,7 +13,22 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public Player myPlayer;
 
-    public int NPCCount = 0;
+    public int NPCCount
+    {
+        get
+        {
+            return npcCount;
+        }
+        set
+        {
+            npcCount = value;
+            if (npcUI == null) npcUI = FindObjectOfType<DisplayNpcCount>();
+            if (npcUI != null) npcUI.ApplyUI();
+        }
+    }
+
+    DisplayNpcCount npcUI;
+    int npcCount = 0;
 
     public bool IsServer()
     {

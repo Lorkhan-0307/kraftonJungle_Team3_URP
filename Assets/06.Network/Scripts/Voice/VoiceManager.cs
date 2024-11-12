@@ -18,17 +18,9 @@ public class VoiceManager : MonoBehaviourPunCallbacks
         PunVoiceClient.Instance.ConnectAndJoinRoom();
     }
 
-    private void Update()
-    {
-        if (NetworkManager.Instance.curState == GameState.Dead)
-        {
-            return;
-        }
-        recorder.enabled = (Microphone.devices.Length != 0);
-    }
-
     public void PressToTalk(bool value)
     {
+        recorder.enabled = (Microphone.devices.Length != 0);
         if (!recorder.enabled) return;
         if (recorder.TransmitEnabled == value) return;
 
