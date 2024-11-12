@@ -10579,6 +10579,11 @@ PrefabInstance:
       propertyPath: m_SceneBindings.Array.data[12].value
       value: 
       objectReference: {fileID: 2488183569421283050}
+    - target: {fileID: 653133361077122975, guid: 34cc7cf46c25d474c931b949fb86efd0,
+        type: 3}
+      propertyPath: m_ExposedReferences.m_References.Array.data[0].second
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1521462014227202076, guid: 34cc7cf46c25d474c931b949fb86efd0,
         type: 3}
       propertyPath: m_BoundingSphereOverride.w
@@ -10660,7 +10665,8 @@ PrefabInstance:
       value: OnTransformationTimelineFinished
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 500073225682096582, guid: 34cc7cf46c25d474c931b949fb86efd0, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34cc7cf46c25d474c931b949fb86efd0, type: 3}
