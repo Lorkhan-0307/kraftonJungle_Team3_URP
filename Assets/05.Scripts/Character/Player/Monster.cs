@@ -22,9 +22,8 @@ public class Monster : Player
 
     [SerializeField] AnimationSync aniSync;
     [SerializeField] private CinemachineVirtualCamera cvc;
-    [SerializeField] private int vc_original_priority = 5;
-    [SerializeField] private int vc_lookat_priority = 20;
-
+    //[SerializeField] private int vc_original_priority = 5;
+    //[SerializeField] private int vc_lookat_priority = 20;
 
     [SerializeField] private PlayableDirector transformationDirector;
     [SerializeField] private PlayableDirector transformationDirectorWithoutCam;
