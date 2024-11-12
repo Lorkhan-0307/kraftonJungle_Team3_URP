@@ -155,9 +155,14 @@ public class Monster : Player
     public void OnDeadTimelineFinished()
     {
         Debug.Log("Dead Timeline Finished");
-        // timeline이 끝나는 시점에 호출
-        NEPlayerDeath.PlayerDeath();
-        SpectatorManager.instance.StartSpectating();
+        if(GetComponent<PhotonView>().IsMine)
+        {
+            //Transform playerObjectTransform = transform.Find("PlayerObjects(Clone)");
+            //if (playerObjectTransform) Destroy(playerObjectTransform.gameObject);
+            // timeline이 끝나는 시점에 호출
+            NEPlayerDeath.PlayerDeath();
+            SpectatorManager.instance.StartSpectating();
+        }
     }
 
     // 괴물 모습 변환
