@@ -469,7 +469,7 @@ MonoBehaviour:
   keepAlphaValue: 1
   useCustomColor: 0
   colorType: 0
-  fontType: 2
+  fontType: 4
 --- !u!1 &3487435596949199281
 GameObject:
   m_ObjectHideFlags: 0
