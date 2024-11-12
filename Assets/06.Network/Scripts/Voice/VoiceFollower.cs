@@ -27,20 +27,21 @@ public class VoiceFollower : MonoBehaviourPun
     {
         if (target == null)
         {
-            if (Camera.main != null)
-            {
-                target = Camera.main.transform;
-            }
+            // 리모트 캐릭터 따라가기
+            List<Player> players = FindObjectsOfType<Player>().ToList();
+            Player myPlayer = players.Find(x => x.GetComponent<PhotonView>().
+            Owner.ActorNumber == GetComponent<Speaker>().RemoteVoice.PlayerId);
+
+            if (!myPlayer)
+                return;
+
+            target = myPlayer.transform;
+            //Debug.Log("Set PARENT Voice");
+
+            transform.SetParent(target.transform);
+            transform.localPosition = Vector3.zero;
+            transform.localRotation = Quaternion.identity;
+
         }
-
-        Follow();
-    }
-
-    void Follow()
-    {
-        if (target == null) return;
-
-        transform.position = target.position;
-        transform.rotation = target.rotation;
     }
 }
