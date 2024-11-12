@@ -6,19 +6,19 @@ public class GameSettings// : ScriptableObject
 {
     [Header("Player Settings")]
     public int players = -1;
-    public int npcCount = 20;
+    public int npcCount = 60;
     public int monsters = 1;
     public int scientists = 4;
 
     [Header("Monster Settings")]
-    public bool monsterRandomSelect = true;
+    public bool monsterRandomSelect = false;
     public int[] monsterActorNums = new int[] { 1 };
     public int spectatorActorNum = -1;
 
     [Header("Time Cycle Settings")]
-    public int dayLength = 45;
-    public int nightLength = 20;
-    public int hungerLength = 30;
+    public int dayLength = 60;
+    public int nightLength = 30;
+    public int hungerLength = 45;
 
     //[Header("Not Working")]
 
