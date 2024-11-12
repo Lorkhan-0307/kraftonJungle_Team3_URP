@@ -32,6 +32,8 @@ public class Monster : Player
     [SerializeField] private PlayableDirector transformationDirector;
     [SerializeField] private PlayableDirector transformationDirectorWithoutCam;
 
+    [SerializeField] private PlayableDirector deadDirector;
+
     private MouseComponent mc;
 
     private bool isAttacking = false;
@@ -105,6 +107,7 @@ public class Monster : Player
         if (GetComponent<PhotonView>().AmOwner)
         {
             //PhotonNetwork.Destroy(this.gameObject);
+            OnDeadTimeline();
             NEPlayerDeath.PlayerDeath();
             SpectatorManager.instance.StartSpectating();
         }
@@ -265,6 +268,20 @@ public class Monster : Player
             transformationDirectorWithoutCam.Play();
         }
         
+    }
+
+    public void OnDeadTimeline()
+    {
+        scientistObj.SetActive(false);
+        monsterObj.SetActive(false);
+
+        deadDirector.gameObject.SetActive(true);
+        deadDirector.Play();
+        //if (monsterMovement != null)
+        //{
+        //    monsterMovement.isMovable = false;
+        //    monsterMovement.OffAllFPS();
+        //}
     }
 
     public void SetupCinemachinBrainOnPlayableAssets()
