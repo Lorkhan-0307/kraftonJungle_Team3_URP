@@ -108,7 +108,6 @@ public class Monster : Player
         {
             //PhotonNetwork.Destroy(this.gameObject);
             OnDeadTimeline(attacker);
-            //SpectatorManager.instance.StartSpectating();
         }
         else
         {
@@ -158,6 +157,7 @@ public class Monster : Player
         Debug.Log("Dead Timeline Finished");
         // timeline이 끝나는 시점에 호출
         NEPlayerDeath.PlayerDeath();
+        SpectatorManager.instance.StartSpectating();
     }
 
     // 괴물 모습 변환
