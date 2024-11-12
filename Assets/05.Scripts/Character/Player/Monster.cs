@@ -22,8 +22,6 @@ public class Monster : Player
 
     [SerializeField] AnimationSync aniSync;
     [SerializeField] private CinemachineVirtualCamera cvc;
-    //[SerializeField] private int vc_original_priority = 5;
-    //[SerializeField] private int vc_lookat_priority = 20;
 
     [SerializeField] private PlayableDirector transformationDirector;
     [SerializeField] private PlayableDirector transformationDirectorWithoutCam;
@@ -79,22 +77,6 @@ public class Monster : Player
 
     }
 
-    // public void TransitionCamera(bool isThird)
-    // {
-    //     if (isThird)
-    //     {
-    //         cvc.Priority = vc_lookat_priority;
-    //         monsterMovement.SetLayerRecursive(monsterObj, 0);
-    //         // Monster FPS 팔 끄기
-    //         monsterMovement.monsterFPS.SetActive(false);
-    //     }
-    //     else
-    //     {
-    //         cvc.Priority = vc_original_priority;
-    //         monsterMovement.SetLayerRecursive(monsterObj, 3);
-    //     }
-    // }
-
     public override void OnDamaged(GameObject attacker)
     {
         base.OnDamaged(attacker);
@@ -104,6 +86,8 @@ public class Monster : Player
         {
             //PhotonNetwork.Destroy(this.gameObject);
             OnDeadTimeline(attacker);
+            // canvas 삭제
+            Destroy(GetComponentInChildren<Canvas>().gameObject);
         }
         else
         {
