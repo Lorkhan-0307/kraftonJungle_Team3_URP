@@ -9,23 +9,31 @@ public class SpectatorCameraColorChange : MonoBehaviour
 
     public void EnableOutlineEffect()
     {
+
         GameObject[] Scientists = GameObject.FindGameObjectsWithTag("ScientistOutline");
-
-        foreach (GameObject obj in Scientists)
-        {
-            SkinnedMeshRenderer skinnedMeshRenderer = obj.GetComponent<SkinnedMeshRenderer>();
-
-            if (skinnedMeshRenderer != null)
-            {
-                Material[] newMats = skinnedMeshRenderer.materials.Clone() as Material[];
-                newMats[0] = ScientistBodyMaterial;
-                skinnedMeshRenderer.materials = newMats;
-            }
-        }
+        
+       // var hungerOutline = scientistObj.transform.Find("Renderer/Outline").gameObject;
+       foreach (GameObject go in Scientists)
+       {
+           SetLayerRecursive(go, 7);
+           
+       }
 
         Debug.Log("Outline Effect Enabled");
         
         StartCoroutine(EnableMonsterOutlineEffectWhenDay());
+    }
+    
+    public void SetLayerRecursive(GameObject obj, int newLayer)
+    {
+        // 현재 오브젝트의 레이어 변경
+        obj.layer = newLayer;
+
+        // 모든 자식 오브젝트의 레이어 변경
+        foreach (Transform child in obj.transform)
+        {
+            SetLayerRecursive(child.gameObject, newLayer);
+        }
     }
     
     
@@ -36,17 +44,11 @@ public class SpectatorCameraColorChange : MonoBehaviour
         yield return new WaitUntil(() => GameObject.FindGameObjectsWithTag("MonsterOutline").Length > 0);
 
         GameObject[] monTaggedObjects = GameObject.FindGameObjectsWithTag("MonsterOutline");
-    
+        
         foreach (GameObject obj in monTaggedObjects)
         {
-            SkinnedMeshRenderer skinnedMeshRenderer = obj.GetComponent<SkinnedMeshRenderer>();
-
-            if (skinnedMeshRenderer != null)
-            {
-                Material[] newMats = skinnedMeshRenderer.materials.Clone() as Material[];
-                newMats[0] = MonsterBodyMaterial;
-                skinnedMeshRenderer.materials = newMats;
-            }
+            SetLayerRecursive(obj, 6);
         }
+        
     }
 }

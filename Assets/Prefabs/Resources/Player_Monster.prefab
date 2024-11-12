@@ -426,7 +426,7 @@ GameObject:
   - component: {fileID: 7980292718287854813}
   m_Layer: 0
   m_Name: Outline
-  m_TagString: Untagged
+  m_TagString: MonsterOutline
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2138,7 +2138,7 @@ GameObject:
   - component: {fileID: 6101505932284612561}
   m_Layer: 0
   m_Name: Astronaut_Suit_Helmet_Details_01_Mesh
-  m_TagString: MonsterOutline
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2483,7 +2483,7 @@ GameObject:
   - component: {fileID: 6101505932284612547}
   m_Layer: 0
   m_Name: Astronaut_Suit_Backpack_01_Mesh
-  m_TagString: MonsterOutline
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2637,7 +2637,7 @@ GameObject:
   - component: {fileID: 6101505932284612549}
   m_Layer: 0
   m_Name: Astronaut_Person_Face_05
-  m_TagString: MonsterOutline
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2727,7 +2727,7 @@ GameObject:
   - component: {fileID: 6101505932284612551}
   m_Layer: 0
   m_Name: Astronaut_Person_Face_04
-  m_TagString: MonsterOutline
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2817,7 +2817,7 @@ GameObject:
   - component: {fileID: 6101505932284612553}
   m_Layer: 0
   m_Name: Astronaut_Person_Face_03
-  m_TagString: MonsterOutline
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2907,7 +2907,7 @@ GameObject:
   - component: {fileID: 6101505932284612555}
   m_Layer: 0
   m_Name: Astronaut_Person_Face_02
-  m_TagString: MonsterOutline
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2997,7 +2997,7 @@ GameObject:
   - component: {fileID: 6101505932284612557}
   m_Layer: 0
   m_Name: Astronaut_Person_Face_01
-  m_TagString: MonsterOutline
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3086,7 +3086,7 @@ GameObject:
   - component: {fileID: 6101505932284612559}
   m_Layer: 0
   m_Name: Astronaut_Person_Body
-  m_TagString: MonsterOutline
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3312,7 +3312,7 @@ GameObject:
   - component: {fileID: 6101505932284612565}
   m_Layer: 0
   m_Name: Astronaut_Suit_Body_Detail_03_Mesh
-  m_TagString: MonsterOutline
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3427,7 +3427,7 @@ GameObject:
   - component: {fileID: 6101505932284612567}
   m_Layer: 0
   m_Name: Astronaut_Suit_Body_Detail_02_Mesh
-  m_TagString: MonsterOutline
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3518,7 +3518,7 @@ GameObject:
   - component: {fileID: 6101505932284612569}
   m_Layer: 0
   m_Name: Astronaut_Suit_Body_Detail_01_Mesh
-  m_TagString: MonsterOutline
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3606,7 +3606,7 @@ GameObject:
   - component: {fileID: 6101505932284612571}
   m_Layer: 0
   m_Name: Astronaut_Suit_Body_Belts_Mesh
-  m_TagString: MonsterOutline
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3697,7 +3697,7 @@ GameObject:
   - component: {fileID: 6101505932284612573}
   m_Layer: 0
   m_Name: Astronaut_Suit_Backpack_Belts_02_Mesh
-  m_TagString: MonsterOutline
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3790,7 +3790,7 @@ GameObject:
   - component: {fileID: 6101505932284612575}
   m_Layer: 0
   m_Name: Astronaut_Suit_Backpack_Belts_01_Mesh
-  m_TagString: MonsterOutline
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
