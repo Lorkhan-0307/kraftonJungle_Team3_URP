@@ -11,12 +11,19 @@ public class Scientist : Player
     {
         base.OnAttack(victim);
         victim.GetComponent<BloodEffect>().OnBloodEffect();
+        // victim 이 Monster이면
+        if (victim.GetComponent<Player>().type == CharacterType.Monster)
+            // Timeline 실행
+            victim.GetComponent<Monster>().OnDeadTimeline(gameObject);
     }
 
     public override void OnDamaged(GameObject attacker)
     {
         base.OnDamaged(attacker);
+
         Debug.Log("ONDAMAGED");
+        Transform playerObjectTransform = transform.Find("PlayerObjects(Clone)");
+        if (playerObjectTransform) Destroy(playerObjectTransform.gameObject);
 
         // 여기서 Destroy 결과 전송
         if (GetComponent<PhotonView>().AmOwner)
