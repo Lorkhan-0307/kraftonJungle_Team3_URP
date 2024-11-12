@@ -3,7 +3,6 @@ using Photon.Realtime;
 using Photon.Voice.PUN;
 using Photon.Voice.Unity;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class VoiceManager : MonoBehaviourPunCallbacks
 {
@@ -22,7 +21,7 @@ public class VoiceManager : MonoBehaviourPunCallbacks
     {
         if(SpectatorManager.instance.isSpectating)
         {
-            recorder.enabled = (Microphone.devices.Length != 0);
+            recorder.TransmitEnabled = false;
         }
         if (NetworkManager.Instance.curState == GameState.Dead)
         {
