@@ -28,9 +28,10 @@ public class DisplayPing : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        // PhotonNetwork.GetPing()를 통해 현재 Ping 값을 가져와 UI에 표시
-        //pingText.text = $"Ping: {PhotonNetwork.GetPing()} ms";
-    }
+    // 최적화 작업
+    //void Update()
+    //{
+    // PhotonNetwork.GetPing()를 통해 현재 Ping 값을 가져와 UI에 표시
+    // pingText.text = $"Ping: {PhotonNetwork.GetPing()} ms";
+    //}
 }

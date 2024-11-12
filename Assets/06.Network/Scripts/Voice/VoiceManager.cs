@@ -18,6 +18,16 @@ public class VoiceManager : MonoBehaviourPunCallbacks
         PunVoiceClient.Instance.ConnectAndJoinRoom();
     }
 
+    // 최적화 작업
+    //private void Update()
+    //{
+    //    if (NetworkManager.Instance.curState == GameState.Dead)
+    //    {
+    //        return;
+    //    }
+    //    recorder.enabled = (Microphone.devices.Length != 0);
+    //}
+
     public void PressToTalk(bool value)
     {
         recorder.enabled = (Microphone.devices.Length != 0);

@@ -34,13 +34,24 @@ public class CustomMenu : MonoBehaviour
     }
 
     // 커스텀 메뉴 항목 생성
-    [MenuItem("Custom Tools/Delete Logs")]
-    public static void DeleteLogs()
+    [MenuItem("Custom Tools/Delete Result Logs")]
+    public static void DeleteResultLogs()
     {
         // PlayerPrefs에서 "GameResultDemo" 키로 string 값 불러오기
         PlayerPrefs.SetString("GameResultDemo", "");
 
         // 콘솔창에 출력
         Debug.Log("Result Log Is Initialized.");
+    }
+
+    // 커스텀 메뉴 항목 생성
+    [MenuItem("Custom Tools/Delete Debugging Logs")]
+    public static void DeleteDebugLogs()
+    {
+        // PlayerPrefs에서 "GameResultDemo" 키로 string 값 불러오기
+        PlayerPrefs.SetInt("DebugLogIndex", 0);
+
+        // 콘솔창에 출력
+        Debug.Log("Debug Log Is Initialized.");
     }
 }

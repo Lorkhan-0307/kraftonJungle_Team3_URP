@@ -18,4 +18,12 @@ public class DisplayNpcCount : MonoBehaviour
         // PhotonNetwork.GetPing()를 통해 현재 Ping 값을 가져와 UI에 표시
         npcText.text = $"NPC: {NetworkManager.Instance.NPCCount}";
     }
+
+    // 최적화 작업
+    //private void Update()
+    //{
+        // PhotonNetwork.GetPing()를 통해 현재 Ping 값을 가져와 UI에 표시
+        //int npcCount = NetworkManager.Instance.NPCCount;
+        //npcText.text = $"NPC: {npcCount}";
+    //}
 }
