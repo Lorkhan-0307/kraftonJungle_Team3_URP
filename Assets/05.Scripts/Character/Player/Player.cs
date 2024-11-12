@@ -30,8 +30,9 @@ public class Player : MonoBehaviour, ICharacter
         CapsuleCollider cc = GetComponent<CapsuleCollider>();
         Destroy(cc);
 
-        Transform playerObjectTransform = transform.Find("PlayerObjects(Clone)");
-        if (playerObjectTransform) Destroy(playerObjectTransform.gameObject);
+        //Transform playerObjectTransform = transform.Find("PlayerObjects(Clone)");
+        //if (playerObjectTransform) Destroy(playerObjectTransform.gameObject);
+
         //GetComponent<BloodEffect>().OnBloodEffect();
     }
 

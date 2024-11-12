@@ -107,9 +107,8 @@ public class Monster : Player
         if (GetComponent<PhotonView>().AmOwner)
         {
             //PhotonNetwork.Destroy(this.gameObject);
-            OnDeadTimeline();
-            NEPlayerDeath.PlayerDeath();
-            SpectatorManager.instance.StartSpectating();
+            OnDeadTimeline(attacker);
+            //SpectatorManager.instance.StartSpectating();
         }
         else
         {
@@ -152,6 +151,13 @@ public class Monster : Player
             monsterMovement.OnMonsterFPS(false);
         }
         aniSync.ani = monsterObj.GetComponent<Animator>();
+    }
+
+    public void OnDeadTimelineFinished()
+    {
+        Debug.Log("Dead Timeline Finished");
+        // timeline이 끝나는 시점에 호출
+        NEPlayerDeath.PlayerDeath();
     }
 
     // 괴물 모습 변환
@@ -270,18 +276,17 @@ public class Monster : Player
         
     }
 
-    public void OnDeadTimeline()
+    public void OnDeadTimeline(GameObject attacker)
     {
+        Debug.Log("Dead Timeline");
         scientistObj.SetActive(false);
         monsterObj.SetActive(false);
 
+        // 공격자 모델 끄기
+        attacker.SetActive(false);
+
         deadDirector.gameObject.SetActive(true);
         deadDirector.Play();
-        //if (monsterMovement != null)
-        //{
-        //    monsterMovement.isMovable = false;
-        //    monsterMovement.OffAllFPS();
-        //}
     }
 
     public void SetupCinemachinBrainOnPlayableAssets()
@@ -300,6 +305,14 @@ public class Monster : Player
         {
             if (track is CinemachineTrack)
                 attackDirector.SetGenericBinding(track, FindObjectOfType<CinemachineBrain>());
+        }
+
+        ta = deadDirector.playableAsset as TimelineAsset;
+        temp = ta.GetOutputTracks();
+        foreach (var track in temp)
+        {
+            if (track is CinemachineTrack)
+                deadDirector.SetGenericBinding(track, FindObjectOfType<CinemachineBrain>());
         }
     }
 

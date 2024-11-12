@@ -788,6 +788,7 @@ MonoBehaviour:
     m_Signals:
     - {fileID: 11400000, guid: 86fddde3393b4674e82cc96a691f7234, type: 2}
     - {fileID: 11400000, guid: cad1912bd66f4ea4b8893ca21269e17e, type: 2}
+    - {fileID: 11400000, guid: ccd45c5ff2c367743a911c8af11bbca4, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -808,6 +809,20 @@ MonoBehaviour:
         - m_Target: {fileID: 4160618565708385934}
           m_TargetAssemblyTypeName: Monster, Assembly-CSharp
           m_MethodName: OnAttackFinished
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4160618565708385934}
+          m_TargetAssemblyTypeName: Monster, Assembly-CSharp
+          m_MethodName: OnDeadTimelineFinished
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -10072,17 +10087,17 @@ PrefabInstance:
     - target: {fileID: 624925797108883466, guid: 3124a4aa5a769024680566bb6766ed5b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -29.362347
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 624925797108883466, guid: 3124a4aa5a769024680566bb6766ed5b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.9868535
+      value: 1.581
       objectReference: {fileID: 0}
     - target: {fileID: 624925797108883466, guid: 3124a4aa5a769024680566bb6766ed5b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -11.460161
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 624925797108883466, guid: 3124a4aa5a769024680566bb6766ed5b,
         type: 3}
@@ -10132,7 +10147,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2213163652270212500, guid: 3124a4aa5a769024680566bb6766ed5b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1058753716200558983}
   m_SourcePrefab: {fileID: 100100000, guid: 3124a4aa5a769024680566bb6766ed5b, type: 3}
 --- !u!4 &740977346878471890 stripped
 Transform:
@@ -10140,6 +10159,42 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 208384164014743256}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2040949589719456588 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2213163652270212500, guid: 3124a4aa5a769024680566bb6766ed5b,
+    type: 3}
+  m_PrefabInstance: {fileID: 208384164014743256}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1058753716200558983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040949589719456588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: ccd45c5ff2c367743a911c8af11bbca4, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4160618565708385934}
+          m_TargetAssemblyTypeName: Monster, Assembly-CSharp
+          m_MethodName: OnDeadTimelineFinished
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!320 &2353361499571455957 stripped
 PlayableDirector:
   m_CorrespondingSourceObject: {fileID: 2471497199421479181, guid: 3124a4aa5a769024680566bb6766ed5b,
