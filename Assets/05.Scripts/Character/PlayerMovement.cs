@@ -125,10 +125,6 @@ public class PlayerMovement : MonoBehaviour
         }
         fpsAnimator = GetComponentInChildren<Animator>();
     }
-    private void  Start()
-    {
-        FindObjectOfType<Monster>().SetupCinemachinBrainOnPlayableAssets();
-    }
 
     public void SetLayerRecursive(GameObject obj, int newLayer)
     {
@@ -144,6 +140,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        FindObjectOfType<Monster>().SetupCinemachinBrainOnPlayableAssets();
+
         if (killButton == null)
         {
             killButton = FindObjectOfType<KillButton>().GetComponent<Button>();
