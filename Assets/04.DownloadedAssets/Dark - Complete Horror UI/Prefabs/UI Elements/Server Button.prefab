@@ -384,8 +384,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: SERVER NAME HERE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d452d52c272ff8442a3fce75bd39af55, type: 2}
-  m_sharedMaterial: {fileID: 21513131424051102, guid: d452d52c272ff8442a3fce75bd39af55,
+  m_fontAsset: {fileID: 11400000, guid: b3a77523d977fcb4c9b1dd7cea0b2162, type: 2}
+  m_sharedMaterial: {fileID: 4382958475629802429, guid: b3a77523d977fcb4c9b1dd7cea0b2162,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -469,7 +469,7 @@ MonoBehaviour:
   keepAlphaValue: 1
   useCustomColor: 0
   colorType: 0
-  fontType: 2
+  fontType: 4
 --- !u!1 &3487435596949199281
 GameObject:
   m_ObjectHideFlags: 0
@@ -939,7 +939,7 @@ MonoBehaviour:
   keepAlphaValue: 1
   useCustomColor: 0
   colorType: 0
-  fontType: 2
+  fontType: 4
 --- !u!1 &3487435597276577870
 GameObject:
   m_ObjectHideFlags: 0
