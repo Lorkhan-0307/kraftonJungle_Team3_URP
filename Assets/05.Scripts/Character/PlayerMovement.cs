@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -8,6 +9,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.HID;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -155,29 +157,25 @@ public class PlayerMovement : MonoBehaviour
         currentCooltime = 0f;
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private Vector2 input;
+    private Vector3 motion;
+    private float currentSpeed;
+    private void Update()
     {
-
         if (VoiceManager)
         {
             VoiceManager.PressToTalk(voiceAction.IsPressed());
         }
-        isGrounded = controller.isGrounded;
-
-        if (isGrounded && velocity.y < 0)
-        {
-            velocity.y = -2f;
-        }
+        
 
         if (isMovable)
         {
             Aim?.SetActive(true);
 
             // Move 액션으로 이동 입력 받기
-            Vector2 input = moveAction.ReadValue<Vector2>();
-            Vector3 motion = transform.right * input.x + transform.forward * input.y;
-            float currentSpeed = IsMonsterNightSpeed() && runAction.IsPressed() ? monsterNightSpeed : speed;
+            input = moveAction.ReadValue<Vector2>();
+            motion = transform.right * input.x + transform.forward * input.y;
+            currentSpeed = IsMonsterNightSpeed() && runAction.IsPressed() ? monsterNightSpeed : speed;
 
             // Jump 액션으로 점프 입력 받기
             if (jumpAction.triggered && isGrounded)
@@ -186,10 +184,6 @@ public class PlayerMovement : MonoBehaviour
                 Debug.Log("JUMP ACTION");
             }
             
-            // 중력 적용
-            velocity.y += gravity * Time.smoothDeltaTime;
-            controller.Move((motion * currentSpeed + velocity) * Time.smoothDeltaTime);
-
             // 발걸음 소리 재생
             if ((input.x != 0 || input.y != 0) && isGrounded)
             {
@@ -242,14 +236,25 @@ public class PlayerMovement : MonoBehaviour
             killButtonText.text = "";
             interactButtonText.text = "";
             Aim?.SetActive(false);
+            velocity = Vector3.zero;
+            motion = Vector3.zero;
         }
-
-        //
-        
-        //
-
         // 쿨타임 업데이트
         UpdatekillCooltime();
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        isGrounded = controller.isGrounded;
+
+        if (isGrounded && velocity.y < 0)
+        {
+            velocity.y = -2f;
+        }
+        
+        velocity.y += gravity * Time.fixedDeltaTime;
+        controller.Move((motion * currentSpeed + velocity) * Time.fixedDeltaTime);
 
     }
 
