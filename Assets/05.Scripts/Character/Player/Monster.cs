@@ -20,9 +20,6 @@ public class Monster : Player
     private PlayerMovement monsterMovement;
     private PlayerMovement playerMovement;
 
-    //private bool isAttacking = false;
-    //private bool isDayShiftedWhileAttacking = false;
-
     [SerializeField] AnimationSync aniSync;
     [SerializeField] private CinemachineVirtualCamera cvc;
     [SerializeField] private int vc_original_priority = 5;
@@ -39,6 +36,7 @@ public class Monster : Player
     private bool isAttacking = false;
 
     private GameObject _victim;
+    private GameObject _attacker;
 
 
     private bool wasDay = false;
@@ -155,7 +153,10 @@ public class Monster : Player
     public void OnDeadTimelineFinished()
     {
         Debug.Log("Dead Timeline Finished");
-        if(GetComponent<PhotonView>().IsMine)
+        if (_attacker)
+            // 공격자 모델 켜기
+            _attacker.SetActive(false);
+        if (GetComponent<PhotonView>().IsMine)
         {
             //Transform playerObjectTransform = transform.Find("PlayerObjects(Clone)");
             //if (playerObjectTransform) Destroy(playerObjectTransform.gameObject);
@@ -288,7 +289,8 @@ public class Monster : Player
         monsterObj.SetActive(false);
 
         // 공격자 모델 끄기
-        attacker.SetActive(false);
+        _attacker = attacker;
+        _attacker.SetActive(false);
 
         deadDirector.gameObject.SetActive(true);
         deadDirector.Play();
