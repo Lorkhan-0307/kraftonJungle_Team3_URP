@@ -17,8 +17,8 @@ public class Monster : Player
     [SerializeField] private GameObject scientistObj;
     [SerializeField] private GameObject monsterObj;
 
-    private PlayerMovement playerMovement;
     private PlayerMovement monsterMovement;
+    private PlayerMovement playerMovement;
 
     //private bool isAttacking = false;
     //private bool isDayShiftedWhileAttacking = false;
@@ -43,9 +43,9 @@ public class Monster : Player
 
     private void Start()
     {
-        playerMovement = GetComponentInChildren<PlayerMovement>();
+        monsterMovement = GetComponentInChildren<PlayerMovement>();
         mc = GetComponentInChildren<MouseComponent>();
-        monsterMovement = FindObjectOfType<PlayerMovement>();
+        playerMovement = FindObjectOfType<PlayerMovement>();
     }
 
     public override void OnAttack(GameObject victim)
@@ -55,7 +55,7 @@ public class Monster : Player
 
         OnTransformation(TimeManager.instance.GetisDay());
 
-        if(playerMovement != null) playerMovement.isMovable = false;
+        if(monsterMovement != null) monsterMovement.isMovable = false;
         //TransitionCamera(true);
 
         // victim pos 값 timeline 기준으로 변경
@@ -86,14 +86,14 @@ public class Monster : Player
     //     if (isThird)
     //     {
     //         cvc.Priority = vc_lookat_priority;
-    //         playerMovement.SetLayerRecursive(monsterObj, 0);
+    //         monsterMovement.SetLayerRecursive(monsterObj, 0);
     //         // Monster FPS 팔 끄기
-    //         playerMovement.monsterFPS.SetActive(false);
+    //         monsterMovement.monsterFPS.SetActive(false);
     //     }
     //     else
     //     {
     //         cvc.Priority = vc_original_priority;
-    //         playerMovement.SetLayerRecursive(monsterObj, 3);
+    //         monsterMovement.SetLayerRecursive(monsterObj, 3);
     //     }
     // }
 
@@ -139,14 +139,14 @@ public class Monster : Player
         bool isDay = TimeManager.instance.isDay;
         scientistObj.SetActive(isDay);
         monsterObj.SetActive(!isDay);
-        if(playerMovement != null) playerMovement.isMovable = true;
+        if(monsterMovement != null) monsterMovement.isMovable = true;
         
         
         // 애니메이터 변환
-        if (playerMovement)
+        if (monsterMovement)
         {
-            playerMovement.animator = monsterObj.GetComponent<Animator>();
-            playerMovement.OnMonsterFPS(false);
+            monsterMovement.animator = monsterObj.GetComponent<Animator>();
+            monsterMovement.OnMonsterFPS(false);
         }
         aniSync.ani = monsterObj.GetComponent<Animator>();
     }
@@ -158,10 +158,10 @@ public class Monster : Player
         scientistObj.SetActive(false);
         monsterObj.SetActive(true);
         // 애니메이터 변환
-        if (playerMovement)
+        if (monsterMovement)
         {
-            playerMovement.animator = monsterObj.GetComponent<Animator>();
-            playerMovement.OnMonsterFPS(isAttackingInDay);
+            monsterMovement.animator = monsterObj.GetComponent<Animator>();
+            monsterMovement.OnMonsterFPS(isAttackingInDay);
         }
         aniSync.ani = monsterObj.GetComponent<Animator>();
     }
@@ -171,11 +171,11 @@ public class Monster : Player
         // 연구원 모습 활성화
         scientistObj.SetActive(true);
         monsterObj.SetActive(false);
-        if (playerMovement)
+        if (monsterMovement)
         {
             // 애니메이터 변환
-            playerMovement.animator = scientistObj.GetComponent<Animator>();
-            playerMovement.OffMonsterFPS();
+            monsterMovement.animator = scientistObj.GetComponent<Animator>();
+            monsterMovement.OffMonsterFPS();
         }
         aniSync.ani = scientistObj.GetComponent<Animator>();
     }
@@ -186,9 +186,10 @@ public class Monster : Player
         // particle systen on
         // hungerParticle = GetComponentInChildren<ParticleSystem>(true).GameObject();
         // hungerParticle.SetActive(true);
-
+        
         hungerOutline = scientistObj.transform.Find("Renderer/Outline").gameObject;
-        monsterMovement.SetLayerRecursive(hungerOutline, 6);
+        if(playerMovement)
+            playerMovement.SetLayerRecursive(hungerOutline, 6);
         
         if (NetworkManager.Instance.IsMonster())
         {
@@ -214,8 +215,8 @@ public class Monster : Player
         if(hungerCanvas)
             hungerCanvas.SetActive(false);
 
-        if (hungerOutline){
-            monsterMovement.SetLayerRecursive(hungerOutline, 0);
+        if (hungerOutline && playerMovement){
+            playerMovement.SetLayerRecursive(hungerOutline, 0);
         }
 
     }
@@ -252,10 +253,10 @@ public class Monster : Player
         {
             transformationDirector.gameObject.SetActive(true);
             transformationDirector.Play();
-            if (playerMovement != null)
+            if (monsterMovement != null)
             {
-                playerMovement.isMovable = false;
-                playerMovement.OffAllFPS();
+                monsterMovement.isMovable = false;
+                monsterMovement.OffAllFPS();
             }
         }
         else
@@ -307,10 +308,10 @@ public class Monster : Player
         {
             attackDirector.gameObject.SetActive(true);
             attackDirector.Play();
-            if (playerMovement != null)
+            if (monsterMovement != null)
             {
-                playerMovement.isMovable = false;
-                playerMovement.OffAllFPS();
+                monsterMovement.isMovable = false;
+                monsterMovement.OffAllFPS();
             }
         }
         else
@@ -328,11 +329,11 @@ public class Monster : Player
 
         if (attackDirectorWithoutCam.gameObject.activeInHierarchy) attackDirectorWithoutCam.gameObject.SetActive(false);
 
-        if (playerMovement)
+        if (monsterMovement)
         {
-            playerMovement.isMovable = true;
-            playerMovement.MonsterFPSOnTime();
-            playerMovement.animator = scientistObj.GetComponent<Animator>();
+            monsterMovement.isMovable = true;
+            monsterMovement.MonsterFPSOnTime();
+            monsterMovement.animator = scientistObj.GetComponent<Animator>();
         }
 
 
@@ -354,10 +355,10 @@ public class Monster : Player
             scientistObj.SetActive(false);
             monsterObj.SetActive(true);
             // 애니메이터 변환
-            if (playerMovement)
+            if (monsterMovement)
             {
-                playerMovement.animator = monsterObj.GetComponent<Animator>();
-                playerMovement.OnMonsterFPS(false);
+                monsterMovement.animator = monsterObj.GetComponent<Animator>();
+                monsterMovement.OnMonsterFPS(false);
             }
             aniSync.ani = monsterObj.GetComponent<Animator>();
         }
