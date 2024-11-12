@@ -172,7 +172,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (isMovable)
         {
-            Aim?.SetActive(true);
+            if(Aim)
+                Aim.SetActive(true);
 
             // Move 액션으로 이동 입력 받기
             Vector2 input = moveAction.ReadValue<Vector2>();
@@ -225,6 +226,8 @@ public class PlayerMovement : MonoBehaviour
                 Debug.Log("Interact");
                 interactTarget.GetComponentInParent<Interact>().BroadcastInteraction();
             }
+
+            //Debug.Log($"my Player Is grounded {isGrounded.ToString()}");
             // 떨어지면 강제로 복구
             if (transform.position.y < -5f)
             {

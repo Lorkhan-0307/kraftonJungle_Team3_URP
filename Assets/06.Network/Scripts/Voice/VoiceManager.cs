@@ -20,6 +20,10 @@ public class VoiceManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
+        if(SpectatorManager.instance.isSpectating)
+        {
+            recorder.enabled = (Microphone.devices.Length != 0);
+        }
         if (NetworkManager.Instance.curState == GameState.Dead)
         {
             return;
