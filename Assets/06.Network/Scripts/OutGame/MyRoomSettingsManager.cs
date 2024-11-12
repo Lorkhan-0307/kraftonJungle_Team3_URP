@@ -7,7 +7,6 @@ using UnityEngine;
 using Unity.VisualScripting;
 using System.Linq;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
 
 public class MyRoomSettingsManager : MonoBehaviourPunCallbacks
 {
@@ -24,9 +23,9 @@ public class MyRoomSettingsManager : MonoBehaviourPunCallbacks
     [SerializeField] Image disableSelectMonster;
 
     [SerializeField] int[] timeLengthPreset;
-    int dayIndex = 6;
-    int nightIndex = 4;
-    int hungerIndex = 5;
+    int dayIndex = 7;
+    int nightIndex = 5;
+    int hungerIndex = 6;
     int monsterActorNum = 1;
 
 

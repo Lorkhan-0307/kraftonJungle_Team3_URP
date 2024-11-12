@@ -22,7 +22,7 @@ public class NPCSync : MonoBehaviourPun
     [PunRPC]
     public void SyncDestination(Vector3 dest)
     {
-        if(agent)
+        if(agent && agent.gameObject.activeSelf)
             agent.SetDestination(dest);
     }
 }

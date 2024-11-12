@@ -53,10 +53,17 @@ public class CCTV_Manager : MonoBehaviour
     
     private void SetActiveCamera(int index)
     {
-        cctv_cameras[index].gameObject.SetActive(true);
+        if (cRenderTexture != null)
+        {
+            cRenderTexture.Release();
+            Destroy(cRenderTexture);
+        }
+        
         cRenderTexture = new RenderTexture(1024, 512, 24);
         cRenderTexture.graphicsFormat = UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm;
         cRenderTexture.depthStencilFormat = UnityEngine.Experimental.Rendering.GraphicsFormat.D24_UNorm_S8_UInt;
+        
+        cctv_cameras[index].gameObject.SetActive(true);
 
         cctv_cameras[index].targetTexture = cRenderTexture;
         
