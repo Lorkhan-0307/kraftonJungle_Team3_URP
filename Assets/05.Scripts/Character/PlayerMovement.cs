@@ -174,6 +174,7 @@ public class PlayerMovement : MonoBehaviour
             input = moveAction.ReadValue<Vector2>();
             motion = transform.right * input.x + transform.forward * input.y;
             currentSpeed = IsMonsterNightSpeed() && runAction.IsPressed() ? monsterNightSpeed : speed;
+            animator.SetBool("IsRunning", runAction.IsPressed());
 
             // Jump 액션으로 점프 입력 받기
             if (jumpAction.triggered && isGrounded)
