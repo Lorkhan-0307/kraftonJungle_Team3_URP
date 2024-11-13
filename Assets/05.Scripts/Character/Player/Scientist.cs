@@ -22,21 +22,23 @@ public class Scientist : Player
         base.OnDamaged(attacker);
 
         Debug.Log("ONDAMAGED");
-        Transform playerObjectTransform = transform.Find("PlayerObjects(Clone)");
-        if (playerObjectTransform) Destroy(playerObjectTransform.gameObject);
+
+        // 주석 처리된 얘네를 Monster.cs의 OnAttackFinished()로 옮겨야 함
+        //Transform playerObjectTransform = transform.Find("PlayerObjects(Clone)");
+        //if (playerObjectTransform) Destroy(playerObjectTransform.gameObject);
 
         // 여기서 Destroy 결과 전송
-        if (GetComponent<PhotonView>().AmOwner)
-        {            
-            NEPlayerDeath.PlayerDeath();
-            // 게임이 끝났으면 실행 X
-            if (!TimeManager.instance.isEnd)
-                SpectatorManager.instance.StartSpectating();
-        }
-        else
-        {
-            SpectatorManager.instance.RemoveRemainingPlayer(this.gameObject);
-        }
+        //if (GetComponent<PhotonView>().AmOwner)
+        //{
+        //    NEPlayerDeath.PlayerDeath();
+        //    // 게임이 끝났으면 실행 X
+        //    if (!TimeManager.instance.isEnd)
+        //        SpectatorManager.instance.StartSpectating();
+        //}
+        //else
+        //{
+        //    SpectatorManager.instance.RemoveRemainingPlayer(this.gameObject);
+        //}
     }
 
     public override void OnDead()
