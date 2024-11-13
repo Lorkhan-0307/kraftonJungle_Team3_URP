@@ -390,6 +390,10 @@ public class Monster : Player
         _victim.GetComponentInChildren<Animator>().transform.GetChild(0).gameObject.SetActive(true);
         _victim.GetComponentInChildren<Animator>().Play("Standing Death Forward", 0, 95);
         _victim.GetComponent<BloodEffect>().OnBloodEffect();
+        if (_victim.TryGetComponent(out Scientist _victimScientist))
+        {
+            _victimScientist.OnAttackFinished();
+        }
     }
     #endregion
 }

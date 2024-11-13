@@ -21,8 +21,13 @@ public class Scientist : Player
     {
         base.OnDamaged(attacker);
 
-        Debug.Log("ONDAMAGED");
+        //Debug.Log("ONDAMAGED");
 
+
+    }
+
+    public void OnAttackFinished()
+    {
         // 여기부터 끝까지 Monster.cs의 OnAttackFinished()로 옮겨야 함
         Transform playerObjectTransform = transform.Find("PlayerObjects(Clone)");
         if (playerObjectTransform) Destroy(playerObjectTransform.gameObject);
