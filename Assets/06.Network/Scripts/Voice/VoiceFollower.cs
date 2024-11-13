@@ -33,8 +33,9 @@ public class VoiceFollower : MonoBehaviourPun
             //PhotonNetwork.CurrentRoom.GetPlayer(GetComponent<Speaker>().RemoteVoice.PlayerId)
             //&& x.type != CharacterType.NPC));
             List<Player> players = FindObjectsOfType<Player>().ToList();
-            Player myPlayer = players.Find(x => x.GetComponent<PhotonView>().
-            Owner.ActorNumber == GetComponent<Speaker>().RemoteVoice.PlayerId);
+            Player myPlayer = players.Find(x => x.type != CharacterType.NPC &&
+            x.GetComponent<PhotonView>().Owner.NickName == 
+            PhotonNetwork.CurrentRoom.GetPlayer(GetComponent<Speaker>().RemoteVoice.PlayerId).NickName);
 
             if (!myPlayer)
                 return;
