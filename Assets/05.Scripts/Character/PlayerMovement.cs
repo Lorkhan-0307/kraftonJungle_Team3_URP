@@ -179,8 +179,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (isMovable)
         {
-            Aim?.SetActive(true);
-
             // Move 액션으로 이동 입력 받기
             input = moveAction.ReadValue<Vector2>();
             motion = transform.right * input.x + transform.forward * input.y;
@@ -251,10 +249,12 @@ public class PlayerMovement : MonoBehaviour
             interactButton.interactable = false;
             killButtonText.text = "";
             interactButtonText.text = "";
-            Aim?.SetActive(false);
             velocity = Vector3.zero;
             motion = Vector3.zero;
         }
+
+        if (Aim)
+            Aim.SetActive(isMovable);
         // 쿨타임 업데이트
         UpdatekillCooltime();
     }
