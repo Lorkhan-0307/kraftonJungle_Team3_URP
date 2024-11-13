@@ -20,11 +20,17 @@ public class DebugLogger : MonoBehaviour
 
     private void HandleLog(string logString, string stackTrace, LogType type)
     {
+        if (type != LogType.Error) return;
         // 로그 메시지 작성
         string logEntry = $"{System.DateTime.Now} [{type}] {logString}\n{stackTrace}\n";
 
         // 로그 파일에 기록
         logWriter.WriteLine(logEntry);
+    }
+
+    public void AddLog(string text)
+    {
+        logWriter.WriteLine(text);
     }
 
     public void NewFile()

@@ -155,6 +155,16 @@ public class PlayerMovement : MonoBehaviour
         currentCooltime = 0f;
     }
 
+    DebugLogger Logger
+    {
+        get
+        {
+            if (logger == null) logger = FindObjectOfType<DebugLogger>();
+            return logger;
+        }
+    }
+    DebugLogger logger;
+
     private Vector2 input;
     private Vector3 motion;
     private float currentSpeed;
@@ -218,12 +228,18 @@ public class PlayerMovement : MonoBehaviour
                 Debug.Log("Interact");
                 interactTarget.GetComponentInParent<Interact>().BroadcastInteraction();
             }
+
+            // 로그 추가 코드. 출시 때 제거해야함
+            Logger.AddLog($"Transform Y:{controller.transform.position.y}  RigidBody.Velocity Y:{controller.GetComponent<Rigidbody>().velocity.y}  IsGrounded:{isGrounded}");
             // 떨어지면 강제로 복구
             if (transform.position.y < -5f)
             {
-                Debug.Log("낙하!");
+                Debug.LogError("낙하!");
+                Logger.NewFile();
+
                 GameObject[] obs = GameObject.FindGameObjectsWithTag("SpawnPoint");
                 controller.transform.position = obs[Random.Range(0, obs.Length)].transform.position;
+
             }
         }
         else

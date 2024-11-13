@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEditor;
+using System.IO;
 
 public class CustomMenu : MonoBehaviour
 {
@@ -53,5 +54,32 @@ public class CustomMenu : MonoBehaviour
 
         // 콘솔창에 출력
         Debug.Log("Debug Log Is Initialized.");
+
+
+        // 로그 파일 삭제
+        string path = Application.persistentDataPath;
+        if (Directory.Exists(path))
+        {
+            // 경로에 있는 모든 파일 가져오기
+            string[] files = Directory.GetFiles(path);
+
+            foreach (string file in files)
+            {
+                try
+                {
+                    File.Delete(file); // 파일 삭제
+                }
+                catch (IOException e)
+                {
+                    Debug.LogError($"Failed to delete file: {file} - {e.Message}");
+                }
+            }
+
+            Debug.Log("All files in Application.persistentDataPath have been deleted.");
+        }
+        else
+        {
+            Debug.LogWarning("Application.persistentDataPath directory does not exist.");
+        }
     }
 }
