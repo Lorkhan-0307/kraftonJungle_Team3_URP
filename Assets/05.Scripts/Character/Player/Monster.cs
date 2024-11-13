@@ -343,6 +343,11 @@ public class Monster : Player
                 monsterMovement.isMovable = false;
                 monsterMovement.OffAllFPS();
             }
+
+            if (playerMovement != null)
+            {
+                playerMovement.OffAllFPS();
+            }
         }
         else
         {
