@@ -66,7 +66,6 @@ public class Monster : Player
         switch (victim.GetComponent<Player>().type)
         {
             case CharacterType.NPC:
-
                 Debug.Log("Your gauge is Max");
                 FindObjectOfType<HungerSlider>().SetHungerMax();
                 NEHungerGauge.HungerEvent(false);
@@ -274,6 +273,13 @@ public class Monster : Player
         scientistObj.SetActive(false);
         monsterObj.SetActive(false);
 
+        // FPS 팔 끄기
+        if (monsterMovement)
+            monsterMovement.OffAllFPS();
+        else
+            // 공격자 FPS 팔 끄기
+            playerMovement.OffAllFPS();
+
         // 공격자 모델 끄기
         _attacker = attacker.GetComponentInChildren<Animator>().gameObject;
         //attacker.SetActive(false);
@@ -348,6 +354,7 @@ public class Monster : Player
     // 공격 애니메이션이 끝난 시점에 시그널로 실행합니다.
     public void OnAttackFinished()
     {
+        
         isAttacking = false;
         if (attackDirector.gameObject.activeInHierarchy) attackDirector.gameObject.SetActive(false);
 
