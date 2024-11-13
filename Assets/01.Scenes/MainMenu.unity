@@ -10286,6 +10286,7 @@ GameObject:
   - component: {fileID: 224220452}
   - component: {fileID: 224220451}
   - component: {fileID: 224220455}
+  - component: {fileID: 224220456}
   m_Layer: 5
   m_Name: LoadingUI
   m_TagString: Untagged
@@ -10390,6 +10391,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadingPanel: {fileID: 985194743}
   isAniEnded: 0
+--- !u!114 &224220456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224220449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ac4dfbf181c7a84c96d317825efae99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &225477121
 GameObject:
   m_ObjectHideFlags: 0
