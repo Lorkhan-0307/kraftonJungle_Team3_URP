@@ -19,23 +19,17 @@ public class VoiceManager : MonoBehaviourPunCallbacks
     }
 
     // 최적화 작업
-    //private void Update()
-    //{
-    //    if (NetworkManager.Instance.curState == GameState.Dead)
-    //    {
-    //        return;
-    //    }
-    //    recorder.enabled = (Microphone.devices.Length != 0);
-    //}
+    private void Update()
+    {
+        if (SpectatorManager.instance.isSpectating)
+        {
+            recorder.TransmitEnabled = false;
+        }
+    }
 
     public void PressToTalk(bool value)
     {
         recorder.enabled = (Microphone.devices.Length != 0);
-        if (SpectatorManager.instance.isSpectating)
-        {
-            recorder.TransmitEnabled = false;
-            return;
-        }
         if (!recorder.enabled) return;
         if (recorder.TransmitEnabled == value) return;
 
