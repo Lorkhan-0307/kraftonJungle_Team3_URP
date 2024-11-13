@@ -1,4 +1,3 @@
-using System;
 using Photon.Pun;
 using System.Collections;
 using TMPro;
@@ -13,9 +12,6 @@ public class DisplayPing : MonoBehaviour
 
     WaitForSeconds wait;
 
-    private int original_ping = -999;
-    private int new_ping;
-
     private void Start()
     {
         wait = new WaitForSeconds(refreshRate);
@@ -26,14 +22,9 @@ public class DisplayPing : MonoBehaviour
     {
         while (pingText != null)
         {
-            new_ping = PhotonNetwork.GetPing();
-            if (new_ping != original_ping)
-            {
-                original_ping = new_ping;
-                pingText.text = $"Ping: {original_ping} ms";
-                yield return wait;
-            }
-                // PhotonNetwork.GetPing()를 통해 현재 Ping 값을 가져와 UI에 표시
+            // PhotonNetwork.GetPing()를 통해 현재 Ping 값을 가져와 UI에 표시
+            pingText.text = $"Ping: {PhotonNetwork.GetPing()} ms";
+            yield return wait;
         }
     }
 
