@@ -31,6 +31,11 @@ public class VoiceManager : MonoBehaviourPunCallbacks
     public void PressToTalk(bool value)
     {
         recorder.enabled = (Microphone.devices.Length != 0);
+        if (SpectatorManager.instance.isSpectating)
+        {
+            recorder.TransmitEnabled = false;
+            return;
+        }
         if (!recorder.enabled) return;
         if (recorder.TransmitEnabled == value) return;
 

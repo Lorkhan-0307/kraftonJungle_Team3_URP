@@ -65,14 +65,13 @@ public class NEGameStart : NetworkEvent
                 spawnedPlayer = PhotonNetwork.Instantiate(playerScientistName, myPosition, Quaternion.identity);
 
 
-            GameObject voice = Instantiate(voicePrefab, Vector3.zero, Quaternion.identity);
-
             NetworkManager.Instance.myPlayer = spawnedPlayer.GetComponent<Player>();
 
             GameObject po = Instantiate(playerObjectPrefab, spawnedPlayer.transform.position,
                 spawnedPlayer.transform.rotation, spawnedPlayer.transform);
 
         }
+        GameObject voice = Instantiate(voicePrefab, Vector3.zero, Quaternion.identity);
 
         NetworkManager.Instance.curState = GameState.Playing;
 
