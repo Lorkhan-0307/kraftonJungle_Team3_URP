@@ -28,9 +28,13 @@ public class VoiceFollower : MonoBehaviourPun
         if (target == null)
         {
             // 리모트 캐릭터 따라가기
+            //List<Player> players = FindObjectsOfType<Player>().ToList();
+            //Player myPlayer = players.Find(x => (x.GetComponent<PhotonView>().Owner == 
+            //PhotonNetwork.CurrentRoom.GetPlayer(GetComponent<Speaker>().RemoteVoice.PlayerId)
+            //&& x.type != CharacterType.NPC));
             List<Player> players = FindObjectsOfType<Player>().ToList();
             Player myPlayer = players.Find(x => x.GetComponent<PhotonView>().
-            Owner == PhotonNetwork.CurrentRoom.GetPlayer(GetComponent<Speaker>().RemoteVoice.PlayerId));
+            Owner.ActorNumber == GetComponent<Speaker>().RemoteVoice.PlayerId);
 
             if (!myPlayer)
                 return;
