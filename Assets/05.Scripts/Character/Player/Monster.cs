@@ -137,7 +137,9 @@ public class Monster : Player
     {
         Debug.Log("Dead Timeline Finished");
 
-        if(_attacker)
+        deadDirector.gameObject.SetActive(false);
+
+        if (_attacker)
             // 공격자 모델 켜기
             _attacker.SetActive(true);
         
