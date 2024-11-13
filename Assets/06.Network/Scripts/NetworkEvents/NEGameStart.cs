@@ -71,7 +71,7 @@ public class NEGameStart : NetworkEvent
                 spawnedPlayer.transform.rotation, spawnedPlayer.transform);
 
         }
-        GameObject voice = Instantiate(voicePrefab, Vector3.zero, Quaternion.identity);
+        //GameObject voice = Instantiate(voicePrefab, Vector3.zero, Quaternion.identity);
 
         NetworkManager.Instance.curState = GameState.Playing;
 
