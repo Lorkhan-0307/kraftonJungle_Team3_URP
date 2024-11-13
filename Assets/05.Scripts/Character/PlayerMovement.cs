@@ -230,7 +230,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             // 로그 추가 코드. 출시 때 제거해야함
-            Logger.AddLog($"Transform Y:{controller.transform.position.y}  RigidBody.Velocity Y:{controller.GetComponent<Rigidbody>().velocity.y}  IsGrounded:{isGrounded}");
+            Logger.AddLog($"Transform Y:{controller.transform.position.y}  Controller.velocity Y:{controller.velocity.y}  IsGrounded:{isGrounded}");
             // 떨어지면 강제로 복구
             if (transform.position.y < -5f)
             {
