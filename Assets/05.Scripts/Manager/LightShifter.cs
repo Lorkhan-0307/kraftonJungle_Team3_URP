@@ -22,6 +22,8 @@ public class LightShifter : MonoBehaviour
 
     private AudioSource sirenAS;
 
+    [SerializeField] private Material[] emissionMaterials;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,6 +63,11 @@ public class LightShifter : MonoBehaviour
             StopCoroutine(flickerCoroutine);
             flickerCoroutine = null;
         }
+
+        foreach (Material mat in emissionMaterials)
+        {
+            mat.SetColor("_EmissionColor", Color.white);
+        }
     }
 
     public void OnNightShift()
@@ -82,6 +89,11 @@ public class LightShifter : MonoBehaviour
         {
             flickerCoroutine = StartCoroutine(CycleLightIntensity());
         }
+        
+        foreach (Material mat in emissionMaterials)
+        {
+            mat.SetColor("_EmissionColor", Color.red);
+        }
     }
 
     private IEnumerator CycleLightIntensity()
@@ -95,8 +107,9 @@ public class LightShifter : MonoBehaviour
 
                 if (light != null)
                 {
-                    // Intensity 값을 0 ~ 원래 값으로 순환 (사인 곡선을 이용)
-                    light.intensity = Mathf.Abs(Mathf.Sin(Time.time * flickerSpeed) * originalIntensity);
+                    // Intensity 값을 0.2 ~ 원래 값으로 순환 (사인 곡선을 이용)
+                    float baseIntensity = Mathf.Abs(Mathf.Sin(Time.time * flickerSpeed)); // 0 ~ 1 값 생성
+                    light.intensity = Mathf.Lerp(0.2f * originalIntensity, originalIntensity, baseIntensity); // 0.2 ~ 1 범위로 조정
                 }
             }
             yield return null; // 다음 프레임까지 대기
