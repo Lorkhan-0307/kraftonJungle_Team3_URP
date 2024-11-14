@@ -36,6 +36,15 @@ public class TransformSync : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
+    DebugLogger Logger
+    {
+        get
+        {
+            if (logger == null) logger = FindObjectOfType<DebugLogger>();
+            return logger;
+        }
+    }
+    DebugLogger logger;
     private void Update()
     {
         if (!photonView.IsMine) // 다른 클라이언트의 오브젝트일 때
@@ -56,6 +65,7 @@ public class TransformSync : MonoBehaviourPunCallbacks, IPunObservable
                 Debug.Log($"{transform.position.ToString()}, {extrapolatedPos.ToString()}, : {deltaTime.ToString()} Error!");
             }
             transform.rotation = Quaternion.Lerp(transform.rotation, latestRot, deltaTime * 10); // 회전 보간
+            Logger.AddLog($"deltaTime:{deltaTime}  extrapolationTime:{extrapolationTime}  extrapolatedPos:{extrapolatedPos.ToString()}  transform.position:{transform.position.ToString()}  FPS:{1f/Time.smoothDeltaTime}  PING:{PhotonNetwork.GetPing()}  latestPos:{latestPos.ToString()}  latestRot:{latestRot.ToString()}");
         }
     }
 }
