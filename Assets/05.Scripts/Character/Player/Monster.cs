@@ -292,9 +292,11 @@ public class Monster : Player
         // FPS 팔 끄기
         if (monsterMovement)
             monsterMovement.OffAllFPS();
-        else
+        else if (playerMovement)
+        {
             // 공격자 FPS 팔 끄기
             playerMovement.OffAllFPS();
+        }
 
         // 공격자 모델 끄기
         _attacker = attacker.GetComponentInChildren<Animator>().gameObject;
