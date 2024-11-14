@@ -29,7 +29,8 @@ public class CCTV_Manager : MonoBehaviour
         if (tv_screen == null) tv_screen = GetComponent<CCTV>();
 
         currentCameraIndex = 0;
-        //SetActiveCamera(currentCameraIndex);
+        SetActiveCamera(currentCameraIndex);
+        EnableCamera(false);
     }
 
     public void SwitchCamera(int direction)
