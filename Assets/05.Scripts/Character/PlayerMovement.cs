@@ -229,7 +229,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             // 로그 추가 코드. 출시 때 제거해야함
-            RaycastHit[] hit = Physics.RaycastAll(transform.position, Vector3.up, 1f);
+            RaycastHit[] hit = Physics.RaycastAll(transform.position + Vector3.down, Vector3.up, 1f);
             string hitLogs = "";
             foreach(RaycastHit h in hit)
             {
