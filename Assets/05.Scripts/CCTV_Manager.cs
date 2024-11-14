@@ -29,7 +29,7 @@ public class CCTV_Manager : MonoBehaviour
         if (tv_screen == null) tv_screen = GetComponent<CCTV>();
 
         currentCameraIndex = 0;
-        SetActiveCamera(currentCameraIndex);
+        //SetActiveCamera(currentCameraIndex);
     }
 
     public void SwitchCamera(int direction)
@@ -59,7 +59,7 @@ public class CCTV_Manager : MonoBehaviour
             Destroy(cRenderTexture);
         }
         
-        cRenderTexture = new RenderTexture(1024, 512, 24);
+        cRenderTexture = new RenderTexture(512, 256, 24);
         cRenderTexture.graphicsFormat = UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm;
         cRenderTexture.depthStencilFormat = UnityEngine.Experimental.Rendering.GraphicsFormat.D24_UNorm_S8_UInt;
         
@@ -69,4 +69,11 @@ public class CCTV_Manager : MonoBehaviour
         
         tv_screen.ApplyScreen(cRenderTexture);
     }
+
+    public void EnableCamera(bool enable)
+    {
+        cctv_cameras[currentCameraIndex].gameObject.SetActive(enable);
+    }
+
+
 }
