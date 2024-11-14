@@ -39,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
     private InputAction interactAction;
     private InputAction voiceAction;
 
+    private LayerMask lm;
+
 
     VoiceManager VoiceManager
     {
@@ -154,6 +156,8 @@ public class PlayerMovement : MonoBehaviour
         killButtonImage = FindObjectOfType<KillButton>().GetComponent<Image>();
         // 시작할 때 쿨타임 초기화
         currentCooltime = 0f;
+
+        lm = ~LayerMask.GetMask("CCTV_Collider");
     }
 
     DebugLogger Logger
@@ -342,7 +346,7 @@ public class PlayerMovement : MonoBehaviour
         killButtonText.text = "";
         interactButtonText.text = "";
 
-        if (Physics.Raycast(raycastShootPos.position, transform.forward, out hit, attackrange))
+        if (Physics.Raycast(raycastShootPos.position, transform.forward, out hit, attackrange, lm))
         {
             // 낮, 연구원 : 현재 로직
             // 밤, 연구원 : Kill X (Detect 호출 X)
