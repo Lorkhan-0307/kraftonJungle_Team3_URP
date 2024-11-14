@@ -19,7 +19,7 @@ public class Heartbeat : MonoBehaviour
 
     private void Update()
     {
-
+        if (NetworkManager.Instance.curState == GameState.End) return;
         if (!NetworkManager.Instance || NetworkManager.Instance.IsMonster()) return;
 
         if (Monster == null)

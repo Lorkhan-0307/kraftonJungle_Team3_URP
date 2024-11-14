@@ -308,6 +308,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void RayCastInteractDetection(GameObject detectedObject)
     {
+        if (NetworkManager.Instance.curState == GameState.End) return;
 
         Interact interactComponent;
 
@@ -333,6 +334,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void RayCastAttackDetection()
     {
+        if (NetworkManager.Instance.curState == GameState.End) return;
         target = null;
         interactTarget = null;
         killButton.interactable = false;
