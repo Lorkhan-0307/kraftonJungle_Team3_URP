@@ -229,7 +229,14 @@ public class PlayerMovement : MonoBehaviour
             }
 
             // 로그 추가 코드. 출시 때 제거해야함
-            Logger.AddLog($"Transform Y:{controller.transform.position.y}  Controller.velocity Y:{controller.velocity.y}  IsGrounded:{isGrounded}  FPS:{1f/Time.smoothDeltaTime}  PING:{PhotonNetwork.GetPing()}");
+            RaycastHit[] hit = Physics.RaycastAll(transform.position, Vector3.up, 1f);
+            string hitLogs = "";
+            foreach(RaycastHit h in hit)
+            {
+                hitLogs += $"{h.transform.name}, ";
+            }
+
+            Logger.AddLog($"Transform Position:{controller.transform.position.ToString()}  Controller.velocity Y:{controller.velocity.y}  IsGrounded:{isGrounded}  FPS:{1f/Time.smoothDeltaTime}  PING:{PhotonNetwork.GetPing()}  Collider:{hitLogs}");
             // 떨어지면 강제로 복구
             if (transform.position.y < -5f)
             {
@@ -238,7 +245,6 @@ public class PlayerMovement : MonoBehaviour
 
                 GameObject[] obs = GameObject.FindGameObjectsWithTag("SpawnPoint");
                 controller.transform.position = obs[Random.Range(0, obs.Length)].transform.position;
-
             }
         }
         else
