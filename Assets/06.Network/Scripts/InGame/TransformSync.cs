@@ -36,7 +36,7 @@ public class TransformSync : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!photonView.IsMine) // 다른 클라이언트의 오브젝트일 때
         {
