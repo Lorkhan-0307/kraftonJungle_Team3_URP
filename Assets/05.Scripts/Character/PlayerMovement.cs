@@ -241,7 +241,7 @@ public class PlayerMovement : MonoBehaviour
             if (transform.position.y < -5f)
             {
                 Debug.LogError("낙하!");
-                Logger.NewFile();
+                Logger.AddLog("=============================================================================================");
 
                 GameObject[] obs = GameObject.FindGameObjectsWithTag("SpawnPoint");
                 controller.transform.position = obs[Random.Range(0, obs.Length)].transform.position;

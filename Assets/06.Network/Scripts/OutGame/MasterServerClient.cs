@@ -19,6 +19,10 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
     bool isPhotonConnected = false;
     bool isDBConnected = false;
 
+    private void Update()
+    {
+        Debug.Log("Vsync : " + QualitySettings.vSyncCount.ToString());
+    }
     void Start()
     {
         orManager = FindObjectOfType<OutgameRoomsManager>(true);
@@ -26,17 +30,16 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
         dbManager = GetComponent<DynamoDBManager>();
 
 
-        // 이미 연결 되어있는 경우
+        //최초 접속시 한번만 실행
         if (!PhotonNetwork.IsConnected)
         {
             PhotonNetwork.ConnectUsingSettings();
             LoginWithToken();
-        }
-        //최초 접속시 한번만 실행
-        else
-        {
+
+
             PhotonNetwork.SerializationRate = 30; // 초당 30회 동기화
             QualitySettings.vSyncCount = 0;     //Vsync 해제
+            Debug.Log("Set Vsync : " + QualitySettings.vSyncCount.ToString());
             Application.targetFrameRate = 60;   //초당 프레임 60으로 제한
         }
 
