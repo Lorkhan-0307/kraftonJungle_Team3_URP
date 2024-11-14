@@ -232,24 +232,6 @@ public class PlayerMovement : MonoBehaviour
                 interactTarget.GetComponentInParent<Interact>().BroadcastInteraction();
             }
 
-            // 로그 추가 코드. 출시 때 제거해야함
-            RaycastHit[] hit = Physics.RaycastAll(transform.position + Vector3.down, Vector3.up, 1f);
-            string hitLogs = "";
-            foreach(RaycastHit h in hit)
-            {
-                hitLogs += $"{h.transform.name}, ";
-            }
-
-            Logger.AddLog($"Transform Position:{controller.transform.position.ToString()}  Controller.velocity Y:{controller.velocity.y}  IsGrounded:{isGrounded}  FPS:{1f/Time.smoothDeltaTime}  PING:{PhotonNetwork.GetPing()}  PhotonView.IsMine:{controller.GetComponent<PhotonView>().IsMine}  PhotonView.AmOwner:{controller.GetComponent<PhotonView>().AmOwner}  Collider:{hitLogs}");
-            // 떨어지면 강제로 복구
-            if (transform.position.y < -5f)
-            {
-                Debug.LogError("낙하!");
-                Logger.AddLog("=============================================================================================");
-
-                GameObject[] obs = GameObject.FindGameObjectsWithTag("SpawnPoint");
-                controller.transform.position = obs[Random.Range(0, obs.Length)].transform.position;
-            }
         }
         else
         {
@@ -274,14 +256,35 @@ public class PlayerMovement : MonoBehaviour
     {
         isGrounded = controller.isGrounded;
 
-        if (isGrounded && velocity.y < 0)
+        //if (isGrounded && velocity.y < 0)
+        //{
+        //    velocity.y = -2f;
+        //}
+        if(!isGrounded)
         {
-            velocity.y = -2f;
+            velocity.y += gravity * Time.fixedDeltaTime;
         }
-        
-        velocity.y += gravity * Time.fixedDeltaTime;
         controller.Move((motion * currentSpeed + velocity) * Time.fixedDeltaTime);
 
+
+        // 로그 추가 코드. 출시 때 제거해야함
+        RaycastHit[] hit = Physics.RaycastAll(transform.position + Vector3.down, Vector3.up, 1f);
+        string hitLogs = "";
+        foreach (RaycastHit h in hit)
+        {
+            hitLogs += $"{h.transform.name}, ";
+        }
+
+        Logger.AddLog($"Transform Position:{controller.transform.position.ToString()}  Controller.velocity Y:{controller.velocity.y}  IsGrounded:{isGrounded}  FPS:{1f / Time.smoothDeltaTime}  PING:{PhotonNetwork.GetPing()}  PhotonView.IsMine:{controller.GetComponent<PhotonView>().IsMine}  PhotonView.AmOwner:{controller.GetComponent<PhotonView>().AmOwner}  Collider:{hitLogs}");
+        // 떨어지면 강제로 복구
+        if (transform.position.y < -5f)
+        {
+            Debug.LogError("낙하!");
+            Logger.AddLog("=============================================================================================");
+
+            GameObject[] obs = GameObject.FindGameObjectsWithTag("SpawnPoint");
+            controller.transform.position = obs[Random.Range(0, obs.Length)].transform.position;
+        }
     }
 
     private void UpdatekillCooltime()
