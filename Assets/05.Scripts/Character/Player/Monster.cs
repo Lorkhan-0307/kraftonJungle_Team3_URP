@@ -289,6 +289,7 @@ public class Monster : Player
         scientistObj.SetActive(false);
         monsterObj.SetActive(false);
 
+
         // FPS 팔 끄기
         if (monsterMovement)
             monsterMovement.OffAllFPS();
@@ -309,12 +310,13 @@ public class Monster : Player
 
     public void SetupCinemachinBrainOnPlayableAssets()
     {
+        CinemachineBrain cinemachineBrain = FindObjectOfType<CinemachineBrain>();
         TimelineAsset ta = transformationDirector.playableAsset as TimelineAsset;
         IEnumerable<TrackAsset> temp = ta.GetOutputTracks();
         foreach (var track in temp)
         {
             if (track is CinemachineTrack)
-                transformationDirector.SetGenericBinding(track, FindObjectOfType<CinemachineBrain>());
+                transformationDirector.SetGenericBinding(track, cinemachineBrain);
         }
 
         ta = attackDirector.playableAsset as TimelineAsset;
@@ -322,15 +324,17 @@ public class Monster : Player
         foreach (var track in temp)
         {
             if (track is CinemachineTrack)
-                attackDirector.SetGenericBinding(track, FindObjectOfType<CinemachineBrain>());
+                attackDirector.SetGenericBinding(track, cinemachineBrain);
         }
 
         ta = deadDirector.playableAsset as TimelineAsset;
         temp = ta.GetOutputTracks();
         foreach (var track in temp)
         {
+            if (!FindObjectOfType<CinemachineBrain>())
+                Debug.Log("Cinemachine Brain is Null");
             if (track is CinemachineTrack)
-                deadDirector.SetGenericBinding(track, FindObjectOfType<CinemachineBrain>());
+                deadDirector.SetGenericBinding(track, cinemachineBrain);
         }
     }
 

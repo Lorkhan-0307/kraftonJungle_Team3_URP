@@ -68,6 +68,7 @@ public class SpectatorCamera : MonoBehaviour
         canvasInstance = Instantiate(canvasPrefab); // 캔버스 생성
         spectatorText = canvasInstance.GetComponentInChildren<SpectatorText>(); // 관전 대상 텍스트
         spectatorText.SetSpectatingTarget(spectatingTarget); // UI에 관전 대상 표시        
+        FindObjectOfType<Monster>().SetupCinemachinBrainOnPlayableAssets();
 
         Debug.Log("Spectator Camera Start");
     }
