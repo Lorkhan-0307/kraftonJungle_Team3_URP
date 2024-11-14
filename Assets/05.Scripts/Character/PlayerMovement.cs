@@ -264,7 +264,6 @@ public class PlayerMovement : MonoBehaviour
         {
             velocity.y += gravity * Time.fixedDeltaTime;
         }
-        controller.Move((motion * currentSpeed + velocity) * Time.fixedDeltaTime);
 
 
         // 로그 추가 코드. 출시 때 제거해야함
@@ -275,16 +274,18 @@ public class PlayerMovement : MonoBehaviour
             hitLogs += $"{h.transform.name}, ";
         }
 
-        Logger.AddLog($"Transform Position:{controller.transform.position.ToString()}  Controller.velocity Y:{controller.velocity.y}  IsGrounded:{isGrounded}  FPS:{1f / Time.smoothDeltaTime}  PING:{PhotonNetwork.GetPing()}  PhotonView.IsMine:{controller.GetComponent<PhotonView>().IsMine}  PhotonView.AmOwner:{controller.GetComponent<PhotonView>().AmOwner}  Collider:{hitLogs}");
+        Logger.AddLog($"Transform Position:{controller.transform.position.ToString()}  Controller.velocity Y:{controller.velocity.y}  IsGrounded:{isGrounded}  FPS:{1f / Time.deltaTime}  PING:{PhotonNetwork.GetPing()}  PhotonView.IsMine:{controller.GetComponent<PhotonView>().IsMine}  PhotonView.AmOwner:{controller.GetComponent<PhotonView>().AmOwner}  Collider:{hitLogs}");
         // 떨어지면 강제로 복구
         if (transform.position.y < -5f)
         {
             Debug.LogError("낙하!");
+            velocity.y = 0f;
             Logger.AddLog("=============================================================================================");
 
             GameObject[] obs = GameObject.FindGameObjectsWithTag("SpawnPoint");
             controller.transform.position = obs[Random.Range(0, obs.Length)].transform.position;
         }
+        controller.Move((motion * currentSpeed + velocity) * Time.fixedDeltaTime);
     }
 
     private void UpdatekillCooltime()
