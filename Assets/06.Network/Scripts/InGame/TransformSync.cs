@@ -22,6 +22,12 @@ public class TransformSync : MonoBehaviourPunCallbacks, IPunObservable
             // 최신 위치와 회전 값 수신
             Vector3 previousPos = latestPos; // 이전 위치 저장
             latestPos = (Vector3)stream.ReceiveNext(); // 위치 받기
+
+            // 예외처리: 패킷 유실 혹은 다른 이유로 유효하지 않은 포지션을 받았을 경우
+            if (float.IsNaN(latestPos.x) || float.IsInfinity(latestPos.x))
+            {
+                latestPos = previousPos; // 이전 위치를 사용하거나 기본값으로 설정
+            }
             latestRot = (Quaternion)stream.ReceiveNext(); // 회전 받기
 
             // 새 위치와 이전 위치 간의 속도 계산
