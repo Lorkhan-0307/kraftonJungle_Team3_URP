@@ -82,11 +82,11 @@ public class Monster : Player
     {
         base.OnDamaged(attacker);
         
+        OnDeadTimeline(attacker);
         // 여기서 Destroy 결과 전송
         if (GetComponent<PhotonView>().AmOwner)
         {
             //PhotonNetwork.Destroy(this.gameObject);
-            OnDeadTimeline(attacker);
             // canvas 삭제
             Destroy(GetComponentInChildren<Canvas>().gameObject);
         }
@@ -249,8 +249,22 @@ public class Monster : Player
         
         scientistObj.SetActive(false);
         monsterObj.SetActive(false);
-        
-        
+
+        // transformationDirector 의 magic circle Transform
+        //Vector3 clipPosition = transformationDirector.GetComponentInChildren<ParticleSystem>().transform.position;
+        //Debug.Log("Clip Position : " + clipPosition);
+        //// material 찾기
+        //SkinnedMeshRenderer[] children = GetComponentsInChildren<SkinnedMeshRenderer>();
+        //foreach (SkinnedMeshRenderer smr in children)
+        //{
+        //    Material[] Mats = smr.materials;
+        //    foreach (Material m in Mats)
+        //    {
+        //        // shader의 objectPosition으로 하기
+        //        m.SetVector("_ObjectPosition", clipPosition);
+        //    }
+        //}
+
         if (isNeededCam)
         {
             transformationDirector.gameObject.SetActive(true);
