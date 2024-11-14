@@ -34,6 +34,7 @@ public class MasterServerClient : MonoBehaviourPunCallbacks
 
 
             PhotonNetwork.SerializationRate = 30; // 초당 30회 동기화
+            PhotonNetwork.SendRate = 30; // 데이터 송신 속도
             QualitySettings.vSyncCount = 0;     //Vsync 해제
             Application.targetFrameRate = 60;   //초당 프레임 60으로 제한
         }
