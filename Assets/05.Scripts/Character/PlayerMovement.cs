@@ -236,7 +236,7 @@ public class PlayerMovement : MonoBehaviour
                 hitLogs += $"{h.transform.name}, ";
             }
 
-            //Logger.AddLog($"Transform Position:{controller.transform.position.ToString()}  Controller.velocity Y:{controller.velocity.y}  IsGrounded:{isGrounded}  FPS:{1f/Time.smoothDeltaTime}  PING:{PhotonNetwork.GetPing()}  Collider:{hitLogs}");
+            Logger.AddLog($"Transform Position:{controller.transform.position.ToString()}  Controller.velocity Y:{controller.velocity.y}  IsGrounded:{isGrounded}  FPS:{1f/Time.smoothDeltaTime}  PING:{PhotonNetwork.GetPing()}  Collider:{hitLogs}");
             // 떨어지면 강제로 복구
             if (transform.position.y < -5f)
             {
