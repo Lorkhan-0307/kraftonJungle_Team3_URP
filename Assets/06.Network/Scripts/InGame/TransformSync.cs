@@ -8,7 +8,15 @@ public class TransformSync : MonoBehaviourPunCallbacks, IPunObservable
     private Vector3 latestPos; // 네트워크에서 받은 최신 위치
     private Quaternion latestRot; // 네트워크에서 받은 최신 회전
     private Vector3 velocity; // 위치 변화 속도 계산용
-
+    DebugLogger Logger
+    {
+        get
+        {
+            if (logger == null) logger = FindObjectOfType<DebugLogger>();
+            return logger;
+        }
+    }
+    DebugLogger logger;
     // 네트워크 동기화를 위한 메서드
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -45,7 +53,7 @@ public class TransformSync : MonoBehaviourPunCallbacks, IPunObservable
             float extrapolationTime = Mathf.Clamp(deltaTime, 0, 0.5f); // 예측 시간 제한
             Vector3 extrapolatedPos = latestPos + velocity * extrapolationTime; // 예측 위치 계산
 
-
+            Logger.AddLog($"deltaTime:{deltaTime}  extrapolationTime:{extrapolationTime}  extrapolatedPos:{extrapolatedPos.ToString()}  transform.position:{transform.position.ToString()}  FPS:{1f / Time.smoothDeltaTime}  PING:{PhotonNetwork.GetPing()}  latestPos:{latestPos.ToString()}  latestRot:{latestRot.ToString()}");
             // 예측 위치와 회전 적용
             try
             {
