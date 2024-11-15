@@ -22,8 +22,7 @@ public class Scientist : Player
         base.OnDamaged(attacker);
 
         //Debug.Log("ONDAMAGED");
-
-
+        OnAttackFinished();
     }
 
     public void OnAttackFinished()
