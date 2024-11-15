@@ -76,6 +76,13 @@ public class SpectatorCamera : MonoBehaviour
     // Update로 관전 대상 변경 감지, 버츄얼 카메라 위치 업데이트
     void Update()
     {
+        // 끝났으면 마우스로 시점 조종 불가
+        if (TimeManager.instance.isEnd)
+        {
+            FreeLockCamera.enabled = false;
+            return;
+        }
+
         // Handle switching between players
         if (prevPlayerAction.triggered)
         {
