@@ -70,6 +70,7 @@ public class GameManager : Singleton<GameManager>
 
     private void OnKilledSoundPlay(GameObject killer, GameObject victim)
     {
+        if (killer.GetComponent<Player>().type == CharacterType.Monster) return;
         killer.GetComponent<Player>().PlayKillSound();
         victim.GetComponent<Player>().PlayDeathSound();
     }
