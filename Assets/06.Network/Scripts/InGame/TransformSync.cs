@@ -40,9 +40,8 @@ public class TransformSync : MonoBehaviourPunCallbacks, IPunObservable
 
             // 새 위치와 이전 위치 간의 속도 계산
             float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
+            if (lag < Mathf.Epsilon) lag = 0.001f; // 최소값 설정으로 0으로 나누기 방지
             velocity = (latestPos - previousPos) / lag; // 속도 계산
-
-            Logger.AddLog($"lag:{lag}  velocity:{velocity.ToString()}  latestPos:{latestPos.ToString()}  previousPos:{previousPos.ToString()}");
         }
     }
 
@@ -55,16 +54,8 @@ public class TransformSync : MonoBehaviourPunCallbacks, IPunObservable
             float extrapolationTime = Mathf.Clamp(deltaTime, 0, 0.5f); // 예측 시간 제한
             Vector3 extrapolatedPos = latestPos + velocity * extrapolationTime; // 예측 위치 계산
 
-            Logger.AddLog($"deltaTime:{deltaTime}  extrapolationTime:{extrapolationTime}  extrapolatedPos:{extrapolatedPos.ToString()}  transform.position:{transform.position.ToString()}  FPS:{1f / Time.smoothDeltaTime}  PING:{PhotonNetwork.GetPing()}  latestPos:{latestPos.ToString()}  latestRot:{latestRot.ToString()}\n");
             // 예측 위치와 회전 적용
-            try
-            {
-                transform.position = Vector3.Lerp(transform.position, extrapolatedPos, deltaTime * 10); // 위치 보간
-            }
-            catch
-            {
-                Debug.Log($"{transform.position.ToString()}, {extrapolatedPos.ToString()}, : {deltaTime.ToString()} Error!");
-            }
+            transform.position = Vector3.Lerp(transform.position, extrapolatedPos, deltaTime * 10); // 위치 보간
             transform.rotation = Quaternion.Lerp(transform.rotation, latestRot, deltaTime * 10); // 회전 보간
         }
     }
