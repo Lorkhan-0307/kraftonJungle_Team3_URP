@@ -1,5 +1,5 @@
 
-## 프로젝트 소개
+# 크래프톤 정글 6기 나만무 프로젝트 : The One Within
 
 [![imggg](https://github.com/user-attachments/assets/44f15bb2-bffb-4d28-aad4-1c3266d9fb18)](https://youtu.be/pj8ExypZcKs)
 
