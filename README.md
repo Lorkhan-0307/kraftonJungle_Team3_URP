@@ -1,15 +1,17 @@
 
-
-
-# 프로젝트 소개
-
-![image](https://github.com/user-attachments/assets/f6677361-0aee-4a79-bed2-fc8fd114533e)
+## 프로젝트 소개
 
 [![imggg](https://github.com/user-attachments/assets/44f15bb2-bffb-4d28-aad4-1c3266d9fb18)](https://youtu.be/pj8ExypZcKs)
 
 (이미지를 클릭하면 프로젝트 소개 영상 재생)
 
 Unity로 제작한 **3D 파티 호러 소셜 디덕션 및 비대칭 서바이벌 게임**
+
+<br>
+
+## 프로젝트 설명
+
+![image](https://github.com/user-attachments/assets/f6677361-0aee-4a79-bed2-fc8fd114533e)
 
 <br>
 
