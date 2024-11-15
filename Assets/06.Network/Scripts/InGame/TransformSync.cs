@@ -42,7 +42,7 @@ public class TransformSync : MonoBehaviourPunCallbacks, IPunObservable
             float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
             velocity = (latestPos - previousPos) / lag; // 속도 계산
 
-            logger.AddLog($"lag:{lag}  velocity:{velocity.ToString()}  latestPos:{latestPos.ToString()}  previousPos:{previousPos.ToString()}");
+            Logger.AddLog($"lag:{lag}  velocity:{velocity.ToString()}  latestPos:{latestPos.ToString()}  previousPos:{previousPos.ToString()}");
         }
     }
 
