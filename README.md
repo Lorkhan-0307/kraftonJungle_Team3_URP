@@ -5,7 +5,7 @@
 
 ![image](https://github.com/user-attachments/assets/f6677361-0aee-4a79-bed2-fc8fd114533e)
 
-[![image](https://github.com/user-attachments/assets/baf5f8d9-92de-447e-aeac-9e257db6e080)](https://youtu.be/pj8ExypZcKs)
+[![imggg](https://github.com/user-attachments/assets/44f15bb2-bffb-4d28-aad4-1c3266d9fb18)](https://youtu.be/pj8ExypZcKs)
 
 (이미지를 클릭하면 프로젝트 소개 영상 재생)
 
