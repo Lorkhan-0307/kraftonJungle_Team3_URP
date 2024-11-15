@@ -41,6 +41,8 @@ public class TransformSync : MonoBehaviourPunCallbacks, IPunObservable
             // 새 위치와 이전 위치 간의 속도 계산
             float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
             velocity = (latestPos - previousPos) / lag; // 속도 계산
+
+            logger.AddLog($"lag:{lag}  velocity:{velocity.ToString()}  latestPos:{latestPos.ToString()}  previousPos:{previousPos.ToString()}");
         }
     }
 
@@ -53,7 +55,7 @@ public class TransformSync : MonoBehaviourPunCallbacks, IPunObservable
             float extrapolationTime = Mathf.Clamp(deltaTime, 0, 0.5f); // 예측 시간 제한
             Vector3 extrapolatedPos = latestPos + velocity * extrapolationTime; // 예측 위치 계산
 
-            Logger.AddLog($"deltaTime:{deltaTime}  extrapolationTime:{extrapolationTime}  extrapolatedPos:{extrapolatedPos.ToString()}  transform.position:{transform.position.ToString()}  FPS:{1f / Time.smoothDeltaTime}  PING:{PhotonNetwork.GetPing()}  latestPos:{latestPos.ToString()}  latestRot:{latestRot.ToString()}");
+            Logger.AddLog($"deltaTime:{deltaTime}  extrapolationTime:{extrapolationTime}  extrapolatedPos:{extrapolatedPos.ToString()}  transform.position:{transform.position.ToString()}  FPS:{1f / Time.smoothDeltaTime}  PING:{PhotonNetwork.GetPing()}  latestPos:{latestPos.ToString()}  latestRot:{latestRot.ToString()}\n");
             // 예측 위치와 회전 적용
             try
             {
