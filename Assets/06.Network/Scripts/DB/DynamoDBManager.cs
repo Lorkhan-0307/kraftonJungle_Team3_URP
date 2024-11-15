@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.Model;
 using System.Collections.Generic;
@@ -11,10 +12,7 @@ public class DynamoDBManager : MonoBehaviour
 {
     private static AmazonDynamoDBClient client;
 
-    private static readonly string accessKey = "AKIA5FTZBVKDTJYXT35R";
-    private static readonly string secretKey = "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";
-    private static readonly string region = "ap-northeast-2"; // DynamoDB 리전
-
+    string filePath = "";
 
     public async Task LoadData(string token, PlayerData playerData)
     {
@@ -48,14 +46,19 @@ public class DynamoDBManager : MonoBehaviour
     {
         if (client == null)
         {
-            //var accessKey = Environment.GetEnvironmentVariable("AWS_ACCESS_KEY_ID");
-            //var secretKey = Environment.GetEnvironmentVariable("AWS_SECRET_ACCESS_KEY");
-            //var region = Environment.GetEnvironmentVariable("AWS_REGION");
+            TextAsset envFile = Resources.Load<TextAsset>("AWS"); // "AWS.env"에서 ".env"는 생략
+            if (envFile == null)
+            {
+                Debug.LogError("AWS credentials file not found in Resources folder.");
+                return;
+            }
+            string[] lines = envFile.text.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
 
-            //// 각 변수를 로그로 출력
-            //Debug.Log($"Access Key: {accessKey}");
-            //Debug.Log($"Secret Key: {secretKey}");
-            //Debug.Log($"Region: {region}");
+
+            string accessKey = lines[0];
+            string secretKey = lines[1];
+            string region = lines[2];
+
 
             var credentials = new BasicAWSCredentials(accessKey, secretKey);
             client = new AmazonDynamoDBClient(credentials, Amazon.RegionEndpoint.GetBySystemName(region));
