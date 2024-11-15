@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class TransformSync : MonoBehaviourPunCallbacks, IPunObservable
 {
-    private Vector3 latestPos; // 네트워크에서 받은 최신 위치
-    private Quaternion latestRot; // 네트워크에서 받은 최신 회전
-    private Vector3 velocity; // 위치 변화 속도 계산용
+    private Vector3 latestPos = Vector3.zero; // 네트워크에서 받은 최신 위치
+    private Quaternion latestRot = Quaternion.identity; // 네트워크에서 받은 최신 회전
+    private Vector3 velocity = Vector3.zero; // 위치 변화 속도 계산용
     DebugLogger Logger
     {
         get
